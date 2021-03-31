@@ -62,6 +62,9 @@ map('n', 'k', ':call show_documentation()<cr>', { silent = true })
 map('n', '<leader>e', ':NvimTreeToggle<cr>', options)
 map('n', '<leader>tr', ':NvimTreeRefreshe<cr>', options)
 
+--- Telescope file_browser
+map('n', '<space>e', ':Telescope file_browser<cr>', options)
+
 
 --- Phpcbf
 map('n', '<leader>pcb', ':!phpcbf %<cr>', { silent = true })
