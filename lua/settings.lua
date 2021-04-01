@@ -31,9 +31,7 @@ o.backup = false
 o.incsearch = true
 o.cmdheight = 2
 o.showbreak = "↪"
---- o.listchars = 'tab:→\ ,eol:↲\ ,nbsp:␣,trail:•,precedes:←\ ,extends:→\ '
---- showbreak=↪\
---- listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→
+o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "FiraCode"
 o.termguicolors = true
 --- o.background = "none"
@@ -58,7 +56,7 @@ local set_options = function(locality,options)
 end
 
 local options_window = {
-    cursorline = true, -- enable cursorline
+    cursorline = true -- enable cursorline
 }
 
 --set locally. no need to call elsewhere
