@@ -49,5 +49,17 @@ wo.signcolumn = "yes"
 vim.cmd('colorscheme gruvbox')
 
 -- div
---vim.cmd('set cul')
 
+-- no need for a global function
+local set_options = function(locality,options)
+    for key, value in pairs(options) do
+        locality[key] = value
+    end
+end
+
+local options_window = {
+    cursorline = true, -- enable cursorline
+}
+
+--set locally. no need to call elsewhere
+set_options(o,options_window)
