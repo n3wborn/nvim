@@ -19,6 +19,7 @@ paq {'nvim-lua/lsp-status.nvim'}
 paq {'nvim-telescope/telescope.nvim'}
 paq {'nvim-treesitter/nvim-treesitter', hook = fn[':TSUpdate']}
 paq {'nvim-treesitter/playground'}
+paq {'nvim-treesitter/nvim-treesitter-textobjects'}
 paq {'nvim-lua/popup.nvim'}
 paq {'nvim-lua/plenary.nvim'}
 
