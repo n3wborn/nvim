@@ -34,6 +34,7 @@ o.showbreak = "↪"
 o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "Fira"
 o.termguicolors = true
+o.colorcolumn = "80"
 --- o.background = "none"
 
 wo.list = true
@@ -41,7 +42,6 @@ wo.number = true
 wo.relativenumber = true
 wo.wrap = false
 wo.signcolumn = "yes"
--- wo.colorcolumn = "lightgrey"
 
 -- colorscheme(s)
 vim.cmd('colorscheme gruvbox')
