@@ -32,7 +32,7 @@ o.incsearch = true
 o.cmdheight = 2
 o.showbreak = "↪"
 o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
-o.guifont = "FiraCode"
+o.guifont = "Fira"
 o.termguicolors = true
 --- o.background = "none"
 
