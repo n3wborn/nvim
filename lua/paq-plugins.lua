@@ -61,8 +61,12 @@ paq {'airblade/vim-gitgutter'}
 paq {'SirVer/ultisnips'}
 paq {'honza/vim-snippets'}
 
+--- Undo stuff
+paq {'mbbill/undotree'}
+
 --- Colors and nice stuff
 paq {'morhetz/gruvbox'}
 paq {'flazz/vim-colorschemes'}
 paq {'ryanoasis/vim-devicons'}
-paq {'hoob3rt/lualine.nvim', opt = true}
+paq {'kyazdani42/nvim-web-devicons'}
+--paq {'hoob3rt/lualine.nvim', opt = true}
