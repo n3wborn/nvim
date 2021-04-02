@@ -35,7 +35,6 @@ o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "Fira"
 o.termguicolors = true
 o.colorcolumn = "80"
---- o.background = "none"
 
 wo.list = true
 wo.number = true
@@ -46,7 +45,9 @@ wo.signcolumn = "yes"
 -- colorscheme(s)
 vim.cmd('colorscheme gruvbox')
 
--- div
+-- background
+vim.cmd('highlight Normal guibg=NONE')
+
 
 -- no need for a global function
 local set_options = function(locality,options)
