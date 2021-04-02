@@ -41,6 +41,9 @@ paq {'tpope/vim-surround'}
 paq {'tpope/vim-endwise'}
 paq {'mhinz/vim-mix-format'}
 
+-- prettier/linter
+paq {'prettier/vim-prettier'}
+
 --- file explorer
 paq {'kyazdani42/nvim-tree.lua'}
 
