@@ -17,6 +17,15 @@ options = { noremap = true }
 --
 -- Normal Mode
 --
+-- easier windows jump
+map('n', '<C-h>', '<C-w>h', options)
+map('n', '<C-Left>', '<C-w>h', options)
+map('n', '<C-l>', '<C-w>l', options)
+map('n', '<C-Right>', '<C-w>l', options)
+map('n', '<C-j>', '<C-w>j', options)
+map('n', '<C-Down>', '<C-w>j', options)
+map('n', '<C-k>', '<C-w>k', options)
+map('n', '<C-Up>', '<C-w>k', options)
 
 -- Ex|-> :nnoremap <silent> <Leader><Space> :set hlsearch<CR>
 map('n', '<leader><space>', ':nohlsearch<cr>', options)
