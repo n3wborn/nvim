@@ -11,4 +11,3 @@ endfunction
 call TrimWhitespace()
 ]],
 true)
-
