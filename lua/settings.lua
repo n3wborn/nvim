@@ -32,14 +32,19 @@ o.errorbells = false
 o.swapfile = false
 o.backup = false
 o.incsearch = true
-o.cmdheight = 2
+o.cmdheight = 1
 o.showbreak = "↪"
 --o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.listchars = "tab:| ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "Fira"
 o.termguicolors = true
 o.colorcolumn = "80"
+o.laststatus = 2
+o.pumheight = 10    -- Makes popup menu smaller
+o.mouse = "a"       -- Enable your mouse
+o.cmdwinheight = 5  -- command window height
 
+wo.cursorline = true
 wo.list = true
 wo.number = true
 wo.relativenumber = true
@@ -51,23 +56,13 @@ g.php_cs_fixer_rules = "@PSR2"
 
 g.nvim_tree_indent_markers = 1
 g.nvim_tree_git_hl = 1
+g.nvim_tree_autoclose = 1
 
+--- https://github.com/morhetz/gruvbox/wiki/Configuration
+g.gruvbox_transparent_bg = 1
 
-cmd('set shortmess+=c')			-- hide unwanted msg
-cmd('colorscheme gruvbox')		-- colorscheme
-cmd('highlight Normal guibg=NONE')	-- background
+cmd('set shortmess+=c')
+cmd('colorscheme gruvbox')
+cmd('syntax on')
+cmd('highlight Normal guibg=NONE')
 
-
--- no need for a global function
-local set_options = function(locality,options)
-    for key, value in pairs(options) do
-        locality[key] = value
-    end
-end
-
-local options_window = {
-    cursorline = true -- enable cursorline
-}
-
---set locally. no need to call elsewhere
-set_options(o,options_window)

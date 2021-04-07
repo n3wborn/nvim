@@ -38,7 +38,7 @@ return require('packer').startup(function()
 	use 'nvim-lua/lsp-status.nvim'
 	use 'ojroques/nvim-lspfuzzy'
 
-    --- telescope
+	--- telescope
 	use {
 	'nvim-telescope/telescope.nvim',
 	requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
