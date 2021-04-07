@@ -66,3 +66,14 @@ cmd('colorscheme gruvbox')
 cmd('syntax on')
 cmd('highlight Normal guibg=NONE')
 
+--- add indent line when needed
+g.indent_blankline_char = "┊"
+g.indent_blankline_filetype_exclude = { 'help', 'packer' }
+g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
+g.indent_blankline_char_highlight = 'LineNr'
+
+--Set statusbar
+g.lightline = { colorscheme = 'gruvbox';
+      active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };
+      component_function = { gitbranch = 'fugitive#head', };
+}

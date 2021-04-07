@@ -99,6 +99,7 @@ return require('packer').startup(function()
 	use 'flazz/vim-colorschemes'
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
+	use 'itchyny/lightline.vim'
 	--use {'hoob3rt/lualine.nvim', opt = true}
 	  --------------
 	-- use { 'datwaft/bubbly.nvim', branch = 'dev' }

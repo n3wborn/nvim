@@ -2,7 +2,7 @@
 
 require'settings'
 require'plugins'
-require'plugins.statusline'
+require'plugins.gitsigns'
 require'lsp'
 require'autocommands'
 require'mappings'
