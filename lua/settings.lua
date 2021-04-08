@@ -41,7 +41,8 @@ o.termguicolors = true
 o.colorcolumn = "80"
 o.laststatus = 2
 o.pumheight = 10    -- Makes popup menu smaller
-o.mouse = "a"       -- Enable your mouse
+o.pumblend = 10     -- And a bit transparent
+o.mouse = "nv"
 o.cmdwinheight = 5  -- command window height
 
 wo.cursorline = true
@@ -75,5 +76,6 @@ g.indent_blankline_char_highlight = 'LineNr'
 --Set statusbar
 g.lightline = { colorscheme = 'gruvbox';
       active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };
-      component_function = { gitbranch = 'fugitive#head', };
+      -- component_function = { gitbranch = 'fugitive#head', };
+      component_function = { gitbranch = 'b:gitsigns_head', };
 }
