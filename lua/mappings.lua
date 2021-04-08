@@ -35,22 +35,22 @@ map('n', '<leader>b', ':Buffers<cr>', options)
 map('n', '<leader>g', ':GitFiles<cr>', options)
 map('n', '<leader>a', ':Ag<cr>', options)
 
--- git/fugitive/gitgutter
-map('n', '<leader>gf', ':diffget //2<cr>', options)
-map('n', '<leader>gh', ':diffget //3<cr>', options)
-map('n', '<leader>gs', ':G<cr>', options)
+-- git/fugitive/gitgutter (replaced by gitsigns)
+-- map('n', '<leader>gf', ':diffget //2<cr>', options)
+-- map('n', '<leader>gh', ':diffget //3<cr>', options)
+-- map('n', '<leader>gs', ':G<cr>', options)
 -- next/prev hunk
-map('n', '<space>n', '<Plug>(GitGutterNextHunk)', { silent = true })
-map('n', '<space>N', '<Plug>(GitGutterPrevHunk)', { silent = true })
+-- map('n', '<space>n', '<Plug>(GitGutterNextHunk)', { silent = true })
+-- map('n', '<space>N', '<Plug>(GitGutterPrevHunk)', { silent = true })
 -- stage/instage hunk
-map('n', '<space>s', '<Plug>(GitGutterStageHunk)', { silent = true })
-map('n', '<space>u', '<Plug>(GitGutterUndoHunk)', { silent = true })
+-- map('n', '<space>s', '<Plug>(GitGutterStageHunk)', { silent = true })
+-- map('n', '<space>u', '<Plug>(GitGutterUndoHunk)', { silent = true })
 -- hunk infos
-map('n', '<space>i', '<Plug>(GitGutterPreviewHunk)', { silent = true })
+-- map('n', '<space>i', '<Plug>(GitGutterPreviewHunk)', { silent = true })
 -- quickfix list
-map('n', '<space>q', ':GitGutterQuickFix<CR>', options)
+-- map('n', '<space>q', ':GitGutterQuickFix<CR>', options)
 -- fold unmodified lines
-vim.api.nvim_set_keymap('n', '<space>F', ':GitGutterFold<CR>', options)
+-- vim.api.nvim_set_keymap('n', '<space>F', ':GitGutterFold<CR>', options)
 
 
 --- Vertical resize
