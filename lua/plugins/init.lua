@@ -56,9 +56,6 @@ return require('packer').startup(function()
 	use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
 	use 'junegunn/fzf.vim'
 
-	--- coc
-	use {'neoclide/coc.nvim', branch = 'release'}
-
 	--- code helpers
 	use 'tpope/vim-commentary'
 	use 'junegunn/vim-easy-align'
@@ -79,9 +76,8 @@ return require('packer').startup(function()
 	use 'stephpy/vim-php-cs-fixer'
 
 	--- git
-	--use 'tpope/vim-fugitive'
-	use 'airblade/vim-gitgutter'
-	--use 'ewis6991/gitsigns.nvim'
+	use 'tpope/vim-fugitive'
+	--use 'airblade/vim-gitgutter'
 	use { 'lewis6991/gitsigns.nvim',
 		config = require'plugins.gitsigns',
 		requires = { 'nvim-lua/plenary.nvim' }
@@ -100,10 +96,6 @@ return require('packer').startup(function()
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
 	use 'itchyny/lightline.vim'
-	--use {'hoob3rt/lualine.nvim', opt = true}
-	  --------------
-	-- use { 'datwaft/bubbly.nvim', branch = 'dev' }
-
 
 end)
 

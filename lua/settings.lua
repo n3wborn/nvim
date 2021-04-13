@@ -34,7 +34,6 @@ o.backup = false
 o.incsearch = true
 o.cmdheight = 1
 o.showbreak = "↪"
---o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.listchars = "tab:┊ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "Fira"
 o.termguicolors = true
@@ -73,9 +72,3 @@ g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
 g.indent_blankline_char_highlight = 'LineNr'
 
---Set statusbar
-g.lightline = { colorscheme = 'gruvbox';
-      active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };
-      -- component_function = { gitbranch = 'fugitive#head', };
-      component_function = { gitbranch = 'b:gitsigns_head', };
-}
