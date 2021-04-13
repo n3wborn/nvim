@@ -49,9 +49,6 @@ return require('packer').startup(function()
 	use 'nvim-treesitter/playground'
 	use 'nvim-treesitter/nvim-treesitter-textobjects'
 
-	--- completion
-	use 'nvim-lua/completion-nvim'
-
 	-- fzf
 	use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
 	use 'junegunn/fzf.vim'
@@ -77,15 +74,17 @@ return require('packer').startup(function()
 
 	--- git
 	use 'tpope/vim-fugitive'
-	--use 'airblade/vim-gitgutter'
 	use { 'lewis6991/gitsigns.nvim',
 		config = require'plugins.gitsigns',
 		requires = { 'nvim-lua/plenary.nvim' }
 	}
 
+	--- Completion
+	use 'hrsh7th/nvim-compe'
+
 	--- Snippets
-	use 'SirVer/ultisnips'
-	use 'honza/vim-snippets'
+	use 'hrsh7th/vim-vsnip'
+	use 'hrsh7th/vim-vsnip-integ'
 
 	--- Undo stuff
 	use 'mbbill/undotree'

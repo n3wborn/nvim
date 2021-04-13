@@ -14,7 +14,8 @@ bo.tabstop = indent
 bo.undofile = true
 
 o.undodir = vim.fn.expand'~'..'/.local/share/nvim/undo'
-o.completeopt = 'menuone,preview'
+-- o.completeopt = 'noinsert,menuone,noselect,preview'
+o.completeopt="menuone,noselect"
 o.hidden = true
 o.ignorecase = true
 o.joinspaces = false

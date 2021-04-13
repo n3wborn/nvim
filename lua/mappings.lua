@@ -55,19 +55,6 @@ map('v', 'K', ":m '<-2<CR>gv=gv", options)
 
 
 
---
--- Insert Mode
---
-
--- <Tab> to navigate the completion menu
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true})
-
---- Manually trigger completion
-map('i', '<C-space>', '<Plug>(completion_trigger)', { expr = true})
-
-
-
 ---
 -- Related Ones
 ---

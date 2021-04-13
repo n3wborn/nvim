@@ -1,6 +1,8 @@
 -- lspconfig
 local nvim_lsp = require('lspconfig')
 local lspfuzzy = require('lspfuzzy')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
     print("LSP started.");
@@ -9,7 +11,7 @@ local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    --buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
@@ -55,7 +57,10 @@ end
 local servers = { "pyright", "intelephense", "tsserver", "ccls", "clangd", "dockerls", "html", "jsonls", "yamlls" }
 
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup { on_attach = on_attach }
+    nvim_lsp[lsp].setup {
+	on_attach = on_attach;
+	capabilities = capabilities;
+    }
 end
 
 
@@ -70,19 +75,11 @@ end
     handlers = lsp_status.extensions.clangd.setup(),
     init_options = {
       clangdFileStatus = true
-    },
-    on_attach = lsp_status.on_attach,
-    capabilities = lsp_status.capabilities
+    }
   })
 
   lspconfig.pyls_ms.setup({
     handlers = lsp_status.extensions.pyls_ms.setup(),
-    settings = { python = { workspaceSymbols = { enabled = true }}},
-    on_attach = lsp_status.on_attach,
-    capabilities = lsp_status.capabilities
+    settings = { python = { workspaceSymbols = { enabled = true }}}
   })
 
-  lspconfig.rust_analyzer.setup({
-    on_attach = lsp_status.on_attach,
-    capabilities = lsp_status.capabilities
-  })
