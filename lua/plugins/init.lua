@@ -57,8 +57,6 @@ return require('packer').startup(function()
 	use 'tpope/vim-commentary'
 	use 'junegunn/vim-easy-align'
 	use 'tpope/vim-surround'
-	use 'tpope/vim-endwise'
-	use 'mhinz/vim-mix-format'
 	use 'mattn/emmet-vim'
 
 	-- prettier/linter
@@ -69,7 +67,7 @@ return require('packer').startup(function()
 
 	--- lang spec
 	use 'ap/vim-css-color'
-	use 'evidens/vim-twig'
+	use 'lumiliet/vim-twig'
 	use 'stephpy/vim-php-cs-fixer'
 
 	--- git
