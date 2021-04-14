@@ -77,11 +77,13 @@ map('n', '<C-_>', ':Commentary<cr>', options)
 map('v', '<C-_>', ':Commentary<cr>', options)
 
 --- Easy Align
-map('n', 'ga', '<Plug>(EasyAlign)', options)
-map('x', 'ga', '<Plug>(EasyAlign)', options)
+map('n', 'ga', ':EasyAlign<cr>', options)
+map('x', 'ga', ':EasyAlign<cr>', options)
+map('v', 'ga', ':EasyAlign<cr>', options)
 
-map('n', 'iga', '<Plug>(LiveEasyAlign)', options)
-map('x', 'iga', '<Plug>(LiveEasyAlign)', options)
+map('n', 'iga', ':LiveEasyAlign<cr>', options)
+map('x', 'iga', ':LiveEasyAlign<cr>', options)
+map('v', 'iga', ':LiveEasyAlign<cr>', options)
 
 --- Telescope Files/Grep/Tags/Buffer Stuff
 map('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]],  opt_nmap_silent)
