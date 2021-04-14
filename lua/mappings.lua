@@ -30,7 +30,7 @@ map('n', '<leader>-', ':vertical resize -10<cr>', options)
 
 --- File explorer
 map('n', '<leader>e', ':NvimTreeToggle<cr>', options)
-map('n', '<leader>tr', ':NvimTreeRefreshe<cr>', options)
+map('n', '<leader>tr', ':NvimTreeRefresh<cr>', options)
 
 --- Quick file save
 map('n', '<leader>ss', ':w<cr>', options)
@@ -38,6 +38,8 @@ map('n', '<leader>ss', ':w<cr>', options)
 --- Phpcbf
 map('n', '<leader>pcb', ':!phpcbf %<cr>', { silent = true })
 
+--- Fugitive
+map('n', '<space>G', ':Git<cr>', { silent = true })
 
 
 --
