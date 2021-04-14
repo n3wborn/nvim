@@ -68,7 +68,11 @@ return require('packer').startup(function()
 	--- lang spec
 	use 'ap/vim-css-color'
 	use 'lumiliet/vim-twig'
-	use 'stephpy/vim-php-cs-fixer'
+	-- need to be fixed for lua
+	-- use 'stephpy/vim-php-cs-fixer'
+	-- use {'phpactor/phpactor', run = 'composer install'}
+
+	use { 'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile' }
 
 	--- git
 	use 'tpope/vim-fugitive'
