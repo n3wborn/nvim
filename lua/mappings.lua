@@ -1,17 +1,17 @@
 --- Mappings
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g      -- a table to access global variables
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
-local map = vim.api.nvim_set_keymap
-local options = { noremap = true }
+local cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
+local fn  =  vim.fn -- to call Vim functions e.g. fn.bufnr()
+local g   =   vim.g -- a table to access global variables
+local scopes          = {o = vim.o, b = vim.bo, w = vim.wo}
+local map             = vim.api.nvim_set_keymap
+local options         = { noremap = true }
 local opt_nmap_silent = { noremap = true, silent = true }
 
 -- map key
 g.mapleader = ','
 
 --
--- Normal Mode
+-- NORMAL MODE
 --
 -- easier windows jump
 map('n', '<C-h>', '<C-w>h', options)
@@ -43,7 +43,7 @@ map('n', '<space>G', ':Git<cr>', { silent = true })
 
 
 --
--- Visual Mode
+-- VISUAL MODE
 --
 
 --- keep text selected after indentation
@@ -58,20 +58,20 @@ map('v', 'K', ":m '<-2<CR>gv=gv", options)
 
 
 ---
--- Related Ones
+-- RELATED ONES
 ---
 
 --- Copy-paste
 --- greatest remap ever
-map('v', '<leader>p', '"_dP"', options)
+map('v', '<leader>p', '"_dP', options)
 
 --- next greatest remap ever : asbjornHaland
 map('n', '<leader>y', '"+y', options)
 map('v', '<leader>y', '"+y', options)
 map('n', '<leader>Y', 'gg"+yG', options)
 
-map('n', '<leader>d', '"_d"', options)
-map('v', '<leader>d', '"_d"', options)
+map('n', '<leader>d', '"_d', options)
+map('v', '<leader>d', '"_d', options)
 
 --- Commentary
 -- <C-_> = ctrl /
