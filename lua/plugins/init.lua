@@ -88,9 +88,6 @@ return require('packer').startup(function()
 	use 'hrsh7th/vim-vsnip'
 	use 'hrsh7th/vim-vsnip-integ'
 
-	--- Undo stuff
-	use 'mbbill/undotree'
-
 	--- Colors and nice stuff
 	use 'morhetz/gruvbox'
 	use 'flazz/vim-colorschemes'
