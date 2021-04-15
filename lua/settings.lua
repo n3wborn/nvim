@@ -5,12 +5,11 @@ local wo = vim.wo	-- window-scoped options
 local bo = vim.bo	-- buffer-scoped options
 local g = vim.g 	-- a table to access global variables (let g:***)
 local cmd = vim.cmd	-- vim.cmd({cmd}) invoc Ex command. vim.cmd('echo 42')
-local indent = 4
 
+bo.shiftwidth = 4
+bo.tabstop = 4
 bo.expandtab = true
-bo.shiftwidth = indent
 bo.smartindent = true
-bo.tabstop = indent
 bo.undofile = true
 
 o.undodir = vim.fn.expand'~'..'/.local/share/nvim/undo'

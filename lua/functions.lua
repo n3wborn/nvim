@@ -26,19 +26,3 @@ endfunction
 ]]
 , false)
 
-
--- hl_yank: highlight the area that was just yanked
--- restore_curpos: restore the last position of the cursor in a file. Taken from Vim's defaults.vim
-vim.api.nvim_exec([[
-augroup hl_yank
-  autocmd!
-  autocmd TextYankPost * lua require('vim.highlight').on_yank()
-augroup END
-
-augroup restore_curpos
-  autocmd!
-  autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
-augroup END
-]], false)
-
-
