@@ -26,7 +26,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
     local function buf_bind_picker(...)
-        require('config.tools.telescope-nvim-utils').buf_bind_picker(bufnr, ...)
+        require('config.telescope-nvim-utils').buf_bind_picker(bufnr, ...)
     end
 
     -- Telescope LSP
