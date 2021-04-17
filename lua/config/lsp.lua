@@ -140,57 +140,17 @@ end
 
 -- LSP Servers
 local servers = { 'bashls', 'rust_analyzer', 'sumneko_lua', 'pyright', 'yamlls',
-                    'intelephense', 'tsserver', 'dockerls', 'html', 'jsonls' }
+    'intelephense','tsserver', 'cssls','dockerls', 'html','jsonls', 'svelte' }
+
 local lspinstall_path = vim.fn.stdpath('data') .. '/lspinstall/'
 
 
 for _, server in ipairs(servers) do
     local config = default_config()
 
-    if server == 'sumneko_lua' then
-        config.cmd = {
-            lspinstall_path .. 'lua/sumneko-lua-language-server',
-            '-E', lspinstall_path .. 'lua/main.lua'
-        }
-        config.settings = {
-            Lua = {
-                runtime = {
-                    -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
-                    version = 'LuaJIT',
-                    -- Setup your lua path
-                    path = vim.split(package.path, ';'),
-                },
-                diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = {'vim'},
-                },
-                workspace = {
-                    -- Make the server aware of Neovim runtime files
-                    library = {
-                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                    },
-                },
-            },
-        }
-    end
-
-    if server == "rust_analyzer" then
-        config.settings = {
-            ["rust-analyzer"] = {
-                assist = {
-                    importMergeBehavior = "last",
-                    importPrefix = "by_self",
-                },
-                cargo = {
-                    loadOutDirsFromCheck = true
-                },
-                procMacro = {
-                    enable = true
-                },
-            }
-        }
-    end
+    --
+    --custom config
+    --
 
     nvim_lsp[server].setup(config)
 end
