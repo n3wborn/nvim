@@ -56,6 +56,13 @@ map('v', 'J', ":m '>+1<CR>gv=gv", options)
 map('v', 'K', ":m '<-2<CR>gv=gv", options)
 
 
+--
+--- INSERT MODE
+--
+
+-- Map Ctrl-c to Escape
+map('i', '<C-c>', '', options)
+map('i', '<C-c>', '<Esc>', options)
 
 ---
 -- RELATED ONES
