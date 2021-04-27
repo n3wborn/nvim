@@ -24,9 +24,12 @@ map('n', '<C-k>', '<C-w>k', options)
 map('n', '<C-Up>', '<C-w>k', options)
 map('n', '<leader><space>', ':nohlsearch<cr>', options)
 
---- Vertical resize
+--- Resize windows
 map('n', '<leader>+', ':vertical resize +10<cr>', options)
 map('n', '<leader>-', ':vertical resize -10<cr>', options)
+
+map('n', '<space>+', ':resize +10<cr>', options)
+map('n', '<space>-', ':resize -10<cr>', options)
 
 --- File explorer
 map('n', '<leader>e', ':NvimTreeToggle<cr>', options)
