@@ -42,10 +42,10 @@ o.incsearch = true
 o.cmdheight = 1
 o.showbreak = "↪"
 -- o.listchars = "tab:┊ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
-o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
+-- o.listchars = "tab:→ ,eol:↲,nbsp:␣,trail:•,precedes:←,extends:→"
 o.guifont = "Fira"
 o.termguicolors = true
-o.colorcolumn = "80"
+o.colorcolumn = "120"
 o.laststatus = 2
 o.pumheight = 10    -- Makes popup menu smaller
 o.pumblend = 10     -- And a bit transparent
@@ -67,45 +67,13 @@ wo.wrap = false
 wo.signcolumn = "yes"
 
 --- https://github.com/morhetz/gruvbox/wiki/Configuration
-g.gruvbox_transparent_bg = 1
+-- g.gruvbox_transparent_bg = 1
 
 cmd('set shortmess+=c')
-cmd('colorscheme gruvbox')
 cmd('syntax on')
-cmd('highlight Normal guibg=NONE')
-
--- Indentation marks
---g.indent_blankline_char = "┊"
-g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
-g.indent_blankline_char_highlight = 'LineNr'
+-- cmd('highlight Normal guibg=NONE')
 
 -- Php CS fixer
 g.php_cs_fixer_path = "~/prog/git/PHP_CodeSniffer/bin/phpcs"
 g.php_cs_fixer_rules = "@PSR2"
 
--- Nvim-Tree
-g.nvim_tree_add_trailing = 0
-g.nvim_tree_auto_close = 1
-g.nvim_tree_auto_open = 1
-g.nvim_tree_disable_netrw = 1
-g.nvim_tree_follow = 1
-g.nvim_tree_git_hl = 1
-g.nvim_tree_gitignore = 1
-g.nvim_tree_group_empty = 1
-g.nvim_tree_hide_dotfiles = 0
-g.nvim_tree_hijack_netrw = 1
-g.nvim_tree_ignore = {'.git', 'node_modules', '.cache'}
-g.nvim_tree_indent_markers = 1
-g.nvim_tree_lsp_diagnostics = 1
-g.nvim_tree_quit_on_open = 0
-g.nvim_tree_root_folder_modifier = ':~'
-g.nvim_tree_show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1,
-}
-g.nvim_tree_side = 'left'
-g.nvim_tree_tab_open = 1
-g.nvim_tree_width = 30
-g.nvim_tree_width_allow_resize = 0

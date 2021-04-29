@@ -27,11 +27,20 @@ require('packer').startup(function()
     use 'ray-x/lsp_signature.nvim'
     use 'kabouzeid/nvim-lspinstall'
     use 'nvim-lua/lsp-status.nvim'
+    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+    use 'onsails/lspkind-nvim'
 
     --- Telescope
     use { 'nvim-telescope/telescope.nvim',
         requires = {
-            { 'nvim-lua/popup.nvim'} , { 'nvim-lua/plenary.nvim' }
+            { 'nvim-lua/popup.nvim' } ,
+            { 'nvim-lua/plenary.nvim'}
+    	}
+    }
+
+    use { 'nvim-telescope/telescope-media-files.nvim',
+        requires = {
+            { 'nvim-telescope/telescope.nvim' }
         }
     }
 
@@ -63,7 +72,6 @@ require('packer').startup(function()
     use 'lumiliet/vim-twig'
     -- need to be fixed for lua
     -- use 'stephpy/vim-php-cs-fixer'
-    -- use {'phpactor/phpactor', run = 'composer install'}
 
     use { 'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile' }
 
@@ -81,13 +89,14 @@ require('packer').startup(function()
     }
 
     --- Colors and nice stuff
-    use 'morhetz/gruvbox'
+    use 'RRethy/nvim-base16'
+
+    -- replace
     use 'flazz/vim-colorschemes'
-    -- use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
 
-    -- feline statusline
-    use 'famiu/feline.nvim'
+    -- Galaxyline
+    use 'glepnir/galaxyline.nvim'
 
     -- Div
     use 'editorconfig/editorconfig-vim'
@@ -96,11 +105,30 @@ require('packer').startup(function()
 end)
 
 
---- lua folder required files
-require('config')
+--- lua files
+--require('colorscheme')
 require('functions')
 require('mappings')
 require('settings')
 require('statusline')
 require('utils')
-require('plugins')
+
+require('config.autocommands')
+require('config.lsp')
+require('config.telescope-nvim-utils')
+
+
+--required plugins
+require('plugins.blankline')
+--require('plugins.compe')
+require('plugins.gitsigns')
+require('plugins.nvim-tree')
+require('plugins.telescope')
+require('plugins.treesitter')
+
+
+local colorscheme = require('base16-colorscheme')
+
+-- Simply provide the name of a builtin colorscheme
+colorscheme.setup('paraiso')
+

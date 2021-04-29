@@ -1,141 +1,75 @@
+-- lsp
+local fn = vim.fn
+
 local nvim_lsp = require('lspconfig')
 
--- Default on_attach for LSP servers
+
+-- https://github.com/nihilistkitten/dotfiles/blob/main/nvim/lua/lsp.lua
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    local opts = { noremap=true, silent=true }
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-
-    local function buf_bind_picker(...)
-        require('config.telescope-nvim-utils').buf_bind_picker(bufnr, ...)
+    local opts = {noremap = true, silent = false}
+    local function lsp_map(lhs, rhs, mode)
+        mode = mode or "n"
+        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, "<cmd>lua " .. rhs .. "<cr>", opts)
     end
 
-    -- Telescope LSP
-    buf_bind_picker('<Leader>lsd', 'lsp_document_symbols')
-    buf_bind_picker('<Leader>lsw', 'lsp_workspace_symbols')
-    buf_bind_picker('<Leader>ldd', 'lsp_document_diagnostics')
-    buf_bind_picker('<Leader>ldw', 'lsp_workspace_diagnostics')
-    buf_bind_picker('<Leader>lc', 'lsp_code_actions')
+    lsp_map("ga", "vim.lsp.buf.code_action()")
+    lsp_map("gD", "vim.lsp.buf.declaration()")
+    lsp_map("gd", "vim.lsp.buf.definition()")
+    lsp_map("K", "vim.lsp.buf.hover()")
+    lsp_map("gi", "vim.lsp.buf.implementation()")
+    lsp_map("<leader>k", "vim.lsp.buf.signature_help()")
+    lsp_map("gt", "vim.lsp.buf.type_definition()")
+    lsp_map("gw", "vim.lsp.buf.workspace_symbol()") -- this doesn't work with telescope for some reason
 
-    local keys = {
-        l = {
-            name = '+lsp',
-            s = {
-                name = '+symbols',
-                d = 'Document Symbols',
-                w = 'Workspace Symbols'
-            },
-            d = {
-                name = '+diagnostics',
-                s = 'Show line diagnostics',
-                p = 'Goto prev',
-                n = 'Goto next',
-                d = 'Document Diagnostics',
-                w = 'Workspace Diagnostics'
-            },
-            c = 'Code Actions',
-            w = {
-                name = '+workspace',
-                a = 'Add workspace folder',
-                r = 'Remove workspace folder',
-                l = 'List workspace folders'
-            },
-            D = 'Type definition',
-            r = 'Rename',
-        }
-    }
+    lsp_map("<leader>d", "vim.lsp.diagnostic.show_line_diagnostics()")
+    lsp_map("[d", "vim.lsp.diagnostic.goto_prev({ wrap = true })")
+    lsp_map("]d", "vim.lsp.diagnostic.goto_next({ wrap = true })")
+    lsp_map("<leader>q", "vim.lsp.diagnostic.set_loclist()")
 
+    lsp_map("g0", 'require("telescope.builtin").lsp_document_symbols()')
+    lsp_map("gr", 'require("telescope.builtin").lsp_references()')
+
+    -- rust-anayzer
+    -- todo: make this only a thing for rust
+    lsp_map("<leader>t", 'require("lsp_extensions").inlay_hints()')
+
+    -- rename if we have the capability
+    -- todo: make sure this is the right name
+    if client.resolved_capabilities.rename then
+        lsp_map("<leader>rn", "vim.lsp.buf.rename()")
+    end
+
+    -- bind formatting if we have the capability
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<space>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        vim.cmd [[augroup Format]]
+        vim.cmd [[autocmd! * <buffer>]]
+        vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
+        vim.cmd [[augroup END]]
+    end
+end
 
-        -- Format on save
-        require('utils').create_augroup({
-            {'BufWritePre', '*', 'lua vim.lsp.buf.formatting_sync(nil, 1000)'}
-        }, 'lsp_auto_format')
-
-        keys.l.f = 'Format'
-
-        if client.resolved_capabilities.document_range_formatting then
-            buf_set_keymap('n', '<space>lF',
-                '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
-                opts
+-- generic settings
+nvim_lsp.util.default_config =
+    vim.tbl_extend(
+    "force",
+    nvim_lsp.util.default_config,
+    {
+        handlers = {
+            ["textDocument/publishDiagnostics"] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics,
+                {
+                    -- disable virtual text
+                    virtual_text = false
+                }
             )
-
-            keys.l.F = 'Range Format'
-        end
-
-    elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap(
-            'n', '<space>lf',
-            '<cmd>lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})<CR>',
-            opts
-        )
-        buf_set_keymap('n', '<space>lF',
-            '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
-            opts
-        )
-
-        -- Format on save
-        require('utils').create_augroup({
-            {
-                'BufWritePre', '*',
-                'lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})'
-            }
-        }, 'lsp_auto_format')
-
-        keys.l.f = 'Format'
-        keys.l.F = 'Range Format'
-    end
-
-
-    -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
-        vim.api.nvim_exec([[
-        hi LspReferenceRead cterm=bold ctermbg=red guibg=Blue
-        hi LspReferenceText cterm=bold ctermbg=red guibg=Blue
-        hi LspReferenceWrite cterm=bold ctermbg=red guibg=Blue
-        augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-        ]], false)
-    end
-
-    -- LSP Signatures
-    require('lsp_signature').on_attach()
-end
-
-
--- LSP Server Configurations
-local default_config = function()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true;
-
-    return {
-        capabilities = capabilities,
-        on_attach = on_attach,
+        },
+        on_attach = on_attach
     }
-end
+)
+
+fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
+fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
+fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
 
 
 -- LSP Servers
@@ -145,13 +79,38 @@ local servers = { 'bashls', 'rust_analyzer', 'sumneko_lua', 'pyright', 'yamlls',
 local lspinstall_path = vim.fn.stdpath('data') .. '/lspinstall/'
 
 
-for _, server in ipairs(servers) do
-    local config = default_config()
+-- specific language servers
+nvim_lsp.bashls.setup {}
 
-    --
-    --custom config
-    --
+nvim_lsp.rust_analyzer.setup {
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                overrideCommand = {
+                    "cargo",
+                    "clippy",
+                    "--tests",
+                    "--message-format=json",
+                    "--",
+                    "-W",
+                    "clippy::nursery",
+                    "-W",
+                    "clippy::pedantic",
+                    "--verbose"
+                }
+            }
+        }
+    }
+}
 
-    nvim_lsp[server].setup(config)
-end
+
+nvim_lsp.pyright.setup {}
+nvim_lsp.yamlls.setup {}
+nvim_lsp.intelephense.setup {}
+nvim_lsp.cssls.setup {}
+nvim_lsp.dockerls.setup {}
+nvim_lsp.html.setup {}
+nvim_lsp.jsonls.setup {}
+nvim_lsp.svelte .setup {}
+nvim_lsp.tsserver.setup {}
 
