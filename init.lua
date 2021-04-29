@@ -106,7 +106,7 @@ end)
 
 
 --- lua files
---require('colorscheme')
+require('colorscheme')
 require('functions')
 require('mappings')
 require('settings')
@@ -120,15 +120,12 @@ require('config.telescope-nvim-utils')
 
 --required plugins
 require('plugins.blankline')
---require('plugins.compe')
+-- compe is excellent but still lacks features (add 'use' declarations
+-- for php is the one I miss the most) I can only find in coc at
+-- this time. When a better solution is find I'll update this
+-- require('plugins.compe')
 require('plugins.gitsigns')
 require('plugins.nvim-tree')
 require('plugins.telescope')
 require('plugins.treesitter')
-
-
-local colorscheme = require('base16-colorscheme')
-
--- Simply provide the name of a builtin colorscheme
-colorscheme.setup('paraiso')
 
