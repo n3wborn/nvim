@@ -97,17 +97,3 @@ map('n', 'iga', ':LiveEasyAlign<cr>', options)
 map('x', 'iga', ':LiveEasyAlign<cr>', options)
 map('v', 'iga', ':LiveEasyAlign<cr>', options)
 
---- Telescope Files/Grep/Tags/Buffer Stuff
-map('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]],  opt_nmap_silent)
-map('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]],  opt_nmap_silent)
-map('n', '<leader>b', [[<cmd>lua require('telescope.builtin').buffers()<cr>]],  opt_nmap_silent)
-map('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]],  opt_nmap_silent)
-map('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]],  opt_nmap_silent)
-map('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]],  opt_nmap_silent)
--- Telescope Git Stuff
-map('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]],  opt_nmap_silent)
-map('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]],  opt_nmap_silent)
-map('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]],  opt_nmap_silent)
-map('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]],  opt_nmap_silent)
-map('n', '<leader>wb', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]],  opt_nmap_silent)
-
