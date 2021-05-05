@@ -22,13 +22,14 @@ require('packer').startup(function()
     use { 'wbthomason/packer.nvim' }
 
     --- Lsp
-    use 'neovim/nvim-lspconfig'
-    use 'neovim/nvim-lsp'
+    use 'neovim/nvim-lsp'           -- nvim native lsp
+    use 'neovim/nvim-lspconfig'     -- lsp config default examples
+    use 'kabouzeid/nvim-lspinstall' -- :LspInstall
     use 'ray-x/lsp_signature.nvim'
-    use 'kabouzeid/nvim-lspinstall'
     use 'nvim-lua/lsp-status.nvim'
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'onsails/lspkind-nvim'
+    use 'glepnir/lspsaga.nvim'
 
     --- Telescope
     use { 'nvim-telescope/telescope.nvim',
@@ -96,7 +97,8 @@ require('packer').startup(function()
     use 'kyazdani42/nvim-web-devicons'
 
     -- Galaxyline
-    use 'glepnir/galaxyline.nvim'
+    --use 'glepnir/galaxyline.nvim'
+    use 'famiu/feline.nvim'
 
     -- Div
     use 'editorconfig/editorconfig-vim'
@@ -125,6 +127,7 @@ require('plugins.blankline')
 -- this time. When a better solution is find I'll update this
 -- require('plugins.compe')
 require('plugins.gitsigns')
+require('plugins.lspsaga')
 require('plugins.nvim-tree')
 require('plugins.telescope')
 require('plugins.treesitter')

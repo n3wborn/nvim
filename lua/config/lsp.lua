@@ -26,13 +26,6 @@ local on_attach = function(client, bufnr)
     lsp_map("]d", "vim.lsp.diagnostic.goto_next({ wrap = true })")
     lsp_map("<leader>q", "vim.lsp.diagnostic.set_loclist()")
 
-    lsp_map("g0", 'require("telescope.builtin").lsp_document_symbols()')
-    lsp_map("gr", 'require("telescope.builtin").lsp_references()')
-
-    -- rust-anayzer
-    -- todo: make this only a thing for rust
-    lsp_map("<leader>t", 'require("lsp_extensions").inlay_hints()')
-
     -- rename if we have the capability
     -- todo: make sure this is the right name
     if client.resolved_capabilities.rename then
