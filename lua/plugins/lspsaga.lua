@@ -1,9 +1,18 @@
 -- Lsp-saga
 
-require('lspsaga').init_lsp_saga()
-
 local map  = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
+local saga = require 'lspsaga'
+
+saga.init_lsp_saga {
+    code_action_keys = {
+        quit = '<ESC>',exec = '<CR>'
+    },
+    definition_preview_icon = '  ',
+    -- 1: thin border | 2: rounded border | 3: thick border
+    border_style = 2,
+    rename_prompt_prefix = '➤'
+}
 
 -- Mappings
 --
@@ -29,13 +38,13 @@ map('n', '<leader>S', [[<cmd>lua require('lspsaga.signaturehelp').signature_help
 map('n', '<leader>R', [[<cmd>lua require('lspsaga.rename').rename()<cr>]],  opts)
 
 -- preview definition
-map('n', '<leader>P', [[<cmd>lua require'lspsaga.provider'.preview_definition()<cr>]],  opts)
+map('n', '<leader>P', [[<cmd>lua require('lspsaga.provider').preview_definition()<cr>]],  opts)
 
 -- show diagnostic
-map('n', '<leader>D', [[<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<cr>]],  opts)
-map('n', '<leader>d', [[<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<cr>]],  opts)
+map('n', '<leader>D', [[<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<cr>]],  opts)
+map('n', '<leader>d', [[<cmd>lua require('lspsaga.diagnostic').show_cursor_diagnostics()<cr>]],  opts)
 
 -- jump diagnostic
-map('n', ']d', [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<cr>]],  opts)
-map('n', '[d', [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<cr>]],  opts)
+map('n', ']d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<cr>]],  opts)
+map('n', '[d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<cr>]],  opts)
 
