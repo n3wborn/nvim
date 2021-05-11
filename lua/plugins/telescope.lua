@@ -74,6 +74,7 @@ map('n', '<leader>t' , [[<cmd>lua require('telescope.builtin').tags()<cr>]],  op
 map('n', '<leader>?' , [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]],  opts)
 map('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]],  opts)
 map('n', '<leader>E' , [[<cmd>lua require('telescope.builtin').file_browser()<cr>]],  opts)
+map('n', '<leader>t' , [[<cmd>lua require('telescope.builtin').treesitter()<cr>]],  opts)
 -- Git builtins
 map('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]],  opts)
 map('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]],  opts)

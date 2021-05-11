@@ -9,9 +9,12 @@ require'nvim-treesitter.configs'.setup {
 		enable = true
 	},
 	indent = {
-		enable = true
+		enable = false
 	},
 	textobjects = {
+        lsp_interop = {
+            enable = true
+        },
 		select = {
 			enable = true,
 			keymaps = {
