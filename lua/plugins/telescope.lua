@@ -80,11 +80,11 @@ map('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>
 map('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]],  opts)
 map('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]],  opts)
 map('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]],  opts)
+map('n', '<leader>gS', [[<cmd>lua require('telescope.builtin').git_stash()<cr>]],  opts)
 -- lsp builtins
 map('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]],  opts)
 map('n', '<leader>ld', [[<cmd>lua require('telescope.builtin').lsp_document_diagnotics()<cr>]],  opts)
 map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]],  opts)
 map('n', '<leader>li', [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]],  opts)
--- Extensions
--- exemple
+-- Extensions example
 --map('n', 'leader>gw', [[<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>]], opts)

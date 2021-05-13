@@ -22,9 +22,7 @@ require('packer').startup(function()
     use { 'wbthomason/packer.nvim' }
 
     --- Lsp
-    use 'neovim/nvim-lsp'           -- nvim native lsp
-    use 'neovim/nvim-lspconfig'     -- lsp config default examples
-    use 'kabouzeid/nvim-lspinstall' -- :LspInstall
+    use 'neovim/nvim-lspconfig'
     use 'ray-x/lsp_signature.nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -59,7 +57,7 @@ require('packer').startup(function()
     use 'junegunn/vim-easy-align'
     use 'tpope/vim-surround'
     use 'mattn/emmet-vim'
-    use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+    use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua' }
 
 
     -- Prettier/Linter
@@ -71,10 +69,6 @@ require('packer').startup(function()
     --- Lang spec
     use 'ap/vim-css-color'
     use 'lumiliet/vim-twig'
-    -- need to be fixed for lua
-    -- use 'stephpy/vim-php-cs-fixer'
-
-    use { 'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile' }
 
     --- Completion
     use 'hrsh7th/nvim-compe'
@@ -116,16 +110,13 @@ require('statusline')
 require('utils')
 
 require('config.autocommands')
-require('config.lsp')
+require('config.lsp').init()
 require('config.telescope-nvim-utils')
 
 
 --required plugins
 require('plugins.blankline')
--- compe is excellent but still lacks features (add 'use' declarations
--- for php is the one I miss the most) I can only find in coc at
--- this time. When a better solution is find I'll update this
--- require('plugins.compe')
+require('plugins.compe')
 require('plugins.gitsigns')
 require('plugins.lspsaga')
 require('plugins.nvim-tree')

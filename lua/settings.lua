@@ -11,7 +11,7 @@ local cmd = vim.cmd	-- vim.cmd({cmd}) invoc Ex command. vim.cmd('echo 42')
 o.shiftwidth = 4
 o.tabstop = 4
 o.expandtab = true
-o.smartindent = true
+o.autoindent = true
 o.undofile = true
 o.cursorline = true
 o.list = true
@@ -21,7 +21,11 @@ o.wrap = false
 o.signcolumn = "yes"
 
 o.undodir = vim.fn.expand'~'..'/.local/share/nvim/undo'
-o.completeopt="menuone,noselect"
+local completeopt = {
+    'menuone',
+    'noselect',
+}
+o.completeopt = table.concat(completeopt, ',')
 o.hidden = true
 o.ignorecase = true
 o.joinspaces = false
@@ -47,15 +51,16 @@ o.guifont = "Fira"
 o.termguicolors = true
 o.colorcolumn = "120"
 o.laststatus = 2
-o.pumheight = 10    -- Makes popup menu smaller
-o.pumblend = 10     -- And a bit transparent
-o.cmdwinheight = 5  -- command window height
+o.pumheight = 25    -- popup windows height
+o.pumblend = 10     -- popup windows width
+o.shortmess = o.shortmess .. 'cI'
+o.shada = "!,'100,<50,s10,h,:1000,/1000"
 
 -- buffer settings
 bo.shiftwidth = 4
 bo.tabstop = 4
 bo.expandtab = true
-bo.smartindent = true
+bo.autoindent = true
 bo.undofile = true
 
 -- window settings
@@ -66,12 +71,7 @@ wo.relativenumber = true
 wo.wrap = false
 wo.signcolumn = "yes"
 
---- https://github.com/morhetz/gruvbox/wiki/Configuration
--- g.gruvbox_transparent_bg = 1
-
-cmd('set shortmess+=c')
-cmd('syntax on')
--- cmd('highlight Normal guibg=NONE')
+-- cmd('syntax on')
 
 -- Php CS fixer
 g.php_cs_fixer_path = "~/prog/git/PHP_CodeSniffer/bin/phpcs"

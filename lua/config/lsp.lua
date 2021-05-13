@@ -1,109 +1,120 @@
--- lsp
-local fn = vim.fn
+--"nanotee inspired" lsp config
+-- (https://github.com/nanotee/dotfiles/blob/master/.config/nvim/lua/my/config/lsp.lua)
 
-local nvim_lsp = require('lspconfig')
+local M = {}
+local map = vim.api.nvim_set_keymap
+
+local float_border = 'single'
+local show_line_diagnostics = vim.lsp.diagnostic.show_line_diagnostics
 
 
--- https://github.com/nihilistkitten/dotfiles/blob/main/nvim/lua/lsp.lua
-local on_attach = function(client, bufnr)
-    local opts = {noremap = true, silent = false}
-    local function lsp_map(lhs, rhs, mode)
-        mode = mode or "n"
-        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, "<cmd>lua " .. rhs .. "<cr>", opts)
-    end
+map('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', {noremap = true})
+map('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', {noremap = true})
+map('n', '<leader>d', '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', {noremap = true})
+map('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', {noremap = true})
 
-    lsp_map("ga", "vim.lsp.buf.code_action()")
-    lsp_map("gD", "vim.lsp.buf.declaration()")
-    lsp_map("gd", "vim.lsp.buf.definition()")
-    lsp_map("K", "vim.lsp.buf.hover()")
-    lsp_map("gi", "vim.lsp.buf.implementation()")
-    lsp_map("<leader>k", "vim.lsp.buf.signature_help()")
-    lsp_map("gt", "vim.lsp.buf.type_definition()")
-    lsp_map("gw", "vim.lsp.buf.workspace_symbol()") -- this doesn't work with telescope for some reason
 
-    lsp_map("<leader>d", "vim.lsp.diagnostic.show_line_diagnostics()")
-    lsp_map("[d", "vim.lsp.diagnostic.goto_prev({ wrap = true })")
-    lsp_map("]d", "vim.lsp.diagnostic.goto_next({ wrap = true })")
-    lsp_map("<leader>q", "vim.lsp.diagnostic.set_loclist()")
-
-    -- rename if we have the capability
-    -- todo: make sure this is the right name
-    if client.resolved_capabilities.rename then
-        lsp_map("<leader>rn", "vim.lsp.buf.rename()")
-    end
-
-    -- bind formatting if we have the capability
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd [[augroup Format]]
-        vim.cmd [[autocmd! * <buffer>]]
-        vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
-        vim.cmd [[augroup END]]
-    end
-end
-
--- generic settings
-nvim_lsp.util.default_config =
-    vim.tbl_extend(
-    "force",
-    nvim_lsp.util.default_config,
-    {
-        handlers = {
-            ["textDocument/publishDiagnostics"] = vim.lsp.with(
-                vim.lsp.diagnostic.on_publish_diagnostics,
-                {
-                    -- disable virtual text
-                    virtual_text = false
-                }
-            )
-        },
-        on_attach = on_attach
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
     }
 )
 
-fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
-fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
-fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
+vim.lsp.diagnostic.show_line_diagnostics = function(opts, ...)
+    opts = opts or {}
+    opts.border = float_border
+    show_line_diagnostics(opts, ...)
+end
 
-
--- LSP Servers
-local servers = { 'bashls', 'rust_analyzer', 'sumneko_lua', 'pyright', 'yamlls',
-    'intelephense','tsserver', 'cssls','dockerls', 'html','jsonls', 'svelte' }
-
-local lspinstall_path = vim.fn.stdpath('data') .. '/lspinstall/'
-
-
--- specific language servers
-nvim_lsp.bashls.setup {}
-
-nvim_lsp.rust_analyzer.setup {
-    settings = {
-        ["rust-analyzer"] = {
-            checkOnSave = {
-                overrideCommand = {
-                    "cargo",
-                    "clippy",
-                    "--tests",
-                    "--message-format=json",
-                    "--",
-                    "-W",
-                    "clippy::nursery",
-                    "-W",
-                    "clippy::pedantic",
-                    "--verbose"
-                }
-            }
-        }
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+        border = float_border,
     }
-}
+)
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help, {
+        border = float_border,
+    }
+)
 
 
-nvim_lsp.pyright.setup {}
-nvim_lsp.yamlls.setup {}
-nvim_lsp.intelephense.setup {}
-nvim_lsp.cssls.setup {}
-nvim_lsp.dockerls.setup {}
-nvim_lsp.html.setup {}
-nvim_lsp.jsonls.setup {}
-nvim_lsp.svelte .setup {}
-nvim_lsp.tsserver.setup {}
+-- Custom attach
+local function custom_attach(client, bufnr)
 
+    if client.name == 'sqls' then
+        client.resolved_capabilities.execute_command = true
+        require('sqls').setup{
+            picker = 'fzf',
+        }
+    end
+
+    local function bmap(mode, lhs, rhs)
+        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, {noremap = true})
+    end
+
+    local cap = client.resolved_capabilities
+
+    if cap.goto_definition then
+        bmap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+    end
+
+    if cap.hover then
+        bmap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
+    end
+
+    if cap.signature_help then
+        bmap('n', 'gS', '<Cmd>lua vim.lsp.buf.signature_help()<CR>')
+    end
+
+    if cap.code_action then
+        bmap('n', 'gA', '<Cmd>lua vim.lsp.buf.code_action()<CR>')
+        bmap('x', 'gA', '<Esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>')
+    end
+
+    if cap.rename then
+        bmap('n', '<leader>rn', 'vim.lsp.buf.rename()<CR>')
+    end
+end
+
+-- init
+function M.init()
+    local lsp = require('lspconfig')
+    local servers = {
+        lsp.tsserver,
+        lsp.pyright,
+        lsp.sqls,
+    }
+
+    -- custom_attach listed servers
+    for _, server in ipairs(servers) do
+        server.setup {
+            on_attach = custom_attach,
+        }
+    end
+
+    -- custom_attach + special settings
+    lsp.jsonls.setup {
+        cmd = {'vscode-json-language-server', '--stdio'},
+        on_attach = custom_attach,
+    }
+
+    lsp.html.setup {
+        cmd = {'vscode-html-language-server', '--stdio'},
+        on_attach = custom_attach,
+    }
+
+    lsp.cssls.setup {
+        cmd = {'vscode-css-language-server', '--stdio'},
+        on_attach = custom_attach,
+    }
+
+    lsp.intelephense.setup {
+        autostart = true,
+        on_attach = custom_attach,
+    }
+
+end
+
+
+return M
