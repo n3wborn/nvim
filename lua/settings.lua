@@ -6,7 +6,6 @@ local bo  = vim.bo	-- buffer-scoped options
 local g   = vim.g 	-- a table to access global variables (let g:***)
 local cmd = vim.cmd	-- vim.cmd({cmd}) invoc Ex command. vim.cmd('echo 42')
 
-
 -- global settings
 o.shiftwidth = 4
 o.tabstop = 4
@@ -19,13 +18,7 @@ o.number = true
 o.relativenumber = true
 o.wrap = false
 o.signcolumn = "yes"
-
 o.undodir = vim.fn.expand'~'..'/.local/share/nvim/undo'
-local completeopt = {
-    'menuone',
-    'noselect',
-}
-o.completeopt = table.concat(completeopt, ',')
 o.hidden = true
 o.ignorecase = true
 o.joinspaces = false
