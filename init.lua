@@ -22,6 +22,7 @@ require('packer').startup(function()
 
     --- Lsp
     use 'neovim/nvim-lspconfig'
+    use 'kabouzeid/nvim-lspinstall'
     use 'ray-x/lsp_signature.nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -118,7 +119,7 @@ require('statusline')
 require('utils')
 
 require('config.autocommands')
-require('config.lsp').init()
+require('config.lsp')
 require('config.telescope-nvim-utils')
 
 
