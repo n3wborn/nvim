@@ -34,7 +34,7 @@ local opts = { silent = true, noremap = true, expr = true }
 local map  = vim.api.nvim_set_keymap
 
 -- mappings
-map('i', '<cr>', 'compe#confirm("<c-y>")', opts)
+map('i', '<c-cr>', 'compe#confirm("<c-y>")', opts)
 map('i', '<c-e>', 'compe#close("<c-e>")', opts)
 map('i', '<c-space>', 'compe#complete()', opts)
 
