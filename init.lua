@@ -74,8 +74,12 @@ require('packer').startup(function()
     use 'junegunn/vim-easy-align'
     use 'tpope/vim-surround'
     use 'mattn/emmet-vim'
-    use 'ap/vim-css-color'
     use 'lumiliet/vim-twig'
+    use {
+        'norcalli/nvim-colorizer.lua',
+            opt = true,
+            ft = { "css", "html" }
+    }
 
     -- Prettier/Linter
     use 'prettier/vim-prettier'
