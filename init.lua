@@ -75,11 +75,7 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'mattn/emmet-vim'
     use 'lumiliet/vim-twig'
-    use {
-        'norcalli/nvim-colorizer.lua',
-            opt = true,
-            ft = { "css", "html" }
-    }
+    use 'norcalli/nvim-colorizer.lua'
 
     -- Prettier/Linter
     use 'prettier/vim-prettier'
@@ -129,6 +125,7 @@ require('config.telescope-nvim-utils')
 
 --required plugins
 require('plugins.blankline')
+require('plugins.colorizer')
 require('plugins.compe')
 require('plugins.gitsigns')
 require('plugins.lspsaga')
