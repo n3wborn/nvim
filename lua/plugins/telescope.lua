@@ -63,7 +63,7 @@ require("telescope").load_extension("media_files")
 
 -- Mappings
 
-local map             = vim.api.nvim_set_keymap
+local map  = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
 -- General builtins
@@ -83,7 +83,7 @@ map('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr
 map('n', '<leader>gS', [[<cmd>lua require('telescope.builtin').git_stash()<cr>]],  opts)
 -- lsp builtins
 map('n', '<leader>ls', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]],  opts)
-map('n', '<leader>ld', [[<cmd>lua require('telescope.builtin').lsp_document_diagnotics()<cr>]],  opts)
+map('n', '<leader>ld', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>]],  opts)
 map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]],  opts)
 map('n', '<leader>li', [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]],  opts)
 -- Extensions example
