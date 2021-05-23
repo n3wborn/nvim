@@ -8,7 +8,7 @@ require'compe'.setup({
     enabled = true;
     autocomplete = true;
     debug = false;
-    min_length = 1;
+    min_length = 2;
     preselect = 'enable';
     throttle_time = 200;
     source_timeout = 200;
@@ -34,7 +34,7 @@ local opts = { silent = true, noremap = true, expr = true }
 local map  = vim.api.nvim_set_keymap
 
 -- mappings
-map('i', '<c-cr>', 'compe#confirm("<c-y>")', opts)
+map('i', '<c-y>', 'compe#confirm("<c-y>")', opts)
 map('i', '<c-e>', 'compe#close("<c-e>")', opts)
 map('i', '<c-space>', 'compe#complete()', opts)
 
