@@ -6,7 +6,14 @@ local saga = require 'lspsaga'
 
 saga.init_lsp_saga {
     code_action_keys = {
-        quit = '<ESC>',exec = '<CR>'
+        quit = '<ESC>',
+        exec = '<CR>'
+    },
+    code_action_prompt = {
+      enable = true,
+      sign = false,
+      sign_priority = 20,
+      virtual_text = true,
     },
     definition_preview_icon = '  ',
     -- "single" "double" "round" "plus"
