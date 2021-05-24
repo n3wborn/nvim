@@ -9,8 +9,8 @@ saga.init_lsp_saga {
         quit = '<ESC>',exec = '<CR>'
     },
     definition_preview_icon = '  ',
-    -- 1: thin border | 2: rounded border | 3: thick border
-    border_style = 2,
+    -- "single" "double" "round" "plus"
+    border_style = "single",
     rename_prompt_prefix = '➤'
 }
 
