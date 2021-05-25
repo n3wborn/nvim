@@ -76,6 +76,7 @@ require('packer').startup(function()
     use 'mattn/emmet-vim'
     use 'lumiliet/vim-twig'
     use 'norcalli/nvim-colorizer.lua'
+    use 'windwp/nvim-autopairs'
 
     -- Prettier/Linter
     use 'prettier/vim-prettier'
@@ -124,6 +125,7 @@ require('config.telescope-nvim-utils')
 
 
 --required plugins
+require('plugins.autopairs')
 require('plugins.blankline')
 require('plugins.colorizer')
 require('plugins.compe')
