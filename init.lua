@@ -94,8 +94,7 @@ require('packer').startup(function()
     use 'kyazdani42/nvim-tree.lua'
 
     -- Colors and nice stuff
-    use 'RRethy/nvim-base16'
-    use 'flazz/vim-colorschemes'
+    use "murilo-menezes/palenight.lua"
     use 'kyazdani42/nvim-web-devicons'
 
     -- Statusline

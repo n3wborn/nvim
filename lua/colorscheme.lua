@@ -1,2 +1,3 @@
 -- Colorscheme
-require('base16-colorscheme').setup('paraiso')
+-- https://github.com/murilo-menezes/palenight.lua
+require('palenight')
