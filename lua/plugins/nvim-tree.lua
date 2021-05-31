@@ -26,4 +26,10 @@ g.nvim_tree_side = 'left'
 g.nvim_tree_tab_open = 1
 g.nvim_tree_width = 30
 g.nvim_tree_width_allow_resize = 0
+g.nvim_tree_window_picker_exclude = {
+    filetype = {
+        "packer",
+        "qf"
+    }
+}
 
