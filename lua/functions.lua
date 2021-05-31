@@ -1,8 +1,9 @@
 --- Functions
 
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
+local fn   = vim.fn
+local exec = vim.api.nvim_exec
 
-local TrimWhitespace = vim.api.nvim_exec(
+local TrimWhitespace = exec(
 [[
 function! TrimWhitespace()
     let l:save = winsaveview()
@@ -14,7 +15,7 @@ call TrimWhitespace()
 ]],
 true)
 
-local ShowDocumentation = vim.api.nvim_exec(
+local ShowDocumentation = exec(
 [[
 function! ShowDocumentation()
     if (index(['vim','help'], &filetype) >=0)

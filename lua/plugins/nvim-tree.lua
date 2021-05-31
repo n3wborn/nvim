@@ -1,6 +1,6 @@
 -- Nvim-Tree
 
-local g   = vim.g 	-- a table to access global variables (let g:***)
+local g   = vim.g
 
 g.nvim_tree_add_trailing = 0
 g.nvim_tree_auto_close = 1

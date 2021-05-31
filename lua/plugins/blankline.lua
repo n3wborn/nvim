@@ -3,7 +3,7 @@
 -- https://github.com/lukas-reineke/indent-blankline.nvim/blob/lua/
 
 local cmd = vim.cmd
-local g = vim.g
+local g   = vim.g
 
 g.indentLine_enabled = true
 
