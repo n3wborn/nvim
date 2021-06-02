@@ -96,7 +96,9 @@ require('packer').startup({function()
     use 'kyazdani42/nvim-tree.lua'
 
     -- Colors and nice stuff
-    use "murilo-menezes/palenight.lua"
+    use 'eddyekofo94/gruvbox-flat.nvim'
+    use 'shaunsingh/nord.nvim'
+    use 'folke/tokyonight.nvim'
     use 'kyazdani42/nvim-web-devicons'
 
     -- Statusline
