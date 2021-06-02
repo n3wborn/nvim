@@ -42,5 +42,5 @@ map('i', '<c-space>', 'compe#complete()', opts)
 -- vim completion options
 g.completion_confirm_key = ""
 g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
-g.completion_enable_snippet = 'snippets.nvim'
+g.completion_enable_snippet = 'vsnip'
 g.completion_trigger_keyword_length = 2
