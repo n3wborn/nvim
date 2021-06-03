@@ -17,7 +17,7 @@ vim.api.nvim_exec([[
 
 
 local use = require('packer').use
-require('packer').startup({function()
+require('packer').startup(function()
 
     -- Plugin manager
     use 'wbthomason/packer.nvim'
@@ -111,16 +111,8 @@ require('packer').startup({function()
     }
     use 'farmergreg/vim-lastplace'
 
-end,
-
-config = {
-  display = {
-    open_fn = function()
-      return require('packer.util').float({ border = 'single' })
-    end
-  }
-}
-})
+end
+)
 
 
 --- lua files
