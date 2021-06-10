@@ -25,7 +25,7 @@ saga.init_lsp_saga {
 --
 --
 -- Find Definition and References
-map('n', '<leader>F', [[<cmd>lua require('lspsaga.provider').lsp_finder()<cr>]],  opts)
+--map('n', '<leader>F', [[<cmd>lua require('lspsaga.provider').lsp_finder()<cr>]],  opts)
 
 -- Actions
 map('n', '<M-Enter>', [[<cmd>lua require('lspsaga.codeaction').code_action()<cr>]],  opts)
@@ -49,9 +49,8 @@ map('n', '<leader>P', [[<cmd>lua require('lspsaga.provider').preview_definition(
 
 -- show diagnostic
 map('n', '<leader>D', [[<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<cr>]],  opts)
--- map('n', '<leader>d', [[<cmd>lua require('lspsaga.diagnostic').show_cursor_diagnostics()<cr>]],  opts)
 
 -- jump diagnostic
-map('n', ']d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<cr>]],  opts)
-map('n', '[d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<cr>]],  opts)
+map('n', '[d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<cr>]],  opts)
+map('n', ']d', [[<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<cr>]],  opts)
 
