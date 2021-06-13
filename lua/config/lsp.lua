@@ -38,7 +38,7 @@ local on_attach = function(client, bufnr)
         {
             with_text = true,
             symbol_map = {
-                Folder = ""
+                Folder = ""
             }
         }
     )

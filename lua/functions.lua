@@ -15,19 +15,6 @@ call TrimWhitespace()
 ]],
 true)
 
-local ShowDocumentation = exec(
-[[
-function! ShowDocumentation()
-    if (index(['vim','help'], &filetype) >=0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocActionAsync('doHover')
-    endif
-endfunction
-]]
-, false)
-
-
 function _G.statusline()
     local filepath = '%f'
     local align_section = '%='
