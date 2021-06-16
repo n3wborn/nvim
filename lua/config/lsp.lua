@@ -31,7 +31,7 @@ lsp.handlers["textDocument/signatureHelp"] =
 
 -- attach
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function map(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
     -- attach lspkind
     require('lspkind').init(
@@ -48,24 +48,24 @@ local on_attach = function(client, bufnr)
 
     -- Mappings (commented one are handled by Telescope and lspsaga)
     local opts = { noremap=true, silent=true }
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    -- buf_set_keymap('n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    -- buf_set_keymap('n', '<leader>S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    -- buf_set_keymap('n', '<space>P', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    -- buf_set_keymap('n', '<M-Enter>', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    -- buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    -- buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    -- map('n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    -- map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    -- map('n', '<leader>S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    -- map('n', '<space>P', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    -- map('n', '<M-Enter>', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    -- map('n', '<leader>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    -- map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    -- map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        map("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
     if client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+        map("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
     -- Set autocommands conditional on server_capabilities
