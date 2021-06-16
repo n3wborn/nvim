@@ -66,6 +66,9 @@ require("telescope").load_extension("media_files")
 local map  = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
+-- Call Telescope
+map('n', '<leader>T', [[:Telescope<cr>]],  opts)
+
 -- General builtins
 map('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]],  opts)
 map('n', '<leader>f' , [[<cmd>lua require('telescope.builtin').find_files()<cr>]],  opts)
