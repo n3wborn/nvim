@@ -84,7 +84,10 @@ require('packer').startup(function()
     use 'prettier/vim-prettier'
 
     -- Git
-    use 'tpope/vim-fugitive'
+    -- use 'tpope/vim-fugitive'
+    use { 'TimUntersberger/neogit',
+        requires = 'nvim-lua/plenary.nvim'
+    }
     use {
         'lewis6991/gitsigns.nvim',
         requires = {
@@ -134,6 +137,7 @@ require('plugins.blankline')
 require('plugins.colorizer')
 require('plugins.compe')
 require('plugins.gitsigns')
+require('plugins.neogit')
 require('plugins.lspsaga')
 require('plugins.nvim-tree')
 require('plugins.telescope')

@@ -42,7 +42,8 @@ map('n', '<leader>ss', ':w<cr>', options)
 map('n', '<leader>pcb', ':!phpcbf %<cr>', { silent = true })
 
 --- Fugitive
-map('n', '<space>G', ':Git<cr>', { silent = true })
+-- map('n', '<space>G', ':Git<cr>', { silent = true })
+map('n', '<space>G', [[<cmd>lua require('neogit').open({ kind = "split" })()<cr>]],  options)
 
 
 --
