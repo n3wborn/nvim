@@ -84,7 +84,6 @@ require('packer').startup(function()
     use 'prettier/vim-prettier'
 
     -- Git
-    -- use 'tpope/vim-fugitive'
     use { 'TimUntersberger/neogit',
         requires = 'nvim-lua/plenary.nvim'
     }
