@@ -1,8 +1,7 @@
 --- Mappings
 local g    = vim.g
 local map  = vim.api.nvim_set_keymap
-local opts = { noremap = true }
-
+local opts = { silent = true, noremap = true }
 
 -- map key
 g.mapleader = ','
@@ -36,7 +35,7 @@ map('n', '<leader>ss', ':w<cr>', opts)
 map('n', '<leader>pcb', ':!phpcbf %<cr>', { silent = true })
 
 --- Git
-map('n', '<space>G', [[<cmd>lua require('neogit').open({ kind = "split" })()<cr>]],  opts)
+map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]],  opts)
 
 --- keep text selected after indentation
 map('v', '<', '<gv', opts)
