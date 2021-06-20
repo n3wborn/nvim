@@ -25,8 +25,7 @@ require('packer').startup(function()
     --- Lsp
     use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
-    use 'ray-x/lsp_signature.nvim'
-    use 'nvim-lua/lsp-status.nvim'
+    use {'ray-x/lsp_signature.nvim'}
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'onsails/lspkind-nvim'
     use 'glepnir/lspsaga.nvim'
@@ -47,20 +46,13 @@ require('packer').startup(function()
         }
     }
 
-    use {
-        'nvim-telescope/telescope-media-files.nvim',
-        requires = {
-            'nvim-telescope/telescope.nvim'
-        }
-    }
-
     --- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use 'nvim-treesitter/playground'
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use {'nvim-treesitter/playground', after = "nvim-treesitter"}
+    use {'nvim-treesitter/nvim-treesitter-textobjects', after = "nvim-treesitter"}
 
     -- Fzf
     use {
@@ -79,9 +71,11 @@ require('packer').startup(function()
     use 'windwp/nvim-autopairs'
 
     -- Git
-    use { 'TimUntersberger/neogit',
+    use {
+        'TimUntersberger/neogit',
         requires = 'nvim-lua/plenary.nvim'
     }
+
     use {
         'lewis6991/gitsigns.nvim',
         requires = {
@@ -114,21 +108,17 @@ end
 
 --- lua files
 require('colorscheme')
-require('functions')
 require('mappings')
 require('settings')
 require('statusline')
-require('utils')
 
 require('config.autocommands')
 require('config.lsp')
-require('config.telescope-nvim-utils')
-
 
 --required plugins
-require('plugins.autopairs')
+require('nvim-autopairs').setup()
 require('plugins.blankline')
-require('plugins.colorizer')
+require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
 require('plugins.compe')
 require('plugins.gitsigns')
 require('plugins.neogit')

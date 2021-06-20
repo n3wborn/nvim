@@ -47,19 +47,8 @@ require("telescope").setup {
         qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
         -- Developer configurations: Not meant for general override
         buffer_previewer_maker = require "telescope.previewers".buffer_previewer_maker
-    },
-    extensions = {      -- require 'nvim-telescope/telescope-media-files.nvim'
-        media_files = {
-            filetypes = {"png", "webp", "jpg", "jpeg"},
-            find_cmd = "rg" --
-        }
     }
 }
-
--- media_files extension
--- see https://github.com/nvim-telescope/telescope-media-files.nvim for softwares used as previewers
-require("telescope").load_extension("media_files")
-
 
 -- Mappings
 
