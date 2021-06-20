@@ -75,13 +75,8 @@ require('packer').startup(function()
     use 'tpope/vim-commentary'
     use 'junegunn/vim-easy-align'
     use 'tpope/vim-surround'
-    use 'mattn/emmet-vim'
-    use 'lumiliet/vim-twig'
     use 'norcalli/nvim-colorizer.lua'
     use 'windwp/nvim-autopairs'
-
-    -- Prettier/Linter
-    use 'prettier/vim-prettier'
 
     -- Git
     use { 'TimUntersberger/neogit',
