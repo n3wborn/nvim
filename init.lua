@@ -107,23 +107,13 @@ end
 
 
 --- lua files
+require('autocommands')
 require('colorscheme')
 require('mappings')
+require('lsp')
 require('settings')
 require('statusline')
 
-require('config.autocommands')
-require('config.lsp')
-
 --required plugins
 require('nvim-autopairs').setup()
-require('plugins.blankline')
 require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
-require('plugins.compe')
-require('plugins.gitsigns')
-require('plugins.neogit')
-require('plugins.lspsaga')
-require('plugins.nvim-tree')
-require('plugins.telescope')
-require('plugins.treesitter')
-
