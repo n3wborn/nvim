@@ -3,31 +3,30 @@
 local lsp = vim.lsp
 local cmd = vim.api.nvim_command
 
+local diagnostic_opts = {
+    underline = true,
+    virtual_text = false,
+    signs = false,
+    update_in_insert = true,
+}
+
+local signature_cfg = {
+  bind = true,
+  floating_window = true,
+  fix_pos = false,
+  hint_enable = false,
+  hint_scheme = "String",
+  use_lspsaga = false,
+  hi_parameter = "Search",
+  max_height = 12,
+  max_width = 120,
+  handler_opts = { border = "single" },
+}
+
 -- handlers config
-lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
-    lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        virtual_text = false,
-        signs = false,
-        update_in_insert = true,
-    }
-)
+lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, diagnostic_opts)
+lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover,{ border = "single" })
 
-lsp.handlers["textDocument/hover"] =
-    lsp.with(
-        lsp.handlers.hover,
-        {
-            border = "single"
-        }
-    )
-
-lsp.handlers["textDocument/signatureHelp"] =
-    lsp.with(
-        lsp.handlers.signature_help,
-        {
-            border = "single"
-        }
-    )
 
 -- attach
 local on_attach = function(client, bufnr)
@@ -44,31 +43,24 @@ local on_attach = function(client, bufnr)
     )
 
     -- attach lsp_signature
-    require('lsp_signature').on_attach()
+    require('lsp_signature').on_attach(signature_cfg)
 
     -- Mappings (commented one are handled by Telescope and lspsaga)
     local opts = { noremap=true, silent=true }
-    map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    -- map('n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    -- map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    -- map('n', '<leader>S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    -- map('n', '<space>P', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    -- map('n', '<M-Enter>', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- map('n', '<leader>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    -- map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    -- map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
-    -- Set some keybinds conditional on server capabilities
+    map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    -- map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+    -- formatting
     if client.resolved_capabilities.document_formatting then
         map("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
+
     if client.resolved_capabilities.document_range_formatting then
         map("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
-    -- Set autocommands conditional on server_capabilities
+    -- document_highlight
     if client.resolved_capabilities.document_highlight then
         vim.api.nvim_exec([[
             hi LspReferenceRead cterm=bold ctermbg=red guibg=Purple

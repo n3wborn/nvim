@@ -23,9 +23,6 @@ saga.init_lsp_saga {
 
 -- Mappings
 --
---
--- Find Definition and References
---map('n', '<leader>F', [[<cmd>lua require('lspsaga.provider').lsp_finder()<cr>]],  opts)
 
 -- Actions
 map('n', '<M-Enter>', [[<cmd>lua require('lspsaga.codeaction').code_action()<cr>]],  opts)
@@ -37,9 +34,6 @@ map('n', 'K', [[<cmd>lua require('lspsaga.hover').render_hover_doc()<cr>]],  opt
 -- Scroll in previews
 map('n', '<C-f>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>]],  opts)
 map('n', '<C-b>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>]],  opts)
-
--- show signature help
-map('n', '<leader>S', [[<cmd>lua require('lspsaga.signaturehelp').signature_help()<cr>]],  opts)
 
 -- rename
 map('n', '<leader>R', [[<cmd>lua require('lspsaga.rename').rename()<cr>]],  opts)
