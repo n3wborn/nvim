@@ -8,30 +8,12 @@ local map  = vim.api.nvim_set_keymap
 
 -- set up
 require'compe'.setup({
-
-    enabled = true,
-    autocomplete = true,
-    debug = false,
-    min_length = 2,
-    preselect = 'enable',
-    throttle_time = 80,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    allow_prefix_unmatch = false,
-    documentation = true,
-
+    preselect = 'always',
     source = {
+        nvim_lsp = true,
         path = true,
         buffer = true,
-        calc = false,
-        -- vsnip = true,
-        vsnip = {kind = "﬌"},
-        nvim_lsp = true,
-        nvim_lua = false,
-        spell = false,
-        tags = true,
-        treesitter = false,
-        snippets_nvim = false,
+        vsnip = true,
     },
 })
 
@@ -44,4 +26,4 @@ map('i', '<c-space>', 'compe#complete()', opts)
 g.completion_confirm_key = ""
 g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
 g.completion_enable_snippet = 'vsnip'
-g.completion_trigger_keyword_length = 2
+g.completion_trigger_keyword_length = 1
