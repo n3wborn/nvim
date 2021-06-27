@@ -2,23 +2,17 @@
 
 local map  = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
-local saga = require 'lspsaga'
 
-saga.init_lsp_saga {
+require('lspsaga').init_lsp_saga {
+    code_action_prompt = { sign = false },
     code_action_keys = {
-        quit = '<ESC>',
-        exec = '<CR>'
+        quit = '<esc>',
+        exec = '<cr>',
     },
-    code_action_prompt = {
-      enable = true,
-      sign = false,
-      sign_priority = 20,
-      virtual_text = true,
+    rename_action_keys = {
+        quit = '<esc>',
+        exec = '<cr>',
     },
-    definition_preview_icon = '  ',
-    -- "single" "double" "round" "plus"
-    border_style = "single",
-    rename_prompt_prefix = '➤'
 }
 
 -- Mappings

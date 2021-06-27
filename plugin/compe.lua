@@ -1,6 +1,6 @@
 -- Completion
 
-vim.o.completeopt = "menuone,noselect"
+vim.opt.completeopt = "menuone,noselect"
 
 local g    = vim.g
 local opts = { silent = true, noremap = true, expr = true }

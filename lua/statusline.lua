@@ -68,21 +68,6 @@ local vi_mode_text = {
   NONE          = '<>'
 }
 
-local buffer_not_empty = function()
-  if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
-    return true
-  end
-  return false
-end
-
-local checkwidth = function()
-  local squeeze_width  = vim.fn.winwidth(0) / 2
-  if squeeze_width > 40 then
-    return true
-  end
-  return false
-end
-
 properties.force_inactive.filetypes = {
   'NvimTree',
   'dbui',
