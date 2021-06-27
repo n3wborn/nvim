@@ -111,7 +111,10 @@ require('mappings')
 require('lsp')
 require('settings')
 require('statusline')
-
 --required plugins
 require('nvim-autopairs').setup()
+require("nvim-autopairs.completion.compe").setup({
+  map_cr = true,
+  map_complete = true
+})
 require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
