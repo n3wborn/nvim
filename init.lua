@@ -28,7 +28,7 @@ require('packer').startup(function()
     use {'ray-x/lsp_signature.nvim'}
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'onsails/lspkind-nvim'
-    use 'glepnir/lspsaga.nvim'
+    use 'folke/trouble.nvim'
 
     -- Completion
     use 'hrsh7th/nvim-compe'

@@ -1,7 +1,8 @@
 -- lsp
 
-local lsp = vim.lsp
-local cmd = vim.api.nvim_command
+local lsp  = vim.lsp
+local cmd  = vim.api.nvim_command
+local opts = { noremap=true, silent=true } -- mappings options
 
 local diagnostic_opts = {
     underline = true,
@@ -45,11 +46,13 @@ local on_attach = function(client, bufnr)
     -- attach lsp_signature
     require('lsp_signature').on_attach(signature_cfg)
 
-    -- Mappings (commented one are handled by Telescope and lspsaga)
-    local opts = { noremap=true, silent=true }
-
     map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    -- map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+    map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+
+    map('n', 'R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
     -- formatting
     if client.resolved_capabilities.document_formatting then
