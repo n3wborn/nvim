@@ -47,3 +47,17 @@ require'nvim-treesitter.configs'.setup {
 	},
 }
 
+--[[
+-- Solidity hack
+--
+-- https://github.com/nvim-treesitter/nvim-treesitter/issues/1168
+--]]
+
+require "nvim-treesitter.parsers".get_parser_configs().Solidity = {
+    install_info = {
+        url = "https://github.com/JoranHonig/tree-sitter-solidity",
+        files = {"src/parser.c"},
+        requires_generate_from_grammar = true,
+    },
+    filetype = 'solidity'
+}
