@@ -1,6 +1,11 @@
 -- telescope
 
-require("telescope").setup {
+local actions    = require('telescope.actions')
+local previewers = require('telescope.previewers')
+local sorters    = require('telescope.sorters')
+local telescope  = require('telescope')
+
+telescope.setup {
     defaults = {
         vimgrep_arguments = {
             "rg",
@@ -26,9 +31,9 @@ require("telescope").setup {
                 mirror = false,
             },
         },
-        file_sorter = require "telescope.sorters".get_fuzzy_file,
+        file_sorter = sorters.get_fuzzy_file,
         file_ignore_patterns = {},
-        generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,
+        generic_sorter = sorters.get_generic_fuzzy_sorter,
         shorten_path = true,
         winblend = 0,
         border = {},
@@ -36,9 +41,11 @@ require("telescope").setup {
         color_devicons = true,
         use_less = true,
         set_env = {["COLORTERM"] = "truecolor"},
-        file_previewer = require "telescope.previewers".vim_buffer_cat.new,
-        grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
-        qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
+        file_previewer = previewers.vim_buffer_cat.new,
+        grep_previewer = previewers.vim_buffer_vimgrep.new,
+        qflist_previewer = previewers.vim_buffer_qflist.new,
+        mappings = { i = { ["<ESC>"] = actions.close, }
+        }
     }
 }
 
