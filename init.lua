@@ -94,10 +94,7 @@ require('packer').startup(function()
     use 'famiu/feline.nvim'
 
     -- Div
-    use {
-        'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua'
-    }
+    use 'lukas-reineke/indent-blankline.nvim'
     use 'farmergreg/vim-lastplace'
 
 end
