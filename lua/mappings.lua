@@ -6,6 +6,8 @@ local opts = { silent = true, noremap = true }
 -- map key
 g.mapleader = ','
 
+map('n', '<leader>R', ':source $MYVIMRC<cr>', opts)
+
 -- easier windows jump
 map('n', '<C-h>', '<C-w>h', opts)
 map('n', '<C-Left>', '<C-w>h', opts)
