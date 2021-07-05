@@ -92,7 +92,14 @@ require('packer').startup(function()
     use 'kyazdani42/nvim-web-devicons'
 
     -- Statusline
-    use 'famiu/feline.nvim'
+    -- use 'famiu/feline.nvim'
+    use {
+    'hoob3rt/lualine.nvim',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+            opt = true
+        }
+    }
 
     -- Div
     use 'lukas-reineke/indent-blankline.nvim'
