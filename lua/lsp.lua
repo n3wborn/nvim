@@ -70,9 +70,14 @@ local on_attach = function(client, bufnr)
             hi LspReferenceText cterm=bold ctermbg=red guibg=Purple
             hi LspReferenceWrite cterm=bold ctermbg=red guibg=Purple
         ]], false)
-        cmd 'autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()'
-        cmd 'autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()'
-        cmd 'autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()'
+        cmd [[ autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight() ]]
+        cmd [[ autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight() ]]
+        cmd [[ autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references() ]]
+    end
+
+    if client.resolved_capabilities.code_lens then
+        map("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
+        cmd [[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
     end
 end
 
@@ -90,5 +95,5 @@ setup_servers()
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 require'lspinstall'.post_install_hook = function ()
     setup_servers() -- reload installed servers
-    cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+    cmd [[bufdo e]] -- this triggers the FileType autocmd that starts the server
 end

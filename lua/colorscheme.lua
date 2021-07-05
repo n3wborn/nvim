@@ -1,7 +1,6 @@
 -- Colorscheme
 
 local g   = vim.g
-local cmd = vim.cmd
 
 -- https://github.com/shaunsingh/nord.nvim
 g.nord_contrast               = false

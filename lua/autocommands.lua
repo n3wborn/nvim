@@ -14,8 +14,10 @@ call TrimWhitespace()
 ]],
 true)
 -- delete trailing spaces
-cmd([[autocmd BufWritePre * :call TrimWhitespace()]])
+cmd [[ autocmd BufWritePre * :call TrimWhitespace() ]]
 -- check all git commit messages
-cmd([[au BufNewFile,BufRead COMMIT_EDITMSG set spell nonumber nolist wrap linebreak]])
+cmd [[ au BufNewFile,BufRead COMMIT_EDITMSG set spell nonumber nolist wrap linebreak ]]
 -- show doc at CursorHold
--- cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.hover()]])
+-- cmd[[ autocmd CursorHold  <buffer> lua vim.lsp.buf.hover() ]]
+-- format on save
+-- cmd[[ autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync() ]]
