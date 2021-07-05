@@ -69,6 +69,7 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'norcalli/nvim-colorizer.lua'
     use 'windwp/nvim-autopairs'
+    use 'tpope/vim-repeat'
 
     -- Git
     use {
