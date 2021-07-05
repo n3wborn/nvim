@@ -15,7 +15,7 @@ local signature_cfg = {
   bind = true,
   floating_window = true,
   fix_pos = true,
-  hint_enable = false,
+  hint_enable = true,
   hint_scheme = "String",
   use_lspsaga = false,
   hi_parameter = "Search",
@@ -27,7 +27,31 @@ local signature_cfg = {
 local kind_cfg  = {
     with_text = true,
     symbol_map = {
-        Folder = ""
+        Text           = ' (text)',
+        Method         = ' (method)',
+        Function       = ' (func)',
+        Ctor           = ' (ctor)',
+        Field          = ' (field)',
+        Variable       = ' (var)',
+        Class          = ' (class)',
+        Interface      = 'ﰮ (interface)',
+        Module         = ' (module)',
+        Property       = ' (property)',
+        Unit           = 'ﰩ (unit)',
+        Value          = ' (value)',
+        Enum           = '練(enum)',
+        Keyword        = ' (keyword)',
+        Snippet        = '﬌ (snippet)',
+        Color          = ' (color)',
+        File           = ' (file)',
+        Reference      = ' (ref)',
+        Folder         = ' (folder)',
+        EnumMember     = ' (enum member)',
+        Constant       = 'ﱃ (const)',
+        Struct         = ' (struct)',
+        Event          = ' (event)',
+        Operator       = '璉(operator)',
+        TypeParameter  = ' (type param)',
     }
 }
 
@@ -48,6 +72,7 @@ local on_attach = function(client, bufnr)
 
     map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    map('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
     map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
