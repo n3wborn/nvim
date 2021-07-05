@@ -24,6 +24,13 @@ local signature_cfg = {
   handler_opts = { border = "single" },
 }
 
+local kind_cfg  = {
+    with_text = true,
+    symbol_map = {
+        Folder = ""
+    }
+}
+
 -- handlers config
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, diagnostic_opts)
 lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover,{ border = "single" })
@@ -34,14 +41,7 @@ local on_attach = function(client, bufnr)
     local function map(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
     -- attach lspkind
-    require('lspkind').init(
-        {
-            with_text = true,
-            symbol_map = {
-                Folder = ""
-            }
-        }
-    )
+    require('lspkind').init(kind_cfg)
 
     -- attach lsp_signature
     require('lsp_signature').on_attach(signature_cfg)
