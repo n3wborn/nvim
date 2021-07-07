@@ -89,6 +89,7 @@ require('packer').startup(function()
 
     -- Colors and nice stuff
     use 'shaunsingh/nord.nvim'
+    use 'marko-cerovac/material.nvim'
     use 'kyazdani42/nvim-web-devicons'
 
     -- Statusline
