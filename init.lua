@@ -46,6 +46,13 @@ require('packer').startup(function()
         }
     }
 
+    use {
+        'nvim-telescope/telescope-project.nvim',
+        requires = {
+            'nvim-telescope/telescope.nvim',
+        }
+    }
+
     --- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',

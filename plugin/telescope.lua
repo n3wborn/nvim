@@ -52,7 +52,7 @@ telescope.setup {
 -- Mappings
 
 local map  = vim.api.nvim_set_keymap
-local opts = { noremap = true }
+local opts = { noremap = true, silent = true }
 
 -- Call Telescope
 map('n', '<leader>T', [[:Telescope<cr>]],  opts)
@@ -78,5 +78,7 @@ map('n', '<leader>lD', [[<cmd>lua require('telescope.builtin').lsp_document_diag
 map('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]],  opts)
 map('n', '<leader>li', [[<cmd>lua require('telescope.builtin').lsp_implementations()<cr>]],  opts)
 map('n', '<leader>ld', [[<cmd>lua require('telescope.builtin').lsp_definitions()<cr>]],  opts)
+-- Telescope project
+map('n', '<C-p>', [[:lua require'telescope'.extensions.project.project{}<CR>]], opts)
 -- Extensions example
 --map('n', 'leader>gw', [[<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>]], opts)
