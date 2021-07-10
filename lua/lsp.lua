@@ -2,7 +2,6 @@
 
 local lsp  = vim.lsp
 local cmd  = vim.api.nvim_command
-local opts = { noremap=true, silent=true } -- mappings options
 
 local diagnostic_opts = {
     underline = true,
@@ -63,6 +62,7 @@ lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover,{ border = "sin
 -- attach
 local on_attach = function(client, bufnr)
     local function map(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local opts = { noremap=true, silent=true } -- mappings options
 
     -- attach lspkind
     require('lspkind').init(kind_cfg)
