@@ -72,7 +72,6 @@ local on_attach = function(client, bufnr)
 
     map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    map('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
     map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
