@@ -45,6 +45,9 @@ require'nvim-treesitter.configs'.setup {
 			},
 		},
 	},
+    autopairs = {
+        enable = true -- check for autopairs (see nvim-autopairs)
+    }
 }
 
 --[[

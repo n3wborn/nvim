@@ -127,7 +127,8 @@ require('statusline')
 --required plugins
 require('nvim-autopairs').setup()
 require("nvim-autopairs.completion.compe").setup({
-  map_cr = true,
-  map_complete = true
+  map_cr = true,        -- nvim-compe
+  map_complete = true,
+  check_ts = true,      -- treesitter
 })
 require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
