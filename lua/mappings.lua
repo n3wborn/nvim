@@ -33,8 +33,9 @@ map('n', '<leader>tr', ':NvimTreeRefresh<cr>', opts)
 --- Quick file save
 map('n', '<leader>ss', ':w<cr>', opts)
 
---- Phpcbf
-map('n', '<leader>pcb', ':!phpcbf %<cr>', { silent = true })
+--- Phpcbf - Php-cs-fixer
+map('n', '<leader>B', ':!phpcbf %<cr>', opts) -- *B*eautify
+map('n', '<leader>F', ':!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>', opts) -- *F*ix
 
 --- Git
 map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]],  opts)

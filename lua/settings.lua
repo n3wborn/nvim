@@ -40,7 +40,3 @@ o.pumheight          = 25
 o.pumblend           = 10
 o.shada              = "!,'100,<50,s10,h,:1000,/1000"
 
--- Php CS fixer
-g.php_cs_fixer_path  = "~/prog/git/PHP_CodeSniffer/bin/phpcs"
-g.php_cs_fixer_rules = "@PSR2"
-
