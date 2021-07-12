@@ -117,18 +117,34 @@ end
 )
 
 
---- lua files
-require('autocommands')
-require('colorscheme')
-require('mappings')
-require('lsp')
-require('settings')
-require('statusline')
---required plugins
-require('nvim-autopairs').setup()
-require("nvim-autopairs.completion.compe").setup({
-  map_cr = true,        -- nvim-compe
-  map_complete = true,
-  check_ts = true,      -- treesitter
-})
-require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
+local function setup_config()
+
+    -- ~/.config/nvim/lua/* files
+    local files = {
+        'autocommands',
+        'colorscheme',
+        'mappings',
+        'lsp',
+        'settings',
+        'statusline',
+    }
+
+    for _,file in ipairs(files) do
+        require(file)
+    end
+
+    -- plugins with "simple" setup function
+    require('nvim-autopairs').setup()
+
+    require("nvim-autopairs.completion.compe").setup({
+        map_cr = true,        -- nvim-compe
+        map_complete = true,
+        check_ts = true,      -- treesitter
+    })
+
+    require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
+
+end
+
+setup_config()
+
