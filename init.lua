@@ -16,22 +16,26 @@ vim.api.nvim_exec([[
 ]], false)
 
 
-local use = require('packer').use
 require('packer').startup(function()
+
+    local use = require('packer').use
 
     -- Plugin manager
     use 'wbthomason/packer.nvim'
 
+
     --- Lsp
     use 'neovim/nvim-lspconfig'
     use 'kabouzeid/nvim-lspinstall'
-    use {'ray-x/lsp_signature.nvim'}
+    use 'ray-x/lsp_signature.nvim'
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'onsails/lspkind-nvim'
     use 'folke/trouble.nvim'
 
+
     -- Completion
     use 'hrsh7th/nvim-compe'
+
 
     -- Snippets
     use 'hrsh7th/vim-vsnip'
@@ -53,13 +57,23 @@ require('packer').startup(function()
         }
     }
 
+
     --- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use {'nvim-treesitter/playground', after = "nvim-treesitter"}
-    use {'nvim-treesitter/nvim-treesitter-textobjects', after = "nvim-treesitter"}
+
+    use {
+        'nvim-treesitter/playground',
+        after = "nvim-treesitter"
+    }
+
+    use {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        after = "nvim-treesitter"
+    }
+
 
     -- Fzf
     use {
@@ -67,7 +81,9 @@ require('packer').startup(function()
         dir = '~/.fzf',
         run = './install --all'
     }
+
     use 'junegunn/fzf.vim'
+
 
     -- Dev div tools
     use 'editorconfig/editorconfig-vim'
@@ -77,6 +93,7 @@ require('packer').startup(function()
     use 'norcalli/nvim-colorizer.lua'
     use 'windwp/nvim-autopairs'
     use 'tpope/vim-repeat'
+
 
     -- Git
     use {
@@ -91,16 +108,18 @@ require('packer').startup(function()
         }
     }
 
+
     -- File explorer
     use 'kyazdani42/nvim-tree.lua'
+
 
     -- Colors and nice stuff
     use 'shaunsingh/nord.nvim'
     use 'marko-cerovac/material.nvim'
     use 'kyazdani42/nvim-web-devicons'
 
+
     -- Statusline
-    -- use 'famiu/feline.nvim'
     use {
     'hoob3rt/lualine.nvim',
         requires = {
@@ -108,6 +127,7 @@ require('packer').startup(function()
             opt = true
         }
     }
+
 
     -- Div
     use 'lukas-reineke/indent-blankline.nvim'
