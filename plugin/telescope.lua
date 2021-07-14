@@ -1,52 +1,10 @@
--- telescope
+-- https://github.com/nvim-telescope/telescope.nvim
 
-local actions    = require('telescope.actions')
-local previewers = require('telescope.previewers')
-local sorters    = require('telescope.sorters')
-local telescope  = require('telescope')
-
-telescope.setup {
+require('telescope').setup {
     defaults = {
-        vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case"
-        },
-        prompt_prefix = "> ",
-        selection_caret = "> ",
-        entry_prefix = "  ",
-        initial_mode = "insert",
-        selection_strategy = "reset",
         sorting_strategy = "ascending",
-        layout_strategy = "horizontal",
-        layout_config = {
-            horizontal = {
-                mirror = false,
-            },
-            vertical = {
-                mirror = false,
-            },
-        },
-        file_sorter = sorters.get_fuzzy_file,
-        file_ignore_patterns = {},
-        generic_sorter = sorters.get_generic_fuzzy_sorter,
-        path_display = {},
-        winblend = 0,
-        border = {},
-        borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
-        color_devicons = true,
-        use_less = true,
-        set_env = {["COLORTERM"] = "truecolor"},
-        file_previewer = previewers.vim_buffer_cat.new,
-        grep_previewer = previewers.vim_buffer_vimgrep.new,
-        qflist_previewer = previewers.vim_buffer_qflist.new,
-        mappings = { i = { ["<ESC>"] = actions.close, }
-        }
-    }
+        mappings = { i = { ["<ESC>"] = require('telescope.actions').close, }}
+    },
 }
 
 -- Mappings
