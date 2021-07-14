@@ -140,16 +140,14 @@ end
 local function setup_config()
 
     -- ~/.config/nvim/lua/* files
-    local files = {
+    for _,file in ipairs {
         'autocommands',
         'colorscheme',
         'mappings',
         'lsp',
         'settings',
         'statusline',
-    }
-
-    for _,file in ipairs(files) do
+    } do
         require(file)
     end
 
