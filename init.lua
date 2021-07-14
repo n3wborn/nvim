@@ -1,166 +1,57 @@
-local execute      = vim.api.nvim_command
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local fn           = vim.fn
+local o  = vim.opt
+local g  = vim.g
+local fn = vim.fn
 
 
--- install packer if needed
-if fn.empty(fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
-end
-
-vim.api.nvim_exec([[
-    augroup Packer
-        autocmd!
-        autocmd BufWritePost plugins.lua PackerCompile
-    augroup end
-]], false)
-
-
-require('packer').startup(function()
-
-    local use = require('packer').use
-
-    -- Plugin manager
-    use 'wbthomason/packer.nvim'
-
-
-    --- Lsp
-    use 'neovim/nvim-lspconfig'
-    use 'kabouzeid/nvim-lspinstall'
-    use 'ray-x/lsp_signature.nvim'
-    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-    use 'onsails/lspkind-nvim'
-    use 'folke/trouble.nvim'
-
-
-    -- Completion
-    use 'hrsh7th/nvim-compe'
-
-
-    -- Snippets
-    use 'hrsh7th/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
-
-    --- Telescope
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim'
-        }
-    }
-
-    use {
-        'nvim-telescope/telescope-project.nvim',
-        requires = {
-            'nvim-telescope/telescope.nvim',
-        }
-    }
+-- global settings
+o.shiftwidth         = 4
+o.tabstop            = 4
+o.expandtab          = true
+o.undofile           = true
+o.cursorline         = true
+o.list               = true
+o.number             = true
+o.relativenumber     = true
+o.wrap               = false
+o.signcolumn         = "yes"
+o.undodir            = fn.expand'~'..'/.local/share/nvim/undo'
+o.hidden             = true
+o.ignorecase         = true
+o.joinspaces         = false
+o.scrolloff          = 8
+o.sidescrolloff      = 8
+o.shiftround         = true
+o.smartcase          = true
+o.splitbelow         = true
+o.splitright         = true
+o.wildmode           = 'list:longest'
+o.updatetime         = 50
+o.inccommand         = 'nosplit'
+o.errorbells         = false
+o.swapfile           = false
+o.backup             = false
+o.cmdheight          = 1
+o.showbreak          = "↪"
+o.guifont            = "Fira"
+o.termguicolors      = true
+o.colorcolumn        = "120"
+o.pumheight          = 25
+o.pumblend           = 10
+o.shada              = "!,'100,<50,s10,h,:1000,/1000"
 
 
-    --- Treesitter
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
-
-    use {
-        'nvim-treesitter/playground',
-        after = "nvim-treesitter"
-    }
-
-    use {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        after = "nvim-treesitter"
-    }
-
-
-    -- Fzf
-    use {
-        'junegunn/fzf',
-        dir = '~/.fzf',
-        run = './install --all'
-    }
-
-    use 'junegunn/fzf.vim'
-
-
-    -- Dev div tools
-    use 'editorconfig/editorconfig-vim'
-    use 'tpope/vim-commentary'
-    use 'junegunn/vim-easy-align'
-    use 'tpope/vim-surround'
-    use 'norcalli/nvim-colorizer.lua'
-    use 'windwp/nvim-autopairs'
-    use 'tpope/vim-repeat'
-
-
-    -- Git
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim'
-    }
-
-    use {
-        'lewis6991/gitsigns.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim'
-        }
-    }
-
-
-    -- File explorer
-    use 'kyazdani42/nvim-tree.lua'
-
-
-    -- Colors and nice stuff
-    use 'shaunsingh/nord.nvim'
-    use 'marko-cerovac/material.nvim'
-    use 'kyazdani42/nvim-web-devicons'
-
-
-    -- Statusline
-    use {
-    'hoob3rt/lualine.nvim',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-            opt = true
-        }
-    }
-
-
-    -- Div
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'farmergreg/vim-lastplace'
-
-end
-)
-
-
+-- required lua/* files
 local function setup_config()
 
-    -- ~/.config/nvim/lua/* files
     for _,file in ipairs {
         'autocommands',
         'colorscheme',
         'mappings',
         'lsp',
-        'settings',
         'statusline',
     } do
         require(file)
     end
-
-    -- plugins with "simple" setup function
-    require('nvim-autopairs').setup()
-
-    require("nvim-autopairs.completion.compe").setup({
-        map_cr = true,        -- nvim-compe
-        map_complete = true,
-        check_ts = true,      -- treesitter
-    })
-
-    require('colorizer').setup {'css', 'javascript', 'html', 'twig'}
 
 end
 
