@@ -105,12 +105,18 @@ local on_attach = function(client, bufnr)
     end
 end
 
+-- capabilities
+local capabilities = lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function setup_servers()
     require'lspinstall'.setup()
     local servers = require'lspinstall'.installed_servers()
     for _, server in pairs(servers) do
-        require'lspconfig'[server].setup{on_attach = on_attach}
+        require'lspconfig'[server].setup{
+            on_attach = on_attach,
+            capabilities = capabilities
+        }
     end
 end
 
