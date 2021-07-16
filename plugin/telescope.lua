@@ -17,7 +17,7 @@ local function setup_mappings()
     local kmaps = {
         -- General builtins
         sp = 'live_grep()',
-        d  = 'grep_string()',
+        sd  = 'grep_string()',
         f  = 'find_files()',
         b  = 'buffers()',
         o  = 'oldfiles()',
