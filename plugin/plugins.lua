@@ -66,12 +66,16 @@ require('packer').startup(function()
 
     use {
         'nvim-treesitter/playground',
-        after = "nvim-treesitter"
+        requires = {
+            'nvim-telescope/telescope.nvim',
+        }
     }
 
     use {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        after = "nvim-treesitter"
+        requires = {
+            'nvim-telescope/telescope.nvim',
+        }
     }
 
 
