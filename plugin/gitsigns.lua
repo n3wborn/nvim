@@ -12,7 +12,6 @@ require('gitsigns').setup {
     linehl = false,
     keymaps = {
         noremap = true,
-        buffer = true,
 
         -- netx/prev_hunk
         ['n <leader>hn'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
