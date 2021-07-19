@@ -21,3 +21,6 @@ cmd [[ au BufNewFile,BufRead COMMIT_EDITMSG set spell nonumber nolist wrap lineb
 -- cmd[[ autocmd CursorHold  <buffer> lua vim.lsp.buf.hover() ]]
 -- format on save
 -- cmd[[ autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync() ]]
+-- disable editorconfig when I commit
+cmd [[ au FileType gitcommit let b:EditorConfig_disable = 1 ]]
+
