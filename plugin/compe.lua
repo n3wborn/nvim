@@ -1,4 +1,4 @@
--- Completion
+-- https://github.com/hrsh7th/nvim-compe
 
 vim.opt.completeopt = "menuone,noselect"
 

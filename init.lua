@@ -1,5 +1,4 @@
 local o  = vim.opt
-local g  = vim.g
 local fn = vim.fn
 
 

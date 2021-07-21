@@ -1,6 +1,4 @@
--- indentline indentation marks
---
--- https://github.com/lukas-reineke/indent-blankline.nvim/blob/lua/
+-- https://github.com/lukas-reineke/indent-blankline.nvim
 
 local cmd = vim.cmd
 local g   = vim.g
