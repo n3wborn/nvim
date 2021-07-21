@@ -37,6 +37,9 @@ map('n', '<leader>ss', ':w<cr>', opts)
 map('n', '<leader>B', ':!phpcbf %<cr>', opts) -- *B*eautify
 map('n', '<leader>F', ':!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>', opts) -- *F*ix
 
+-- Format
+map('n', '<space>f', [[:FormatWrite<cr>]], opts)
+
 --- Git
 map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]],  opts)
 

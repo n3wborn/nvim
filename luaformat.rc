@@ -1,0 +1,31 @@
+# luaformat ~> https://github.com/Koihik/LuaFormatter/blob/master/docs/Style-Config.md
+column_limit: 20
+indent_width: 4
+use_tab: false
+continuation_indent_width: 4
+keep_simple_block_one_line: true
+align_args: true
+break_after_functioncall_lp: true
+break_before_functioncall_rp: false
+align_parameter: true
+chop_down_parameter: false
+break_after_functiondef_lp: true
+break_before_functiondef_rp: false
+align_table_field: false
+break_after_table_lb: true
+break_before_table_rb: true
+chop_down_table: false
+chop_down_kv_table: true
+column_table_limit: 60
+table_sep: ','
+extra_sep_at_table_end: true
+break_after_operator: true
+single_quote_to_double_quote: false
+double_quote_to_single_quote: false
+spaces_before_call: 1
+spaces_inside_functiondef_parens: false
+spaces_inside_functioncall_parens: false
+spaces_inside_table_braces: true
+spaces_around_equals_in_field: true
+line_breaks_after_function_body:1
+
