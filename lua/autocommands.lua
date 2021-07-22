@@ -60,9 +60,9 @@ local autocmds = {
     -- hover = {
     --     {"CursorHold", "*", "lua vim.lsp.buf.hover()"};
     -- };
-    formatter = {
-        { 'BufWritePost', '*.js,*.rs,*.lua', 'FormatWrite' },
-    },
+    -- formatter = {
+    --     { 'BufWritePost', '*.js,*.rs,*.lua', 'FormatWrite' },
+    -- },
 }
 
 nvim_create_augroups(autocmds)
