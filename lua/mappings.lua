@@ -39,6 +39,7 @@ map('n', '<leader>F', ':!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr
 
 -- Format
 map('n', '<space>f', [[:FormatWrite<cr>]], opts)
+map('v', '<space>f', [[:FormatWrite<cr>]], opts)
 
 --- Git
 map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]],  opts)
