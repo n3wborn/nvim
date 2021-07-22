@@ -41,6 +41,11 @@ require('packer').startup(function()
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
 
+
+    --- Format/Lint
+    use 'mhartington/formatter.nvim'
+
+
     --- Telescope
     use {
         'nvim-telescope/telescope.nvim',
