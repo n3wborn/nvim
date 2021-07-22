@@ -7,10 +7,10 @@ local statusline = require('lualine')
 local options = { theme = 'material' }
 local extensions = { 'quickfix', 'nvim-tree' }
 
-statusline.setup{
-  options    = options,
-  extensions = extensions
-}
+statusline.setup({
+    options = options,
+    extensions = extensions,
+})
 
 --[[
 

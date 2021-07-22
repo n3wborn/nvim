@@ -1,6 +1,6 @@
 --- Mappings
-local g    = vim.g
-local map  = vim.api.nvim_set_keymap
+local g = vim.g
+local map = vim.api.nvim_set_keymap
 local opts = { silent = true, noremap = true }
 
 -- map key
@@ -42,7 +42,7 @@ map('n', '<space>f', [[:FormatWrite<cr>]], opts)
 map('v', '<space>f', [[:FormatWrite<cr>]], opts)
 
 --- Git
-map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]],  opts)
+map('n', '<space>G', [[<cmd>lua require("neogit").open({ kind = "split" })<cr>]], opts)
 
 --- keep text selected after indentation
 map('v', '<', '<gv', opts)
@@ -75,4 +75,3 @@ map('v', 'ga', ':EasyAlign<cr>', opts)
 map('n', 'iga', ':LiveEasyAlign<cr>', opts)
 map('x', 'iga', ':LiveEasyAlign<cr>', opts)
 map('v', 'iga', ':LiveEasyAlign<cr>', opts)
-
