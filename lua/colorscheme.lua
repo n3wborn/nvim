@@ -1,6 +1,6 @@
 -- Colorscheme
 
-local g   = vim.g
+local g = vim.g
 
 -- https://github.com/marko-cerovac/material.nvim
 g.material_style = 'palenight'
