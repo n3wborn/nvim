@@ -112,6 +112,13 @@ end
 -- capabilities
 local capabilities = lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    },
+}
 
 local function setup_servers()
     require('lspinstall').setup()
