@@ -38,6 +38,7 @@ require('packer').startup(function()
     -- Snippets
     use('hrsh7th/vim-vsnip')
     use('hrsh7th/vim-vsnip-integ')
+    use('L3MON4D3/luasnip')
 
     --- Format/Lint
     use('mhartington/formatter.nvim')
