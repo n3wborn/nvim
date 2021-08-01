@@ -34,6 +34,7 @@ local function setup_mappings()
         lr = 'lsp_references()',
         li = 'lsp_implementations()',
         ld = 'lsp_definitions()',
+        la = 'lsp_code_actions()',
     }
 
     for key, builtin in pairs(kmaps) do
