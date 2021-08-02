@@ -1,6 +1,7 @@
 -- autocommands
-local exec = vim.api.nvim_exec
-local TrimWhitespace = exec(
+local u = require('utils')
+
+local TrimWhitespace = vim.api.nvim_exec(
     [[
     function! TrimWhitespace()
     let l:save = winsaveview()
@@ -12,19 +13,6 @@ local TrimWhitespace = exec(
     ]],
     true
 )
-
--- Taken from https://github.com/ibhagwan/nvim-lua/blob/main/lua/autocmd.lua
-local function nvim_create_augroups(definitions)
-    for group_name, definition in pairs(definitions) do
-        vim.api.nvim_command('augroup ' .. group_name)
-        vim.api.nvim_command('autocmd!')
-        for _, def in ipairs(definition) do
-            local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-            vim.api.nvim_command(command)
-        end
-        vim.api.nvim_command('augroup END')
-    end
-end
 
 local autocmds = {
     set_formatoptions = {
@@ -65,4 +53,4 @@ local autocmds = {
     -- },
 }
 
-nvim_create_augroups(autocmds)
+require('utils').nvim_create_augroups(autocmds)

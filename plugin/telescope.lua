@@ -9,8 +9,7 @@ require('telescope').setup({
 
 -- Mappings
 local function setup_mappings()
-    local map = vim.api.nvim_set_keymap
-    local o = { noremap = true, silent = true }
+    local map = require('utils').map
     local b_require = "<cmd>lua require('telescope.builtin')."
 
     local kmaps = {
@@ -38,14 +37,14 @@ local function setup_mappings()
     }
 
     for key, builtin in pairs(kmaps) do
-        map('n', '<leader>' .. key, b_require .. builtin .. '<cr>', o)
+        map('n', '<leader>' .. key, b_require .. builtin .. '<cr>')
     end
 
     -- Call Telescope with sugar
-    map('n', '<leader>T', [[:Telescope<cr>]], o)
+    map('n', '<leader>T', [[:Telescope<cr>]])
 
     -- Telescope project extension
-    map('n', '<C-p>', [[:lua require'telescope'.extensions.project.project{}<CR>]], o)
+    map('n', '<C-p>', [[:lua require'telescope'.extensions.project.project{}<CR>]])
 end
 
 setup_mappings()

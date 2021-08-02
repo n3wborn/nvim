@@ -1,7 +1,8 @@
 -- lsp
 
 local lsp = vim.lsp
-local cmd = vim.api.nvim_command
+local bmap = require('utils').bmap
+local cmd = vim.cmd
 
 local diagnostic_opts = {
     underline = true,
@@ -60,32 +61,27 @@ lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, { border = 'si
 
 -- attach
 local on_attach = function(client, bufnr)
-    local function map(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local opts = { noremap = true, silent = true } -- mappings options
-
     -- attach lspkind
     require('lspkind').init(kind_cfg)
 
     -- attach lsp_signature
     require('lsp_signature').on_attach(signature_cfg)
 
-    map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    bmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+    bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 
-    map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+    bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 
-    map('n', 'R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    bmap(bufnr, 'n', 'R', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
     -- formatting
     if client.resolved_capabilities.document_formatting then
-        map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+        bmap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
     end
 
     if client.resolved_capabilities.document_range_formatting then
-        map('v', '<space>f', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+        bmap(bufnr, 'v', '<space>f', '<cmd>lua vim.lsp.buf.range_formatting()<CR>')
     end
 
     -- document_highlight
@@ -104,7 +100,7 @@ local on_attach = function(client, bufnr)
     end
 
     if client.resolved_capabilities.code_lens then
-        map('n', '<leader>lL', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
+        bmap(bufnr, 'n', '<leader>lL', '<cmd>lua vim.lsp.codelens.run()<CR>')
         cmd([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
     end
 end
@@ -135,6 +131,6 @@ setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 require('lspinstall').post_install_hook = function()
-    setup_servers() -- reload installed servers
-    cmd([[bufdo e]]) -- this triggers the FileType autocmd that starts the server
+    setup_servers()
+    cmd([[bufdo e]])
 end
