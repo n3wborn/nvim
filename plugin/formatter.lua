@@ -23,6 +23,14 @@ local function prettier()
     }
 end
 
+local function eslint_d()
+    return {
+        exe = 'eslint_d',
+        args = { '--fix-to-stdout', '--stdin', '--stdin-filename', vim.api.nvim_buf_get_name(0) },
+        stdin = true,
+    }
+end
+
 local function rustfmt()
     return {
         exe = 'rustfmt',
@@ -34,7 +42,7 @@ end
 require('formatter').setup({
     logging = false,
     filetype = {
-        javascript = { prettier },
+        javascript = { eslint_d },
         rust = { rustfmt },
         lua = { luastyle },
     },
