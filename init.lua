@@ -38,17 +38,10 @@ o.pumblend = 10
 o.shada = "!,'100,<50,s10,h,:1000,/1000"
 o.lazyredraw = true
 
--- required lua/* files
-local function setup_config()
-    for _, file in ipairs({
-        'autocommands',
-        'colorscheme',
-        'mappings',
-        'lsp',
-        'statusline',
-    }) do
-        require(file)
-    end
-end
-
-setup_config()
+require('utils').setup_config({
+    'autocommands',
+    'colorscheme',
+    'mappings',
+    'lsp',
+    'statusline',
+})

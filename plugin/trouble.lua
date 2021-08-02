@@ -10,12 +10,11 @@ require('trouble').setup({
 })
 
 -- mappings
-local map = vim.api.nvim_set_keymap
-local opts = { silent = true, noremap = true }
+local map = require('utils').map
 
-map('n', '<leader>xx', '<cmd>Trouble<cr>', opts)
-map('n', '<leader>xD', '<cmd>Trouble lsp_workspace_diagnostics<cr>', opts)
-map('n', '<leader>xd', '<cmd>Trouble lsp_document_diagnostics<cr>', opts)
-map('n', '<leader>xl', '<cmd>Trouble loclist<cr>', opts)
-map('n', '<leader>xq', '<cmd>Trouble quickfix<cr>', opts)
-map('n', '<leader>xR', '<cmd>Trouble lsp_references<cr>', opts)
+map('n', '<leader>xx', '<cmd>Trouble<cr>')
+map('n', '<leader>xD', '<cmd>Trouble lsp_workspace_diagnostics<cr>')
+map('n', '<leader>xd', '<cmd>Trouble lsp_document_diagnostics<cr>')
+map('n', '<leader>xl', '<cmd>Trouble loclist<cr>')
+map('n', '<leader>xq', '<cmd>Trouble quickfix<cr>')
+map('n', '<leader>xR', '<cmd>Trouble lsp_references<cr>')
