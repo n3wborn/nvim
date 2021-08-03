@@ -54,6 +54,10 @@ map('v', 'K', ":m '<-2<CR>gv=gv")
 map('i', '<C-c>', '')
 map('i', '<C-c>', '<Esc>')
 
+-- map Ctrl-h to close :help windows
+map('n', '<C-h>', ':helpclose<cr>')
+map('i', '<C-h>', ':helpclose<cr>')
+
 --- Copy-paste
 map('v', '<leader>p', '"_dP')
 map('n', '<leader>y', '"+y')
