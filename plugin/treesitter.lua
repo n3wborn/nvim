@@ -14,9 +14,15 @@ require('nvim-treesitter.configs').setup({
     textobjects = {
         lsp_interop = {
             enable = true,
+            border = 'rounded',
+            peek_definition_code = {
+                ['df'] = '@function.outer',
+                ['dF'] = '@class.outer',
+            },
         },
         select = {
             enable = true,
+            lookahead = true,
             keymaps = {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
@@ -26,6 +32,7 @@ require('nvim-treesitter.configs').setup({
         },
         move = {
             enable = true,
+            set_jumps = true,
             goto_next_start = {
                 [']m'] = '@function.outer',
                 [']]'] = '@class.outer',
