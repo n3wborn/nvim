@@ -3,7 +3,13 @@
 require('telescope').setup({
     defaults = {
         sorting_strategy = 'ascending',
-        mappings = { i = { ['<ESC>'] = require('telescope.actions').close } },
+        mappings = {
+            i = {
+                ['<ESC>'] = require('telescope.actions').close,
+                ['<C-u>'] = false,
+                ['<C-d>'] = false,
+            },
+        },
     },
 })
 
