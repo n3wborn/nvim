@@ -32,3 +32,9 @@ g.completion_confirm_key = ''
 g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }
 g.completion_enable_snippet = 'vsnip'
 g.completion_trigger_keyword_length = 1
+
+-- link with autopairs
+require('nvim-autopairs.completion.compe').setup({
+    map_cr = true, --  map <CR> on insert mode
+    map_complete = true, -- it will auto insert `(` after select function or method item
+})

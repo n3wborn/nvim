@@ -8,37 +8,36 @@ if fn.empty(fn.glob(install_path)) > 0 then
     execute('packadd packer.nvim')
 end
 
-vim.api.nvim_exec(
-    [[
-    augroup Packer
-        autocmd!
-        autocmd BufWritePost plugins.lua PackerCompile
-    augroup end
-]],
-    false
-)
-
 require('packer').startup(function()
     local use = require('packer').use
 
     -- Plugin manager
     use('wbthomason/packer.nvim')
 
+    -- Libs lua
+    use({
+        'nvim-lua/plenary.nvim',
+        'nvim-lua/popup.nvim',
+    })
+
     --- Lsp
-    use('neovim/nvim-lspconfig')
-    use('kabouzeid/nvim-lspinstall')
-    use('ray-x/lsp_signature.nvim')
-    use('jose-elias-alvarez/nvim-lsp-ts-utils')
-    use('onsails/lspkind-nvim')
-    use('folke/trouble.nvim')
+    use({
+        'neovim/nvim-lspconfig',
+        'kabouzeid/nvim-lspinstall',
+        'ray-x/lsp_signature.nvim',
+        'jose-elias-alvarez/nvim-lsp-ts-utils',
+        'onsails/lspkind-nvim',
+    })
 
     -- Completion
     use('hrsh7th/nvim-compe')
 
     -- Snippets
-    use('hrsh7th/vim-vsnip')
-    use('hrsh7th/vim-vsnip-integ')
-    use('L3MON4D3/luasnip')
+    use({
+        'hrsh7th/vim-vsnip',
+        'hrsh7th/vim-vsnip-integ',
+        'L3MON4D3/luasnip',
+    })
 
     --- Format/Lint
     use('mhartington/formatter.nvim')
@@ -47,36 +46,27 @@ require('packer').startup(function()
     use({
         'nvim-telescope/telescope.nvim',
         requires = {
-            'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
+            'nvim-lua/popup.nvim',
         },
     })
 
     use({
         'nvim-telescope/telescope-project.nvim',
-        requires = {
-            'nvim-telescope/telescope.nvim',
+        after = {
+            'telescope.nvim',
         },
     })
 
     --- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
+        requires = {
+            'nvim-treesitter/nvim-treesitter-refactor',
+            'nvim-treesitter/nvim-treesitter-textobjects',
+            'nvim-treesitter/playground',
+        },
         run = ':TSUpdate',
-    })
-
-    use({
-        'nvim-treesitter/playground',
-        requires = {
-            'nvim-telescope/telescope.nvim',
-        },
-    })
-
-    use({
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        requires = {
-            'nvim-telescope/telescope.nvim',
-        },
     })
 
     -- Fzf
@@ -89,13 +79,31 @@ require('packer').startup(function()
     use('junegunn/fzf.vim')
 
     -- Dev div tools
-    use('editorconfig/editorconfig-vim')
-    use('tpope/vim-commentary')
-    use('junegunn/vim-easy-align')
-    use('tpope/vim-surround')
-    use('norcalli/nvim-colorizer.lua')
-    use('windwp/nvim-autopairs')
-    use('tpope/vim-repeat')
+    use({
+        'editorconfig/editorconfig-vim',
+        'tpope/vim-commentary',
+        'junegunn/vim-easy-align',
+        'tpope/vim-surround',
+        'folke/trouble.nvim',
+        'tpope/vim-repeat',
+    })
+
+    use({
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup({
+                check_ts = true,
+                enable_check_bracket_line = false,
+            })
+        end,
+    })
+
+    use({
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require('colorizer').setup()
+        end,
+    })
 
     -- Git
     use({
@@ -114,32 +122,24 @@ require('packer').startup(function()
     use('kyazdani42/nvim-tree.lua')
 
     -- Colors and nice stuff
-    use('shaunsingh/nord.nvim')
-    use('marko-cerovac/material.nvim')
-    use('kyazdani42/nvim-web-devicons')
+    use({
+        'shaunsingh/nord.nvim',
+        'marko-cerovac/material.nvim',
+        'kyazdani42/nvim-web-devicons',
+    })
 
     -- Statusline
     use({
         'hoob3rt/lualine.nvim',
         requires = {
-            'kyazdani42/nvim-web-devicons',
+            'nvim-web-devicons',
             opt = true,
         },
     })
 
     -- Div
-    use('lukas-reineke/indent-blankline.nvim')
-    use('farmergreg/vim-lastplace')
+    use({
+        'lukas-reineke/indent-blankline.nvim',
+        'farmergreg/vim-lastplace',
+    })
 end)
-
--- plugins with "simple" setup function
--- (and don't have their one config files)
-require('nvim-autopairs').setup()
-
-require('nvim-autopairs.completion.compe').setup({
-    map_cr = true, -- nvim-compe
-    map_complete = true,
-    check_ts = true, -- treesitter
-})
-
-require('colorizer').setup({ 'css', 'javascript', 'html', 'twig' })
