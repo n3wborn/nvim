@@ -34,7 +34,7 @@ local function setup_mappings()
         gp = 'git_bcommits()',
         gS = 'git_stash()',
         -- lsp builtins
-        ls = 'lsp_document_symbols()',
+        ls = 'lsp_document_symbols',
         lD = 'lsp_document_diagnostics()',
         lr = 'lsp_references()',
         li = 'lsp_implementations()',
