@@ -47,10 +47,10 @@ local function setup_mappings()
     end
 
     -- Call Telescope with sugar
-    map('n', '<leader>T', [[:Telescope<cr>]])
+    map('n', '<leader>T', '<cmd>Telescope<cr>')
 
     -- Telescope project extension
-    map('n', '<C-p>', [[:lua require'telescope'.extensions.project.project{}<CR>]])
+    map('n', '<C-p>', [[<cmd>lua require'telescope'.extensions.project.project{}<cr>]])
 end
 
 setup_mappings()
