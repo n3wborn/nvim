@@ -48,15 +48,11 @@ require('packer').startup(function()
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
+            'nvim-telescope/telescope-project.nvim'
         },
     })
 
-    use({
-        'nvim-telescope/telescope-project.nvim',
-        after = {
-            'telescope.nvim',
-        },
-    })
+    use('nvim-telescope/telescope-project.nvim')
 
     --- Treesitter
     use({
