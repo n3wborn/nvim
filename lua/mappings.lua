@@ -25,8 +25,8 @@ map('n', '<space>+', ':resize +5<cr>')
 map('n', '<space>-', ':resize -5<cr>')
 
 --- File explorer
-map('n', '<leader>e', ':NvimTreeToggle<cr>')
-map('n', '<leader>tr', ':NvimTreeRefresh<cr>')
+map('n', '<leader>e', '<cmd>lua require("nvim-tree").toggle()<cr>')
+map('n', '<leader>tr', '<cmd>lua require("nvim-tree").refresh()<cr>')
 
 --- Quick file save
 map('n', '<leader>ss', ':w<cr>')
