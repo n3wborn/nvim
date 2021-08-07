@@ -37,6 +37,9 @@ o.pumheight = 25
 o.pumblend = 10
 o.shada = "!,'100,<50,s10,h,:1000,/1000"
 o.lazyredraw = true
+o.foldlevel = 99
+o.foldmethod = 'expr'
+o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 require('utils').setup_config({
     'autocommands',
