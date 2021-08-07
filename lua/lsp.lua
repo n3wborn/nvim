@@ -11,6 +11,11 @@ local diagnostic_opts = {
     update_in_insert = true,
 }
 
+local popup_opts = {
+    border = 'rounded',
+    focusable = false,
+}
+
 local signature_cfg = {
     bind = true,
     floating_window = true,
@@ -21,7 +26,7 @@ local signature_cfg = {
     hi_parameter = 'Search',
     max_height = 12,
     max_width = 120,
-    handler_opts = { border = 'single' },
+    handler_opts = popup_opts,
 }
 
 local kind_cfg = {
@@ -57,7 +62,7 @@ local kind_cfg = {
 
 -- handlers config
 lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, diagnostic_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, { border = 'single' })
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
 
 -- attach
 local on_attach = function(client, bufnr)
@@ -70,8 +75,8 @@ local on_attach = function(client, bufnr)
     bmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
     bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 
-    bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-    bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+    bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = "rounded"}})<CR>')
+    bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>')
 
     bmap(bufnr, 'n', 'R', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
@@ -95,7 +100,7 @@ local on_attach = function(client, bufnr)
             false
         )
         cmd([[ autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight() ]])
-        cmd([[ autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight() ]])
+        -- cmd([[ autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight() ]])
         cmd([[ autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references() ]])
     end
 
