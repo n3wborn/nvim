@@ -34,7 +34,7 @@ map('n', '<leader>ss', '<cmd>w<cr>')
 --- Phpcbf - Php-cs-fixer
 map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
 map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>') -- *F*ix (Symfony)
-map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>')   -- *F*ix (PSR12)
+map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
 
 -- Format
 map('n', '<space>f', '<cmd>FormatWrite<cr>')
