@@ -48,8 +48,8 @@ map('v', '<', '<gv')
 map('v', '>', '>gv')
 
 --- move current line up/down
-map('v', 'J', [[<cmd>m '>+1<CR>gv=gv]])
-map('v', 'K', [[<cmd>m '<-2<CR>gv=gv]])
+map('v', 'J', ":m '>+1<CR>gv=gv")
+map('v', 'K', ":m '<-2<CR>gv=gv")
 
 -- map Ctrl-c to Escape
 map('i', '<C-c>', '')
@@ -57,10 +57,6 @@ map('i', '<C-c>', '<Esc>')
 
 -- close current window
 map('n', '<C-c><C-c>', '<cmd>close<cr>')
-
--- map Ctrl-h to close :help windows
-map('n', '<C-h>', '<cmd>helpclose<cr>')
-map('i', '<C-h>', '<cmd>helpclose<cr>')
 
 --- Copy-paste
 map('v', '<leader>p', '"_dP')
@@ -71,13 +67,13 @@ map('n', '<leader>d', '"_d')
 map('v', '<leader>d', '"_d')
 
 --- Commentary
-map('n', '<C-_>', '<cmd>Commentary<cr>')
-map('v', '<C-_>', '<cmd>Commentary<cr>')
+map('n', '<C-_>', ':Commentary<cr>')
+map('v', '<C-_>', ':Commentary<cr>')
 
 --- Easy Align
-map('n', 'ga', '<cmd>EasyAlign<cr>')
-map('x', 'ga', '<cmd>EasyAlign<cr>')
-map('v', 'ga', '<cmd>EasyAlign<cr>')
-map('n', 'iga', '<cmd>LiveEasyAlign<cr>')
-map('x', 'iga', '<cmd>LiveEasyAlign<cr>')
-map('v', 'iga', '<cmd>LiveEasyAlign<cr>')
+map('n', 'ga', ':EasyAlign<cr>')
+map('x', 'ga', ':EasyAlign<cr>')
+map('v', 'ga', ':EasyAlign<cr>')
+map('n', 'iga', ':LiveEasyAlign<cr>')
+map('x', 'iga', ':LiveEasyAlign<cr>')
+map('v', 'iga', ':LiveEasyAlign<cr>')
