@@ -29,7 +29,7 @@ map('n', '<leader>e', [[<cmd>lua require('nvim-tree').toggle()<cr>]])
 map('n', '<leader>tr', [[<cmd>lua require('nvim-tree').refresh()<cr>]])
 
 --- Quick file save
-map('n', '<leader>ss', 'w<cr>')
+map('n', '<leader>ss', '<cmd>w<cr>')
 
 --- Phpcbf - Php-cs-fixer
 map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
