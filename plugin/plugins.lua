@@ -61,6 +61,7 @@ require('packer').startup(function()
             'nvim-treesitter/nvim-treesitter-refactor',
             'nvim-treesitter/nvim-treesitter-textobjects',
             'nvim-treesitter/playground',
+            'nvim-treesitter/nvim-tree-docs',
         },
         run = ':TSUpdate',
     })

@@ -6,7 +6,7 @@ require('nvim-treesitter.configs').setup({
         enable = true,
     },
     playground = {
-        enable = true,
+        enable = false,
     },
     indent = {
         enable = true,
@@ -53,6 +53,28 @@ require('nvim-treesitter.configs').setup({
     },
     autopairs = {
         enable = true, -- check for autopairs (see nvim-autopairs)
+    },
+    -- https://github.com/nvim-treesitter/nvim-treesitter-refactor
+    refactor = {
+        highlight_definitions = {
+            enable = true,
+        },
+        smart_rename = {
+            enable = true,
+            keymaps = {
+                smart_rename = 'R',
+            },
+        },
+        navigation = {
+            enable = true,
+            keymaps = {
+                goto_definition_lsp_fallback = 'gnd',
+                list_definitions = 'gnD',
+                list_definitions_toc = 'gO',
+                goto_next_usage = '<a-*>',
+                goto_previous_usage = '<a-µ>',
+            },
+        },
     },
 })
 
