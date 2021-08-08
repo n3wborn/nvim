@@ -78,8 +78,6 @@ local on_attach = function(client, bufnr)
     bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = "rounded"}})<CR>')
     bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>')
 
-    bmap(bufnr, 'n', 'R', '<cmd>lua vim.lsp.buf.rename()<CR>')
-
     -- formatting
     if client.resolved_capabilities.document_formatting then
         bmap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
