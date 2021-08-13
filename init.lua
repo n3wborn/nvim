@@ -40,6 +40,7 @@ o.lazyredraw = true
 o.foldlevel = 99
 o.foldmethod = 'expr'
 o.foldexpr = 'nvim_treesitter#foldexpr()'
+o.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
 require('utils').setup_config({
     'autocommands',
