@@ -41,6 +41,10 @@ o.foldlevel = 99
 o.foldmethod = 'expr'
 o.foldexpr = 'nvim_treesitter#foldexpr()'
 o.omnifunc = 'v:lua.vim.lsp.omnifunc'
+vim.cmd[[
+    filetype indent plugin on
+    syntax enable
+]]
 
 require('utils').setup_config({
     'autocommands',
