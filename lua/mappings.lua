@@ -37,8 +37,8 @@ map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix
 map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
 
 -- Format
-map('n', '<space>f', '<cmd>FormatWrite<cr>')
-map('v', '<space>f', '<cmd>FormatWrite<cr>')
+map('n', '<space>F', '<cmd>FormatWrite<cr>')
+map('v', '<space>F', '<cmd>FormatWrite<cr>')
 
 --- Git
 map('n', '<space>G', [[<cmd>lua require('neogit').open({ kind = 'split' })<cr>]])
