@@ -35,21 +35,40 @@ require('packer').startup(function()
     })
 
     -- Completion
-    use('hrsh7th/nvim-compe')
+    use({
+        'hrsh7th/nvim-compe',
+        config = function()
+            require('modules.plugins.compe')
+        end,
+    })
 
     -- Snippets
     use({
         'hrsh7th/vim-vsnip',
         'hrsh7th/vim-vsnip-integ',
+    })
+
+    use({
         'L3MON4D3/luasnip',
+        config = function()
+            require('modules.plugins.snippets')
+        end,
     })
 
     --- Format/Lint
-    use('mhartington/formatter.nvim')
+    use({
+        'mhartington/formatter.nvim',
+        config = function()
+            require('modules.plugins.formatter')
+        end,
+    })
 
     --- Telescope
     use({
         'nvim-telescope/telescope.nvim',
+        config = function()
+            require('lua.modules.plugins.telescope')
+        end,
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
@@ -62,6 +81,9 @@ require('packer').startup(function()
     --- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require('modules.plugins.treesitter')
+        end,
         requires = {
             'nvim-treesitter/nvim-treesitter-refactor',
             'nvim-treesitter/nvim-treesitter-textobjects',
@@ -110,10 +132,16 @@ require('packer').startup(function()
         requires = {
             'nvim-lua/plenary.nvim',
         },
+        config = [[require('modules.plugins.gitsigns')]],
     })
 
     -- File explorer
-    use('kyazdani42/nvim-tree.lua')
+    use({
+        'kyazdani42/nvim-tree.lua',
+        config = function()
+            require('modules.plugins.nvimtree')
+        end,
+    })
 
     -- Colors and nice stuff
     use({
@@ -134,6 +162,10 @@ require('packer').startup(function()
     -- Div
     use({
         'lukas-reineke/indent-blankline.nvim',
-        'farmergreg/vim-lastplace',
+        config = function()
+            require('modules.plugins.blankline')
+        end,
     })
+
+    use({ 'farmergreg/vim-lastplace' })
 end)

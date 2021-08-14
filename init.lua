@@ -1,4 +1,5 @@
 local o = vim.opt
+
 local fn = vim.fn
 
 -- global settings
@@ -53,3 +54,13 @@ require('utils').setup_config({
     'lsp',
     'statusline',
 })
+
+require('modules.plugins.gitsigns')
+require('modules.plugins.trouble')
+require('modules.plugins.blankline')
+require('modules.plugins.nvimtree')
+require('modules.plugins.treesitter')
+require('modules.plugins.telescope')
+require('modules.plugins.formatter')
+require('modules.plugins.compe')
+require('modules.plugins.plugins')
