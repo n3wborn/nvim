@@ -14,6 +14,16 @@ require('compe').setup({
         vsnip = true,
         luasnip = true,
     },
+    max_abbr_width = 100,
+    max_kind_width = 100,
+    max_menu_width = 30,
+    documentation = {
+        winhighlight = 'NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder',
+        max_width = 60,
+        min_width = 10,
+        max_height = math.floor(vim.o.lines * 0.3),
+        min_height = 1,
+    },
 })
 
 -- mappings
@@ -34,7 +44,13 @@ g.completion_enable_snippet = 'vsnip'
 g.completion_trigger_keyword_length = 1
 
 -- link with autopairs
+require('nvim-autopairs').setup({
+    check_ts = true,
+    enable_check_bracket_line = false,
+})
+
 require('nvim-autopairs.completion.compe').setup({
     map_cr = true, --  map <CR> on insert mode
     map_complete = true, -- it will auto insert `(` after select function or method item
+    auto_select = false, -- auto select first item
 })

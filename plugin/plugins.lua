@@ -84,15 +84,7 @@ require('packer').startup(function()
         'tpope/vim-repeat',
     })
 
-    use({
-        'windwp/nvim-autopairs',
-        config = function()
-            require('nvim-autopairs').setup({
-                check_ts = true,
-                enable_check_bracket_line = false,
-            })
-        end,
-    })
+    use({ 'windwp/nvim-autopairs' })
 
     use({
         'norcalli/nvim-colorizer.lua',
