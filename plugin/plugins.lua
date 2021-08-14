@@ -8,6 +8,11 @@ if fn.empty(fn.glob(install_path)) > 0 then
     execute('packadd packer.nvim')
 end
 
+require('packer').init({
+    -- /home/stef/.local/share/nvim/site/pack/packer/start/packer.nvim/packer_compiled.lua
+    compile_path = install_path .. '/packer_compiled.lua',
+})
+
 require('packer').startup(function()
     local use = require('packer').use
 
