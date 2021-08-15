@@ -159,6 +159,14 @@ require('packer').startup(function()
         },
     })
 
+    -- Term
+    use({
+        'akinsho/nvim-toggleterm.lua',
+        config = function()
+            require('modules.plugins.toggleterm')
+        end,
+    })
+
     -- Div
     use({
         'lukas-reineke/indent-blankline.nvim',
