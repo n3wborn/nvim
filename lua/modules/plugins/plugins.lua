@@ -167,6 +167,14 @@ require('packer').startup(function()
         end,
     })
 
+    -- Lua
+    use({
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require('project_nvim').setup()
+        end,
+    })
+
     -- Div
     use({
         'lukas-reineke/indent-blankline.nvim',
