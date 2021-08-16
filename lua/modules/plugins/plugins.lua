@@ -38,8 +38,8 @@ require('packer').startup(function()
         'jose-elias-alvarez/null-ls.nvim',
         requires = {
             'nvim-lua/plenary.nvim',
-            'neovim/nvim-lspconfig'
-        }
+            'neovim/nvim-lspconfig',
+        },
     })
 
     -- Completion
