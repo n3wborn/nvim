@@ -51,7 +51,6 @@ require('utils').setup_config({
     'autocommands',
     'colorscheme',
     'mappings',
-    'lsp',
     'statusline',
 })
 
@@ -64,4 +63,5 @@ require('modules.plugins.telescope')
 require('modules.plugins.formatter')
 require('modules.plugins.compe')
 require('modules.plugins.toggleterm')
+require("modules.lsp")
 require('modules.plugins.plugins')

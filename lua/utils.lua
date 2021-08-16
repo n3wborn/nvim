@@ -79,4 +79,35 @@ M.setup_config = function(files)
     end
 end
 
+M.kind_cfg = {
+    with_text = true,
+    symbol_map = {
+        Text = ' ',
+        Method = ' ',
+        Function = ' ',
+        Ctor = ' ',
+        Field = ' ',
+        Variable = ' ',
+        Class = ' ',
+        Interface = 'ﰮ ',
+        Module = ' ',
+        Property = ' ',
+        Unit = 'ﰩ ',
+        Value = ' ',
+        Enum = '練',
+        Keyword = ' ',
+        Snippet = '﬌ ',
+        Color = ' ',
+        File = ' ',
+        Reference = ' ',
+        Folder = ' ',
+        EnumMember = ' ',
+        Constant = 'ﱃ ',
+        Struct = ' ',
+        Event = ' ',
+        Operator = '璉',
+        TypeParameter = ' ',
+    },
+}
+
 return M
