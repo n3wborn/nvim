@@ -1,7 +1,7 @@
 local lspconfig = require('lspconfig')
 local ts_utils = require('nvim-lsp-ts-utils')
 
-local u = require('utils')
+local map = require('modules.core.utils').map
 
 local ts_utils_settings = {
     -- debug = true,

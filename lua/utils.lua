@@ -79,6 +79,12 @@ M.setup_config = function(files)
     end
 end
 
+M.require = function(files)
+    for _, file in ipairs(files) do
+        require(file)
+    end
+end
+
 M.kind_cfg = {
     with_text = true,
     symbol_map = {
