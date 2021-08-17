@@ -19,7 +19,7 @@ local autocmds = {
         { 'BufEnter', '*', 'setlocal formatoptions-=o' },
     },
     restore_cursor = {
-        { 'BufRead', '*', [[call setpos(".", getpos("'\""))]] };
+        { 'BufRead', '*', [[call setpos(".", getpos("'\""))]] },
     },
     terminal_job = {
         { 'TermOpen', '*', 'setlocal listchars= nonumber norelativenumber' },
