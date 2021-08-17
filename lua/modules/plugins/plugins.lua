@@ -190,6 +190,4 @@ require('packer').startup(function()
             require('modules.plugins.blankline')
         end,
     })
-
-    use({ 'farmergreg/vim-lastplace' })
 end)
