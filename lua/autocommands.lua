@@ -18,6 +18,9 @@ local autocmds = {
     set_formatoptions = {
         { 'BufEnter', '*', 'setlocal formatoptions-=o' },
     },
+    restore_cursor = {
+        { 'BufRead', '*', [[call setpos(".", getpos("'\""))]] };
+    },
     terminal_job = {
         { 'TermOpen', '*', 'setlocal listchars= nonumber norelativenumber' },
     },
@@ -25,7 +28,7 @@ local autocmds = {
         { 'VimResized', '*', [[tabdo wincmd =]] },
     },
     toggle_search_highlighting = {
-        { 'InsertEnter', '*', ':nohlsearch | redraw' },
+        { 'InsertEnter', '*', [[:nohlsearch | redraw]] },
     },
     wins = {
         -- Highlight current line only on focused window
@@ -34,6 +37,9 @@ local autocmds = {
     },
     solidity = {
         { 'BufRead,BufNewFile', '*.sol', 'set filetype=solidity' },
+    },
+    twig = {
+        { 'BufRead,BufNewFile', '*.twig', 'set filetype=html.twig' },
     },
     trim_white_space = {
         { 'BufWritePre', '*', 'call TrimWhitespace()' },
