@@ -1,6 +1,6 @@
 local o = vim.opt
-
 local fn = vim.fn
+local u = require('utils')
 
 -- global settings
 o.shiftwidth = 4
@@ -47,21 +47,8 @@ vim.cmd([[
     syntax enable
 ]])
 
-require('utils').setup_config({
-    'autocommands',
-    'colorscheme',
-    'mappings',
-    'statusline',
+u.require({
+    'modules.core',
+    'modules.lsp',
+    'modules.plugins',
 })
-
-require('modules.plugins.gitsigns')
-require('modules.plugins.trouble')
-require('modules.plugins.blankline')
-require('modules.plugins.nvimtree')
-require('modules.plugins.treesitter')
-require('modules.plugins.telescope')
-require('modules.plugins.formatter')
-require('modules.plugins.compe')
-require('modules.plugins.toggleterm')
-require('modules.lsp')
-require('modules.plugins')

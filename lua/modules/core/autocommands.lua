@@ -1,5 +1,4 @@
 -- autocommands
-local u = require('utils')
 
 local TrimWhitespace = vim.api.nvim_exec(
     [[
