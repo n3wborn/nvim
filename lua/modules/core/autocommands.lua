@@ -20,9 +20,6 @@ local autocmds = {
     restore_cursor = {
         { 'BufRead', '*', [[call setpos(".", getpos("'\""))]] },
     },
-    terminal_job = {
-        { 'TermOpen', '*', 'setlocal listchars= nonumber norelativenumber' },
-    },
     resize_windows_proportionally = {
         { 'VimResized', '*', [[tabdo wincmd =]] },
     },

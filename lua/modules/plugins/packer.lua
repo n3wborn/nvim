@@ -28,7 +28,6 @@ require('packer').startup(function()
     --- Lsp
     use({
         'neovim/nvim-lspconfig',
-        'kabouzeid/nvim-lspinstall',
         'ray-x/lsp_signature.nvim',
         'jose-elias-alvarez/nvim-lsp-ts-utils',
         'onsails/lspkind-nvim',
@@ -165,14 +164,6 @@ require('packer').startup(function()
             'nvim-web-devicons',
             opt = true,
         },
-    })
-
-    -- Term
-    use({
-        'akinsho/nvim-toggleterm.lua',
-        config = function()
-            require('modules.plugins.toggleterm')
-        end,
     })
 
     -- Lua

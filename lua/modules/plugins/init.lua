@@ -10,5 +10,4 @@ u.require({
     'modules.plugins.telescope',
     'modules.plugins.formatter',
     'modules.plugins.compe',
-    'modules.plugins.toggleterm',
 })
