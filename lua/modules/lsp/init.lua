@@ -80,10 +80,14 @@ end
 local function setup_servers()
     local servers = { 'tsserver', 'intelephense', 'cssls', 'yamlls', 'jsonls' }
     for _, server in pairs(servers) do
-        require('lspconfig')[server].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-        })
+        if server == 'tsserver' then
+            require('modules.lsp.tsserver')
+        else
+            require('lspconfig')[server].setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+            })
+        end
     end
 end
 
