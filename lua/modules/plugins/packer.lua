@@ -115,7 +115,6 @@ require('packer').startup(function()
         'junegunn/vim-easy-align',
         'tpope/vim-surround',
         'folke/trouble.nvim',
-        'tpope/vim-repeat',
     })
 
     use({ 'windwp/nvim-autopairs' })
@@ -175,6 +174,19 @@ require('packer').startup(function()
     })
 
     -- Div
+    use({ 'tpope/vim-repeat' })
+
+    use({
+        'rafcamlet/nvim-luapad',
+        config = function()
+            require('luapad').setup({
+                count_limit = 150000,
+                error_indicator = true,
+                eval_on_move = true,
+                error_highlight = 'WarningMsg',
+            })
+        end,
+    })
     use({
         'lukas-reineke/indent-blankline.nvim',
         config = function()
