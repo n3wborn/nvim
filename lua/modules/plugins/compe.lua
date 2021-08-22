@@ -11,7 +11,7 @@ require('compe').setup({
         nvim_lsp = true,
         path = true,
         buffer = true,
-        vsnip = true,
+        vsnip = false,
         luasnip = true,
     },
     max_abbr_width = 100,
@@ -25,6 +25,9 @@ require('compe').setup({
         min_height = 1,
     },
 })
+
+-- I want luasnip
+require('modules.plugins.snippets')
 
 -- mappings
 map('i', '<Tab>', 'v:lua.tab_complete()', opts)
@@ -40,7 +43,7 @@ map('i', '<c-space>', 'compe#complete()', opts)
 vim.o.completeopt = 'menuone,noselect'
 g.completion_confirm_key = ''
 g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }
-g.completion_enable_snippet = 'vsnip'
+g.completion_enable_snippet = 'luasnip'
 g.completion_trigger_keyword_length = 1
 
 -- link with autopairs
