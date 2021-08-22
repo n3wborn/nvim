@@ -49,15 +49,15 @@ require('packer').startup(function()
         end,
         requires = {
             'L3MON4D3/luasnip',
-        }
+        },
     })
 
     -- Snippets
     use({
         'L3MON4D3/luasnip',
         requires = {
-            'rafamadriz/friendly-snippets'
-        }
+            'rafamadriz/friendly-snippets',
+        },
     })
 
     --- Format/Lint
