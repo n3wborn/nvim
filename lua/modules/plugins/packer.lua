@@ -47,19 +47,17 @@ require('packer').startup(function()
         config = function()
             require('modules.plugins.compe')
         end,
+        requires = {
+            'L3MON4D3/luasnip',
+        },
     })
 
     -- Snippets
     use({
-        'hrsh7th/vim-vsnip',
-        'hrsh7th/vim-vsnip-integ',
-    })
-
-    use({
         'L3MON4D3/luasnip',
-        config = function()
-            require('modules.plugins.snippets')
-        end,
+        requires = {
+            'rafamadriz/friendly-snippets',
+        },
     })
 
     --- Format/Lint
