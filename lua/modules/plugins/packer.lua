@@ -151,7 +151,6 @@ require('packer').startup(function()
 
     -- Colors and nice stuff
     use({
-        'shaunsingh/nord.nvim',
         'marko-cerovac/material.nvim',
         'kyazdani42/nvim-web-devicons',
     })
