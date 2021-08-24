@@ -115,8 +115,6 @@ M.signature_cfg = {
     handler_opts = popup_opts,
 }
 
-
-
 --[[
 --
 -- global functions
