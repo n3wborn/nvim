@@ -1,99 +1,76 @@
 -- lsp
 
 local bmap = require('utils').bmap
+local u = require('utils')
 local api = vim.api
 local lsp = vim.lsp
 local cmd = vim.cmd
 
--- popup windows opts
-local popup_opts = { border = 'rounded', focusable = false }
-
--- signature opts
-local signature_cfg = {
-    bind = true,
-    floating_window = true,
-    fix_pos = true,
-    hint_enable = true,
-    hint_scheme = 'String',
-    use_lspsaga = false,
-    hi_parameter = 'Search',
-    max_height = 12,
-    max_width = 120,
-    handler_opts = popup_opts,
-}
-
 -- lsp handlers
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, popup_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, u.popup_opts)
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, u.popup_opts)
 lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     signs = true,
     virtual_text = false,
 })
 
--- custom attach
-local on_attach = function(client, bufnr)
-    -- attach lspkind
-    local kind_cfg = require('utils').kind_cfg
-    require('lspkind').init(kind_cfg)
+local nvim_lsp = require('lspconfig')
 
-    -- attach lsp_signature
+-- custom attach
+local on_attach = function(_, bufnr)
+    local kind_cfg = require('utils').kind_cfg
+    local signature_cfg = require('utils').signature_cfg
+
+    require('lspkind').init(kind_cfg)
     require('lsp_signature').on_attach(signature_cfg)
 
-    bmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-    bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = "rounded"}})<CR>')
-    bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = "rounded"}})<CR>')
-
-    -- formatting
-    if client.resolved_capabilities.document_formatting then
-        bmap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-    elseif client.resolved_capabilities.document_range_formatting then
-        bmap(bufnr, 'v', '<space>f', '<cmd>lua vim.lsp.buf.range_formatting()<CR>')
-    end
-
-    -- document_highlight
-    if client.resolved_capabilities.document_highlight then
-        cmd([[ autocmd CursorHold,CursorHoldI  <buffer> lua vim.lsp.buf.document_highlight() ]])
-        cmd([[ autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references() ]])
-    end
-
-    if client.resolved_capabilities.code_lens then
-        bmap(bufnr, 'n', '<leader>lL', '<cmd>lua vim.lsp.codelens.run()<CR>')
-        cmd([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
-    end
-
-    -- capabilities
-    local capabilities = lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-            'documentation',
-            'detail',
-            'additionalTextEdits',
-        },
-    }
+    bmap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+    bmap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
+    bmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+    bmap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+    bmap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+    bmap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+    bmap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+    bmap('n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>')
+    bmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+    bmap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+    bmap('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>')
+    bmap('n', '<leader>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+    bmap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+    bmap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+    bmap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+    bmap('n', '<leader>F', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 end
+
+-- capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown' }
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    },
+}
 
 -- attach servers using local on_attach/capabilities
-local function setup_servers()
-    local servers = { 'tsserver', 'intelephense', 'cssls', 'yamlls', 'jsonls' }
-    for _, server in pairs(servers) do
-        if server == 'tsserver' then
-            require('modules.lsp.tsserver')
-        else
-            require('lspconfig')[server].setup({
-                on_attach = on_attach,
-                capabilities = capabilities,
-            })
-        end
-    end
+local servers = { 'intelephense', 'cssls', 'yamlls', 'jsonls', 'rust_analyzer' }
+for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+    })
 end
 
--- setup language servers
-setup_servers()
-
--- TODO: Fix null_ls conditional setup
-local null_ls = require('modules.lsp.null-ls')
-null_ls.setup(on_attach)
+require('modules.lsp.tsserver')
+require('modules.lsp.null-ls').setup()

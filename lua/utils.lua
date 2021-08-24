@@ -99,6 +99,22 @@ M.kind_cfg = {
     },
 }
 
+-- popup windows opts
+M.popup_opts = { border = 'rounded', focusable = false }
+
+M.signature_cfg = {
+    bind = true,
+    floating_window = true,
+    fix_pos = true,
+    hint_enable = true,
+    hint_scheme = 'String',
+    use_lspsaga = false,
+    hi_parameter = 'Search',
+    max_height = 12,
+    max_width = 120,
+    handler_opts = popup_opts,
+}
+
 --[[
 --
 -- global functions
@@ -108,29 +124,6 @@ function _G.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     print(unpack(objects))
     return ...
-end
-
---- https://github.com/hrsh7th/nvim-compe#how-to-use-tab-to-navigate-completion-menu
-_G.tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return t('<C-n>')
-    elseif require('luasnip').expand_or_jumpable() then
-        return t("<cmd>lua require'luasnip'.jump(1)<Cr>")
-    elseif check_back_space() then
-        return t('<Tab>')
-    else
-        return vim.fn['compe#complete']()
-    end
-end
-
-_G.s_tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return t('<C-p>')
-    elseif require('luasnip').jumpable(-1) then
-        return t("<cmd>lua require'luasnip'.jump(-1)<CR>")
-    else
-        return t('<S-Tab>')
-    end
 end
 
 return M
