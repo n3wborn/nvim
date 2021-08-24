@@ -20,6 +20,7 @@ local sources = {
 }
 
 local M = {}
+
 M.setup = function(on_attach)
     null_ls.config({
         -- debug = true,
