@@ -64,17 +64,13 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 -- attach servers using local on_attach/capabilities
-local servers = { 'tsserver', 'intelephense', 'cssls', 'yamlls', 'jsonls', 'rust_analyzer' }
+local servers = { 'intelephense', 'cssls', 'yamlls', 'jsonls', 'rust_analyzer' }
 for _, lsp in ipairs(servers) do
-    if server == 'tsserver' then
-        require('modules.lsp.tsserver')
-    else
-        nvim_lsp[lsp].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-        })
-    end
+    nvim_lsp[lsp].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+    })
 end
 
--- TODO: Fix null_ls conditional setup
+require('modules.lsp.tsserver')
 require('modules.lsp.null-ls').setup()
