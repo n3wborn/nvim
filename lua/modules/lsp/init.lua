@@ -1,76 +1,163 @@
--- lsp
-
-local bmap = require('utils').bmap
-local u = require('utils')
-local api = vim.api
-local lsp = vim.lsp
-local cmd = vim.cmd
-
--- lsp handlers
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, u.popup_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, u.popup_opts)
-lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    signs = true,
-    virtual_text = false,
-})
+--[[ LSP config ]]
 
 local nvim_lsp = require('lspconfig')
 
--- custom attach
-local on_attach = function(_, bufnr)
-    local kind_cfg = require('utils').kind_cfg
-    local signature_cfg = require('utils').signature_cfg
-
-    require('lspkind').init(kind_cfg)
-    require('lsp_signature').on_attach(signature_cfg)
-
+-- on_attach
+local on_attach = function(_client, bufnr)
+    -- Omnifunc
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    bmap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
-    bmap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
-    bmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-    bmap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-    bmap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
-    bmap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
-    bmap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
-    bmap(bufnr, 'n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>')
-    bmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-    bmap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-    bmap(bufnr, 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>')
-    bmap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
-    bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-    bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-    bmap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
-    bmap(bufnr, 'n', '<leader>F', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+    -- Signature
+    require('lsp_signature').on_attach()
+
+    -- Kind
+    require('lspkind').init({
+        with_text = true,
+        symbol_map = {
+            Text = ' ',
+            Method = ' ',
+            Function = ' ',
+            Ctor = ' ',
+            Field = ' ',
+            Variable = ' ',
+            Class = ' ',
+            Interface = 'ﰮ ',
+            Module = ' ',
+            Property = ' ',
+            Unit = 'ﰩ ',
+            Value = ' ',
+            Enum = '練',
+            Keyword = ' ',
+            Snippet = '﬌ ',
+            Color = ' ',
+            File = ' ',
+            Reference = ' ',
+            Folder = ' ',
+            EnumMember = ' ',
+            Constant = 'ﱃ ',
+            Struct = ' ',
+            Event = ' ',
+            Operator = '璉',
+            TypeParameter = ' ',
+        },
+    })
+
+    -- Diagnostics
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        signs = true,
+        virtual_text = false,
+    })
+
+    -- Hover
+    local hover = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+    vim.lsp.handlers['textDocument/hover'] = function(...)
+        local buf = hover(...)
+        vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', { noremap = true, silent = true })
+    end
+
+    -- Mappings
+    local opts = { noremap = true, silent = true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>A', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr,
+        'n',
+        '[d',
+        '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = { border = "rounded"}})<CR>',
+        opts
+    )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr,
+        'n',
+        ']d',
+        '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = { border = "rounded"}})<CR>',
+        opts
+    )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr,
+        'n',
+        '<leader>D',
+        '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({popup_opts = { border = "rounded"}})<CR>',
+        opts
+    )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr,
+        'n',
+        '<leader>wl',
+        '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+        opts
+    )
 end
 
--- capabilities
+-- Capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown' }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    },
+
+-- Servers
+local servers = {
+    'intelephense',
+    'cssls',
+    'yamlls',
+    'jsonls',
+    'rust_analyzer',
 }
 
--- attach servers using local on_attach/capabilities
-local servers = { 'intelephense', 'cssls', 'yamlls', 'jsonls', 'rust_analyzer' }
+-- Servers setup
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup({
-        on_attach = on_attach,
         capabilities = capabilities,
+        on_attach = on_attach,
     })
 end
 
+--[[ Null-ls ]]
+local null_ls = require('null-ls')
+local b = null_ls.builtins
+
+-- sources
+local sources = {
+    -- builtins : https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+    -- formatting
+    b.formatting.prettierd.with({
+        filetypes = { 'html', 'json', 'yaml', 'markdown' },
+    }),
+    b.formatting.stylua.with({
+        condition = function(utils)
+            return utils.root_has_file('stylua.toml')
+        end,
+    }),
+    b.formatting.phpcbf,
+    b.formatting.trim_whitespace.with({ filetypes = { 'tmux', 'teal', 'zsh' } }),
+    b.formatting.shfmt,
+    -- diagnostics
+    b.diagnostics.shellcheck,
+    b.diagnostics.write_good,
+    b.diagnostics.markdownlint,
+    b.diagnostics.shellcheck,
+    b.code_actions.gitsigns,
+}
+
+-- setup
+require('null-ls').config({
+    sources = sources,
+})
+
+require('lspconfig')['null-ls'].setup({
+    on_attach = on_attach,
+})
+
+--[[ Tsserver ]]
 require('modules.lsp.tsserver')
-require('modules.lsp.null-ls').setup()
