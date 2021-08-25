@@ -109,7 +109,7 @@ require('packer').startup(function()
     -- Dev div tools
     use({
         'editorconfig/editorconfig-vim',
-        'windwp/nvim-autopairs',
+        'b3nj5m1n/kommentary',
         'junegunn/vim-easy-align',
         'tpope/vim-surround',
         'folke/trouble.nvim',
