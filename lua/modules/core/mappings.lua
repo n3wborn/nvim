@@ -66,9 +66,10 @@ map('n', '<leader>Y', 'gg"+yG')
 map('n', '<leader>d', '"_d')
 map('v', '<leader>d', '"_d')
 
---- Commentary
-map('n', '<C-_>', ':Commentary<cr>')
-map('v', '<C-_>', ':Commentary<cr>')
+--- Kommentary
+vim.g.kommentary_create_default_mappings = false
+map("n", "<C-_>", "<Plug>kommentary_line_default", {})
+map("x", "<C-_>", "<Plug>kommentary_visual_default", {})
 
 --- Easy Align
 map('n', 'ga', ':EasyAlign<cr>')
