@@ -68,8 +68,8 @@ map('v', '<leader>d', '"_d')
 
 --- Kommentary
 vim.g.kommentary_create_default_mappings = false
-map("n", "<C-_>", "<Plug>kommentary_line_default", {})
-map("x", "<C-_>", "<Plug>kommentary_visual_default", {})
+map('n', '<C-_>', '<Plug>kommentary_line_default', {})
+map('x', '<C-_>', '<Plug>kommentary_visual_default', {})
 
 --- Easy Align
 map('n', 'ga', ':EasyAlign<cr>')
