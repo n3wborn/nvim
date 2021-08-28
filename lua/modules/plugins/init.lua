@@ -4,7 +4,6 @@ u.require({
     'modules.plugins.packer',
     'modules.plugins.gitsigns',
     'modules.plugins.trouble',
-    'modules.plugins.blankline',
     'modules.plugins.nvimtree',
     'modules.plugins.treesitter',
     'modules.plugins.telescope',
