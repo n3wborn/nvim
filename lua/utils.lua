@@ -62,12 +62,6 @@ M.PeekDefinition = function()
     return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
 end
 
-M.require = function(files)
-    for _, file in ipairs(files) do
-        require(file)
-    end
-end
-
 M.kind_cfg = {
     with_text = true,
     symbol_map = {

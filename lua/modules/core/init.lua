@@ -1,8 +1,4 @@
-local u = require('utils')
-
-u.require({
-    'modules.core.autocommands',
-    'modules.core.colorscheme',
-    'modules.core.mappings',
-    'modules.core.statusline',
-})
+require('modules.core.autocommands')
+require('modules.core.colorscheme')
+require('modules.core.mappings')
+require('modules.core.statusline')
