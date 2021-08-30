@@ -47,7 +47,6 @@ vim.cmd([[
     syntax enable
 ]])
 
-require('impatient')
 require('modules.core')
 require('modules.lsp')
 require('modules.plugins')

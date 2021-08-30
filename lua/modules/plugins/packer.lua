@@ -19,10 +19,6 @@ require('packer').startup(function()
     -- Plugin manager
     use('wbthomason/packer.nvim')
 
-    -- https://github.com/lewis6991/impatient.nvim
-    -- (also fixes luv error since 896d22b6)
-    use('lewis6991/impatient.nvim')
-
     -- Libs lua
     use({
         'nvim-lua/plenary.nvim',
