@@ -45,6 +45,19 @@ local function eslint_d()
     }
 end
 
+local function eslint()
+    return {
+        exe = 'eslint',
+        args = {
+            '--fix',
+            '--stdin',
+            '--stdin-filename',
+            vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+        },
+        stdin = true,
+    }
+end
+
 local function rustfmt()
     return {
         exe = 'rustfmt',
