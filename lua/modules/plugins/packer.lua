@@ -125,6 +125,11 @@ require('packer').startup(function()
         end,
     })
 
+    use({
+        'kkoomen/vim-doge',
+        run = ':call doge#install()',
+    })
+
     -- Git
     use({
         'TimUntersberger/neogit',
