@@ -1,4 +1,5 @@
 -- autocommands
+local u = require('utils')
 
 local TrimWhitespace = vim.api.nvim_exec(
     [[
@@ -52,7 +53,7 @@ local autocmds = {
     -- };
     -- formatter = {
     --     { 'BufWritePost', '*.js,*.rs,*.lua', 'FormatWrite' },
-    -- },
+    -- };
 }
 
-require('utils').nvim_create_augroups(autocmds)
+u.nvim_create_augroups(autocmds)

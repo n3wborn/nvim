@@ -1,8 +1,29 @@
 -- https://github.com/nvim-telescope/telescope.nvim
+local u = require('utils')
 
 require('telescope').setup({
     defaults = {
         sorting_strategy = 'ascending',
+        extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+            },
+        },
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--ignore',
+            '--hidden',
+            '-g',
+            '!.git',
+        },
         mappings = {
             i = {
                 ['<ESC>'] = require('telescope.actions').close,
@@ -13,44 +34,46 @@ require('telescope').setup({
     },
 })
 
--- Mappings
-local function setup_mappings()
-    local map = require('utils').map
-    local b_require = "<cmd>lua require('telescope.builtin')."
+-- generic mappings
+u.map('n', '<Leader>T', ':Telescope<CR>')
+u.map('n', '<Leader>t', ':Telescope treesitter<CR>')
+u.map('n', '<C-p>', "<cmd>lua require'telescope'.extensions.project.project{}<cr>")
 
-    local kmaps = {
-        -- General builtins
-        sp = 'live_grep()',
-        sd = 'grep_string()',
-        f = 'find_files()',
-        b = 'buffers()',
-        o = 'oldfiles()',
-        E = 'file_browser()',
-        t = 'treesitter()',
-        -- Git builtins
-        gc = 'git_commits()',
-        gb = 'git_branches()',
-        gs = 'git_status()',
-        gp = 'git_bcommits()',
-        gS = 'git_stash()',
-        -- lsp builtins
-        ls = 'lsp_document_symbols',
-        lD = 'lsp_document_diagnostics()',
-        lr = 'lsp_references()',
-        li = 'lsp_implementations()',
-        ld = 'lsp_definitions()',
-        la = 'lsp_code_actions()',
-    }
+--find * commands/mappings
+u.command('Files', 'Telescope find_files')
+u.command('Rg', 'Telescope live_grep')
+u.command('GrepStr', 'Telescope grep_string')
+u.command('BLines', 'Telescope current_buffer_fuzzy_find')
+u.command('History', 'Telescope oldfiles')
+u.command('Buffers', 'Telescope buffers')
 
-    for key, builtin in pairs(kmaps) do
-        map('n', '<leader>' .. key, b_require .. builtin .. '<cr>')
-    end
+u.map('n', '<Leader>f', '<cmd>Files<CR>')
+u.map('n', '<Leader>sp', '<cmd>Rg<CR>')
+u.map('n', '<Leader>sd', '<cmd>GrepStr<CR>')
+u.map('n', '<Leader>b', '<cmd>Buffers<CR>')
+u.map('n', '<Leader>o', '<cmd>History<CR>')
 
-    -- Call Telescope with sugar
-    map('n', '<leader>T', '<cmd>Telescope<cr>')
+--git * commands
+u.command('BCommits', 'Telescope git_bcommits')
+u.command('Commits', 'Telescope git_commits')
+u.command('Branchs', 'Telescope git_branches')
+u.command('GStatus', 'Telescope git_status')
 
-    -- Telescope project extension
-    map('n', '<C-p>', [[<cmd>lua require'telescope'.extensions.project.project{}<cr>]])
-end
+u.map('n', '<Leader>gc', '<cmd>Commits<CR>')
+u.map('n', '<Leader>gp', '<cmd>BCommits<CR>')
+u.map('n', '<Leader>gb', '<cmd>Branchs<CR>')
+u.map('n', '<Leader>gs', '<cmd>GStatus<CR>')
 
-setup_mappings()
+--help commands
+u.command('HelpTags', 'Telescope help_tags')
+u.command('ManPages', 'Telescope man_pages')
+
+u.map('n', '<Leader>H', ':HelpTags<CR>')
+u.map('n', '<leader>m', ':ManPages<CR>')
+
+-- lsp mappings/commands
+u.map('n', '<Leader>ls', '<cmd>LspSym<CR>')
+u.command('LspRef', 'Telescope lsp_references')
+u.command('LspDef', 'Telescope lsp_definitions')
+u.command('LspSym', 'Telescope lsp_workspace_symbols')
+u.command('LspAct', 'Telescope lsp_code_actions')

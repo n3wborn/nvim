@@ -1,123 +1,140 @@
--- utils
+local format = string.format
+local uv = vim.loop
+local api = vim.api
+
+local get_map_options = function(custom_options)
+    local options = { noremap = true, silent = true }
+    if custom_options then
+        options = vim.tbl_extend('force', options, custom_options)
+    end
+    return options
+end
 
 local M = {}
-local map_opts = { noremap = true, silent = true }
 
---[[
---
--- local functions
---
----]]
+M.nvim_create_augroups = function(definitions)
+    for group_name, definition in pairs(definitions) do
+        api.nvim_command('augroup ' .. group_name)
+        api.nvim_command('autocmd!')
+        for _, def in ipairs(definition) do
+            local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
+            api.nvim_command(command)
+        end
+        api.nvim_command('augroup END')
+    end
+end
 
--- nvim_replace_termcodes
-local t = function(str)
+M.map = function(mode, target, source, opts)
+    api.nvim_set_keymap(mode, target, source, get_map_options(opts))
+end
+M.nmap = function(...)
+    M.map('n', ...)
+end
+M.omap = function(...)
+    M.map('o', ...)
+end
+M.imap = function(...)
+    M.map('i', ...)
+end
+
+M.buf_map = function(mode, target, source, opts, bufnr)
+    api.nvim_buf_set_keymap(bufnr or 0, mode, target, source, get_map_options(opts))
+end
+
+M.for_each = function(tbl, cb)
+    for _, v in ipairs(tbl) do
+        cb(v)
+    end
+end
+
+M.replace = function(str, original, replacement)
+    local found, found_end = string.find(str, original, nil, true)
+    if not found then
+        return
+    end
+
+    if str == original then
+        return replacement
+    end
+
+    local first_half = string.sub(str, 0, found - 1)
+    local second_half = string.sub(str, found_end + 1)
+
+    return first_half .. replacement .. second_half
+end
+
+_G.inspect = function(...)
+    print(vim.inspect(...))
+end
+
+M.timer = {
+    start_time = nil,
+    start = function()
+        M.timer.start_time = uv.now()
+    end,
+    stop = function()
+        print(uv.now() - M.timer.start_time .. ' ms')
+        M.timer.start_time = nil
+    end,
+
+    start_nano = function()
+        M.timer.start_time = uv.hrtime()
+    end,
+    stop_nano = function()
+        print(uv.hrtime() - M.timer.start_time .. ' ns')
+        M.timer.start_time = nil
+    end,
+}
+
+M.command = function(name, fn)
+    vim.cmd(format('command! %s %s', name, fn))
+end
+
+M.lua_command = function(name, fn)
+    M.command(name, 'lua ' .. fn)
+end
+
+M.augroup = function(name, event, fn, ft)
+    api.nvim_exec(
+        format(
+            [[
+    augroup %s
+        autocmd!
+        autocmd %s %s %s
+    augroup END
+    ]],
+            name,
+            event,
+            ft or '*',
+            fn
+        ),
+        false
+    )
+end
+
+M.t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
--- check_back_space
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+M.input = function(keys, mode)
+    vim.api.nvim_feedkeys(M.t(keys), mode or 'i', true)
 end
 
--- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#peek-definition
-local function preview_location_callback(_, _, result)
-    if result == nil or vim.tbl_isempty(result) then
-        return nil
-    end
-    vim.lsp.util.preview_location(result[1])
-end
-
---[[
---
--- utils methods
---
-----]]
-
--- autocommands
-M.nvim_create_augroups = function(definitions)
-    for group_name, definition in pairs(definitions) do
-        vim.cmd('augroup ' .. group_name)
-        vim.cmd('autocmd!')
-        for _, def in ipairs(definition) do
-            local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-            vim.cmd(command)
-        end
-        vim.cmd('augroup END')
-    end
-end
-
--- buffer mappings
-M.bmap = function(bufnr, mode, lhs, rhs, ...)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, ... or map_opts)
-end
-
--- mappings
-M.map = function(mode, lhs, rhs, ...)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, ... or map_opts)
-end
-
-M.PeekDefinition = function()
-    local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
-end
-
-M.kind_cfg = {
-    with_text = true,
-    symbol_map = {
-        Text = ' ',
-        Method = ' ',
-        Function = ' ',
-        Ctor = ' ',
-        Field = ' ',
-        Variable = ' ',
-        Class = ' ',
-        Interface = 'ﰮ ',
-        Module = ' ',
-        Property = ' ',
-        Unit = 'ﰩ ',
-        Value = ' ',
-        Enum = '練',
-        Keyword = ' ',
-        Snippet = '﬌ ',
-        Color = ' ',
-        File = ' ',
-        Reference = ' ',
-        Folder = ' ',
-        EnumMember = ' ',
-        Constant = 'ﱃ ',
-        Struct = ' ',
-        Event = ' ',
-        Operator = '璉',
-        TypeParameter = ' ',
-    },
-}
-
--- popup windows opts
-M.popup_opts = { border = 'rounded', focusable = false }
-
-M.signature_cfg = {
-    bind = true,
-    floating_window = true,
-    fix_pos = true,
-    hint_enable = true,
-    hint_scheme = 'String',
-    use_lspsaga = false,
-    hi_parameter = 'Search',
-    max_height = 12,
-    max_width = 120,
-    handler_opts = popup_opts,
-}
-
---[[
---
--- global functions
---
----]]
-function _G.dump(...)
-    local objects = vim.tbl_map(vim.inspect, { ... })
-    print(unpack(objects))
-    return ...
+M.buf_augroup = function(name, event, fn)
+    api.nvim_exec(
+        format(
+            [[
+    augroup %s
+        autocmd! * <buffer>
+        autocmd %s <buffer> %s
+    augroup END
+    ]],
+            name,
+            event,
+            fn
+        ),
+        false
+    )
 end
 
 return M
