@@ -1,170 +1,109 @@
---[[ LSP config ]]
-
+local u = require('utils')
+local null_ls = require('modules.lsp.null-ls')
+local tsserver = require('modules.lsp.tsserver')
 local nvim_lsp = require('lspconfig')
 
--- on_attach
-local on_attach = function(_client, bufnr)
-    -- Omnifunc
+local lsp = vim.lsp
+
+lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    signs = true,
+    virtual_text = false,
+})
+
+local popup_opts = { border = 'rounded', focusable = false }
+
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, popup_opts)
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
+
+_G.global.lsp = {
+    popup_opts = popup_opts,
+}
+
+require('lsp_signature').on_attach({
+    bind = true,
+    handler_opts = {
+        border = 'rounded',
+    },
+    zindex = 50,
+    toggle_key = '<M-x>',
+})
+
+require('lspkind').init({
+    with_text = true,
+    symbol_map = {
+        Text = ' ',
+        Method = ' ',
+        Function = ' ',
+        Ctor = ' ',
+        Field = ' ',
+        Variable = ' ',
+        Class = ' ',
+        Interface = 'ﰮ ',
+        Module = ' ',
+        Property = ' ',
+        Unit = 'ﰩ ',
+        Value = ' ',
+        Enum = '練',
+        Keyword = ' ',
+        Snippet = '﬌ ',
+        Color = ' ',
+        File = ' ',
+        Reference = ' ',
+        Folder = ' ',
+        EnumMember = ' ',
+        Constant = 'ﱃ ',
+        Struct = ' ',
+        Event = ' ',
+        Operator = '璉',
+        TypeParameter = ' ',
+    },
+})
+
+--on_attach
+local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Signature
-    require('lsp_signature').on_attach()
+    -- commands
+    u.lua_command('LspFormatting', 'vim.lsp.buf.formatting()')
+    u.lua_command('LspHover', 'vim.lsp.buf.hover()')
+    u.lua_command('LspRename', 'vim.lsp.buf.rename()')
+    u.lua_command('LspDiagPrev', 'vim.lsp.diagnostic.goto_prev({ popup_opts = global.lsp.popup_opts })')
+    u.lua_command('LspDiagNext', 'vim.lsp.diagnostic.goto_next({ popup_opts = global.lsp.popup_opts })')
+    u.lua_command('LspDiagLine', 'vim.lsp.diagnostic.show_line_diagnostics(global.lsp.popup_opts)')
+    u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
+    u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
 
-    -- Kind
-    require('lspkind').init({
-        with_text = true,
-        symbol_map = {
-            Text = ' ',
-            Method = ' ',
-            Function = ' ',
-            Ctor = ' ',
-            Field = ' ',
-            Variable = ' ',
-            Class = ' ',
-            Interface = 'ﰮ ',
-            Module = ' ',
-            Property = ' ',
-            Unit = 'ﰩ ',
-            Value = ' ',
-            Enum = '練',
-            Keyword = ' ',
-            Snippet = '﬌ ',
-            Color = ' ',
-            File = ' ',
-            Reference = ' ',
-            Folder = ' ',
-            EnumMember = ' ',
-            Constant = 'ﱃ ',
-            Struct = ' ',
-            Event = ' ',
-            Operator = '璉',
-            TypeParameter = ' ',
-        },
-    })
+    -- bindings
+    u.buf_map('n', '<leader>R', ':LspRename<CR>', nil, bufnr)
+    u.buf_map('n', 'gy', ':LspTypeDef<CR>', nil, bufnr)
+    u.buf_map('n', 'K', ':LspHover<CR>', nil, bufnr)
+    u.buf_map('n', '[d', ':LspDiagPrev<CR>', nil, bufnr)
+    u.buf_map('n', ']d', ':LspDiagNext<CR>', nil, bufnr)
+    u.buf_map('n', '<leader>D', ':LspDiagLine<CR>', nil, bufnr)
+    u.buf_map('i', '<C-x><C-x>', '<cmd> LspSignatureHelp<CR>', nil, bufnr)
+    -- telescope
+    u.buf_map('n', '<leader>lr', ':LspRef<CR>', nil, bufnr)
+    u.buf_map('n', 'gd', ':LspDef<CR>', nil, bufnr)
+    u.buf_map('n', 'la', ':LspAct<CR>', nil, bufnr)
+    u.buf_map('n', 'ls', ':LspSym<CR>', nil, bufnr)
 
-    -- Diagnostics
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        signs = true,
-        virtual_text = false,
-    })
-
-    -- Hover
-    local hover = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-    vim.lsp.handlers['textDocument/hover'] = function(...)
-        local buf = hover(...)
-        vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', { noremap = true, silent = true })
+    if client.resolved_capabilities.document_formatting then
+        u.buf_augroup('LspFormatOnSave', 'BufWritePre', 'lua vim.lsp.buf.formatting_sync()')
     end
-
-    -- Mappings
-    local opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>A', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-    vim.api.nvim_buf_set_keymap(
-        bufnr,
-        'n',
-        '[d',
-        '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = { border = "rounded"}})<CR>',
-        opts
-    )
-
-    vim.api.nvim_buf_set_keymap(
-        bufnr,
-        'n',
-        ']d',
-        '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = { border = "rounded"}})<CR>',
-        opts
-    )
-
-    vim.api.nvim_buf_set_keymap(
-        bufnr,
-        'n',
-        '<leader>D',
-        '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({popup_opts = { border = "rounded"}})<CR>',
-        opts
-    )
-
-    vim.api.nvim_buf_set_keymap(
-        bufnr,
-        'n',
-        '<leader>wl',
-        '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-        opts
-    )
 end
 
--- Capabilities
+--capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    },
-}
 
--- Servers
-local servers = {
-    'intelephense',
-    'cssls',
-    'yamlls',
-    'jsonls',
-    'rust_analyzer',
-}
-
--- Servers setup
+-- language servers
+local servers = { 'intelephense' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup({
-        capabilities = capabilities,
         on_attach = on_attach,
+        capabilities = capabilities,
     })
 end
 
---[[ Null-ls ]]
-local null_ls = require('null-ls')
-local b = null_ls.builtins
-
--- sources
-local sources = {
-    -- builtins : https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    -- formatting
-    b.formatting.prettierd.with({
-        filetypes = { 'html', 'json', 'yaml', 'markdown' },
-    }),
-    b.formatting.stylua.with({
-        condition = function(utils)
-            return utils.root_has_file('stylua.toml')
-        end,
-    }),
-    b.formatting.phpcbf,
-    b.formatting.trim_whitespace.with({ filetypes = { 'tmux', 'teal', 'zsh' } }),
-    b.formatting.shfmt,
-    -- diagnostics
-    b.diagnostics.shellcheck,
-    b.diagnostics.write_good,
-    b.diagnostics.markdownlint,
-    b.diagnostics.shellcheck,
-    b.code_actions.gitsigns,
-}
-
--- setup
-require('null-ls').config({
-    sources = sources,
-})
-
-require('lspconfig')['null-ls'].setup({
-    on_attach = on_attach,
-})
-
---[[ Tsserver ]]
-require('modules.lsp.tsserver')
+tsserver.setup(on_attach)
+null_ls.setup(on_attach)

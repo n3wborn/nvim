@@ -1,6 +1,6 @@
 -- https://github.com/hrsh7th/nvim-compe
 
-local map = require('utils').map
+local u = require('utils')
 local g = vim.g
 local opts = { silent = true, noremap = true, expr = true }
 
@@ -64,14 +64,14 @@ require('compe').setup({
 })
 
 -- mappings
-map('i', '<Tab>', 'v:lua.tab_complete()', opts)
-map('s', '<Tab>', 'v:lua.tab_complete()', opts)
-map('i', '<S-Tab>', 'v:lua.s_tab_complete()', opts)
-map('s', '<S-Tab>', 'v:lua.s_tab_complete()', opts)
+u.map('i', '<Tab>', 'v:lua.tab_complete()', opts)
+u.map('s', '<Tab>', 'v:lua.tab_complete()', opts)
+u.map('i', '<S-Tab>', 'v:lua.s_tab_complete()', opts)
+u.map('s', '<S-Tab>', 'v:lua.s_tab_complete()', opts)
 
-map('i', '<c-y>', 'compe#confirm("<c-y>")', opts)
-map('i', '<c-e>', 'compe#close("<c-e>")', opts)
-map('i', '<c-space>', 'compe#complete()', opts)
+u.map('i', '<c-y>', 'compe#confirm("<c-y>")', opts)
+u.map('i', '<c-e>', 'compe#close("<c-e>")', opts)
+u.map('i', '<c-space>', 'compe#complete()', opts)
 
 -- vim completion options
 vim.o.completeopt = 'menuone,noselect'

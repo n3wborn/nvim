@@ -41,11 +41,12 @@ o.lazyredraw = true
 o.foldlevel = 99
 o.foldmethod = 'expr'
 o.foldexpr = 'nvim_treesitter#foldexpr()'
-o.omnifunc = 'v:lua.vim.lsp.omnifunc'
 vim.cmd([[
     filetype indent plugin on
     syntax enable
 ]])
+
+_G.global = {}
 
 require('modules.core')
 require('modules.lsp')

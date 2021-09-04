@@ -4,7 +4,7 @@ local fn = vim.fn
 
 -- install packer if needed
 if fn.empty(fn.glob(install_path)) > 0 then
-    cmd('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     cmd('packadd packer.nvim')
 end
 
