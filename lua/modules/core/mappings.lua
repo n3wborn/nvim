@@ -68,8 +68,8 @@ u.map('v', '<leader>d', '"_d')
 
 --- Kommentary
 vim.g.kommentary_create_default_mappings = false
-u.map('n', '<C-_>', '<Plug>kommentary_line_default', {})
-u.map('x', '<C-_>', '<Plug>kommentary_visual_default', {})
+vim.api.nvim_set_keymap('n', '<C-_>', '<Plug>kommentary_line_default', {})
+vim.api.nvim_set_keymap('x', '<C-_>', '<Plug>kommentary_visual_default', {})
 
 --- Easy Align
 u.map('n', 'ga', ':EasyAlign<cr>')
