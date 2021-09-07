@@ -98,7 +98,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- language servers
-local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls' }
+local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup({
         on_attach = on_attach,

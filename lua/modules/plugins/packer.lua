@@ -189,10 +189,14 @@ require('packer').startup(function()
             })
         end,
     })
+
     use({
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require('modules.plugins.blankline')
         end,
     })
+
+    -- to be removed once treesitter support solidity
+    use({ 'tomlion/vim-solidity' })
 end)
