@@ -29,11 +29,16 @@ local sources = {
     b.diagnostics.write_good,
     b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.code_actions.gitsigns,
-    b.diagnostics.phpstan.with({
+    b.diagnostics.phpcs.with({
+        filetypes = { 'php' },
+        command = 'phpcs',
+        args = { '--report=json', '--standard=PSR12', '-s', '-' },
+    }),
+    --[[ b.diagnostics.phpstan.with({
         filetypes = { 'php' },
         command = 'phpstan',
         args = { 'analyze', '--error-format', 'json', '-l6', '--no-progress', '$FILENAME' },
-    }),
+    }), ]]
 }
 
 local M = {}
