@@ -167,28 +167,8 @@ require('packer').startup(function()
         },
     })
 
-    -- Lua
-    use({
-        'ahmedkhalf/project.nvim',
-        config = function()
-            require('project_nvim').setup()
-        end,
-    })
-
     -- Div
     use({ 'tpope/vim-repeat' })
-
-    use({
-        'rafcamlet/nvim-luapad',
-        config = function()
-            require('luapad').setup({
-                count_limit = 150000,
-                error_indicator = true,
-                eval_on_move = true,
-                error_highlight = 'WarningMsg',
-            })
-        end,
-    })
 
     use({
         'lukas-reineke/indent-blankline.nvim',
@@ -197,6 +177,6 @@ require('packer').startup(function()
         end,
     })
 
-    -- to be removed once treesitter support solidity
+    -- to be removed once treesitter support solidity ?
     use({ 'tomlion/vim-solidity' })
 end)
