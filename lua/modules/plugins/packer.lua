@@ -43,13 +43,11 @@ require('packer').startup(function()
 
     -- Completion
     use({
-        'hrsh7th/nvim-compe',
-        config = function()
-            require('modules.plugins.compe')
-        end,
-        requires = {
-            'L3MON4D3/luasnip',
-        },
+        'hrsh7th/nvim-cmp',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
     })
 
     -- Snippets
