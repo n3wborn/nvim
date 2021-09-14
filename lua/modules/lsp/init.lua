@@ -30,6 +30,7 @@ local on_attach = function(client, bufnr)
         handler_opts = {
             border = 'rounded',
         },
+        floating_window_above_cur_line = true,
         zindex = 50,
         --toggle_key = '<M-x>',
     })
@@ -96,6 +97,7 @@ end
 
 --capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- language servers
 local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang' }
