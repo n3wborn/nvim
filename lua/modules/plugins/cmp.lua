@@ -1,6 +1,4 @@
 -- https://github.com/hrsh7th/nvim-cmp
-local luasnip = require('luasnip')
-local lspkind = require('lspkind')
 local cmp = require('cmp')
 
 vim.opt.completeopt = 'menuone,noselect'
