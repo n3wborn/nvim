@@ -50,7 +50,7 @@ gitsigns.setup({
         -- refresh/toggle(?)
         ['n <leader>ht'] = '<cmd>lua require"gitsigns".refresh()<CR>',
     },
-    watch_index = {
+    watch_gitdir = {
         interval = 1000,
     },
     current_line_blame = false,
