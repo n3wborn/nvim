@@ -88,9 +88,7 @@ require('packer').startup(function()
             require('modules.plugins.treesitter')
         end,
         requires = {
-            'nvim-treesitter/nvim-treesitter-refactor',
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'nvim-treesitter/playground',
         },
         run = ':TSUpdate',
     })
@@ -140,14 +138,6 @@ require('packer').startup(function()
             'nvim-lua/plenary.nvim',
         },
         config = [[require('modules.plugins.gitsigns')]],
-    })
-
-    -- File explorer
-    use({
-        'kyazdani42/nvim-tree.lua',
-        config = function()
-            require('modules.plugins.nvimtree')
-        end,
     })
 
     -- Colors and nice stuff
