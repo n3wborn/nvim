@@ -102,6 +102,13 @@ require('packer').startup(function()
 
     use('junegunn/fzf.vim')
 
+    -- File explorer
+    use({
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = [[ require('modules.lua.nvimtree') ]],
+    })
+
     -- Dev div tools
     use({
         'editorconfig/editorconfig-vim',
