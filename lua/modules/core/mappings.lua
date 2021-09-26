@@ -24,10 +24,6 @@ u.map('n', '<leader>-', '<cmd>vertical resize -10<cr>')
 u.map('n', '<space>+', '<cmd>resize +5<cr>')
 u.map('n', '<space>-', '<cmd>resize -5<cr>')
 
---- File explorer
-u.map('n', '<leader>e', [[<cmd>lua require('nvim-tree').toggle()<cr>]])
-u.map('n', '<leader>tr', [[<cmd>lua require('nvim-tree').refresh()<cr>]])
-
 --- Quick file save
 u.map('n', '<leader>ss', '<cmd>w<cr>')
 
