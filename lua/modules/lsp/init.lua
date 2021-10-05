@@ -108,5 +108,12 @@ for _, lsp in ipairs(servers) do
     })
 end
 
+nvim_lsp.intelephense.setup({
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end,
+})
+
 tsserver.setup(on_attach)
 null_ls.setup(on_attach)
