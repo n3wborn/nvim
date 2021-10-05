@@ -2,6 +2,36 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
+local cmp_kinds = {
+    Class = ' ',
+    Color = ' ',
+    Constant = 'ﲀ ',
+    Constructor = ' ',
+    Enum = '練',
+    EnumMember = ' ',
+    Event = ' ',
+    Field = ' ',
+    File = '',
+    Folder = ' ',
+    Function = ' ',
+    Interface = 'ﰮ ',
+    Keyword = ' ',
+    Method = ' ',
+    Module = ' ',
+    Operator = '',
+    Property = ' ',
+    Reference = ' ',
+    Snippet = ' ',
+    Struct = ' ',
+    Text = ' ',
+    TypeParameter = ' ',
+    Unit = '塞',
+    Value = ' ',
+    Variable = ' ',
+}
+
+require('luasnip.loaders.from_vscode').lazy_load()
+
 vim.opt.completeopt = 'menuone,noselect'
 
 cmp.setup({
@@ -12,14 +42,17 @@ cmp.setup({
     },
     formatting = {
         format = function(entry, vim_item)
-            vim_item.kind = require('lspkind').presets.default[vim_item.kind] .. ' ' .. vim_item.kind
-
+            vim_item.kind = string.format('%s %s', cmp_kinds[vim_item.kind], vim_item.kind)
             vim_item.menu = ({
                 nvim_lsp = '[LSP]',
-                luasnip = '[LuaSnip]',
-                buffer = '[Buffer]',
-                path = '[Path]',
+                luasnip = '[Snp]',
+                buffer = '[Buf]',
+                nvim_lua = '[Lua]',
+                path = '[Pth]',
+                calc = '[Clc]',
+                emoji = '[Emj]',
             })[entry.source.name]
+
             return vim_item
         end,
     },
