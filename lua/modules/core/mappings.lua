@@ -4,7 +4,11 @@ local u = require('utils')
 -- map key
 vim.g.mapleader = ','
 
+-- source config
 u.map('n', '<leader>R', '<cmd>source $MYVIMRC<cr>')
+
+-- fix indentation
+u.map('n', '<leader>i', 'mmgg=G`m<cr>')
 
 -- easier windows jump
 u.map('n', '<C-h>', '<C-w>h')
@@ -31,6 +35,7 @@ u.map('n', '<leader>ss', '<cmd>w<cr>')
 u.map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
 u.map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>') -- *F*ix (Symfony)
 u.map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
+u.map('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
 
 -- Format
 u.map('n', '<space>F', '<cmd>FormatWrite<cr>')
@@ -38,6 +43,8 @@ u.map('v', '<space>F', '<cmd>FormatWrite<cr>')
 
 --- Git
 u.map('n', '<space>G', [[<cmd>lua require('neogit').open({ kind = 'split' })<cr>]])
+u.map('n', '<leader>gh', ':diffget //3<cr>')
+u.map('n', '<leader>gu', ':diffget //2<cr>')
 
 --- keep text selected after indentation
 u.map('v', '<', '<gv')
