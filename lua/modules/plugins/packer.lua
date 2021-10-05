@@ -30,7 +30,6 @@ require('packer').startup(function()
         'neovim/nvim-lspconfig',
         'ray-x/lsp_signature.nvim',
         'jose-elias-alvarez/nvim-lsp-ts-utils',
-        'onsails/lspkind-nvim',
     })
 
     use({

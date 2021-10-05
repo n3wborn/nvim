@@ -35,37 +35,6 @@ local on_attach = function(client, bufnr)
         --toggle_key = '<M-x>',
     })
 
-    require('lspkind').init({
-        with_text = true,
-        symbol_map = {
-            Text = ' ',
-            Method = ' ',
-            Function = ' ',
-            Ctor = ' ',
-            Field = ' ',
-            Variable = ' ',
-            Class = ' ',
-            Interface = 'ﰮ ',
-            Module = ' ',
-            Property = ' ',
-            Unit = 'ﰩ ',
-            Value = ' ',
-            Enum = '練',
-            Keyword = ' ',
-            Snippet = '﬌ ',
-            Color = ' ',
-            File = ' ',
-            Reference = ' ',
-            Folder = ' ',
-            EnumMember = ' ',
-            Constant = 'ﱃ ',
-            Struct = ' ',
-            Event = ' ',
-            Operator = '璉',
-            TypeParameter = ' ',
-        },
-    })
-
     -- commands
     u.lua_command('LspFormatting', 'vim.lsp.buf.formatting()')
     u.lua_command('LspHover', 'vim.lsp.buf.hover()')
