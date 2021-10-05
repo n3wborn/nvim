@@ -90,14 +90,12 @@ local on_attach = function(client, bufnr)
     u.buf_map('n', 'la', ':LspAct<CR>', nil, bufnr)
     u.buf_map('n', 'ls', ':LspSym<CR>', nil, bufnr)
 
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
     if client.resolved_capabilities.document_formatting then
         u.buf_augroup('LspFormatOnSave', 'BufWritePre', 'lua vim.lsp.buf.formatting_sync()')
     end
 end
-
---capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- language servers
 local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang' }
