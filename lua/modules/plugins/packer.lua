@@ -4,8 +4,14 @@ local fn = vim.fn
 
 -- install packer if needed
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-    cmd('packadd packer.nvim')
+    packer_bootstrap = fn.system({
+        'git',
+        'clone',
+        '--depth',
+        '1',
+        'https://github.com/wbthomason/packer.nvim',
+        install_path,
+    })
 end
 
 require('packer').init({
@@ -13,9 +19,7 @@ require('packer').init({
     compile_path = install_path .. '/packer_compiled.lua',
 })
 
-require('packer').startup(function()
-    local use = require('packer').use
-
+return require('packer').startup(function(use)
     -- Plugin manager
     use('wbthomason/packer.nvim')
 
@@ -173,4 +177,8 @@ require('packer').startup(function()
 
     -- to be removed once treesitter support solidity ?
     use({ 'tomlion/vim-solidity' })
+
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)
