@@ -42,7 +42,7 @@ u.map('n', '<space>F', '<cmd>FormatWrite<cr>')
 u.map('v', '<space>F', '<cmd>FormatWrite<cr>')
 
 --- Git
-u.map('n', '<space>G', [[<cmd>lua require('neogit').open({ kind = 'split' })<cr>]])
+u.map('n', '<space>G', '<cmd>Neogit<cr>')
 u.map('n', '<leader>gh', ':diffget //3<cr>')
 u.map('n', '<leader>gu', ':diffget //2<cr>')
 
