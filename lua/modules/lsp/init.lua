@@ -2,6 +2,7 @@ local u = require('utils')
 local null_ls = require('modules.lsp.null-ls')
 local tsserver = require('modules.lsp.tsserver')
 local nvim_lsp = require('lspconfig')
+local exec = vim.api.nvim_exec
 
 local lsp = vim.lsp
 
@@ -62,7 +63,7 @@ local on_attach = function(client, bufnr)
     capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
     if client.resolved_capabilities.document_formatting then
-        u.buf_augroup('LspFormatOnSave', 'BufWritePre', 'lua vim.lsp.buf.formatting_sync()')
+        exec('au BufWritePre * lua vim.lsp.buf.formatting_sync()', false)
     end
 end
 
