@@ -30,6 +30,7 @@ local on_attach = function(client, bufnr)
         bind = true,
         handler_opts = {
             border = 'rounded',
+            virtual_text_pos = 'eol',
         },
         floating_window_above_cur_line = true,
         zindex = 50,
@@ -53,10 +54,12 @@ local on_attach = function(client, bufnr)
     u.buf_map('n', '[d', ':LspDiagPrev<CR>', nil, bufnr)
     u.buf_map('n', ']d', ':LspDiagNext<CR>', nil, bufnr)
     u.buf_map('n', '<leader>D', ':LspDiagLine<CR>', nil, bufnr)
-    u.buf_map('i', '<C-x><C-x>', '<cmd> LspSignatureHelp<CR>', nil, bufnr)
+    -- u.buf_map('i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>', nil, bufnr)
+
     -- telescope
     u.buf_map('n', '<leader>lr', ':LspRef<CR>', nil, bufnr)
     u.buf_map('n', 'gd', ':LspDef<CR>', nil, bufnr)
+    u.buf_map('n', 'gT', ':LspDef<CR>', nil, bufnr)
     u.buf_map('n', 'la', ':LspAct<CR>', nil, bufnr)
     u.buf_map('n', 'ls', ':LspSym<CR>', nil, bufnr)
 
@@ -68,11 +71,10 @@ local on_attach = function(client, bufnr)
 end
 
 -- language servers
-local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang' }
+local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang', 'html' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup({
         on_attach = on_attach,
-        capabilities = capabilities,
     })
 end
 
@@ -81,6 +83,27 @@ nvim_lsp.intelephense.setup({
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
     end,
+})
+
+nvim_lsp.rust_analyzer.setup({
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end,
+    settings = {
+        ['rust-analyzer'] = {
+            assist = {
+                importGranularity = 'module',
+                importPrefix = 'by_self',
+            },
+            cargo = {
+                loadOutDirsFromCheck = true,
+            },
+            procMacro = {
+                enable = true,
+            },
+        },
+    },
 })
 
 tsserver.setup(on_attach)
