@@ -3,23 +3,29 @@ local null_ls = require('modules.lsp.null-ls')
 local tsserver = require('modules.lsp.tsserver')
 local nvim_lsp = require('lspconfig')
 local exec = vim.api.nvim_exec
-
 local lsp = vim.lsp
-
-lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    signs = true,
-    virtual_text = false,
-})
-
 local popup_opts = { border = 'rounded', focusable = false }
-
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, popup_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
 
 _G.global.lsp = {
     popup_opts = popup_opts,
 }
+
+vim.diagnostic.config({
+    underline = true,
+    signs = true,
+    virtual_text = false,
+    float = {
+        show_header = true,
+        source = 'if_many',
+        border = 'rounded',
+        focusable = false,
+    },
+    update_in_insert = false, -- default to false
+    severity_sort = false, -- default to false
+})
+
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, popup_opts)
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
 
 --on_attach
 local on_attach = function(client, bufnr)
@@ -43,7 +49,7 @@ local on_attach = function(client, bufnr)
     u.lua_command('LspRename', 'vim.lsp.buf.rename()')
     u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev({ popup_opts = global.lsp.popup_opts })')
     u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next({ popup_opts = global.lsp.popup_opts })')
-    u.lua_command('LspDiagLine', 'vim.diagnostic.show_line_diagnostics(global.lsp.popup_opts)')
+    u.lua_command('LspDiagLine', 'vim.diagnostic.open_float(0, { scope="line" })')
     u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
     u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
 
