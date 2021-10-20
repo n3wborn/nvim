@@ -43,6 +43,7 @@ local sources = {
         command = 'phpstan',
         args = { 'analyze', '--error-format', 'json', '-l6', '--no-progress', '$FILENAME' },
     }), ]]
+    b.diagnostics.yamllint,
 }
 
 local M = {}
