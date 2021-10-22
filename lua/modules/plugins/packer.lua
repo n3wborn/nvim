@@ -158,7 +158,7 @@ return require('packer').startup(function(use)
 
     -- Statusline
     use({
-        'hoob3rt/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         requires = {
             'nvim-web-devicons',
             opt = true,
