@@ -175,6 +175,19 @@ return require('packer').startup(function(use)
         end,
     })
 
+    use({
+        'kwkarlwang/bufjump.nvim',
+        config = function()
+            require('bufjump').setup({
+                forward = '<C-n>',
+                backward = '<C-p>',
+                on_success = function()
+                    vim.cmd([[execute "normal! g`\"zz"]])
+                end,
+            })
+        end,
+    })
+
     -- to be removed once treesitter support solidity ?
     use({ 'tomlion/vim-solidity' })
 
