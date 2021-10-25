@@ -1,4 +1,5 @@
 require('modules.plugins.blankline')
+require('modules.plugins.colorizer')
 require('modules.plugins.cmp')
 require('modules.plugins.formatter')
 require('modules.plugins.gitsigns')
