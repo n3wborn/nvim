@@ -52,6 +52,7 @@ cmp.setup({
                 path = '[Pth]',
                 calc = '[Clc]',
                 emoji = '[Emj]',
+                rg = '[RipGrep]',
             })[entry.source.name]
 
             return vim_item
@@ -95,6 +96,7 @@ cmp.setup({
         { name = 'buffer' },
         { name = 'path' },
         { name = 'nvim_lua' },
+        { name = 'rg' },
     },
 })
 
