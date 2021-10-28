@@ -1,6 +1,7 @@
 -- https://github.com/hrsh7th/nvim-cmp
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 local cmp_kinds = {
     Class = ' ',
@@ -102,4 +103,4 @@ cmp.setup({
 
 -- https://github.com/windwp/nvim-autopairs
 require('nvim-autopairs').setup()
-require('nvim-autopairs.completion.cmp').setup({ map_complete = true })
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
