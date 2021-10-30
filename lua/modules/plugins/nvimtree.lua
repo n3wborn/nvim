@@ -1,5 +1,4 @@
 -- https://github.com/kyazdani42/nvim-tree.lua
-vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache' }
 
 require('nvim-tree').setup({
     auto_close = true,
@@ -9,6 +8,10 @@ require('nvim-tree').setup({
         enable = true,
         update_cwd = false,
         ignore_list = {},
+    },
+    filters = {
+        dotfiles = false,
+        custom = { 'node_modules', '.cache', 'build', 'var', 'vendor' },
     },
 })
 
