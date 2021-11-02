@@ -34,7 +34,7 @@ local cmp_kinds = {
 require('luasnip.loaders.from_vscode').lazy_load()
 vim.api.nvim_command('hi LuasnipChoiceNodePassive cterm=italic')
 
-vim.opt.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menu,menuone,noselect'
 
 cmp.setup({
     snippet = {
