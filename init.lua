@@ -6,6 +6,7 @@ local u = require('utils')
 o.shiftwidth = 4
 o.tabstop = 4
 o.expandtab = true
+o.smartindent = true
 o.undofile = true
 o.cursorline = true
 o.list = true
@@ -14,6 +15,7 @@ o.relativenumber = true
 o.wrap = false
 o.signcolumn = 'yes'
 o.undodir = fn.expand('~') .. '/.local/share/nvim/undo'
+o.shortmess:append('c')
 o.hidden = true
 o.ignorecase = true
 o.joinspaces = false
