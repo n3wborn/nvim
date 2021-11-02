@@ -23,7 +23,6 @@ o.shiftround = true
 o.smartcase = true
 o.splitbelow = true
 o.splitright = true
-o.wildmode = 'list:longest'
 o.updatetime = 50
 o.inccommand = 'nosplit'
 o.errorbells = false
