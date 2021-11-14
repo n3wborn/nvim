@@ -11,15 +11,10 @@ u.map('n', '<leader>R', '<cmd>source $MYVIMRC<cr>')
 u.map('n', '<leader>i', 'mmgg=G`m<cr>')
 
 -- easier windows jump
-u.map('n', '<C-h>', '<C-w>h')
 u.map('n', '<C-Left>', '<C-w>h')
-u.map('n', '<C-l>', '<C-w>l')
 u.map('n', '<C-Right>', '<C-w>l')
-u.map('n', '<C-j>', '<C-w>j')
 u.map('n', '<C-Down>', '<C-w>j')
-u.map('n', '<C-k>', '<C-w>k')
 u.map('n', '<C-Up>', '<C-w>k')
-u.map('n', '<leader><space>', '<cmd>nohlsearch<cr>')
 
 --- Resize windows
 u.map('n', '<leader>+', '<cmd>vertical resize +10<cr>')
