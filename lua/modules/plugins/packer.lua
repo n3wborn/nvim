@@ -66,17 +66,13 @@ return require('packer').startup(function(use)
     --- Format/Lint
     use({
         'mhartington/formatter.nvim',
-        config = function()
-            require('modules.plugins.formatter')
-        end,
+        config = [[ require('modules.plugins.formatter') ]],
     })
 
     --- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        config = function()
-            require('modules.plugins.telescope')
-        end,
+        config = [[ require('modules.plugins.telescope') ]],
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
@@ -127,7 +123,7 @@ return require('packer').startup(function(use)
 
     use({
         'norcalli/nvim-colorizer.lua',
-        config = [[require('modules.plugins.colorizer')]],
+        config = [[ require('modules.plugins.colorizer') ]],
     })
 
     use({
@@ -146,7 +142,7 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-lua/plenary.nvim',
         },
-        config = [[require('modules.plugins.gitsigns')]],
+        config = [[ require('modules.plugins.gitsigns') ]],
     })
 
     -- Colors and nice stuff
@@ -169,22 +165,12 @@ return require('packer').startup(function(use)
 
     use({
         'lukas-reineke/indent-blankline.nvim',
-        config = function()
-            require('modules.plugins.blankline')
-        end,
+        config = [[ require('modules.plugins.blankline') ]],
     })
 
     use({
         'kwkarlwang/bufjump.nvim',
-        config = function()
-            require('bufjump').setup({
-                forward = '<C-n>',
-                backward = '<C-p>',
-                on_success = function()
-                    vim.cmd([[execute "normal! g`\"zz"]])
-                end,
-            })
-        end,
+        config = [[ require('bufjump').setup() ]],
     })
 
     -- to be removed once treesitter support solidity ?
