@@ -1,15 +1,10 @@
 local u = require('utils')
-local null_ls = require('modules.lsp.null-ls')
-local tsserver = require('modules.lsp.tsserver')
-local nvim_lsp = require('lspconfig')
-local exec = vim.api.nvim_exec
 local lsp = vim.lsp
-local popup_opts = { border = 'rounded', focusable = false }
+local api = vim.api
+local map_opts = { silent = true, noremap = true }
+local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
-_G.global.lsp = {
-    popup_opts = popup_opts,
-}
-
+-- diagnostics
 vim.diagnostic.config({
     underline = true,
     signs = true,
@@ -20,97 +15,99 @@ vim.diagnostic.config({
         border = 'rounded',
         focusable = false,
     },
-    update_in_insert = false, -- default to false
-    severity_sort = false, -- default to false
+    update_in_insert = true,
+    severity_sort = false,
 })
 
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, popup_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, popup_opts)
+-- handlers
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
---on_attach
-local on_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- use lsp formatting if it's available (and if it's good)
+-- otherwise, fall back to null-ls
+local preferred_formatting_clients = { 'eslint', 'null-ls' }
+local fallback_formatting_client = { 'intelephense' }
 
-    -- signature
-    require('lsp_signature').on_attach({
-        bind = true,
-        handler_opts = {
-            border = 'rounded',
-            virtual_text_pos = 'eol',
-        },
-        floating_window_above_cur_line = true,
-        zindex = 50,
-        --toggle_key = '<M-x>',
-    })
+local formatting = function()
+    local bufnr = api.nvim_get_current_buf()
+    local selected_client
 
-    -- commands
-    u.lua_command('LspFormatting', 'vim.lsp.buf.formatting()')
-    u.lua_command('LspHover', 'vim.lsp.buf.hover()')
-    u.lua_command('LspRename', 'vim.lsp.buf.rename()')
-    u.lua_command('LspDiagPrev', 'vim.diagnostic.goto_prev({ popup_opts = global.lsp.popup_opts })')
-    u.lua_command('LspDiagNext', 'vim.diagnostic.goto_next({ popup_opts = global.lsp.popup_opts })')
-    u.lua_command('LspDiagLine', 'vim.diagnostic.open_float(0, { scope="line" })')
-    u.lua_command('LspSignatureHelp', 'vim.lsp.buf.signature_help()')
-    u.lua_command('LspTypeDef', 'vim.lsp.buf.type_definition()')
+    for _, client in ipairs(lsp.get_active_clients()) do
+        if vim.tbl_contains(preferred_formatting_clients, client.name) then
+            selected_client = client
+            break
+        end
 
-    -- bindings
-    u.buf_map('n', '<leader>R', ':LspRename<CR>', nil, bufnr)
-    u.buf_map('n', 'gy', ':LspTypeDef<CR>', nil, bufnr)
-    u.buf_map('n', 'K', ':LspHover<CR>', nil, bufnr)
-    u.buf_map('n', '[d', ':LspDiagPrev<CR>', nil, bufnr)
-    u.buf_map('n', ']d', ':LspDiagNext<CR>', nil, bufnr)
-    u.buf_map('n', '<leader>D', ':LspDiagLine<CR>', nil, bufnr)
-    -- u.buf_map('i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>', nil, bufnr)
+        if client.name == fallback_formatting_client then
+            selected_client = client
+        end
+    end
 
-    -- telescope
-    u.buf_map('n', '<leader>lr', ':LspRef<CR>', nil, bufnr)
-    u.buf_map('n', 'gd', ':LspDef<CR>', nil, bufnr)
-    u.buf_map('n', 'gT', ':LspDef<CR>', nil, bufnr)
-    u.buf_map('n', 'la', ':LspAct<CR>', nil, bufnr)
-    u.buf_map('n', 'ls', ':LspSym<CR>', nil, bufnr)
+    if not selected_client then
+        return
+    end
 
-    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local params = lsp.util.make_formatting_params()
+    local result, err = selected_client.request_sync('textDocument/formatting', params, 5000, bufnr)
 
-    if client.resolved_capabilities.document_formatting then
-        exec('au BufWritePre * lua vim.lsp.buf.formatting_sync()', false)
+    if result and result.result then
+        lsp.util.apply_text_edits(result.result, bufnr)
+    elseif err then
+        vim.notify('global.lsp.formatting: ' .. err, vim.log.levels.WARN)
     end
 end
 
--- language servers
-local servers = { 'intelephense', 'jsonls', 'yamlls', 'cssls', 'solang', 'html' }
-for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup({
-        on_attach = on_attach,
-    })
+global.lsp = {
+    border_opts = border_opts,
+    formatting = formatting,
+}
+
+--- on_attach
+local on_attach = function(client, bufnr)
+    require('lsp_signature').on_attach()
+
+    --- bindings
+    u.buf_map(bufnr, 'n', '<leader>R', ':lua vim.lsp.buf.rename()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', ']d', ':lua vim.diagnostic.goto_next()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>D', ':lua vim.diagnostic.open_float(nil, border_opts)<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>q', ':lua vim.diagnostic.setqflist()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<C-x><C-x>', ':lua vim.lsp.buf.signature_help()<CR>', map_opts)
+
+    --- telescope
+    u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>', map_opts)
+
+    if client.resolved_capabilities.document_formatting then
+        vim.cmd('autocmd BufWritePre <buffer> lua global.lsp.formatting()')
+    end
+
+    require('illuminate').on_attach(client)
 end
 
-nvim_lsp.intelephense.setup({
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-    end,
-})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-nvim_lsp.rust_analyzer.setup({
-    on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-    end,
-    settings = {
-        ['rust-analyzer'] = {
-            assist = {
-                importGranularity = 'module',
-                importPrefix = 'by_self',
-            },
-            cargo = {
-                loadOutDirsFromCheck = true,
-            },
-            procMacro = {
-                enable = true,
-            },
-        },
-    },
-})
+for _, server in ipairs({
+    'bashls',
+    'eslint',
+    'jsonls',
+    'tsserver',
+    'null-ls',
+    'intelephense',
+}) do
+    require('modules.lsp.' .. server).setup(on_attach, capabilities)
+end
 
-tsserver.setup(on_attach)
-null_ls.setup(on_attach)
+-- suppress lspconfig messages
+local notify = vim.notify
+vim.notify = function(msg, ...)
+    if msg:match('%[lspconfig%]') then
+        return
+    end
+
+    notify(msg, ...)
+end

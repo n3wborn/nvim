@@ -33,3 +33,5 @@ exec([[au filetype gitcommit let b:EditorConfig_disable=1]], false)
 
 -- trim_white_space
 exec([[au BufWritePre * call TrimWhitespace()]], false)
+
+exec([[au CursorHold * lua vim.diagnostic.open_float(nil,{focusable=false,scope="cursor"})]], false)

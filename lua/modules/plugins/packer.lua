@@ -1,3 +1,4 @@
+vim.cmd('packadd packer.nvim')
 local cmd = vim.api.nvim_command
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local fn = vim.fn
@@ -85,14 +86,20 @@ return require('packer').startup(function(use)
     --- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
-        config = function()
-            require('modules.plugins.treesitter')
-        end,
-        requires = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-        },
         run = ':TSUpdate',
+        config = [[require('modules.plugins.treesitter')]],
     })
+
+    use({
+        'windwp/nvim-ts-autotag',
+        ft = { 'typescript', 'typescriptreact' },
+    })
+    use({
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        ft = { 'typescript', 'typescriptreact' },
+    })
+
+    use('nvim-treesitter/nvim-treesitter-textobjects')
 
     -- Fzf
     use({
@@ -117,7 +124,10 @@ return require('packer').startup(function(use)
         'junegunn/vim-easy-align',
         'tpope/vim-surround',
         'folke/trouble.nvim',
+        'RRethy/vim-illuminate',
     })
+
+    use({ 'b0o/schemastore.nvim' })
 
     use({ 'windwp/nvim-autopairs' })
 
