@@ -1,23 +1,16 @@
 local u = require('utils')
 local lsp = vim.lsp
 local api = vim.api
+local fn = vim.fn
 local map_opts = { silent = true, noremap = true }
 local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
 -- diagnostics
-vim.diagnostic.config({
-    underline = true,
-    signs = true,
-    virtual_text = false,
-    float = {
-        show_header = true,
-        source = 'if_many',
-        border = 'rounded',
-        focusable = false,
-    },
-    update_in_insert = true,
-    severity_sort = false,
-})
+vim.diagnostic.config({ virtual_text = false, float = border_opts })
+fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
+fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
+fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
+fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
 -- handlers
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
