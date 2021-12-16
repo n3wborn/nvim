@@ -78,6 +78,10 @@ local on_attach = function(client, bufnr)
         vim.cmd('autocmd BufWritePre <buffer> lua global.lsp.formatting()')
     end
 
+    if client.resolved_capabilities.signature_help then
+        vim.cmd('autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()')
+    end
+
     require('illuminate').on_attach(client)
 end
 
