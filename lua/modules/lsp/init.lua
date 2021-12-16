@@ -18,8 +18,8 @@ lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
 -- use lsp formatting if it's available (and if it's good)
 -- otherwise, fall back to null-ls
-local preferred_formatting_clients = { 'eslint', 'null-ls' }
-local fallback_formatting_client = { 'intelephense' }
+local preferred_formatting_clients = { 'eslint' }
+local fallback_formatting_client = 'null-ls'
 
 local formatting = function()
     local bufnr = api.nvim_get_current_buf()

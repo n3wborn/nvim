@@ -24,7 +24,6 @@ local sources = {
     }),
     b.formatting.shfmt,
     b.formatting.fixjson,
-    b.formatting.json_tool,
     b.formatting.sqlformat,
     b.formatting.rustfmt,
     ---diagnostics
