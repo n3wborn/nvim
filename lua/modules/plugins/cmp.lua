@@ -99,20 +99,6 @@ cmp.setup({
     }),
 })
 
-cmp.setup.cmdline('/', {
-    sources = {
-        { name = 'buffer' },
-    },
-})
-
-cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        { name = 'path' },
-    }, {
-        { name = 'cmdline' },
-    }),
-})
-
 -- https://github.com/windwp/nvim-autopairs
 require('nvim-autopairs').setup()
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
