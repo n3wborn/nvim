@@ -125,11 +125,10 @@ return require('packer').startup(function(use)
         'tpope/vim-surround',
         'folke/trouble.nvim',
         'RRethy/vim-illuminate',
+        'b0o/schemastore.nvim',
+        'windwp/nvim-autopairs',
+        'simrat39/rust-tools.nvim',
     })
-
-    use({ 'b0o/schemastore.nvim' })
-
-    use({ 'windwp/nvim-autopairs' })
 
     use({
         'norcalli/nvim-colorizer.lua',

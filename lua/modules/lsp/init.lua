@@ -95,6 +95,7 @@ for _, server in ipairs({
     'tsserver',
     'null-ls',
     'intelephense',
+    'rust-analyzer',
 }) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end
