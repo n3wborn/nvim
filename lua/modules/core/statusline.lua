@@ -1,12 +1,18 @@
 -- statusline
 
--- https://github.com/hoob3rt/lualine.nvim
-local statusline = require('lualine')
-
-local options = { theme = 'material' }
-local extensions = { 'quickfix', 'nvim-tree' }
-
-statusline.setup({
-    options = options,
-    extensions = extensions,
+-- https://github.com/nvim-lualine/lualine.nvim
+-- https://github.com/arkav/lualine-lsp-progress
+require('lualine').setup({
+    options = {
+        theme = 'material',
+    },
+    extensions = {
+        'quickfix',
+        'nvim-tree',
+    },
+    sections = {
+        lualine_c = {
+            'lsp_progress',
+        },
+    },
 })

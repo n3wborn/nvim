@@ -170,6 +170,8 @@ return require('packer').startup(function(use)
         },
     })
 
+    use({ 'arkav/lualine-lsp-progress' })
+
     -- Div
     use({ 'tpope/vim-repeat' })
 
