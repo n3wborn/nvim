@@ -32,6 +32,7 @@ local sources = {
     b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.diagnostics.tsc,
     b.diagnostics.php,
+    b.diagnostics.gitlint,
 }
 
 local M = {
