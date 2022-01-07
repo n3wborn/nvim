@@ -4,7 +4,7 @@
 -- https://github.com/arkav/lualine-lsp-progress
 require('lualine').setup({
     options = {
-        theme = 'material',
+        theme = 'material-nvim',
     },
     extensions = {
         'quickfix',
