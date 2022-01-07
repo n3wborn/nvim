@@ -179,11 +179,6 @@ return require('packer').startup(function(use)
         config = [[ require('modules.plugins.blankline') ]],
     })
 
-    use({
-        'kwkarlwang/bufjump.nvim',
-        config = [[ require('bufjump').setup() ]],
-    })
-
     -- to be removed once treesitter support solidity ?
     use({ 'tomlion/vim-solidity' })
 
