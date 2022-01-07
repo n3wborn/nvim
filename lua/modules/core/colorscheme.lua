@@ -4,17 +4,16 @@
 vim.g.material_style = 'palenight'
 
 require('material').setup({
-    contrast = false,
     italics = {
         comments = true,
         functions = true,
     },
-    contrast_windows = {
+    contrast_filetypes = {
         'terminal',
         'packer',
         'qf',
     },
-    text_contrast = {
+    high_visibility = {
         lighter = false,
         darker = false,
     },
