@@ -76,7 +76,3 @@ u.map('v', 'ga', ':EasyAlign<cr>')
 u.map('n', 'iga', ':LiveEasyAlign<cr>')
 u.map('x', 'iga', ':LiveEasyAlign<cr>')
 u.map('v', 'iga', ':LiveEasyAlign<cr>')
-
---- bufjump
-u.map('n', '<C-o>', ":lua require('bufjump').backward()<cr>")
-u.map('n', '<C-i>', ":lua require('bufjump').forward()<cr>")
