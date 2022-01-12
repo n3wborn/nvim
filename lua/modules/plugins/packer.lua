@@ -77,11 +77,16 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
-            'nvim-telescope/telescope-project.nvim',
         },
     })
 
-    use('nvim-telescope/telescope-project.nvim')
+    use({
+        'nvim-telescope/telescope-project.nvim',
+        'nvim-telescope/telescope-file-browser.nvim',
+        requires = {
+            'nvim-telescope/telescope.nvim',
+        },
+    })
 
     --- Treesitter
     use({
@@ -109,13 +114,6 @@ return require('packer').startup(function(use)
     })
 
     use('junegunn/fzf.vim')
-
-    -- File explorer
-    use({
-        'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = [[ require('modules.lua.nvimtree') ]],
-    })
 
     -- Dev div tools
     use({

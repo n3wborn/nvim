@@ -37,7 +37,6 @@ require('telescope').setup({
 -- generic mappings
 u.map('n', '<Leader>T', ':Telescope<CR>')
 u.map('n', '<Leader>t', ':Telescope treesitter<CR>')
-u.map('n', '<C-p>', "<cmd>lua require'telescope'.extensions.project.project{}<cr>")
 
 --find * commands/mappings
 u.command('Files', 'Telescope find_files')
@@ -77,3 +76,13 @@ u.command('LspRef', 'Telescope lsp_references')
 u.command('LspDef', 'Telescope lsp_definitions')
 u.command('LspSym', 'Telescope lsp_workspace_symbols')
 u.command('LspAct', 'Telescope lsp_code_actions')
+
+-- extensions mappings/commands
+require('telescope').load_extension('file_browser')
+require('telescope').load_extension('project')
+
+u.command('Project', 'Telescope project')
+u.command('Browser', 'Telescope file_browser')
+
+u.map('n', '<leader>e', '<cmd>Browser<CR>')
+u.map('n', '<C-p>', '<cmd>Project<CR>')
