@@ -44,7 +44,7 @@ local formatting = function()
     local result, err = selected_client.request_sync('textDocument/formatting', params, 5000, bufnr)
 
     if result and result.result then
-        lsp.util.apply_text_edits(result.result, bufnr)
+        lsp.util.apply_text_edits(result.result, bufnr, client.offset_encoding or "utf-16")
     elseif err then
         vim.notify('global.lsp.formatting: ' .. err, vim.log.levels.WARN)
     end
