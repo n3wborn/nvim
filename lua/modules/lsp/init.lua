@@ -21,11 +21,11 @@ lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 local preferred_formatting_clients = { 'eslint' }
 local fallback_formatting_client = 'null-ls'
 
-local formatting = function()
-    local bufnr = api.nvim_get_current_buf()
-    local selected_client
+local formatting = function(bufnr)
+    bufnr = tonumber(bufnr) or api.nvim_get_current_buf()
 
-    for _, client in ipairs(lsp.get_active_clients()) do
+    local selected_client
+    for _, client in ipairs(lsp.buf_get_clients(bufnr)) do
         if vim.tbl_contains(preferred_formatting_clients, client.name) then
             selected_client = client
             break
@@ -41,13 +41,25 @@ local formatting = function()
     end
 
     local params = lsp.util.make_formatting_params()
-    local result, err = selected_client.request_sync('textDocument/formatting', params, 5000, bufnr)
 
-    if result and result.result then
-        lsp.util.apply_text_edits(result.result, bufnr, client.offset_encoding or 'utf-16')
-    elseif err then
-        vim.notify('global.lsp.formatting: ' .. err, vim.log.levels.WARN)
-    end
+    selected_client.request('textDocument/formatting', params, function(err, res)
+        if err then
+            local err_msg = type(err) == 'string' and err or err.message
+            vim.notify('global.lsp.formatting: ' .. err_msg, vim.log.levels.WARN)
+            return
+        end
+
+        if not api.nvim_buf_is_loaded(bufnr) or api.nvim_buf_get_option(bufnr, 'modified') then
+            return
+        end
+
+        if res then
+            lsp.util.apply_text_edits(res, bufnr, selected_client.offset_encoding or 'utf-16')
+            api.nvim_buf_call(bufnr, function()
+                vim.cmd('silent noautocmd update')
+            end)
+        end
+    end, bufnr)
 end
 
 global.lsp = {
