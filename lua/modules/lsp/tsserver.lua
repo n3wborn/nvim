@@ -24,6 +24,8 @@ M.setup = function(on_attach, capabilities)
             u.buf_map(bufnr, 'n', 'gO', ':TSLspOrganize<CR>')
             u.buf_map(bufnr, 'n', 'gR', ':TSLspRenameFile<CR>')
             u.buf_map(bufnr, 'n', 'gI', ':TSLspImportAll<CR>')
+
+            client.resolved_capabilities.document_formatting = false
         end,
         flags = {
             debounce_text_changes = 150,
