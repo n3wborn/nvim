@@ -65,15 +65,11 @@ return require('packer').startup(function(use)
     })
 
     --- Format/Lint
-    use({
-        'mhartington/formatter.nvim',
-        config = [[ require('modules.plugins.formatter') ]],
-    })
+    use({ 'mhartington/formatter.nvim' })
 
     --- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        config = [[ require('modules.plugins.telescope') ]],
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
@@ -92,7 +88,6 @@ return require('packer').startup(function(use)
     use({
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = [[require('modules.plugins.treesitter')]],
     })
 
     use({
@@ -104,7 +99,7 @@ return require('packer').startup(function(use)
         ft = { 'typescript', 'typescriptreact' },
     })
 
-    use('nvim-treesitter/nvim-treesitter-textobjects')
+    use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
 
     -- Fzf
     use({
@@ -113,7 +108,7 @@ return require('packer').startup(function(use)
         run = './install --all',
     })
 
-    use('junegunn/fzf.vim')
+    use({ 'junegunn/fzf.vim' })
 
     -- Dev div tools
     use({
@@ -126,11 +121,7 @@ return require('packer').startup(function(use)
         'b0o/schemastore.nvim',
         'windwp/nvim-autopairs',
         'simrat39/rust-tools.nvim',
-    })
-
-    use({
         'norcalli/nvim-colorizer.lua',
-        config = [[ require('modules.plugins.colorizer') ]],
     })
 
     use({
@@ -141,15 +132,8 @@ return require('packer').startup(function(use)
     -- Git
     use({
         'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim',
-    })
-
-    use({
         'lewis6991/gitsigns.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim',
-        },
-        config = [[ require('modules.plugins.gitsigns') ]],
+        requires = 'nvim-lua/plenary.nvim',
     })
 
     -- Colors and nice stuff
@@ -170,11 +154,9 @@ return require('packer').startup(function(use)
     use({ 'arkav/lualine-lsp-progress' })
 
     -- Div
-    use({ 'tpope/vim-repeat' })
-
     use({
         'lukas-reineke/indent-blankline.nvim',
-        config = [[ require('modules.plugins.blankline') ]],
+        'tpope/vim-repeat',
     })
 
     -- to be removed once treesitter support solidity ?
