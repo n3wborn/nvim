@@ -78,11 +78,7 @@ u.command('LspSym', 'Telescope lsp_workspace_symbols')
 u.command('LspAct', 'Telescope lsp_code_actions')
 
 -- extensions mappings/commands
-require('telescope').load_extension('file_browser')
 require('telescope').load_extension('project')
 
 u.command('Project', 'Telescope project')
-u.command('Browser', 'Telescope file_browser')
-
-u.map('n', '<leader>e', '<cmd>Browser<CR>')
 u.map('n', '<C-p>', '<cmd>Project<CR>')

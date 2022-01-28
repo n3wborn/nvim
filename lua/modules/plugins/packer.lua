@@ -78,7 +78,6 @@ return require('packer').startup(function(use)
 
     use({
         'nvim-telescope/telescope-project.nvim',
-        'nvim-telescope/telescope-file-browser.nvim',
         requires = {
             'nvim-telescope/telescope.nvim',
         },
@@ -152,6 +151,14 @@ return require('packer').startup(function(use)
     })
 
     use({ 'arkav/lualine-lsp-progress' })
+
+    -- Explorer
+    use({
+        'kyazdani42/nvim-tree.lua',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+        },
+    })
 
     -- Div
     use({
