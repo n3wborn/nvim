@@ -173,4 +173,8 @@ M.get_system_output = function(cmd)
     return vim.split(vim.fn.system(cmd), '\n')
 end
 
+M.get_cwd = function()
+    return uv.cwd
+end
+
 return M

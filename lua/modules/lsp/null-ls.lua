@@ -28,7 +28,6 @@ local sources = {
     b.formatting.rustfmt,
     ---diagnostics
     b.diagnostics.shellcheck,
-    b.diagnostics.write_good,
     b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.diagnostics.tsc,
     b.diagnostics.php,
