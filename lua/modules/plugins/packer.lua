@@ -116,7 +116,7 @@ return require('packer').startup(function(use)
         'b3nj5m1n/kommentary',
         'junegunn/vim-easy-align',
         'tpope/vim-surround',
-        'folke/trouble.nvim',
+        'onsails/diaglist.nvim',
         'RRethy/vim-illuminate',
         'b0o/schemastore.nvim',
         'windwp/nvim-autopairs',
