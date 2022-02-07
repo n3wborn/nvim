@@ -45,6 +45,7 @@ o.foldexpr = 'nvim_treesitter#foldexpr()'
 o.syntax = 'enable'
 vim.cmd([[
     filetype indent plugin on
+    hi link illuminatedWord Visual
 ]])
 
 _G.global = {}
