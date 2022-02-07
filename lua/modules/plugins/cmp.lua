@@ -2,34 +2,7 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-
-local cmp_kinds = {
-    Class = ' ',
-    Color = ' ',
-    Constant = 'ﲀ ',
-    Constructor = ' ',
-    Enum = '練',
-    EnumMember = ' ',
-    Event = ' ',
-    Field = ' ',
-    File = '',
-    Folder = ' ',
-    Function = ' ',
-    Interface = 'ﰮ ',
-    Keyword = ' ',
-    Method = ' ',
-    Module = ' ',
-    Operator = '',
-    Property = ' ',
-    Reference = ' ',
-    Snippet = ' ',
-    Struct = ' ',
-    Text = ' ',
-    TypeParameter = ' ',
-    Unit = '塞',
-    Value = ' ',
-    Variable = ' ',
-}
+local lspkind = require('lspkind')
 
 require('luasnip.loaders.from_vscode').lazy_load()
 vim.api.nvim_command('hi LuasnipChoiceNodePassive cterm=italic')
@@ -43,21 +16,10 @@ cmp.setup({
         end,
     },
     formatting = {
-        format = function(entry, vim_item)
-            vim_item.kind = string.format('%s %s', cmp_kinds[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
-                nvim_lsp = '[Lsp]',
-                luasnip = '[Snp]',
-                buffer = '[Buf]',
-                nvim_lua = '[Lua]',
-                path = '[Pth]',
-                calc = '[Clc]',
-                emoji = '[Emj]',
-                rg = '[Rg]',
-            })[entry.source.name]
-
-            return vim_item
-        end,
+        format = lspkind.cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 50,
+        }),
     },
     mapping = {
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
