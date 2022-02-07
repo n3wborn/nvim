@@ -2,7 +2,6 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local lspkind = require('lspkind')
 
 require('luasnip.loaders.from_vscode').lazy_load()
 vim.api.nvim_command('hi LuasnipChoiceNodePassive cterm=italic')
@@ -16,10 +15,24 @@ cmp.setup({
         end,
     },
     formatting = {
-        format = lspkind.cmp_format({
-            mode = 'symbol_text',
-            maxwidth = 50,
-        }),
+        format = function(entry, vim_item)
+            vim_item = require('lspkind').cmp_format()(entry, vim_item)
+
+            local alias = {
+                buffer = 'buffer',
+                path = 'path',
+                nvim_lsp = 'LSP',
+                luasnip = 'LuaSnip',
+                nvim_lua = 'Lua',
+            }
+
+            if entry.source.name == 'nvim_lsp' then
+                vim_item.menu = entry.source.source.client.name
+            else
+                vim_item.menu = alias[entry.source.name] or entry.source.name
+            end
+            return vim_item
+        end,
     },
     mapping = {
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
