@@ -86,12 +86,17 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', map_opts)
     u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>', map_opts)
 
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd('autocmd BufWritePre <buffer> lua global.lsp.formatting()')
-    end
-
     if client.resolved_capabilities.signature_help then
         vim.cmd('autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()')
+    end
+
+    if client.supports_method('textDocument/formatting') then
+        vim.cmd([[
+        augroup LspFormatting
+            autocmd! * <buffer>
+            autocmd BufWritePost <buffer> silent! lua global.lsp.formatting(vim.fn.expand("<abuf>"))
+        augroup END
+        ]])
     end
 
     require('illuminate').on_attach(client)
@@ -100,18 +105,16 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-for _, server in
-    ipairs({
-        'bashls',
-        'eslint',
-        'jsonls',
-        'tsserver',
-        'null-ls',
-        'intelephense',
-        'null-ls',
-        'rust-analyzer',
-    })
-do
+for _, server in ipairs({
+    'bashls',
+    'eslint',
+    'jsonls',
+    'tsserver',
+    'null-ls',
+    'intelephense',
+    'null-ls',
+    'rust-analyzer',
+}) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end
 
