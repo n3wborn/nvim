@@ -105,18 +105,17 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-for _, server in
-    ipairs({
-        'bashls',
-        'eslint',
-        'jsonls',
-        'tsserver',
-        'null-ls',
-        'intelephense',
-        'null-ls',
-        'rust-analyzer',
-    })
-do
+-- stylua: ignore
+for _, server in ipairs({
+    'bashls',
+    'eslint',
+    'jsonls',
+    'tsserver',
+    'null-ls',
+    'intelephense',
+    'null-ls',
+    'rust-analyzer',
+}) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end
 
