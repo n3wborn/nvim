@@ -2,6 +2,14 @@
 local null_ls = require('null-ls')
 local b = null_ls.builtins
 
+local with_root_file = function(builtin, file)
+    return builtin.with({
+        condition = function(utils)
+            return utils.root_has_file(file)
+        end,
+    })
+end
+
 -- null-ls sources
 local sources = {
     ---actions
@@ -11,11 +19,7 @@ local sources = {
     b.formatting.prettier.with({
         disabled_filetypes = { 'typescript', 'typescriptreact' },
     }),
-    b.formatting.stylua.with({
-        condition = function(utils)
-            return utils.root_has_file('stylua.toml')
-        end,
-    }),
+    with_root_file(b.formatting.stylua, 'stylua.toml'),
     b.formatting.trim_whitespace,
     b.formatting.phpcsfixer.with({
         filetypes = { 'php' },
@@ -27,11 +31,12 @@ local sources = {
     b.formatting.sqlformat,
     b.formatting.rustfmt,
     ---diagnostics
-    b.diagnostics.shellcheck,
     b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.diagnostics.tsc,
     b.diagnostics.php,
     b.diagnostics.gitlint,
+    b.diagnostics.zsh,
+    b.diagnostics.trail_space,
 }
 
 local M = {
