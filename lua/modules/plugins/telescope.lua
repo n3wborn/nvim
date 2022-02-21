@@ -3,6 +3,8 @@ local u = require('utils')
 
 require('telescope').setup({
     defaults = {
+        prompt_prefix = '❯ ',
+        selection_caret = '❯ ',
         sorting_strategy = 'ascending',
         extensions = {
             fzf = {
@@ -76,6 +78,13 @@ u.command('LspRef', 'Telescope lsp_references')
 u.command('LspDef', 'Telescope lsp_definitions')
 u.command('LspSym', 'Telescope lsp_workspace_symbols')
 u.command('LspAct', 'Telescope lsp_code_actions')
+
+-- functions/classes
+u.command('GrepFuncs', ':lua require("telescope.builtin").live_grep({default_text="function"})<CR>')
+u.command('GrepClasses', ':lua require("telescope.builtin").live_grep({default_text="class"})<CR>')
+
+u.map('n', '<space>f', '<cmd>GrepFuncs<CR>')
+u.map('n', '<space>c', '<cmd>GrepClasses<CR>')
 
 -- extensions mappings/commands
 require('telescope').load_extension('project')
