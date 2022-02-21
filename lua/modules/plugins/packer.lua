@@ -129,6 +129,11 @@ return require('packer').startup(function(use)
         run = ':call doge#install()',
     })
 
+    use({
+        'kevinhwang91/nvim-bqf',
+        config = [[require('bqf').setup()]],
+    })
+
     -- Git
     use({
         'TimUntersberger/neogit',
