@@ -25,7 +25,7 @@ M.nvim_create_augroups = function(definitions)
 end
 
 M.map = function(mode, target, source, opts)
-    api.nvim_set_keymap(mode, target, source, get_map_options(opts))
+    vim.keymap.set(mode, target, source, get_map_options(opts))
 end
 
 for _, mode in ipairs({ 'n', 'o', 'i', 'x', 't' }) do
@@ -35,7 +35,10 @@ for _, mode in ipairs({ 'n', 'o', 'i', 'x', 't' }) do
 end
 
 M.buf_map = function(bufnr, mode, target, source, opts)
-    api.nvim_buf_set_keymap(bufnr or 0, mode, target, source, get_map_options(opts))
+    opts = opts or {}
+    opts.buffer = bufnr
+
+    M.map(mode, target, source, get_map_options(opts))
 end
 
 M.for_each = function(tbl, cb)
@@ -83,12 +86,8 @@ M.timer = {
     end,
 }
 
-M.command = function(name, fn)
-    vim.cmd(format('command! %s %s', name, fn))
-end
-
-M.lua_command = function(name, fn)
-    M.command(name, 'lua ' .. fn)
+M.command = function(name, fn, opts)
+    api.nvim_add_user_command(name, fn, opts or {})
 end
 
 M.augroup = function(name, event, fn, ft)
