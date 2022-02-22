@@ -1,8 +1,9 @@
+-- heavily inspired by jose-elias-alvarez config
+-- https://github.com/jose-elias-alvarez/dotfiles/blob/main/config/nvim/lua/lsp/init.lua
 local u = require('utils')
 local lsp = vim.lsp
 local api = vim.api
 local fn = vim.fn
-local map_opts = { silent = true, noremap = true }
 local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
 -- diagnostics
@@ -71,20 +72,35 @@ global.lsp = {
 local on_attach = function(client, bufnr)
     require('lsp_signature').on_attach()
 
+    -- commands
+    u.command('LspFormatting', vim.lsp.buf.formatting)
+    u.command('LspHover', vim.lsp.buf.hover)
+    u.command('LspDiagPrev', vim.diagnostic.goto_prev)
+    u.command('LspDiagNext', vim.diagnostic.goto_next)
+    u.command('LspDiagLine', vim.diagnostic.open_float)
+    u.command('LspDiagQuickfix', vim.diagnostic.setqflist)
+    u.command('LspSignatureHelp', vim.lsp.buf.signature_help)
+    u.command('LspTypeDef', vim.lsp.buf.type_definition)
+    u.command('LspRangeAct', vim.lsp.buf.range_code_action)
+    -- not sure why this is necessary?
+    u.command('LspRename', function()
+        vim.lsp.buf.rename()
+    end)
+
     --- bindings
-    u.buf_map(bufnr, 'n', '<leader>R', ':lua vim.lsp.buf.rename()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', 'K', ':lua vim.lsp.buf.hover()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', ']d', ':lua vim.diagnostic.goto_next()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '<leader>D', ':lua vim.diagnostic.open_float(nil, border_opts)<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '<leader>q', ':lua vim.diagnostic.setqflist()<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '<C-x><C-x>', ':lua vim.lsp.buf.signature_help()<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
+    u.buf_map(bufnr, 'n', 'gd', ':LspTypeDef<CR>')
+    u.buf_map(bufnr, 'n', 'K', ':LspHover<CR>')
+    u.buf_map(bufnr, 'n', '[d', ':LspDiagPrev<CR>')
+    u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
+    u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
+    u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
+    u.buf_map(bufnr, 'n', '<C-x><C-x>', ':LspSignatureHelp<CR>')
 
     --- telescope
-    u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', map_opts)
-    u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>', map_opts)
+    u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
+    u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
+    u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>')
 
     if client.resolved_capabilities.signature_help then
         vim.cmd('autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()')
