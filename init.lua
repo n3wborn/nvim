@@ -40,8 +40,7 @@ o.pumblend = 10
 o.shada = "!,'100,<50,s10,h,:1000,/1000"
 o.lazyredraw = true
 o.foldlevel = 99
-o.foldmethod = 'expr'
-o.foldexpr = 'nvim_treesitter#foldexpr()'
+o.foldmethod = 'indent'
 o.syntax = 'enable'
 vim.cmd([[
     filetype indent plugin on
