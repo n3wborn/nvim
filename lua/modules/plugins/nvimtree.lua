@@ -25,4 +25,3 @@ require('nvim-tree').setup(config)
 -- mappings
 local u = require('utils')
 u.map('n', '<leader>e', ':NvimTreeToggle<CR>')
-u.map('n', '<leader>r', ':NvimTreeRefresh<CR>')
