@@ -81,6 +81,7 @@ local on_attach = function(client, bufnr)
     u.command('LspDiagQuickfix', vim.diagnostic.setqflist)
     u.command('LspSignatureHelp', vim.lsp.buf.signature_help)
     u.command('LspTypeDef', vim.lsp.buf.type_definition)
+    u.command('LspDef', vim.lsp.buf.definition)
     u.command('LspRangeAct', vim.lsp.buf.range_code_action)
     -- not sure why this is necessary?
     u.command('LspRename', function()
@@ -89,7 +90,7 @@ local on_attach = function(client, bufnr)
 
     --- bindings
     u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
-    u.buf_map(bufnr, 'n', 'gd', ':LspTypeDef<CR>')
+    u.buf_map(bufnr, 'n', 'gd', ':LspDef<CR>')
     u.buf_map(bufnr, 'n', 'K', ':LspHover<CR>')
     u.buf_map(bufnr, 'n', '[d', ':LspDiagPrev<CR>')
     u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
