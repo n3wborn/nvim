@@ -74,6 +74,7 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
+            'kdheepak/lazygit.nvim',
         },
     })
 
@@ -136,7 +137,6 @@ return require('packer').startup(function(use)
 
     -- Git
     use({
-        'TimUntersberger/neogit',
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
     })
