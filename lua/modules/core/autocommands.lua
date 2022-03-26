@@ -45,3 +45,8 @@ autocmd('CursorHold', {
         vim.diagnostic.open_float(nil, { focusable = false, scope = 'cursor' })
     end,
 })
+
+autocmd('BufEnter', {
+    desc = 'makes sure any opened buffer inside a git repo will be tracked by lazygit',
+    command = [[lua require('lazygit.utils').project_root_dir()]],
+})

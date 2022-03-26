@@ -88,6 +88,10 @@ u.map('n', '<space>c', '<cmd>GrepClasses<CR>')
 
 -- extensions mappings/commands
 require('telescope').load_extension('project')
+require('telescope').load_extension('lazygit')
 
 u.command('Project', 'Telescope project')
 u.map('n', '<C-p>', '<cmd>Project<CR>')
+
+u.command('Lazygit', 'Telescope lazygit')
+u.map('n', '<space>G', '<cmd>Lazygit<CR>')
