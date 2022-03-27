@@ -3,7 +3,6 @@
 -- config
 local config = {
     -- open_on_setup = true,
-    auto_close = true,
     filters = {
         dotfiles = false,
         custom = { 'node_modules', '.cache', 'build', 'var', 'vendor' },
