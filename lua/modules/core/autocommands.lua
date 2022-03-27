@@ -50,3 +50,8 @@ autocmd('BufEnter', {
     desc = 'makes sure any opened buffer inside a git repo will be tracked by lazygit',
     command = [[lua require('lazygit.utils').project_root_dir()]],
 })
+
+autocmd('BufEnter', {
+    desc = 'Quit nvim if nvim-tree is the last buffer',
+    command = 'if winnr("$") == 1 && bufname() == "NvimTree_" . tabpagenr() | quit | endif',
+})
