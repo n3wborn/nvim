@@ -108,12 +108,17 @@ local on_attach = function(client, bufnr)
     end
 
     if client.supports_method('textDocument/formatting') then
-        vim.cmd([[
-        augroup LspFormatting
-            autocmd! * <buffer>
-            autocmd BufWritePost <buffer> silent! lua global.lsp.formatting(vim.fn.expand("<abuf>"))
-        augroup END
-        ]])
+        local lsp_format_buf = function()
+            global.lsp.formatting(vim.fn.expand('<abuf>'))
+        end
+
+        lsp_au_group = vim.api.nvim_create_augroup('LspFormatting', { clear = false })
+
+        vim.api.nvim_create_autocmd({ 'BufWritePost <buffer>' }, {
+            desc = 'Trigger LSP Autoformat on save',
+            callback = lsp_format_buf,
+            group = 'LspFormatting',
+        })
     end
 
     require('illuminate').on_attach(client)

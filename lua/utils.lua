@@ -12,18 +12,6 @@ end
 
 local M = {}
 
-M.nvim_create_augroups = function(definitions)
-    for group_name, definition in pairs(definitions) do
-        api.nvim_command('augroup ' .. group_name)
-        api.nvim_command('autocmd!')
-        for _, def in ipairs(definition) do
-            local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-            api.nvim_command(command)
-        end
-        api.nvim_command('augroup END')
-    end
-end
-
 M.map = function(mode, target, source, opts)
     vim.keymap.set(mode, target, source, get_map_options(opts))
 end
