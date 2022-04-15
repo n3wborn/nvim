@@ -34,14 +34,31 @@ cmp.setup({
             return vim_item
         end,
     },
-    mapping = {
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-e>'] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        }),
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4)),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4)),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete()),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-n>'] = {
+            c = function(fallback)
+                local cmp = require('cmp')
+                if cmp.visible() then
+                    cmp.select_next_item()
+                else
+                    fallback()
+                end
+            end,
+        },
+        ['<C-p>'] = {
+            c = function(fallback)
+                local cmp = require('cmp')
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                else
+                    fallback()
+                end
+            end,
+        },
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ['<Tab>'] = function(fallback)
             if cmp.visible() then
@@ -61,7 +78,7 @@ cmp.setup({
                 fallback()
             end
         end,
-    },
+    }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp', priority = 10 },
         { name = 'luasnip' },
