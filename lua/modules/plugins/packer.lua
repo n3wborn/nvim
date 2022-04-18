@@ -91,15 +91,6 @@ return require('packer').startup(function(use)
         run = ':TSUpdate',
     })
 
-    use({
-        'windwp/nvim-ts-autotag',
-        ft = { 'typescript', 'typescriptreact' },
-    })
-    use({
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        ft = { 'typescript', 'typescriptreact' },
-    })
-
     use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
 
     -- Fzf
@@ -115,7 +106,6 @@ return require('packer').startup(function(use)
     use({
         'editorconfig/editorconfig-vim',
         'b3nj5m1n/kommentary',
-        'junegunn/vim-easy-align',
         'tpope/vim-surround',
         'onsails/diaglist.nvim',
         'RRethy/vim-illuminate',
@@ -123,11 +113,6 @@ return require('packer').startup(function(use)
         'windwp/nvim-autopairs',
         'simrat39/rust-tools.nvim',
         'norcalli/nvim-colorizer.lua',
-    })
-
-    use({
-        'kkoomen/vim-doge',
-        run = ':call doge#install()',
     })
 
     use({
@@ -171,9 +156,6 @@ return require('packer').startup(function(use)
         'lukas-reineke/indent-blankline.nvim',
         'tpope/vim-repeat',
     })
-
-    -- to be removed once treesitter support solidity ?
-    use({ 'tomlion/vim-solidity' })
 
     if packer_bootstrap then
         require('packer').sync()
