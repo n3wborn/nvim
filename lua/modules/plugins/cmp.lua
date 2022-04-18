@@ -34,6 +34,16 @@ cmp.setup({
             return vim_item
         end,
     },
+    window = {
+        completion = {
+            border = 'rounded',
+            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+        },
+        documentation = {
+            border = 'rounded',
+            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+        },
+    },
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4)),
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4)),
