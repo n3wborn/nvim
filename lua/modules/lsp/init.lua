@@ -163,6 +163,7 @@ for _, server in ipairs({
     'null-ls',
     'intelephense',
     'rust-analyzer',
+    'gopls',
 }) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end

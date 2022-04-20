@@ -120,6 +120,8 @@ return require('packer').startup(function(use)
         config = [[require('bqf').setup()]],
     })
 
+    use({ 'ray-x/go.nvim' })
+
     -- Git
     use({
         'lewis6991/gitsigns.nvim',
