@@ -42,6 +42,7 @@ o.lazyredraw = true
 o.foldlevel = 99
 o.foldmethod = 'indent'
 o.syntax = 'enable'
+o.redrawtime = 3000
 vim.cmd([[
     filetype indent plugin on
     hi link illuminatedWord Visual
