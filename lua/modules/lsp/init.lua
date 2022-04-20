@@ -13,6 +13,34 @@ fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn'
 fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
 fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
+vim.lsp.protocol.CompletionItemKind = {
+    Text = ' [text]',
+    Method = ' [method]',
+    Function = ' [function]',
+    Constructor = ' [constructor]',
+    Field = 'ﰠ [field]',
+    Variable = ' [variable]',
+    Class = ' [class]',
+    Interface = ' [interface]',
+    Module = ' [module]',
+    Property = ' [property]',
+    Unit = ' [unit]',
+    Value = ' [value]',
+    Enum = ' [enum]',
+    Keyword = ' [key]',
+    Snippet = '﬌ [snippet]',
+    Color = ' [color]',
+    File = ' [file]',
+    Reference = ' [reference]',
+    Folder = ' [folder]',
+    EnumMember = ' [enum member]',
+    Constant = ' [constant]',
+    Struct = ' [struct]',
+    Event = '⌘ [event]',
+    Operator = ' [operator]',
+    TypeParameter = ' [type]',
+}
+
 -- handlers
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
