@@ -15,23 +15,20 @@ cmp.setup({
         end,
     },
     formatting = {
-        format = function(entry, vim_item)
-            vim_item = require('lspkind').cmp_format()(entry, vim_item)
-
-            local alias = {
-                buffer = 'buffer',
-                path = 'path',
-                nvim_lsp = 'LSP',
-                luasnip = 'LuaSnip',
-                nvim_lua = 'Lua',
+        format = function(entry, item)
+            local menu_map = {
+                buffer = '[Buf]',
+                nvim_lsp = '[LSP]',
+                nvim_lua = '[API]',
+                path = '[Path]',
+                luasnip = '[Snip]',
+                rg = '[RG]',
             }
 
-            if entry.source.name == 'nvim_lsp' then
-                vim_item.menu = entry.source.source.client.name
-            else
-                vim_item.menu = alias[entry.source.name] or entry.source.name
-            end
-            return vim_item
+            item.menu = menu_map[entry.source.name] or string.format('[%s]', entry.source.name)
+            item.kind = vim.lsp.protocol.CompletionItemKind[item.kind]
+
+            return item
         end,
     },
     window = {
