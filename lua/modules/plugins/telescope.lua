@@ -89,9 +89,22 @@ u.map('n', '<space>c', '<cmd>GrepClasses<CR>')
 -- extensions mappings/commands
 require('telescope').load_extension('project')
 require('telescope').load_extension('lazygit')
+require('telescope').load_extension('gh')
 
 u.command('Project', 'Telescope project')
 u.map('n', '<C-p>', '<cmd>Project<CR>')
 
 u.command('Lazygit', 'Telescope lazygit')
 u.map('n', '<space>G', '<cmd>Lazygit<CR>')
+
+u.command('GithubIssues', 'Telescope gh issues')
+u.map('n', '<space>gi', '<cmd>GithubIssues<CR>')
+
+u.command('GithubPr', 'Telescope gh pull_request')
+u.map('n', '<space>gp', '<cmd>GithubPr<CR>')
+
+u.command('GithubGist', 'Telescope gh gist')
+u.map('n', '<space>gg', '<cmd>GithubGist<CR>')
+
+u.command('GithubRun', 'Telescope gh run')
+u.map('n', '<space>gr', '<cmd>GithubRun<CR>')
