@@ -74,6 +74,7 @@ return require('packer').startup(function(use)
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
             'kdheepak/lazygit.nvim',
+            'nvim-telescope/telescope-github.nvim',
         },
     })
 
