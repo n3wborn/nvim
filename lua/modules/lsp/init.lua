@@ -98,7 +98,7 @@ global.lsp = {
 
 --- on_attach
 local on_attach = function(client, bufnr)
-    require('lsp_signature').on_attach()
+    bufnr = tonumber(bufnr) or api.nvim_get_current_buf()
 
     -- commands
     u.command('LspFormatting', vim.lsp.buf.formatting)
@@ -124,15 +124,36 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
     u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
     u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
-    u.buf_map(bufnr, 'n', '<C-x><C-x>', ':LspSignatureHelp<CR>')
 
     --- telescope
     u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
     u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
     u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>')
 
-    if client.resolved_capabilities.signature_help then
-        vim.cmd('autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()')
+    if client.supports_method('textDocument/signatureHelp') then
+        require('lsp_signature').on_attach({
+            bind = true,
+            doc_lines = 15,
+            floating_window = true,
+            floating_window_above_cur_line = true,
+            floating_window_off_x = 1,
+            floating_window_off_y = 1,
+            fix_pos = false,
+            hint_enable = false,
+            hi_parameter = 'DiagnosticVirtualTextHint',
+            max_height = 25,
+            max_width = 300,
+            handler_opts = {
+                border = 'rounded',
+            },
+            always_trigger = false,
+            auto_close_after = nil,
+            extra_trigger_chars = {},
+            zindex = 200, -- on top of all floating windows, set to <= 50 to send it to bottom
+            padding = ' ',
+            timer_interval = 200,
+            toggle_key = '<M-x>',
+        }, bufnr)
     end
 
     if client.supports_method('textDocument/formatting') then
