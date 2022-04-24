@@ -88,23 +88,6 @@ M.input = function(keys, mode)
     vim.api.nvim_feedkeys(M.t(keys), mode or 'i', true)
 end
 
-M.buf_augroup = function(name, event, fn)
-    api.nvim_exec(
-        format(
-            [[
-    augroup %s
-        autocmd! * <buffer>
-        autocmd %s <buffer> %s
-    augroup END
-    ]],
-            name,
-            event,
-            fn
-        ),
-        false
-    )
-end
-
 M.warn = function(msg)
     api.nvim_echo({ { msg, 'WarningMsg' } }, true, {})
 end
