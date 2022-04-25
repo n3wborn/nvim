@@ -163,7 +163,7 @@ local on_attach = function(client, bufnr)
 
         lsp_au_group = vim.api.nvim_create_augroup('LspFormatting', { clear = false })
 
-        vim.api.nvim_create_autocmd({ 'BufWritePost <buffer>' }, {
+        vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
             desc = 'Trigger LSP Autoformat on save',
             callback = lsp_format_buf,
             group = 'LspFormatting',
