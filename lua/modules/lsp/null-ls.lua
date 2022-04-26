@@ -30,6 +30,7 @@ local sources = {
     b.formatting.fixjson,
     b.formatting.sqlformat,
     b.formatting.rustfmt,
+    b.formatting.goimports,
     ---diagnostics
     b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.diagnostics.tsc,
