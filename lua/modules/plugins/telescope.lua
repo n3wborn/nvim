@@ -77,7 +77,6 @@ u.map('n', '<Leader>ls', '<cmd>LspSym<CR>')
 u.command('LspRef', 'Telescope lsp_references')
 u.command('LspDef', 'Telescope lsp_definitions')
 u.command('LspSym', 'Telescope lsp_workspace_symbols')
-u.command('LspAct', 'Telescope lsp_code_actions')
 
 -- functions/classes
 u.command('GrepFuncs', ':lua require("telescope.builtin").live_grep({default_text="function"})<CR>')
