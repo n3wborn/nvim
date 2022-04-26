@@ -129,7 +129,7 @@ local on_attach = function(client, bufnr)
     --- telescope
     u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
     u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
-    u.buf_map(bufnr, 'n', '<leader>la', ':Telescope lsp_code_actions<CR>')
+    u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
 
     if client.supports_method('textDocument/signatureHelp') then
         require('lsp_signature').on_attach({
