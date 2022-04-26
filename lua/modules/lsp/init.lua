@@ -111,6 +111,7 @@ local on_attach = function(client, bufnr)
     u.command('LspTypeDef', vim.lsp.buf.type_definition)
     u.command('LspDef', vim.lsp.buf.definition)
     u.command('LspRangeAct', vim.lsp.buf.range_code_action)
+    u.command('LspAct', vim.lsp.buf.range_code_action)
     -- not sure why this is necessary?
     u.command('LspRename', function()
         vim.lsp.buf.rename()
