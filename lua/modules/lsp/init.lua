@@ -45,50 +45,24 @@ vim.lsp.protocol.CompletionItemKind = {
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
--- use lsp formatting if it's available (and if it's good)
--- otherwise, fall back to null-ls
-local preferred_formatting_clients = { 'eslint' }
-local fallback_formatting_client = 'null-ls'
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
-local formatting = function(bufnr)
-    bufnr = tonumber(bufnr) or api.nvim_get_current_buf()
-
-    local selected_client
-    for _, client in ipairs(lsp.buf_get_clients(bufnr)) do
-        if vim.tbl_contains(preferred_formatting_clients, client.name) then
-            selected_client = client
-            break
-        end
-
-        if client.name == fallback_formatting_client then
-            selected_client = client
-        end
-    end
-
-    if not selected_client then
-        return
-    end
-
-    local params = lsp.util.make_formatting_params()
-
-    selected_client.request('textDocument/formatting', params, function(err, res)
-        if err then
-            local err_msg = type(err) == 'string' and err or err.message
-            vim.notify('global.lsp.formatting: ' .. err_msg, vim.log.levels.WARN)
-            return
-        end
-
-        if not api.nvim_buf_is_loaded(bufnr) or api.nvim_buf_get_option(bufnr, 'modified') then
-            return
-        end
-
-        if res then
-            lsp.util.apply_text_edits(res, bufnr, selected_client.offset_encoding or 'utf-16')
-            api.nvim_buf_call(bufnr, function()
-                vim.cmd('silent noautocmd update')
-            end)
-        end
-    end, bufnr)
+local lsp_formatting = function(bufnr)
+    lsp.buf.format({
+        bufnr = bufnr,
+        filter = function(clients)
+            return vim.tbl_filter(function(client)
+                if client.name == 'eslint' then
+                    return true
+                end
+                if client.name == 'null-ls' then
+                    return not u.table.some(clients, function(_, other_client)
+                        return other_client.name == 'eslint'
+                    end)
+                end
+            end, clients)
+        end,
+    })
 end
 
 global.lsp = {
@@ -98,10 +72,7 @@ global.lsp = {
 
 --- on_attach
 local on_attach = function(client, bufnr)
-    bufnr = tonumber(bufnr) or api.nvim_get_current_buf()
-
     -- commands
-    u.command('LspFormatting', vim.lsp.buf.formatting)
     u.command('LspHover', vim.lsp.buf.hover)
     u.command('LspDiagPrev', vim.diagnostic.goto_prev)
     u.command('LspDiagNext', vim.diagnostic.goto_next)
@@ -131,43 +102,16 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
     u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
 
-    if client.supports_method('textDocument/signatureHelp') then
-        require('lsp_signature').on_attach({
-            bind = true,
-            doc_lines = 15,
-            floating_window = true,
-            floating_window_above_cur_line = true,
-            floating_window_off_x = 1,
-            floating_window_off_y = 1,
-            fix_pos = false,
-            hint_enable = false,
-            hi_parameter = 'DiagnosticVirtualTextHint',
-            max_height = 25,
-            max_width = 300,
-            handler_opts = {
-                border = 'rounded',
-            },
-            always_trigger = false,
-            auto_close_after = nil,
-            extra_trigger_chars = {},
-            zindex = 200, -- on top of all floating windows, set to <= 50 to send it to bottom
-            padding = ' ',
-            timer_interval = 200,
-            toggle_key = '<M-x>',
-        }, bufnr)
-    end
-
     if client.supports_method('textDocument/formatting') then
-        local lsp_format_buf = function()
-            global.lsp.formatting(vim.fn.expand('<abuf>'))
-        end
+        u.buf_command(bufnr, 'LspFormatting', function()
+            lsp_formatting(bufnr)
+        end)
 
-        lsp_au_group = vim.api.nvim_create_augroup('LspFormatting', { clear = false })
-
-        vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-            desc = 'Trigger LSP Autoformat on save',
-            callback = lsp_format_buf,
-            group = 'LspFormatting',
+        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        vim.api.nvim_create_autocmd('BufWritePre', {
+            group = augroup,
+            buffer = bufnr,
+            command = 'LspFormatting',
         })
     end
 

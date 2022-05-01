@@ -3,10 +3,7 @@ local M = {}
 M.setup = function(on_attach, capabilities)
     require('lspconfig').gopls.setup({
         capabilities = capabilities,
-        on_attach = function(client)
-            client.resolved_capabilities.document_formatting = false
-            on_attach(client)
-        end,
+        on_attach = on_attach,
         settings = {
             gopls = {
                 usePlaceholders = true,
