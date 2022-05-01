@@ -41,7 +41,6 @@ o.shada = "!,'100,<50,s10,h,:1000,/1000"
 o.lazyredraw = true
 o.foldlevel = 99
 o.foldmethod = 'indent'
-o.syntax = 'enable'
 o.redrawtime = 3000
 vim.cmd([[
     filetype indent plugin on
