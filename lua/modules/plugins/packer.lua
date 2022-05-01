@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
         'neovim/nvim-lspconfig',
         'ray-x/lsp_signature.nvim',
         -- 'jose-elias-alvarez/nvim-lsp-ts-utils',
-        'jose-elias-alvarez/typescript.nvim'
+        'jose-elias-alvarez/typescript.nvim',
     })
 
     use({
