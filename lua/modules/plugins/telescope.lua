@@ -28,7 +28,6 @@ require('telescope').setup({
         },
         mappings = {
             i = {
-                ['<ESC>'] = require('telescope.actions').close,
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
             },
@@ -89,6 +88,7 @@ u.map('n', '<space>c', '<cmd>GrepClasses<CR>')
 require('telescope').load_extension('project')
 require('telescope').load_extension('lazygit')
 require('telescope').load_extension('gh')
+require('telescope').load_extension('ui-select')
 
 u.command('Project', 'Telescope project')
 u.map('n', '<C-p>', '<cmd>Project<CR>')
