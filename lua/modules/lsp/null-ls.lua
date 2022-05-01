@@ -15,6 +15,9 @@ local sources = {
     ---actions
     b.code_actions.gitsigns,
     b.code_actions.gitrebase,
+    b.code_actions.eslint,
+    b.code_actions.refactoring,
+    b.code_actions.shellcheck,
     ---formatting
     b.formatting.prettier.with({
         disabled_filetypes = { 'typescript', 'typescriptreact' },
