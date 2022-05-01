@@ -45,7 +45,6 @@ local M = {
         require('null-ls').setup({
             sources = sources,
             on_attach = on_attach,
-            capabilities = capabilities,
         })
     end,
 }

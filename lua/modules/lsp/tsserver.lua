@@ -9,28 +9,19 @@ local ts_utils_settings = {
 local M = {}
 
 M.setup = function(on_attach, capabilities)
-    local lspconfig = require('lspconfig')
-    local ts_utils = require('nvim-lsp-ts-utils')
+    require('typescript').setup({
+        server = {
+            on_attach = function(client, bufnr)
+                u.buf_map(bufnr, 'n', 'gs', ':TypescriptRemoveUnused<CR>')
+                u.buf_map(bufnr, 'n', 'gS', ':TypescriptOrganizeImports<CR>')
+                u.buf_map(bufnr, 'n', 'go', ':TypescriptAddMissingImports<CR>')
+                u.buf_map(bufnr, 'n', 'gA', ':TypescriptFixAll<CR>')
+                u.buf_map(bufnr, 'n', 'gI', ':TypescriptRenameFile<CR>')
 
-    lspconfig['tsserver'].setup({
-        root_dir = lspconfig.util.root_pattern('package.json'),
-        init_options = ts_utils.init_options,
-        on_attach = function(client, bufnr)
-            on_attach(client, bufnr)
-
-            ts_utils.setup(ts_utils_settings)
-            ts_utils.setup_client(client)
-
-            u.buf_map(bufnr, 'n', 'gO', ':TSLspOrganize<CR>')
-            u.buf_map(bufnr, 'n', 'gR', ':TSLspRenameFile<CR>')
-            u.buf_map(bufnr, 'n', 'gI', ':TSLspImportAll<CR>')
-
-            client.resolved_capabilities.document_formatting = false
-        end,
-        flags = {
-            debounce_text_changes = 150,
+                on_attach(client, bufnr)
+            end,
+            capabilities = capabilities,
         },
-        capabilities = capabilities,
     })
 end
 
