@@ -101,6 +101,7 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
     u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
     u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
+    u.buf_map(bufnr, 'n', '<leader>lA', '<cmd>LspRangeAct<CR>')
 
     if client.supports_method('textDocument/formatting') then
         u.buf_command(bufnr, 'LspFormatting', function()
