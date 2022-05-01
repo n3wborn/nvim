@@ -34,7 +34,8 @@ return require('packer').startup(function(use)
     use({
         'neovim/nvim-lspconfig',
         'ray-x/lsp_signature.nvim',
-        'jose-elias-alvarez/nvim-lsp-ts-utils',
+        -- 'jose-elias-alvarez/nvim-lsp-ts-utils',
+        'jose-elias-alvarez/typescript.nvim'
     })
 
     use({
@@ -54,6 +55,7 @@ return require('packer').startup(function(use)
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
+        'hrsh7th/cmp-nvim-lsp-signature-help',
     })
 
     -- Snippets
