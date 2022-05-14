@@ -2,18 +2,16 @@
 -- https://github.com/jose-elias-alvarez/dotfiles/blob/main/config/nvim/lua/lsp/init.lua
 local u = require('utils')
 local lsp = vim.lsp
-local api = vim.api
-local fn = vim.fn
 local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
 -- diagnostics
 vim.diagnostic.config({ virtual_text = false, float = border_opts })
-fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
-fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
-fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
-fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
+vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
-vim.lsp.protocol.CompletionItemKind = {
+lsp.protocol.CompletionItemKind = {
     Text = ' [text]',
     Method = ' [method]',
     Function = ' [function]',
@@ -64,11 +62,6 @@ local lsp_formatting = function(bufnr)
         end,
     })
 end
-
-global.lsp = {
-    border_opts = border_opts,
-    formatting = formatting,
-}
 
 --- on_attach
 local on_attach = function(client, bufnr)
