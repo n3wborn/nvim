@@ -66,18 +66,17 @@ end
 --- on_attach
 local on_attach = function(client, bufnr)
     -- commands
-    u.command('LspHover', vim.lsp.buf.hover)
-    u.command('LspDiagPrev', vim.diagnostic.goto_prev)
-    u.command('LspDiagNext', vim.diagnostic.goto_next)
-    u.command('LspDiagLine', vim.diagnostic.open_float)
-    u.command('LspDiagQuickfix', vim.diagnostic.setqflist)
-    u.command('LspSignatureHelp', vim.lsp.buf.signature_help)
-    u.command('LspTypeDef', vim.lsp.buf.type_definition)
-    u.command('LspDef', vim.lsp.buf.definition)
-    u.command('LspRangeAct', vim.lsp.buf.range_code_action)
-    u.command('LspAct', vim.lsp.buf.range_code_action)
-    -- not sure why this is necessary?
-    u.command('LspRename', function()
+    u.buf_command(bufnr, 'LspHover', vim.lsp.buf.hover)
+    u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
+    u.buf_command(bufnr, 'LspDiagNext', vim.diagnostic.goto_next)
+    u.buf_command(bufnr, 'LspDiagLine', vim.diagnostic.open_float)
+    u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
+    u.buf_command(bufnr, 'LspSignatureHelp', vim.lsp.buf.signature_help)
+    u.buf_command(bufnr, 'LspTypeDef', vim.lsp.buf.type_definition)
+    u.buf_command(bufnr, 'LspDef', vim.lsp.buf.definition)
+    u.buf_command(bufnr, 'LspRangeAct', vim.lsp.buf.range_code_action)
+    u.buf_command(bufnr, 'LspAct', vim.lsp.buf.range_code_action)
+    u.buf_command(bufnr, 'LspRename', function()
         vim.lsp.buf.rename()
     end)
 
@@ -89,6 +88,7 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
     u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
     u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
+    u.buf_map(bufnr, 'i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>')
 
     --- telescope
     u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
