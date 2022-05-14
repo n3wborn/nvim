@@ -43,23 +43,15 @@ lsp.protocol.CompletionItemKind = {
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
-local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
 local lsp_formatting = function(bufnr)
-    lsp.buf.format({
-        bufnr = bufnr,
+    vim.lsp.buf.format({
         filter = function(clients)
+            -- only format using null-ls
             return vim.tbl_filter(function(client)
-                if client.name == 'eslint' then
-                    return true
-                end
-                if client.name == 'null-ls' then
-                    return not u.table.some(clients, function(_, other_client)
-                        return other_client.name == 'eslint'
-                    end)
-                end
+                return client.name == 'null-ls'
             end, clients)
         end,
+        bufnr = bufnr,
     })
 end
 
@@ -97,15 +89,13 @@ local on_attach = function(client, bufnr)
     u.buf_map(bufnr, 'n', '<leader>lA', '<cmd>LspRangeAct<CR>')
 
     if client.supports_method('textDocument/formatting') then
-        u.buf_command(bufnr, 'LspFormatting', function()
-            lsp_formatting(bufnr)
-        end)
-
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        vim.api.nvim_clear_autocmds({ group = lsp_formatting, buffer = bufnr })
         vim.api.nvim_create_autocmd('BufWritePre', {
-            group = augroup,
+            group = lsp_formatting,
             buffer = bufnr,
-            command = 'LspFormatting',
+            callback = function()
+                lsp_formatting(bufnr)
+            end,
         })
     end
 
