@@ -3,10 +3,15 @@ local M = {
         local lspconfig = require('lspconfig')
 
         lspconfig['eslint'].setup({
-            root_dir = lspconfig.util.root_pattern('.eslintrc', '.eslintrc.js', '.eslintrc.json'),
+            root_dir = lspconfig.util.root_pattern(
+                '.eslintrc.js',
+                '.eslintrc.cjs',
+                '.eslintrc.yaml',
+                '.eslintrc.yml',
+                '.eslintrc.json'
+            ),
             on_attach = function(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = true
-                client.server_capabilities.documentRangeFormattingProvider = true
+                client.server_capabilities.documentFormattingProvider = false
                 on_attach(client, bufnr)
             end,
             capabilities = capabilities,
@@ -25,31 +30,15 @@ local M = {
                     mode = 'all',
                 },
                 format = {
-                    enable = true,
+                    enable = false,
                 },
-                nodePath = '',
-                onIgnoredFiles = 'off',
+                useESLintClass = true,
                 packageManager = 'yarn',
-                quiet = false,
-                rulesCustomizations = {},
-                run = 'onType',
-                useESLintClass = false,
-                validate = 'on',
                 workingDirectory = {
                     mode = 'location',
                 },
             },
-            handlers = {
-                -- this error shows up occasionally when formatting
-                -- formatting actually works, so this will supress it
-                ['window/showMessageRequest'] = function(_, result)
-                    if result.message:find('ENOENT') then
-                        return vim.NIL
-                    end
-
-                    return vim.lsp.handlers['window/showMessageRequest'](nil, result)
-                end,
-            },
+            root_dir = require('lspconfig.util').find_git_ancestor,
         })
     end,
 }

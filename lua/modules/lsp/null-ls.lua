@@ -19,6 +19,7 @@ local sources = {
     b.code_actions.refactoring,
     b.code_actions.shellcheck,
     ---formatting
+    b.formatting.eslint_d,
     b.formatting.prettier.with({
         disabled_filetypes = { 'typescript', 'typescriptreact' },
     }),

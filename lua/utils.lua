@@ -77,24 +77,6 @@ M.command = function(name, fn, opts)
     api.nvim_create_user_command(name, fn, opts or {})
 end
 
-M.augroup = function(name, event, fn, ft)
-    api.nvim_exec(
-        format(
-            [[
-    augroup %s
-        autocmd!
-        autocmd %s %s %s
-    augroup END
-    ]],
-            name,
-            event,
-            ft or '*',
-            fn
-        ),
-        false
-    )
-end
-
 M.t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
