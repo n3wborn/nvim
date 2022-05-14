@@ -154,6 +154,9 @@ return require('packer').startup(function(use)
         },
     })
 
+    -- Markdown
+    use({ 'davidgranstrom/nvim-markdown-preview' })
+
     -- Div
     use({
         'lukas-reineke/indent-blankline.nvim',

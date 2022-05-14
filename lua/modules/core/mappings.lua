@@ -67,3 +67,7 @@ u.map('v', '<leader>d', '"_d')
 vim.g.kommentary_create_default_mappings = false
 u.map('n', '<C-_>', '<Plug>kommentary_line_default', {})
 u.map('x', '<C-_>', '<Plug>kommentary_visual_default', {})
+
+-- nvim-markdown-preview
+vim.g.nvim_markdown_preview_theme = 'github'
+u.map('n', '<leader>P', '<cmd>MarkdownPreview<cr>')
