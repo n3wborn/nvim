@@ -11,6 +11,7 @@ vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignW
 vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
+-- lsp comp items
 lsp.protocol.CompletionItemKind = {
     Text = ' [text]',
     Method = ' [method]',
@@ -43,6 +44,7 @@ lsp.protocol.CompletionItemKind = {
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
 lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
+-- lsp formatting
 local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
 local lsp_formatting = function(bufnr)
@@ -113,9 +115,11 @@ local on_attach = function(client, bufnr)
     require('illuminate').on_attach(client)
 end
 
+-- capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+-- required servers
 for _, server in ipairs({
     'bashls',
     'eslint',
