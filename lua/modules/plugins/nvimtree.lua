@@ -2,7 +2,6 @@
 
 -- config
 local config = {
-    -- open_on_setup = true,
     filters = {
         dotfiles = false,
         custom = { 'node_modules', '.cache', 'build', 'var', 'vendor' },
@@ -16,6 +15,15 @@ local config = {
         enable = true,
         update_cwd = false,
     },
+    diagnostics = {
+        icons = {
+            error = '✗',
+            warning = '!',
+            info = '',
+            hint = '',
+        },
+    },
+    reload_on_bufenter = true,
 }
 
 -- setup
