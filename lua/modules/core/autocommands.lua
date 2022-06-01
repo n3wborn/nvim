@@ -76,3 +76,9 @@ autocmd({ 'BufReadPost' }, {
     end,
     group = vim.api.nvim_create_augroup('LastPosition', { clear = true }),
 })
+
+autocmd({ 'BufWritePre' }, {
+    desc = 'trim buffer whitespaces',
+    pattern = '*',
+    command = 'TrimTrailingWhitespace',
+})

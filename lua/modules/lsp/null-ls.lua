@@ -24,7 +24,6 @@ local sources = {
         disabled_filetypes = { 'typescript', 'typescriptreact' },
     }),
     with_root_file(b.formatting.stylua, 'stylua.toml'),
-    b.formatting.trim_whitespace,
     b.formatting.phpcsfixer.with({
         filetypes = { 'php' },
         command = 'php-cs-fixer',
