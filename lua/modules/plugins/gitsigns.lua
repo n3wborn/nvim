@@ -7,8 +7,14 @@ local mapping = function(buf)
     local gs = package.loaded.gitsigns
 
     -- Navigation
-    u.map('n', '<leader>hn', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-    u.map('n', '<leader>hN', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+    if gs.get_hunks() then
+        u.map('n', '<leader>hn', function()
+            gs.next_hunk({ preview = true, navigation_message = false })
+        end)
+        u.map('n', '<leader>hN', function()
+            gs.prev_hunk({ preview = true, navigation_message = false })
+        end)
+    end
 
     -- Actions
     u.map({ 'n', 'v' }, '<leader>hs', gs.stage_hunk)
@@ -36,6 +42,6 @@ gitsigns.setup({
         changedelete = { hl = 'GitSignsChange', text = '│ ' },
     },
     word_diff = true,
-    on_attach = mapping(),
+    on_attach = mapping(buf),
     preview_config = { border = 'rounded' },
 })
