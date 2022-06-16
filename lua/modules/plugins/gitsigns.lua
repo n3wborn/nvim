@@ -7,16 +7,14 @@ local mapping = function(buf)
     local gs = package.loaded.gitsigns
 
     -- Navigation
-    u.map('n', '<leader>hn', function()
-        if gs.get_hunks() then
+    if gs.get_hunks() then
+        u.map('n', '<leader>hn', function()
             gs.next_hunk({ preview = true, navigation_message = false })
-        end
-    end)
-    u.map('n', '<leader>hN', function()
-        if gs.get_hunks() then
+        end)
+        u.map('n', '<leader>hN', function()
             gs.prev_hunk({ preview = true, navigation_message = false })
-        end
-    end)
+        end)
+    end
 
     -- Actions
     u.map({ 'n', 'v' }, '<leader>hs', gs.stage_hunk)
