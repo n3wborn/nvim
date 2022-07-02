@@ -107,7 +107,7 @@ return require('packer').startup(function(use)
     use({
         'editorconfig/editorconfig-vim',
         'b3nj5m1n/kommentary',
-        'tpope/vim-surround',
+        'kylechui/nvim-surround',
         'onsails/diaglist.nvim',
         'RRethy/vim-illuminate',
         'b0o/schemastore.nvim',
