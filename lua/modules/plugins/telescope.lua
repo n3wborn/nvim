@@ -6,13 +6,6 @@ require('telescope').setup({
         prompt_prefix = '❯ ',
         selection_caret = '❯ ',
         sorting_strategy = 'ascending',
-        extensions = {
-            fzf = {
-                fuzzy = true,
-                override_generic_sorter = true,
-                override_file_sorter = true,
-            },
-        },
         vimgrep_arguments = {
             'rg',
             '--color=never',
@@ -31,6 +24,18 @@ require('telescope').setup({
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
             },
+        },
+    },
+    pickers = {
+        git_files = {
+            show_untracked = true,
+        },
+    },
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
         },
     },
 })
