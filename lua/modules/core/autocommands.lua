@@ -23,20 +23,6 @@ autocmd('VimResized', {
 })
 
 autocmd({ 'BufNewFile', 'BufRead' }, {
-    desc = 'Fix solidity filetype',
-    pattern = '*.sol',
-    command = 'set filetype=solidity',
-    group = 'Filetypes',
-})
-
-autocmd({ 'BufNewFile', 'BufRead' }, {
-    desc = 'Fix twig filetype',
-    pattern = '*.twig',
-    command = 'set filetype=html.twig',
-    group = 'Filetypes',
-})
-
-autocmd({ 'BufNewFile', 'BufRead' }, {
     desc = 'Git commit messages settings',
     pattern = 'COMMIT_EDITMSG',
     command = 'set spell nonumber wrap linebreak',
