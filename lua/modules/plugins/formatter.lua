@@ -95,14 +95,21 @@ local function vue()
     }
 end
 
-require('formatter').setup({
-    logging = false,
-    filetype = {
-        javascript = { prettier },
-        scss = { prettier },
-        rust = { rustfmt },
-        lua = { luastyle },
-        vue = { vue },
-        sh = { shfmt },
-    },
-})
+local formatter_ok, formatter = pcall(require, 'formatter')
+
+if not formatter_ok then
+    print('Something went wrong with', formatter)
+    return
+else
+    formatter.setup({
+        logging = false,
+        filetype = {
+            javascript = { prettier },
+            scss = { prettier },
+            rust = { rustfmt },
+            lua = { luastyle },
+            vue = { vue },
+            sh = { shfmt },
+        },
+    })
+end
