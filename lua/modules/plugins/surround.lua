@@ -1,36 +1,16 @@
 -- https://github.com/kylechui/nvim-surround
-require('nvim-surround').setup({
-    keymaps = {
-        insert = 'ys',
-        visual = 'S',
-        delete = 'ds',
-        change = 'cs',
-    },
-    delimiters = {
-        pairs = {
-            ['('] = { '( ', ' )' },
-            [')'] = { '(', ')' },
-            ['{'] = { '{ ', ' }' },
-            ['}'] = { '{', '}' },
-            ['<'] = { '< ', ' >' },
-            ['>'] = { '<', '>' },
-            ['['] = { '[ ', ' ]' },
-            [']'] = { '[', ']' },
+local surround_ok, surround = pcall(require, 'nvim-surround')
+
+if not surround_ok then
+    print('Something went wrong with', surround)
+    return
+else
+    surround.setup({
+        keymaps = {
+            insert = 'ys',
+            visual = 'S',
+            delete = 'ds',
+            change = 'cs',
         },
-        separators = {
-            ["'"] = { "'", "'" },
-            ['"'] = { '"', '"' },
-            ['`'] = { '`', '`' },
-        },
-        HTML = {
-            ['t'] = true, -- Use "t" for HTML-style mappings
-        },
-        aliases = {
-            ['a'] = '>', -- Single character aliases apply everywhere
-            ['b'] = ')',
-            ['B'] = '}',
-            ['r'] = ']',
-            ['q'] = { '"', "'", '`' }, -- Table aliases only apply for changes/deletions
-        },
-    },
-})
+    })
+end
