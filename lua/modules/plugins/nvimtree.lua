@@ -1,8 +1,9 @@
 -- https://github.com/kyazdani42/nvim-tree.lua
+local u = require('utils')
 local nvim_tree_ok, nvim_tree = pcall(require, 'nvim-tree')
 
 if not nvim_tree_ok then
-    print('Something went wrong with', nvim_tree)
+    u.notif('Plugins :', 'Something went wrong with nvim-tree', vim.log.levels.WARN)
     return
 else
     -- config

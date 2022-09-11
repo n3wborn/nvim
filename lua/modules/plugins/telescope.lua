@@ -3,7 +3,7 @@ local u = require('utils')
 local telescope_ok, telescope = pcall(require, 'telescope')
 
 if not telescope_ok then
-    print('Something went wrong with', telescope)
+    u.notif('Plugins :', 'Something went wrong with telescope', vim.log.levels.WARN)
     return
 else
     telescope.setup({

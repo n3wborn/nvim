@@ -143,6 +143,9 @@ return require('packer').startup(function(use)
         },
     })
 
+    -- Notify
+    use({ 'rcarriga/nvim-notify' })
+
     use({ 'arkav/lualine-lsp-progress' })
 
     -- Explorer

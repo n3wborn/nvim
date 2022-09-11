@@ -1,8 +1,9 @@
 --- https://github.com/nvim-treesitter/nvim-treesitter
+local u = require('utils')
 local treesitter_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
 
 if not treesitter_ok then
-    print('Something went wrong with', treesitter)
+    u.notif('Plugins :', 'Something went wrong with treesitter', vim.log.levels.WARN)
     return
 else
     treesitter.setup({

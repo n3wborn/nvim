@@ -4,7 +4,8 @@ local diaglist_ok, diaglist = pcall(require, 'diaglist')
 
 -- settings
 if not diaglist_ok then
-    print('Something went wrong with', diaglist)
+    u.notif('Plugins :', 'Something went wrong with diaglist', vim.log.levels.WARN)
+    return
 else
     diaglist.init({
         debug = false,
