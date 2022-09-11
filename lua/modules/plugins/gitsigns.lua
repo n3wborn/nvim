@@ -1,7 +1,11 @@
 -- https://github.com/lewis6991/gitsigns.nvim
+local u = require('utils')
 local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
 
-if gitsigns_ok then
+if not gitsigns_ok then
+    u.notif('Plugins :', 'Something went wrong with gitsigns', vim.log.levels.WARN)
+    return
+else
     local jump_hunk_opts = { preview = true, navigation_message = 'f' }
 
     local mappings = function(bufnr)

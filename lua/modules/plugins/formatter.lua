@@ -95,10 +95,11 @@ local function vue()
     }
 end
 
+local u = require('utils')
 local formatter_ok, formatter = pcall(require, 'formatter')
 
 if not formatter_ok then
-    print('Something went wrong with', formatter)
+    u.notif('Plugins :', 'Something went wrong with formatter', vim.log.levels.WARN)
     return
 else
     formatter.setup({

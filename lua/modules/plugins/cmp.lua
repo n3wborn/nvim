@@ -1,4 +1,5 @@
 -- https://github.com/hrsh7th/nvim-cmp
+local u = require('utils')
 local cmp_ok, cmp = pcall(require, 'cmp')
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
 local cmp_autopair_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
@@ -9,7 +10,8 @@ vim.api.nvim_command('hi LuasnipChoiceNodePassive cterm=italic')
 vim.opt.completeopt = 'menu,menuone,noselect'
 
 if not cmp_ok then
-    print('Something went wrong with', cmp)
+    u.notif('Plugins :', 'Something went wrong with nvim-cmp', vim.log.levels.WARN)
+    return
 else
     cmp.setup({
         snippet = {
