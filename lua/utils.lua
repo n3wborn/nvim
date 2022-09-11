@@ -181,4 +181,10 @@ M.trim_trailing_whitespace = M.command(
     { nargs = '?', range = '%', addr = 'lines', preview = trim_space }
 )
 
+M.notif = function(title, msg, level)
+    vim.notify(msg, level, {
+        title = title,
+    })
+end
+
 return M
