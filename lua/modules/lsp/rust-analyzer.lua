@@ -69,7 +69,6 @@ local M = {
         local rust_opts = {
             tools = {
                 autoSetHints = true,
-                hover_with_actions = true,
                 runnables = {
                     use_telescope = true,
                 },

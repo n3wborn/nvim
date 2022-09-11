@@ -62,7 +62,6 @@ end
 --- on_attach
 local on_attach = function(client, bufnr)
     -- commands
-    u.buf_command(bufnr, 'LspHover', vim.lsp.buf.hover)
     u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
     u.buf_command(bufnr, 'LspDiagNext', vim.diagnostic.goto_next)
     u.buf_command(bufnr, 'LspDiagLine', vim.diagnostic.open_float)
@@ -75,6 +74,12 @@ local on_attach = function(client, bufnr)
     u.buf_command(bufnr, 'LspRename', function()
         vim.lsp.buf.rename()
     end)
+    if client.name == 'rust-analyzer' then
+        -- hover_with_actions has been deprecated from rust-tools settings
+        u.buf_command(bufnr, 'LspHover', ':RustHoverActions<CR>')
+    else
+        u.buf_command(bufnr, 'LspHover', vim.lsp.buf.hover)
+    end
 
     --- bindings
     u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
