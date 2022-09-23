@@ -14,7 +14,6 @@ else
         },
         view = {
             width = 35,
-            height = 35,
         },
         update_cwd = true,
         update_focused_file = {
