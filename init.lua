@@ -15,7 +15,7 @@ o.relativenumber = true
 o.wrap = false
 o.signcolumn = 'yes'
 o.undodir = fn.expand('~') .. '/.local/share/nvim/undo'
-o.shortmess:append('c')
+o.shortmess:append('cS')
 o.hidden = true
 o.ignorecase = true
 o.joinspaces = false
