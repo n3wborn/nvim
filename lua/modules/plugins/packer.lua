@@ -78,7 +78,7 @@ return require('packer').startup(function(use)
         },
     })
 
-    use({ 'thefux/lazygit.nvim', branch = 'bug/60-fix-lazygit-telescope-extension' })
+    use({ 'kdheepak/lazygit.nvim' })
 
     use({
         'nvim-telescope/telescope-project.nvim',
