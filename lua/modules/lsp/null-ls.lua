@@ -27,7 +27,18 @@ local sources = {
     b.formatting.phpcsfixer.with({
         filetypes = { 'php' },
         command = 'php-cs-fixer',
+        args = { '--no-interaction', '--quiet', '--config', vim.fn.expand('$PWD/.php-cs-fixer.php'), 'fix', '$FILENAME' },
+        condition = function(utils)
+            return utils.root_has_file('.php-cs-fixer.php')
+        end,
+    }),
+    b.formatting.phpcsfixer.with({
+        filetypes = { 'php' },
+        command = 'php-cs-fixer',
         args = { '--no-interaction', '--quiet', '--rules=@PSR12,@Symfony', 'fix', '$FILENAME' },
+        condition = function(utils)
+            return not utils.root_has_file('.php-cs-fixer.php')
+        end,
     }),
     b.formatting.shfmt,
     b.formatting.fixjson,
