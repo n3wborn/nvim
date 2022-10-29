@@ -40,7 +40,6 @@ M.setup = function(on_attach, capabilities)
     require('lspconfig').sumneko_lua.setup({
         on_attach = on_attach,
         settings = settings,
-        cmd = { vim.fn.expand('lua-language-server') },
         flags = {
             debounce_text_changes = 150,
         },
