@@ -127,6 +127,7 @@ for _, server in ipairs({
     'intelephense',
     'rust-analyzer',
     'gopls',
+    'neodev',
 }) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end

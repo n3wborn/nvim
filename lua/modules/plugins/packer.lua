@@ -36,6 +36,8 @@ return require('packer').startup(function(use)
         'jose-elias-alvarez/typescript.nvim',
     })
 
+    use({ 'folke/neodev.nvim' })
+
     use({
         'jose-elias-alvarez/null-ls.nvim',
         requires = {
