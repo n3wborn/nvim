@@ -96,15 +96,13 @@ else
             end,
         }),
         sources = cmp.config.sources({
-            { name = 'nvim_lsp', priority = 10 },
+            { name = 'nvim_lsp', priority = 5, max_item_count = 5 },
+            { name = 'buffer', priority = 4, max_item_count = 3 },
+            { name = 'rg', priority = 3, max_item_count = 3 },
+            { name = 'luasnip', priority = 2, max_item_count = 3 },
+            { name = 'path', priority = 1, max_item_count = 3 },
             { name = 'nvim_lsp_signature_help' },
-            { name = 'luasnip' },
-        }, {
             { name = 'nvim_lua' },
-        }, {
-            { name = 'buffer' },
-            { name = 'path' },
-            { name = 'rg' },
         }),
     })
 end
