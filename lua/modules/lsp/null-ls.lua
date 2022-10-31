@@ -13,7 +13,6 @@ end
 -- null-ls sources
 local sources = {
     ---actions
-    b.code_actions.gitsigns,
     b.code_actions.gitrebase,
     b.code_actions.eslint,
     b.code_actions.refactoring,
@@ -66,6 +65,7 @@ local sources = {
     b.diagnostics.php,
     b.diagnostics.gitlint,
     b.diagnostics.zsh,
+    b.diagnostics.todo_comments,
     b.diagnostics.trail_space,
 }
 
