@@ -29,6 +29,10 @@ require('material').setup({
     custom_highlights = {
         NormalNC = { bg = 'NONE' },
     },
+    plugins = {
+        'gitsigns',
+        'nvim-cmp',
+    },
 })
 
 vim.cmd([[colorscheme material]])
