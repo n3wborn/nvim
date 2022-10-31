@@ -75,7 +75,6 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim',
-            'nvim-telescope/telescope-github.nvim',
             'nvim-telescope/telescope-ui-select.nvim',
         },
     })
