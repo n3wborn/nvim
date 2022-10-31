@@ -26,6 +26,9 @@ require('material').setup({
     disable = {
         background = true,
     },
+    custom_highlights = {
+        NormalNC = { bg = 'NONE' },
+    },
 })
 
 vim.cmd([[colorscheme material]])
