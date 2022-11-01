@@ -68,3 +68,17 @@ autocmd({ 'BufWritePre' }, {
     pattern = '*',
     command = 'TrimTrailingWhitespace',
 })
+
+autocmd({ 'BufWinLeave' }, {
+    desc = 'Remember current folds',
+    pattern = '*.*',
+    command = 'mkview',
+    group = 'UI',
+})
+
+autocmd({ 'BufWinEnter' }, {
+    desc = 'Reload folds as they were',
+    pattern = '*.*',
+    command = 'loadview',
+    group = 'UI',
+})
