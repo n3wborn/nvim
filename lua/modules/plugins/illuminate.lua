@@ -7,7 +7,12 @@ if not ok then
     return
 else
     illuminate.configure({
+        providers = {
+            'lsp',
+            'treesitter',
+        },
         filetypes_denylist = {
+            'nvimTree',
             'nvim-tree',
             'telescope',
         },
