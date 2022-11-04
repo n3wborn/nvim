@@ -8,7 +8,7 @@ else
     vim.notify = vim_notify
 
     vim_notify.setup({
-        background_colour = 'CursorColumn',
+        background_colour = '#000000',
         render = 'default',
         stages = 'fade_in_slide_out',
     })

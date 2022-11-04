@@ -182,9 +182,12 @@ M.trim_trailing_whitespace = M.command(
 )
 
 M.notif = function(title, msg, level)
-    vim.notify(msg, level, {
-        title = title,
-    })
+    local async = require('plenary.async')
+    local notify = require('notify').async
+
+    async.run(function()
+        notify(msg, level, { title = title }).events.close()
+    end)
 end
 
 return M
