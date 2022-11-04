@@ -36,18 +36,6 @@ autocmd({ 'FileType' }, {
     group = 'Git',
 })
 
-autocmd('BufEnter', {
-    desc = 'makes sure any opened buffer inside a git repo will be tracked by lazygit',
-    command = [[lua require('lazygit.utils').project_root_dir()]],
-    group = 'Git',
-})
-
-autocmd('BufEnter', {
-    desc = 'Quit nvim if nvim-tree is the last buffer',
-    command = 'if winnr("$") == 1 && bufname() == "NvimTree_" . tabpagenr() | quit | endif',
-    group = 'UI',
-})
-
 autocmd({ 'BufReadPost' }, {
     desc = 'return to last position known inside a buffer',
     pattern = '*',
