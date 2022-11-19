@@ -1,5 +1,4 @@
 local autocmd = vim.api.nvim_create_autocmd
-local create_augroup = vim.api.nvim_create_augroup
 
 vim.api.nvim_create_augroup('Git', { clear = false })
 vim.api.nvim_create_augroup('Filetypes', { clear = false })
@@ -68,5 +67,12 @@ autocmd({ 'BufWinEnter' }, {
     desc = 'Reload folds as they were',
     pattern = '*.*',
     command = 'loadview',
+    group = 'UI',
+})
+
+autocmd('FileType', {
+    desc = 'close windows using "q"',
+    pattern = { 'help', 'qf' },
+    command = 'nnoremap <buffer><silent> q :close<CR>',
     group = 'UI',
 })
