@@ -38,8 +38,6 @@ lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_hel
 lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
 
 -- lsp formatting
-local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
 local lsp_formatting = function(bufnr)
     local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
 
@@ -61,48 +59,19 @@ end
 
 --- on_attach
 local on_attach = function(client, bufnr)
-    -- commands
-    u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
-    u.buf_command(bufnr, 'LspDiagNext', vim.diagnostic.goto_next)
-    u.buf_command(bufnr, 'LspDiagLine', vim.diagnostic.open_float)
-    u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
-    u.buf_command(bufnr, 'LspSignatureHelp', vim.lsp.buf.signature_help)
-    u.buf_command(bufnr, 'LspTypeDef', vim.lsp.buf.type_definition)
-    u.buf_command(bufnr, 'LspDef', vim.lsp.buf.definition)
-    u.buf_command(bufnr, 'LspRangeAct', vim.lsp.buf.code_action)
-    u.buf_command(bufnr, 'LspAct', vim.lsp.buf.code_action)
-    u.buf_command(bufnr, 'LspRename', function()
-        vim.lsp.buf.rename()
-    end)
-    if client.name == 'rust-analyzer' then
-        -- hover_with_actions has been deprecated from rust-tools settings
-        u.buf_command(bufnr, 'LspHover', ':RustHoverActions<CR>')
-    else
-        u.buf_command(bufnr, 'LspHover', vim.lsp.buf.hover)
-    end
+    require('illuminate').on_attach(client)
 
-    --- bindings
-    u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
-    u.buf_map(bufnr, 'n', 'gd', ':LspDef<CR>')
-    u.buf_map(bufnr, 'n', 'K', ':LspHover<CR>')
-    u.buf_map(bufnr, 'n', '[d', ':LspDiagPrev<CR>')
-    u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
-    u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
-    u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
-    u.buf_map(bufnr, 'i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>')
+    -- capabilities
+    local capabilities = client.server_capabilities
 
-    --- telescope
-    u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
-    u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
-    u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
-    u.buf_map(bufnr, 'n', '<leader>lA', '<cmd>LspRangeAct<CR>')
-
-    if client.supports_method('textDocument/formatting') then
+    -- lsp format
+    if capabilities.documentFormattingProvider then
         u.buf_command(bufnr, 'LspFormatting', function()
             lsp_formatting(bufnr)
         end)
 
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        local augroup = 'auto_format_' .. bufnr
+        vim.api.nvim_create_augroup(augroup, { clear = true })
         vim.api.nvim_create_autocmd('BufWritePre', {
             group = augroup,
             buffer = bufnr,
@@ -110,12 +79,109 @@ local on_attach = function(client, bufnr)
         })
     end
 
-    require('illuminate').on_attach(client)
+    -- show definition of current symbol
+    if capabilities.definitionProvider then
+        u.buf_command(bufnr, 'LspDef', function()
+            vim.lsp.buf.definition()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>gd', '<cmd>LspDef<CR>')
+    end
+
+    -- show declaration of current symbol
+    if capabilities.declarationProvider then
+        u.buf_command(bufnr, 'LspDef', function()
+            vim.lsp.buf.declaration()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>gD', '<cmd>LspDef<CR>')
+    end
+
+    -- show definition of current type
+    if capabilities.typeDefinitionProvider then
+        u.buf_command(bufnr, 'LspTypeDef', function()
+            vim.lsp.buf.type_definition()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>lt', '<cmd>LspTypeDef<CR>')
+        -- u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
+    end
+
+    -- show implementation fo current symbol
+    if capabilities.implementationProvider then
+        u.buf_command(bufnr, 'LspImplementations', function()
+            vim.lsp.buf.implementation()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>li', '<cmd>LspImplementations<CR>')
+    end
+
+    -- hover current symbol details
+    if capabilities.hoverProvider then
+        if client.name == 'rust-analyzer' then
+            -- hover_with_actions has been deprecated from rust-tools settings
+            u.buf_command(bufnr, 'LspHover', ':RustHoverActions<CR>')
+        else
+            u.buf_command(bufnr, 'LspHover', function()
+                vim.lsp.buf.hover()
+            end)
+        end
+
+        u.buf_map(bufnr, 'n', 'K', '<cmd>LspHover<CR>')
+    end
+
+    -- rename current symbol
+    if capabilities.renameProvider then
+        u.buf_command(bufnr, 'LspRename', function()
+            vim.lsp.buf.rename()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
+    end
+
+    -- show code actions available
+    if capabilities.codeActionProvider then
+        u.buf_command(bufnr, 'LspAct', function()
+            vim.lsp.buf.code_action()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
+    end
+
+    -- References of current symbol
+    if capabilities.referencesProvider then
+        u.buf_command(bufnr, 'LspRefs', function()
+            vim.lsp.buf.references()
+        end)
+
+        u.buf_map(bufnr, 'n', '<leader>lr', '<cmd>LspRefs<CR>')
+        -- u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
+    end
+
+    -- show signature help
+    if capabilities.signatureHelpProvider then
+        u.buf_command(bufnr, 'LspSignatureHelp', function()
+            vim.lsp.buf.signature_help()
+        end)
+        u.buf_map(bufnr, 'i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>')
+    end
+
+    -- diagnostics
+    u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
+    u.buf_map(bufnr, 'n', '[d', ':LspDiagPrev<CR>')
+
+    u.buf_command(bufnr, 'LspDiagNext', vim.diagnostic.goto_next)
+    u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
+
+    u.buf_command(bufnr, 'LspDiagLine', vim.diagnostic.open_float)
+    u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
+
+    --- quickfix
+    u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
+    u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
 end
 
--- capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- required servers
 for _, server in ipairs({
