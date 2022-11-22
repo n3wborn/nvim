@@ -1,11 +1,9 @@
-vim.cmd('packadd packer.nvim')
-local cmd = vim.api.nvim_command
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local fn = vim.fn
+local install_path = vim.fn.stdpath('data') .. 'site/pack/packer/start/packer.nvim'
+local packer_available = vim.fn.empty(vim.fn.glob(install_path)) == 0
 
--- install packer if needed
-if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({
+if not packer_available then
+    vim.fn.delete(install_path, 'rf')
+    vim.fn.system({
         'git',
         'clone',
         '--depth',
@@ -13,12 +11,17 @@ if fn.empty(fn.glob(install_path)) > 0 then
         'https://github.com/wbthomason/packer.nvim',
         install_path,
     })
+
+    vim.cmd.packadd('packer.nvim')
+    local packer_loaded, _ = pcall(require, 'packer')
+    packer_available = packer_loaded
+
+    if not packer_available then
+        vim.api.nvim_err_writeln('Failed to load packer at:' .. install_path)
+    end
 end
 
-require('packer').init({
-    -- /home/stef/.local/share/nvim/site/pack/packer/start/packer.nvim/packer_compiled.lua
-    compile_path = install_path .. '/packer_compiled.lua',
-})
+require('packer').init({ compile_path = install_path .. '/packer_compiled.lua' })
 
 return require('packer').startup(function(use)
     -- Plugin manager
