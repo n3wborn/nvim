@@ -44,4 +44,10 @@ else
     -- mappings
     local u = require('utils')
     u.map('n', '<leader>e', ':NvimTreeToggle<CR>')
+
+    vim.api.nvim_create_autocmd('BufEnter', {
+        desc = 'Quit nvim if nvim-tree is the last buffer',
+        command = 'if winnr("$") == 1 && bufname() == "NvimTree_" . tabpagenr() | quit | endif',
+        group = vim.api.nvim_create_augroup('nvim-tree', { clear = false }),
+    })
 end

@@ -197,13 +197,3 @@ for _, server in ipairs({
 }) do
     require('modules.lsp.' .. server).setup(on_attach, capabilities)
 end
-
--- suppress lspconfig messages
-local notify = vim.notify
-vim.notify = function(msg, ...)
-    if msg:match('%[lspconfig%]') then
-        return
-    end
-
-    notify(msg, ...)
-end
