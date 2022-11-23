@@ -38,7 +38,6 @@ local M = {
                     mode = 'location',
                 },
             },
-            root_dir = require('lspconfig.util').find_git_ancestor,
         })
     end,
 }
