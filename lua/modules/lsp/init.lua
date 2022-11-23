@@ -188,7 +188,7 @@ for _, server in ipairs({
     'bashls',
     'eslint',
     'jsonls',
-    'tsserver',
+    'typescript',
     'null-ls',
     'intelephense',
     'rust-analyzer',
