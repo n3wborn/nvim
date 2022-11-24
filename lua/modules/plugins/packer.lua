@@ -1,4 +1,4 @@
-local install_path = vim.fn.stdpath('data') .. 'site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local packer_available = vim.fn.empty(vim.fn.glob(install_path)) == 0
 
 if not packer_available then
@@ -20,6 +20,7 @@ if not packer_available then
         vim.api.nvim_err_writeln('Failed to load packer at:' .. install_path)
     end
 end
+
 
 require('packer').init({ compile_path = install_path .. '/packer_compiled.lua' })
 
