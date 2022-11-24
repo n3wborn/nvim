@@ -21,7 +21,6 @@ if not packer_available then
     end
 end
 
-
 require('packer').init({ compile_path = install_path .. '/packer_compiled.lua' })
 
 return require('packer').startup(function(use)
