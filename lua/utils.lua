@@ -1,4 +1,3 @@
-local format = string.format
 local uv = vim.loop
 local api = vim.api
 
@@ -20,7 +19,7 @@ local function trim_space(opts, preview_ns, preview_buf)
     local line1 = opts.line1
     local line2 = opts.line2
     local buf = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(buf, line1 - 1, line2, 0)
+    local lines = vim.api.nvim_buf_get_lines(buf, line1 - 1, line2, true)
     local new_lines = {}
     local preview_buf_line = 0
     for i, line in ipairs(lines) do
@@ -33,7 +32,7 @@ local function trim_space(opts, preview_ns, preview_buf)
                 -- if inccommand=split
                 if preview_buf ~= nil then
                     local prefix = string.format('|%d| ', line1 + i - 1)
-                    api.nvim_buf_set_lines(preview_buf, preview_buf_line, preview_buf_line, 0, { prefix .. line })
+                    api.nvim_buf_set_lines(preview_buf, preview_buf_line, preview_buf_line, true, { prefix .. line })
                     api.nvim_buf_add_highlight(
                         preview_buf,
                         preview_ns,
@@ -52,7 +51,7 @@ local function trim_space(opts, preview_ns, preview_buf)
     end
     -- Don't make any changes to the buffer if previewing
     if not preview_ns then
-        api.nvim_buf_set_lines(buf, line1 - 1, line2, 0, new_lines)
+        api.nvim_buf_set_lines(buf, line1 - 1, line2, true, new_lines)
     end
     -- When called as a preview callback, return the value of the
     -- preview type
@@ -175,11 +174,8 @@ M.get_cwd = function()
     return uv.cwd
 end
 
-M.trim_trailing_whitespace = M.command(
-    'TrimTrailingWhitespace',
-    trim_space,
-    { nargs = '?', range = '%', addr = 'lines', preview = trim_space }
-)
+M.trim_trailing_whitespace =
+    M.command('TrimTrailingWhitespace', trim_space, { nargs = '?', range = '%', addr = 'lines', preview = trim_space })
 
 M.notif = function(title, msg, level)
     local async = require('plenary.async')
