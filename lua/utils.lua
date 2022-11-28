@@ -174,8 +174,11 @@ M.get_cwd = function()
     return uv.cwd
 end
 
-M.trim_trailing_whitespace =
-    M.command('TrimTrailingWhitespace', trim_space, { nargs = '?', range = '%', addr = 'lines', preview = trim_space })
+M.trim_trailing_whitespace = M.command(
+    'TrimTrailingWhitespace',
+    trim_space,
+    { nargs = '?', range = '%', addr = 'lines', preview = trim_space }
+)
 
 M.notif = function(title, msg, level)
     local async = require('plenary.async')
