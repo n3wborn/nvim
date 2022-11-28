@@ -42,7 +42,6 @@ else
     nvim_tree.setup(config)
 
     -- mappings
-    local u = require('utils')
     u.map('n', '<leader>e', ':NvimTreeToggle<CR>')
 
     vim.api.nvim_create_autocmd('BufEnter', {

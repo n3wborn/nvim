@@ -68,11 +68,13 @@ else
     u.command('Commits', 'Telescope git_commits')
     u.command('Branchs', 'Telescope git_branches')
     u.command('GStatus', 'Telescope git_status')
+    u.command('GStash', 'Telescope git_stash')
 
     u.map('n', '<Leader>gc', '<cmd>Commits<CR>')
     u.map('n', '<Leader>gp', '<cmd>BCommits<CR>')
     u.map('n', '<Leader>gb', '<cmd>Branchs<CR>')
     u.map('n', '<Leader>gs', '<cmd>GStatus<CR>')
+    u.map('n', '<Leader>gS', '<cmd>GStash<CR>')
 
     --help commands
     u.command('HelpTags', 'Telescope help_tags')

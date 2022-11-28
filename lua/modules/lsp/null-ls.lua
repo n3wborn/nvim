@@ -10,19 +10,28 @@ local with_root_file = function(builtin, file)
     })
 end
 
--- null-ls sources
 local sources = {
-    ---actions
-    b.code_actions.gitrebase,
+    --- code actions
     b.code_actions.eslint,
+    b.code_actions.gitrebase,
     b.code_actions.refactoring,
     b.code_actions.shellcheck,
-    ---formatting
+
+    --- diagnostics
+    b.diagnostics.gitlint,
+    b.diagnostics.markdownlint,
+    b.diagnostics.php,
+    b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
+    b.diagnostics.todo_comments,
+    b.diagnostics.trail_space,
+    b.diagnostics.tsc,
+    b.diagnostics.zsh,
+
+    --- formatting
+    b.formatting.blade_formatter,
     b.formatting.eslint_d,
-    b.formatting.prettier.with({
-        disabled_filetypes = { 'typescript', 'typescriptreact' },
-    }),
-    with_root_file(b.formatting.stylua, 'stylua.toml'),
+    b.formatting.fixjson,
+    b.formatting.goimports,
     b.formatting.phpcsfixer.with({
         filetypes = { 'php' },
         command = 'php-cs-fixer',
@@ -53,20 +62,13 @@ local sources = {
             return not utils.root_has_file('.php-cs-fixer.php')
         end,
     }),
-    b.formatting.shfmt,
-    b.formatting.fixjson,
-    b.formatting.sqlformat,
+    b.formatting.prettier.with({
+        disabled_filetypes = { 'typescript', 'typescriptreact' },
+    }),
     b.formatting.rustfmt,
-    b.formatting.goimports,
-    b.formatting.blade_formatter,
-    ---diagnostics
-    b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
-    b.diagnostics.tsc,
-    b.diagnostics.php,
-    b.diagnostics.gitlint,
-    b.diagnostics.zsh,
-    b.diagnostics.todo_comments,
-    b.diagnostics.trail_space,
+    b.formatting.shfmt,
+    b.formatting.sqlformat,
+    with_root_file(b.formatting.stylua, 'stylua.toml'),
 }
 
 local M = {
