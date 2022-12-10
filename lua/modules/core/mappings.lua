@@ -32,10 +32,6 @@ u.map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no f
 u.map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
 u.map('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
 
--- Format
-u.map('n', '<space>F', '<cmd>FormatWrite<cr>')
-u.map('v', '<space>F', '<cmd>FormatWrite<cr>')
-
 --- Git
 u.map('n', '<leader>gh', ':diffget //3<cr>')
 u.map('n', '<leader>gu', ':diffget //2<cr>')
@@ -62,12 +58,3 @@ u.map('v', '<leader>y', '"+y')
 u.map('n', '<leader>Y', 'gg"+yG')
 u.map('n', '<leader>d', '"_d')
 u.map('v', '<leader>d', '"_d')
-
---- Kommentary
-vim.g.kommentary_create_default_mappings = false
-u.map('n', '<C-_>', '<Plug>kommentary_line_default', {})
-u.map('x', '<C-_>', '<Plug>kommentary_visual_default', {})
-
--- nvim-markdown-preview
-vim.g.nvim_markdown_preview_theme = 'github'
-u.map('n', '<leader>P', '<cmd>MarkdownPreview<cr>')
