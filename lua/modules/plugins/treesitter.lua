@@ -50,7 +50,7 @@ else
             enable = true,
         },
         indent = {
-            enable = false,
+            enable = true,
         },
         textobjects = {
             lookahead = true,

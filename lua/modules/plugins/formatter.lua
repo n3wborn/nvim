@@ -113,4 +113,7 @@ else
             sh = { shfmt },
         },
     })
+
+    u.map('n', '<space>F', '<cmd>FormatWrite<cr>')
+    u.map('v', '<space>F', '<cmd>FormatWrite<cr>')
 end
