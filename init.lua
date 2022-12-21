@@ -38,6 +38,7 @@ vim.opt.lazyredraw = true
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'indent'
 vim.opt.redrawtime = 3000
+vim.g.mapleader = ','
 
 _G.global = {}
 
