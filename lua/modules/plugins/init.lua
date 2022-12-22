@@ -1,5 +1,6 @@
 require('modules.plugins.packer')
 require('modules.plugins.blankline')
+require('modules.plugins.bufferline')
 require('modules.plugins.cmp')
 require('modules.plugins.colorizer')
 require('modules.plugins.colorscheme')

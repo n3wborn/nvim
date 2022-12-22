@@ -147,6 +147,11 @@ return require('packer').startup(function(use)
         },
     })
 
+    use({
+        'akinsho/bufferline.nvim',
+        requires = 'nvim-tree/nvim-web-devicons',
+    })
+
     -- Notify
     use({ 'rcarriga/nvim-notify' })
 
