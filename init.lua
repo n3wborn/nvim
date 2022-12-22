@@ -71,15 +71,7 @@ end
 vim.g.mapleader = ','
 
 _G.global = {}
-
--- diagnostics
-local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
-
-vim.diagnostic.config({ virtual_text = false, float = border_opts })
-vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
 require('modules.core')
 require('modules.lsp')

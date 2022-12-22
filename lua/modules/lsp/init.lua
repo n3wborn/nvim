@@ -2,7 +2,8 @@
 -- https://github.com/jose-elias-alvarez/dotfiles/blob/main/config/nvim/lua/lsp/init.lua
 local u = require('utils')
 local lsp = vim.lsp
-local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
+
+require('modules.lsp.diagnostics').setup()
 
 -- lsp comp items
 lsp.protocol.CompletionItemKind = {
@@ -34,8 +35,8 @@ lsp.protocol.CompletionItemKind = {
 }
 
 -- handlers
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, border_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, border_opts)
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, _G.global.float_border_opts)
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, _G.global.float_border_opts)
 
 -- lsp formatting
 local lsp_formatting = function(bufnr)
