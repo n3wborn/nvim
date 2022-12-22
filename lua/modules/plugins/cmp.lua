@@ -96,7 +96,7 @@ else
             end,
         }),
         sources = cmp.config.sources({
-            { name = 'nvim_lsp', priority = 5, max_item_count = 5 },
+            { name = 'nvim_lsp', priority = 5 },
             { name = 'buffer', priority = 4, max_item_count = 3 },
             { name = 'rg', priority = 3, max_item_count = 3 },
             { name = 'luasnip', priority = 2, max_item_count = 3 },
