@@ -1,4 +1,5 @@
 require('modules.plugins.packer')
+require('modules.plugins.autopairs')
 require('modules.plugins.blankline')
 require('modules.plugins.bufferline')
 require('modules.plugins.cmp')

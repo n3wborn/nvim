@@ -2,7 +2,6 @@
 local u = require('utils')
 local cmp_ok, cmp = pcall(require, 'cmp')
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
-local cmp_autopair_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
 
 require('luasnip.loaders.from_vscode').lazy_load()
 vim.api.nvim_command('hi LuasnipChoiceNodePassive cterm=italic')
@@ -97,19 +96,12 @@ else
         }),
         sources = cmp.config.sources({
             { name = 'nvim_lsp', priority = 5 },
-            { name = 'buffer', priority = 4, max_item_count = 3 },
-            { name = 'rg', priority = 3, max_item_count = 3 },
-            { name = 'luasnip', priority = 2, max_item_count = 3 },
-            { name = 'path', priority = 1, max_item_count = 3 },
+            { name = 'buffer', priority = 4 },
+            { name = 'rg', priority = 3 },
+            { name = 'luasnip', priority = 2 },
+            { name = 'path', priority = 1 },
             { name = 'nvim_lsp_signature_help' },
             { name = 'nvim_lua' },
         }),
     })
-end
-
--- https://github.com/windwp/nvim-autopairs
-local autopairs_ok, autopairs = pcall(require, 'nvim-autopairs')
-
-if autopairs_ok then
-    autopairs.setup()
 end
