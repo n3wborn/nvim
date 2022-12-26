@@ -138,6 +138,15 @@ return require('packer').startup(function(use)
         'kyazdani42/nvim-web-devicons',
     })
 
+    -- window sizing
+    use({
+        'anuvyklack/windows.nvim',
+        requires = {
+            'anuvyklack/middleclass',
+            'anuvyklack/animation.nvim',
+        },
+    })
+
     -- Statusline
     use({
         'nvim-lualine/lualine.nvim',
