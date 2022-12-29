@@ -1,25 +1,18 @@
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local packer_available = vim.fn.empty(vim.fn.glob(install_path)) == 0
 
-if not packer_available then
-    vim.fn.delete(install_path, 'rf')
-    vim.fn.system({
-        'git',
-        'clone',
-        '--depth',
-        '1',
-        'https://github.com/wbthomason/packer.nvim',
-        install_path,
-    })
+local ensure_packer = function()
+    local fn = vim.fn
 
-    vim.cmd.packadd('packer.nvim')
-    local packer_loaded, _ = pcall(require, 'packer')
-    packer_available = packer_loaded
-
-    if not packer_available then
-        vim.api.nvim_err_writeln('Failed to load packer at:' .. install_path)
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd([[packadd packer.nvim]])
+        return true
     end
+
+    return false
 end
+
+local packer_bootstrap = ensure_packer()
 
 require('packer').init({ compile_path = install_path .. '/packer_compiled.lua' })
 
