@@ -5,5 +5,6 @@ if not notify_ok then
     print('Something went wrong with nvim-notify')
     return
 else
+    vim.notify = vim_notify
     vim_notify.setup()
 end
