@@ -90,7 +90,10 @@ return require('packer').startup(function(use)
         run = ':TSUpdate',
     })
 
-    use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
+    use({
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        'windwp/nvim-ts-autotag',
+    })
 
     -- Fzf
     use({
