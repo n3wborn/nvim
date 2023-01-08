@@ -174,25 +174,11 @@ M.get_cwd = function()
     return uv.cwd
 end
 
-M.trim_trailing_whitespace = M.command(
-    'TrimTrailingWhitespace',
-    trim_space,
-    { nargs = '?', range = '%', addr = 'lines', preview = trim_space }
-)
+M.trim_trailing_whitespace =
+    M.command('TrimTrailingWhitespace', trim_space, { nargs = '?', range = '%', addr = 'lines', preview = trim_space })
 
 M.notif = function(title, msg, level)
-    local async = require('plenary.async')
-    local notify = require('notify')
-    local config = {
-        background_colour = '#000000',
-        render = 'default',
-        stages = 'fade_in_slide_out',
-    }
-    notify.setup(config)
-
-    async.run(function()
-        notify.async(msg, level, { title = title }).events.close()
-    end)
+    vim.notify(title, msg, level)
 end
 
 return M

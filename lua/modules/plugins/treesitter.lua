@@ -33,12 +33,15 @@ else
             'php',
             'phpdoc',
             'python',
+            'query',
+            'regex',
             'ruby',
             'rust',
             'scss',
             'solidity',
             'sql',
             'svelte',
+            'toml',
             'tsx',
             'twig',
             'typescript',
@@ -94,5 +97,6 @@ else
             },
         },
         autopairs = { enable = true },
+        autotag = { enable = true },
     })
 end

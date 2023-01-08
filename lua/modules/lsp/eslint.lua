@@ -11,7 +11,7 @@ local M = {
                 '.eslintrc.json'
             ),
             on_attach = function(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentFormattingProvider = true
                 on_attach(client, bufnr)
             end,
             capabilities = capabilities,
@@ -30,7 +30,7 @@ local M = {
                     mode = 'all',
                 },
                 format = {
-                    enable = false,
+                    enable = true,
                 },
                 useESLintClass = true,
                 packageManager = 'yarn',

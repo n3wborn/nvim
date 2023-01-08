@@ -1,6 +1,7 @@
 -- global settings
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
+local indent = 4
+vim.opt.shiftwidth = indent
+vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
@@ -11,7 +12,7 @@ vim.opt.relativenumber = true
 vim.opt.wrap = false
 vim.opt.signcolumn = 'yes'
 vim.opt.undodir = vim.fn.expand('~') .. '/.local/share/nvim/undo'
-vim.opt.shortmess:append('cS')
+vim.opt.shortmess = 'filnxtToOFWIcC'
 vim.opt.hidden = true
 vim.opt.ignorecase = true
 vim.opt.joinspaces = false
@@ -28,7 +29,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.cmdheight = 1
 vim.opt.showbreak = '↪'
-vim.opt.guifont = 'Fira'
+vim.opt.guifont = 'FiraCode Nerd Font Regular'
 vim.opt.termguicolors = true
 vim.opt.colorcolumn = '120'
 vim.opt.pumheight = 25
@@ -38,17 +39,39 @@ vim.opt.lazyredraw = true
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'indent'
 vim.opt.redrawtime = 3000
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.joinspaces = false
+
+local builtins = {
+    'gzip',
+    'zip',
+    'zipPlugin',
+    'fzf',
+    'tar',
+    'tarPlugin',
+    'getscript',
+    'getscriptPlugin',
+    'vimball',
+    'vimballPlugin',
+    '2html_plugin',
+    'matchit',
+    'matchparen',
+    'logiPat',
+    'rrhelper',
+    'netrw',
+    'netrwPlugin',
+    'netrwSettings',
+    'netrwFileHandlers',
+}
+
+for _, plugin in ipairs(builtins) do
+    vim.g['loaded_' .. plugin] = 1
+end
+
+vim.g.mapleader = ','
 
 _G.global = {}
-
--- diagnostics
-local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
-
-vim.diagnostic.config({ virtual_text = false, float = border_opts })
-vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
 require('modules.core')
 require('modules.lsp')
