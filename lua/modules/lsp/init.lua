@@ -187,6 +187,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- required servers
 for _, server in ipairs({
     'bashls',
+    'emmet',
     'eslint',
     'jsonls',
     'typescript',
