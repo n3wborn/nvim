@@ -16,7 +16,7 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 vim.opt.foldmethod = 'indent'
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.o.statuscolumn = '%=%{v:relnum?v:relnum:v:lnum}%s%C'
+vim.o.statuscolumn = '%C%=%{v:relnum?v:relnum:v:lnum}%s'
 vim.opt.undodir = vim.fn.expand('~') .. '/.local/share/nvim/undo'
 vim.opt.shortmess = 'filnxtToOFWIcC'
 vim.opt.hidden = true
