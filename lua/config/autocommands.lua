@@ -1,56 +1,23 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_augroup('Git', { clear = false })
-vim.api.nvim_create_augroup('UI', { clear = false })
-
-autocmd('BufEnter', {
-    desc = 'Do not auto comment on new line',
+-- Do not auto comment on new line
+vim.api.nvim_create_autocmd('BufEnter', {
     command = 'set fo-=c fo-=r fo-=o',
 })
 
-autocmd({ 'FileType markdown' }, {
-    desc = 'Disable IndentLine for markdown files',
+-- Disable IndentLine for markdown files
+vim.api.nvim_create_autocmd({ 'FileType markdown' }, {
     command = 'let g:indentLine_enabled=0',
 })
 
-autocmd('VimResized', {
-    desc = 'Keep windows equally resized',
-    command = 'tabdo wincmd =',
-    group = 'UI',
-})
-
-autocmd({ 'BufNewFile', 'BufRead' }, {
-    desc = 'Git commit messages settings',
-    pattern = 'COMMIT_EDITMSG',
-    command = 'set spell nonumber wrap linebreak',
-    group = 'Git',
-})
-
-autocmd({ 'FileType' }, {
-    desc = 'Git messages settings',
+-- Disable editor settings for git commits
+vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = 'gitcommit',
     command = 'let b:EditorConfig_disable=1',
-    group = 'Git',
 })
 
-autocmd({ 'BufReadPre' }, {
-    desc = 'return to last position known inside a buffer',
-    pattern = '*',
-    callback = function()
-        vim.api.nvim_create_autocmd('FileType', {
-            pattern = '<buffer>',
-            once = true,
-            callback = function()
-                vim.cmd(
-                    [[if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
-                )
-            end,
-        })
-    end,
-})
-
-autocmd({ 'InsertLeave', 'WinEnter' }, {
-    desc = 'show cursor line only in active window',
+-- show cursor line only in active window
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
     callback = function()
         local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
         if ok and cl then
@@ -59,9 +26,7 @@ autocmd({ 'InsertLeave', 'WinEnter' }, {
         end
     end,
 })
-
-autocmd({ 'InsertEnter', 'WinLeave' }, {
-    desc = 'show cursor line only in active window',
+vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
     callback = function()
         local cl = vim.wo.cursorline
         if cl then
@@ -71,21 +36,8 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
     end,
 })
 
-autocmd({ 'BufWritePre' }, {
-    desc = 'create directories when needed, when saving a file',
-    group = vim.api.nvim_create_augroup('auto_create_dir', { clear = true }),
-    callback = function(event)
-        local file = vim.loop.fs_realpath(event.match) or event.match
-
-        vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
-        local backup = vim.fn.fnamemodify(file, ':p:~:h')
-        backup = backup:gsub('[/\\]', '%%')
-        vim.go.backupext = backup
-    end,
-})
-
-autocmd({ 'FileType' }, {
-    desc = 'Fix conceallevel for json & help files',
+-- Fix conceallevel for json an help files
+vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = { 'json', 'jsonc' },
     callback = function()
         vim.wo.spell = false
@@ -93,28 +45,67 @@ autocmd({ 'FileType' }, {
     end,
 })
 
-autocmd({ 'BufWritePre' }, {
-    desc = 'trim buffer whitespaces',
+-- Trim buffer whitespaces
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     pattern = '*',
     command = 'TrimTrailingWhitespace',
 })
 
-autocmd({ 'FileType' }, {
-    desc = 'close windows using "q"',
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, { command = 'checktime' })
+
+-- Highlight on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
+-- resize splits if window got resized
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
+    callback = function()
+        vim.cmd('tabdo wincmd =')
+    end,
+})
+
+-- go to last loc when opening a buffer
+vim.api.nvim_create_autocmd('BufReadPost', {
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
+})
+
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
-        'qf',
+        'PlenaryTestPopup',
         'help',
+        'lspinfo',
         'man',
         'notify',
-        'lspinfo',
+        'qf',
+        'spectre_panel',
         'startuptime',
         'tsplayground',
-        'PlenaryTestPopup',
     },
     callback = function()
         vim.cmd([[
     nnoremap <silent> <buffer> q <cmd>close<CR>
     set nobuflisted
     ]])
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'gitcommit', 'markdown' },
+    callback = function()
+        vim.opt_local.wrap = true
+        vim.opt_local.spell = true
+        vim.opt_local.nonumber = true
+        vim.opt_local.linebreak = true
     end,
 })
