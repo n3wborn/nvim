@@ -75,7 +75,10 @@ return require('packer').startup(function(use)
         },
     })
 
-    use({ 'kdheepak/lazygit.nvim' })
+    use({
+        'danielfalk/smart-open.nvim',
+        requires = { 'tami5/sqlite.lua' },
+    })
 
     use({
         'nvim-telescope/telescope-project.nvim',
@@ -123,6 +126,8 @@ return require('packer').startup(function(use)
     })
 
     -- Git
+    use({ 'kdheepak/lazygit.nvim' })
+
     use({
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
