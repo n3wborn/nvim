@@ -2,7 +2,7 @@
 require('lazy').setup({
     spec = {
         -- load lazyvim plugins
-        { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+        { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
         -- add typescript/json (https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins/extras/lang)
         { import = 'lazyvim.plugins.extras.lang.typescript' },
         { import = 'lazyvim.plugins.extras.lang.json' },

@@ -41,6 +41,5 @@ return {
 
             vim.cmd([[colorscheme material]])
         end,
-
     },
 }
