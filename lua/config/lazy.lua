@@ -7,7 +7,7 @@ require('lazy').setup({
     defaults = { lazy = true },
     install = {
         missing = true,
-        colorscheme = { 'tokyonight', 'gruvbox' },
+        colorscheme = { 'material' },
     },
     checker = { enabled = true },
     ui = {

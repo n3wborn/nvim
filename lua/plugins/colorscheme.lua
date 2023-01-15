@@ -1,34 +1,46 @@
 return {
-    { 'ellisonleao/gruvbox.nvim' },
     {
-        'folke/tokyonight.nvim',
+        'marko-cerovac/material.nvim',
         lazy = false,
         priority = 1000,
         config = function()
-            local tokyonight = require('tokyonight')
-            tokyonight.setup({
-                style = 'moon',
-                sidebars = {
-                    'qf',
-                    'vista_kind',
-                    'terminal',
-                    'spectre_panel',
-                    'startuptime',
-                    'Outline',
+            local material = require('material')
+            vim.g.material_style = 'palenight'
+
+            material.setup({
+                styles = {
+                    comments = { italic = true },
+                    functions = { italic = true },
                 },
-                on_highlights = function(hl, c)
-                    hl.CursorLineNr = { fg = c.orange, bold = true }
-                    local prompt = '#2d3149'
-                    hl.TelescopeNormal = { bg = c.bg_dark, fg = c.fg_dark }
-                    hl.TelescopeBorder = { bg = c.bg_dark, fg = c.bg_dark }
-                    hl.TelescopePromptNormal = { bg = prompt }
-                    hl.TelescopePromptBorder = { bg = prompt, fg = prompt }
-                    hl.TelescopePromptTitle = { bg = c.fg_gutter, fg = c.orange }
-                    hl.TelescopePreviewTitle = { bg = c.bg_dark, fg = c.bg_dark }
-                    hl.TelescopeResultsTitle = { bg = c.bg_dark, fg = c.bg_dark }
-                end,
+                contrast = {
+                    sidebars = true,
+                    floating_windows = false,
+                    cursor_line = true,
+                    popup_menu = false,
+                    filetypes = {
+                        'terminal',
+                        'packer',
+                        'qf',
+                    },
+                },
+                high_visibility = {
+                    lighter = false,
+                    darker = false,
+                },
+                disable = {
+                    background = true,
+                },
+                custom_highlights = {
+                    NormalNC = { bg = 'NONE' },
+                },
+                plugins = {
+                    'gitsigns',
+                    'nvim-cmp',
+                },
             })
-            tokyonight.load()
+
+            vim.cmd([[colorscheme material]])
         end,
+
     },
 }
