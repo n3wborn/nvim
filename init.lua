@@ -18,7 +18,8 @@ opt.foldlevelstart = 99
 opt.foldenable = true
 opt.foldmethod = 'indent'
 opt.signcolumn = 'yes'
-opt.statuscolumn = '%=%{v:wrap ? repeat(" ", float2nr(ceil(log10(v:lnum))))."↳":v:lnum}%=%C%=%s'
+opt.statuscolumn =
+    '%=%{v:relnum ? v:relnum : v:lnum}%=%{% foldlevel(v:lnum) ? " %C" : " " %}%=%{%&signcolumn ? " " : "%s" %}'
 opt.shortmess = 'filnxtToOFWIcC'
 opt.hidden = true
 opt.ignorecase = true
