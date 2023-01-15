@@ -1,7 +1,7 @@
 -- https://github.com/folke/lazy.nvim
 require('lazy').setup({
     spec = {
-        { 'folke/LazyVim', import = 'lazyvim.plugins' },
+        { "LazyVim/LazyVim", import = "lazyvim.plugins" },
         { import = 'lazyvim.plugins.extras.lang.typescript' },
     },
     defaults = { lazy = true },
