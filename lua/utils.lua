@@ -177,8 +177,13 @@ end
 M.trim_trailing_whitespace =
     M.command('TrimTrailingWhitespace', trim_space, { nargs = '?', range = '%', addr = 'lines', preview = trim_space })
 
+---@param level number|nil
+---@param msg string
+---@param title string
 M.notif = function(title, msg, level)
-    vim.notify(title, msg, level)
+    vim.notify(msg, level, {
+        title = title,
+    })
 end
 
 return M
