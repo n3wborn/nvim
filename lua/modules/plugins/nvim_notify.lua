@@ -1,9 +1,9 @@
 -- https://github.com/rcarriga/nvim-notify
 local config = {
-    timeout = 3000,
+    timeout = 2000,
     fps = 20,
     background_colour = '#000000',
-    render = 'default',
+    render = 'compact',
     stages = 'fade_in_slide_out',
     max_height = function()
         return math.floor(vim.o.lines * 0.75)
