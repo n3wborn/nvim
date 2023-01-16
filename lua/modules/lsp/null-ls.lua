@@ -63,7 +63,7 @@ local sources = {
         end,
     }),
     b.formatting.prettier.with({
-        disabled_filetypes = { 'typescript', 'typescriptreact' },
+        disabled_filetypes = { 'typescript', 'typescriptreact', 'markdown' },
     }),
     b.formatting.rustfmt,
     b.formatting.shfmt,
