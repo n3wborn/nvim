@@ -35,7 +35,6 @@ vim.opt.colorcolumn = '120'
 vim.opt.pumheight = 25
 vim.opt.pumblend = 10
 vim.opt.shada = "!,'100,<50,s10,h,:1000,/1000"
-vim.opt.lazyredraw = true
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'indent'
 vim.opt.redrawtime = 3000
