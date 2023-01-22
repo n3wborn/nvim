@@ -14,7 +14,7 @@ His job in neovim ecosystem is already awesome !
 
 If you're looking for a already configured neovim you may prefer these:
 
-- [LazyVim](https://github.com/LazyVim/LazyVim)
-- [NvChad](https://github.com/NvChad/NvChad)
-- [Lunarvim](https://github.com/LunarVim/LunarVim)
-- [Astrovim](https://github.com/AstroNvim/AstroNvim)
+-  [LazyVim](https://github.com/LazyVim/LazyVim)
+-  [NvChad](https://github.com/NvChad/NvChad)
+-  [Lunarvim](https://github.com/LunarVim/LunarVim)
+-  [Astrovim](https://github.com/AstroNvim/AstroNvim)
