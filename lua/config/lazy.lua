@@ -1,5 +1,5 @@
 -- https://github.com/folke/lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
     -- bootstrap lazy.nvim
@@ -16,14 +16,14 @@ end
 
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-require("lazy").setup({
+require('lazy').setup({
     spec = {
         -- import LazyVim plugins
-        { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+        { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
         -- import any extras modules here
         -- add typescript/json (https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins/extras/lang)
-        { import = "lazyvim.plugins.extras.lang.typescript" },
-        { import = "lazyvim.plugins.extras.lang.json" },
+        { import = 'lazyvim.plugins.extras.lang.typescript' },
+        { import = 'lazyvim.plugins.extras.lang.json' },
         -- import/override with your plugins
         { import = 'plugins' },
     },
@@ -38,21 +38,21 @@ require("lazy").setup({
     },
     install = {
         missing = true,
-        colorscheme = { "catpuccin", "material" }
+        colorscheme = { 'catpuccin', 'material' },
     },
     checker = { enabled = true }, -- automatically check for plugin updates
     performance = {
         rtp = {
             -- disable some rtp plugins
             disabled_plugins = {
-                "gzip",
-                "matchit",
-                "matchparen",
-                "netrwPlugin",
-                "tarPlugin",
-                "tohtml",
-                "tutor",
-                "zipPlugin",
+                'gzip',
+                'matchit',
+                'matchparen',
+                'netrwPlugin',
+                'tarPlugin',
+                'tohtml',
+                'tutor',
+                'zipPlugin',
             },
         },
     },

@@ -1,5 +1,35 @@
 return {
     {
+        'catppuccin/nvim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            local catppuccin = require('catppuccin')
+
+            catppuccin.setup({
+                flavour = 'macchiato', -- latte, frappe, macchiato, mocha
+                background = {
+                    dark = '',
+                },
+                styles = {
+                    comments = { 'italic' },
+                    conditionals = { 'italic' },
+                    functions = { 'italic' },
+                },
+                integrations = {
+                    cmp = true,
+                    gitsigns = true,
+                    nvimtree = true,
+                    telescope = true,
+                    notify = false,
+                    mini = false,
+                },
+            })
+
+            vim.cmd([[ colorscheme catppuccin ]])
+        end,
+    },
+    {
         'marko-cerovac/material.nvim',
         lazy = false,
         priority = 1000,
