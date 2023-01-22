@@ -13,10 +13,3 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('config.lazy')
-
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'VeryLazy',
-    callback = function()
-        require('utils').version()
-    end,
-})
