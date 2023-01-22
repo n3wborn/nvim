@@ -3,7 +3,7 @@ name: Formating
 on: [push, pull_request_target]
 
 jobs:
-  postprocessing:
+  stylua:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,4 +15,16 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Format with stylua"
+          branch: ${{ github.head_ref }}
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: |
+            *.md
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Format with markdownlint"
           branch: ${{ github.head_ref }}
