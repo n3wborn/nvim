@@ -158,6 +158,11 @@ return require('packer').startup(function(use)
     })
 
     use({
+        'SmiteshP/nvim-navic',
+        requires = 'neovim/nvim-lspconfig',
+    })
+
+    use({
         'akinsho/bufferline.nvim',
         requires = 'nvim-tree/nvim-web-devicons',
     })

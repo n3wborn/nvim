@@ -60,6 +60,7 @@ end
 
 --- on_attach
 local on_attach = function(client, bufnr)
+    local navic = require('nvim-navic')
     require('illuminate').on_attach(client)
 
     -- capabilities
@@ -180,6 +181,11 @@ local on_attach = function(client, bufnr)
     --- quickfix
     u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
     u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
+
+    -- show current context in statusline/winbar
+    if client.server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
+    end
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
