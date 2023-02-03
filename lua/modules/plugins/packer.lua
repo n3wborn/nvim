@@ -109,7 +109,6 @@ return require('packer').startup(function(use)
 
     -- Dev div tools
     use({
-        'editorconfig/editorconfig-vim',
         'b3nj5m1n/kommentary',
         'kylechui/nvim-surround',
         'onsails/diaglist.nvim',
