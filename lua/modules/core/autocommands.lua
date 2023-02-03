@@ -29,7 +29,9 @@ autocmd({ 'BufNewFile', 'BufRead' }, {
 autocmd({ 'FileType' }, {
     desc = 'Git messages settings',
     pattern = 'gitcommit',
-    command = 'let b:EditorConfig_disable=1',
+    callback = function()
+        vim.b.editorconfig = false
+    end,
     group = 'Git',
 })
 
@@ -110,6 +112,7 @@ autocmd({ 'FileType' }, {
         'startuptime',
         'tsplayground',
         'PlenaryTestPopup',
+        'NvimTree',
     },
     callback = function()
         vim.cmd([[
