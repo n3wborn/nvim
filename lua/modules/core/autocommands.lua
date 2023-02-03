@@ -51,17 +51,6 @@ autocmd({ 'BufReadPre' }, {
     end,
 })
 
-autocmd({ 'InsertLeave', 'WinEnter' }, {
-    desc = 'show cursor line only in active window',
-    callback = function()
-        local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
-        if ok and cl then
-            vim.wo.cursorline = true
-            vim.api.nvim_win_del_var(0, 'auto-cursorline')
-        end
-    end,
-})
-
 autocmd({ 'InsertEnter', 'WinLeave' }, {
     desc = 'show cursor line only in active window',
     callback = function()
