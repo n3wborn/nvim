@@ -110,6 +110,7 @@ return {
         'jose-elias-alvarez/null-ls.nvim',
         config = function()
             local nls = require('null-ls')
+            local b = require('null-ls.builtins')
 
             local with_root_file = function(builtin, file)
                 return builtin.with({
@@ -121,28 +122,28 @@ return {
 
             nls.setup({
                 debounce = 150,
-                save_after_format = true,
+                save_after_format = false,
                 sources = {
                     --- code actions
-                    nls.code_actions.eslint,
-                    nls.code_actions.gitrebase,
-                    nls.code_actions.refactoring,
-                    nls.code_actions.shellcheck,
+                    b.code_actions.eslint,
+                    b.code_actions.gitrebase,
+                    b.code_actions.refactoring,
+                    b.code_actions.shellcheck,
                     --- diagnostics
-                    nls.diagnostics.gitlint,
-                    nls.diagnostics.markdownlint,
-                    nls.diagnostics.php,
-                    nls.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
-                    nls.diagnostics.todo_comments,
-                    nls.diagnostics.trail_space,
-                    nls.diagnostics.tsc,
-                    nls.diagnostics.zsh,
+                    b.diagnostics.gitlint,
+                    b.diagnostics.markdownlint,
+                    b.diagnostics.php,
+                    b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
+                    b.diagnostics.todo_comments,
+                    b.diagnostics.trail_space,
+                    b.diagnostics.tsc,
+                    b.diagnostics.zsh,
                     --- formatting
-                    nls.formatting.blade_formatter,
-                    nls.formatting.eslint_d,
-                    nls.formatting.fixjson,
-                    nls.formatting.goimports,
-                    nls.formatting.phpcsfixer.with({
+                    b.formatting.blade_formatter,
+                    b.formatting.eslint_d,
+                    b.formatting.fixjson,
+                    b.formatting.goimports,
+                    b.formatting.phpcsfixer.with({
                         filetypes = { 'php' },
                         command = 'php-cs-fixer',
                         args = {
@@ -157,7 +158,7 @@ return {
                             return utils.root_has_file('.php-cs-fixer.php')
                         end,
                     }),
-                    nls.formatting.phpcsfixer.with({
+                    b.formatting.phpcsfixer.with({
                         filetypes = { 'php' },
                         command = 'php-cs-fixer',
                         args = {
@@ -172,13 +173,13 @@ return {
                             return not utils.root_has_file('.php-cs-fixer.php')
                         end,
                     }),
-                    nls.formatting.prettier.with({
+                    b.formatting.prettier.with({
                         disabled_filetypes = { 'typescript', 'typescriptreact' },
                     }),
-                    nls.formatting.rustfmt,
-                    nls.formatting.shfmt,
-                    nls.formatting.sqlformat,
-                    with_root_file(nls.formatting.stylua, 'stylua.toml'),
+                    b.formatting.rustfmt,
+                    b.formatting.shfmt,
+                    b.formatting.sqlformat,
+                    with_root_file(b.formatting.stylua, 'stylua.toml'),
                 },
             })
         end,
