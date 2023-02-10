@@ -110,3 +110,10 @@ autocmd({ 'FileType' }, {
     ]])
     end,
 })
+
+autocmd('BufEnter', {
+    pattern = { '*.*' },
+    callback = function(data)
+        require('local-highlight').attach(data.buf)
+    end,
+})

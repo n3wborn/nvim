@@ -112,11 +112,15 @@ return require('packer').startup(function(use)
         'b3nj5m1n/kommentary',
         'kylechui/nvim-surround',
         'onsails/diaglist.nvim',
-        'RRethy/vim-illuminate',
         'b0o/schemastore.nvim',
         'windwp/nvim-autopairs',
         'simrat39/rust-tools.nvim',
         'norcalli/nvim-colorizer.lua',
+    })
+
+    use({
+        'tzachar/local-highlight.nvim',
+        config = [[require('local-highlight').setup()]],
     })
 
     use({
