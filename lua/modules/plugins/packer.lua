@@ -137,6 +137,8 @@ return require('packer').startup(function(use)
     })
 
     -- Colors and nice stuff
+    use({ 'catppuccin/nvim' })
+
     use({
         'marko-cerovac/material.nvim',
         'kyazdani42/nvim-web-devicons',
