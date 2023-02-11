@@ -61,7 +61,6 @@ end
 --- on_attach
 local on_attach = function(client, bufnr)
     local navic = require('nvim-navic')
-    require('illuminate').on_attach(client)
 
     -- capabilities
     local capabilities = client.server_capabilities
