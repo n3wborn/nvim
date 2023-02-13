@@ -34,10 +34,6 @@ lsp.protocol.CompletionItemKind = {
     TypeParameter = ' [type]',
 }
 
--- handlers
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, _G.global.float_border_opts)
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, _G.global.float_border_opts)
-
 -- lsp formatting
 local lsp_formatting = function(bufnr)
     local clients = vim.lsp.get_active_clients({ bufnr = bufnr })

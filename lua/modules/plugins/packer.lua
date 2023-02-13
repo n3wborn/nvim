@@ -51,8 +51,9 @@ return require('packer').startup(function(use)
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
-        'hrsh7th/cmp-nvim-lsp-signature-help',
     })
+
+    use({ 'onsails/lspkind.nvim' })
 
     -- Snippets
     use({
@@ -172,6 +173,7 @@ return require('packer').startup(function(use)
 
     use({
         'SmiteshP/nvim-navic',
+        config = [[require("nvim-navic").setup({highlight = true})]],
         requires = 'neovim/nvim-lspconfig',
     })
 
