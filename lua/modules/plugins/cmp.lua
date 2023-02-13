@@ -23,68 +23,26 @@ local check_backspace = function()
     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
-local icons = {
-    Array = ' ',
-    Boolean = ' ',
-    Class = ' ',
-    Color = ' ',
-    Constant = ' ',
-    Constructor = ' ',
-    Enum = ' ',
-    EnumMember = ' ',
-    Event = ' ',
-    Field = ' ',
-    File = ' ',
-    Folder = ' ',
-    Function = ' ',
-    Interface = ' ',
-    Key = ' ',
-    Keyword = ' ',
-    Method = ' ',
-    Module = ' ',
-    Namespace = ' ',
-    Null = 'ﳠ ',
-    Number = ' ',
-    Object = ' ',
-    Operator = ' ',
-    Package = ' ',
-    Property = ' ',
-    Reference = ' ',
-    Snippet = ' ',
-    String = ' ',
-    Struct = ' ',
-    Text = ' ',
-    TypeParameter = ' ',
-    Unit = ' ',
-    Value = ' ',
-    Variable = ' ',
-}
-
 cmp.setup({
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
+    -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-get-types-on-the-left-and-offset-the-menu
     formatting = {
         fields = { 'kind', 'abbr', 'menu' },
-        format = function(entry, item)
-            item.kind = string.format('%s', icons[item.kind])
-            item.menu = ({
-                buffer = '[Buffer]',
-                luasnip = '[Snip]',
-                nvim_lsp = '[LSP]',
-                nvim_lua = '[API]',
-                path = '[Path]',
-                rg = '[RG]',
-            })[entry.source.name]
-            return item
+        format = function(entry, vim_item)
+            local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            kind.kind = ' ' .. (strings[1] or '') .. ' '
+            kind.menu = '    (' .. (strings[2] or '') .. ')'
+            return kind
         end,
     },
     window = {
         completion = {
             border = 'rounded',
-            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
         },
         documentation = {
             border = 'rounded',
@@ -131,7 +89,6 @@ cmp.setup({
         { name = 'rg', priority = 3 },
         { name = 'luasnip', priority = 2 },
         { name = 'path', priority = 1 },
-        { name = 'nvim_lsp_signature_help' },
         { name = 'nvim_lua' },
     }),
 })

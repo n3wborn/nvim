@@ -79,8 +79,3 @@ vim.lsp.handlers['$/progress'] = function(_, result, ctx)
         notif_data.spinner = nil
     end
 end
-
-local border_opts = { border = 'rounded', focusable = false, scope = 'line' }
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, border_opts)
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, border_opts)
