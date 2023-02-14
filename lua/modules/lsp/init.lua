@@ -189,6 +189,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 for _, server in ipairs({
     'bashls',
     'dockerls',
+    'docker-compose',
     'emmet',
     'eslint',
     'jsonls',
