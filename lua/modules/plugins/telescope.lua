@@ -101,11 +101,6 @@ else
     require('telescope').load_extension('project')
     require('telescope').load_extension('lazygit')
     require('telescope').load_extension('ui-select')
-    require('telescope').load_extension('smart_open')
-
-    u.command('SmartOpen', 'Telescope smart_open')
-    u.map('n', '<leader>F', '<cmd>SmartOpen<CR>')
-
     u.command('Project', 'Telescope project')
     u.map('n', '<C-p>', '<cmd>Project<CR>')
 
