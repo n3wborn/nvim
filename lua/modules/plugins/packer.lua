@@ -77,11 +77,6 @@ return require('packer').startup(function(use)
     })
 
     use({
-        'danielfalk/smart-open.nvim',
-        requires = { 'tami5/sqlite.lua' },
-    })
-
-    use({
         'nvim-telescope/telescope-project.nvim',
         requires = {
             'nvim-telescope/telescope.nvim',
