@@ -132,6 +132,12 @@ return require('packer').startup(function(use)
         requires = 'nvim-lua/plenary.nvim',
     })
 
+    use({
+        'akinsho/git-conflict.nvim',
+        tag = '*',
+        config = [[require('modules.plugins.git_conflict')]],
+    })
+
     -- Colors and nice stuff
     use({ 'catppuccin/nvim' })
 
