@@ -18,8 +18,8 @@ opt.foldlevelstart = 99
 opt.foldenable = true
 opt.foldmethod = 'indent'
 opt.signcolumn = 'yes'
-vim.opt.numberwidth = 3
-vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
+opt.numberwidth = 3
+opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
 opt.shortmess = 'filnxtToOFWIcC'
 opt.hidden = true
 opt.ignorecase = true
