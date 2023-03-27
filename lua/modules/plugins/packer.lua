@@ -124,6 +124,15 @@ return require('packer').startup(function(use)
         config = [[require('bqf').setup()]],
     })
 
+    use({
+        'SmiteshP/nvim-navbuddy',
+        requires = {
+            'neovim/nvim-lspconfig',
+            'SmiteshP/nvim-navic',
+            'MunifTanjim/nui.nvim',
+        },
+    })
+
     -- Git
     use({ 'kdheepak/lazygit.nvim' })
 
