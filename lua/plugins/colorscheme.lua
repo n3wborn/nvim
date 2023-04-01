@@ -32,7 +32,7 @@ return {
     {
         'marko-cerovac/material.nvim',
         lazy = false,
-        priority = 1000,
+        priority = 999,
         config = function()
             local material = require('material')
             vim.g.material_style = 'palenight'
