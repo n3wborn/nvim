@@ -88,7 +88,7 @@ return {
     -- indent guides for Neovim
     {
         'lukas-reineke/indent-blankline.nvim',
-        event = 'BufReadPost',
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             char = '▏',
             filetype_exclude = {
