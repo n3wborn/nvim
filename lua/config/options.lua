@@ -49,8 +49,3 @@ vim.filetype.add({
         ['.*twig'] = 'twig.html',
     },
 })
-
-vim.g.mapleader = ','
-
-_G.global = {}
-_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
