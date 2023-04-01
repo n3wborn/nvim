@@ -1,15 +1,7 @@
-local M = {
+return {
     'lewis6991/gitsigns.nvim',
     event = 'BufReadPre',
-}
-
-function M.config()
-    if not package.loaded.trouble then
-        package.preload.trouble = function()
-            return true
-        end
-    end
-    require('gitsigns').setup({
+    opts = {
         signs = {
             add = { text = '│ ' },
             change = { text = '│ ' },
@@ -73,9 +65,8 @@ function M.config()
                 gs.diffthis('~')
             end)
         end,
-    })
-    package.loaded.trouble = nil
-    package.preload.trouble = nil
-end
-
-return M
+    },
+    config = function(_, opts)
+        require('gitsigns').setup(opts)
+    end,
+}
