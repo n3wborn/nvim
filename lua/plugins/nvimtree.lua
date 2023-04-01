@@ -1,6 +1,9 @@
 -- https://github.com/kyazdani42/nvim-tree.lua
 return {
     'kyazdani42/nvim-tree.lua',
+    keys = {
+        { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
+    },
     opts = {
         filters = {
             dotfiles = false,
@@ -33,12 +36,5 @@ return {
     },
     config = function(_, opts)
         require('nvim-tree').setup(opts)
-        vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
-
-        vim.api.nvim_create_autocmd('BufEnter', {
-            desc = 'Quit nvim if nvim-tree is the last buffer',
-            command = 'if winnr("$") == 1 && bufname() == "NvimTree_" . tabpagenr() | quit | endif',
-            group = vim.api.nvim_create_augroup('nvim-tree', { clear = false }),
-        })
     end,
 }
