@@ -1,4 +1,5 @@
 return {
+    { 'nvim-lua/plenary.nvim' },
     -- neodev
     {
         'folke/neodev.nvim',
@@ -108,6 +109,9 @@ return {
     -- null-ls
     {
         'jose-elias-alvarez/null-ls.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+        },
         config = function()
             local nls = require('null-ls')
             local b = require('null-ls.builtins')
