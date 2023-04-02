@@ -58,6 +58,10 @@ return {
     {
         'akinsho/nvim-bufferline.lua',
         event = 'VeryLazy',
+        keys = {
+            { '<C-PageUp>', '<cmd>BufferLineCyclePrev<CR>', desc = 'move to previous buffer' },
+            { '<C-PageDown>', '<cmd>BufferLineCycleNext<CR>', desc = 'move to next buffer' },
+        },
         opts = {
             options = {
                 diagnostics = 'nvim_lsp',
