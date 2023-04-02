@@ -1,6 +1,6 @@
-return  {
-    "catppuccin/nvim",
-    name = "catppuccin",
+return {
+    'catppuccin/nvim',
+    name = 'catppuccin',
     config = function()
         require('catppuccin').setup({
             flavour = 'mocha',
@@ -70,7 +70,6 @@ return  {
                     CmpItemKindCopilot = { fg = c.base, bg = c.teal },
                 }
             end,
-
         })
 
         vim.cmd.colorscheme('catppuccin')
