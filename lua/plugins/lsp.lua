@@ -1,191 +1,251 @@
 return {
-    { 'nvim-lua/plenary.nvim' },
-    -- neodev
     {
-        'folke/neodev.nvim',
-        config = {
-            debug = true,
-            experimental = {
-                pathStrict = true,
+        'SmiteshP/nvim-navic',
+        requires = 'neovim/nvim-lspconfig',
+    },
+    {
+        'simrat39/rust-tools.nvim',
+        requires = 'neovim/nvim-lspconfig',
+    },
+    {
+        'RRethy/vim-illuminate',
+        opts = {
+            providers = {
+                'lsp',
+                'treesitter',
             },
-            library = {
-                runtime = '~/prog/git/neovim/runtime/',
+            filetypes_denylist = {
+                'nvimTree',
+                'nvim-tree',
+                'telescope',
             },
         },
-    },
+        config = function(_, opts)
+            require('illuminate').configure(opts)
 
-    -- tools
+            vim.cmd('hi link illuminatedWord Visual')
+        end,
+    },
     {
-        'williamboman/mason.nvim',
-        ensure_installed = {
-            'emmet',
-            'eslint',
-            'eslint_d',
-            'luacheck',
-            'prettier',
-            'prettierd',
-            'shellcheck',
-            'shfmt',
-            'stylua',
-            'tsserver',
-        },
+        'rafamadriz/friendly-snippets',
+        dependencies = { 'L3MON4D3/LuaSnip' },
+        config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+        end,
     },
-
-    -- json schemas
-    'b0o/SchemaStore.nvim',
-
-    -- lsp servers
     {
         'neovim/nvim-lspconfig',
-        ---@type lspconfig.options
-        servers = {
-            bashls = {},
-            cssls = {},
-            dockerls = {},
-            tsserver = {},
-            eslint = {},
-            emmet = {},
-            html = {},
-            jsonls = {
-                on_new_config = function(new_config)
-                    new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-                    vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
-                end,
-                settings = {
-                    json = {
-                        format = {
-                            enable = true,
-                        },
-                        validate = { enable = true },
-                    },
-                },
-            },
-            gopls = {},
-            rust_analyzer = {
-                settings = {
-                    ['rust-analyzer'] = {
-                        cargo = { allFeatures = true },
-                        checkOnSave = {
-                            command = 'clippy',
-                            extraArgs = { '--no-deps' },
-                        },
-                    },
-                },
-            },
-            yamlls = {},
-            sumneko_lua = {
-                single_file_support = true,
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = {
-                                'vim',
-                                'use',
-                                'describe',
-                                'it',
-                                'assert',
-                                'before_each',
-                                'after_each',
-                            },
-                        },
-                        completion = {
-                            showWord = 'Disable',
-                            callSnippet = 'Disable',
-                            keywordSnippet = 'Disable',
-                        },
-                        workspace = {
-                            checkThirdParty = false,
-                            library = {
-                                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                            },
-                        },
-                    },
-                },
-            },
-            vimls = {},
-        },
-    },
-
-    -- null-ls
-    {
-        'jose-elias-alvarez/null-ls.nvim',
         dependencies = {
-            'nvim-lua/plenary.nvim',
+            'folke/neodev.nvim',
+            'jose-elias-alvarez/null-ls.nvim',
+            'jose-elias-alvarez/typescript.nvim',
+            'b0o/schemastore.nvim',
+            'simrat39/rust-tools.nvim,
         },
         config = function()
-            local nls = require('null-ls')
-            local b = require('null-ls.builtins')
+            -- heavily inspired by jose-elias-alvarez config
+            -- https://github.com/jose-elias-alvarez/dotfiles/blob/main/config/nvim/lua/lsp/init.lua
+            local u = require('utils')
+            local lsp = vim.lsp
 
-            local with_root_file = function(builtin, file)
-                return builtin.with({
-                    condition = function(utils)
-                        return utils.root_has_file(file)
+            require('lsp.diagnostics').setup()
+
+            -- lsp comp items
+            lsp.protocol.CompletionItemKind = {
+                Text = ' [text]',
+                Method = ' [method]',
+                Function = ' [function]',
+                Constructor = ' [constructor]',
+                Field = 'ﰠ [field]',
+                Variable = ' [variable]',
+                Class = ' [class]',
+                Interface = ' [interface]',
+                Module = ' [module]',
+                Property = ' [property]',
+                Unit = ' [unit]',
+                Value = ' [value]',
+                Enum = ' [enum]',
+                Keyword = ' [key]',
+                Snippet = ' [snippet]',
+                Color = ' [color]',
+                File = ' [file]',
+                Reference = ' [reference]',
+                Folder = ' [folder]',
+                EnumMember = ' [enum member]',
+                Constant = ' [constant]',
+                Struct = ' [struct]',
+                Event = '⌘ [event]',
+                Operator = ' [operator]',
+                TypeParameter = ' [type]',
+            }
+
+            -- lsp formatting
+            local lsp_formatting = function(bufnr)
+                local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+
+                lsp.buf.format({
+                    bufnr = bufnr,
+                    filter = function(client)
+                        if client.name == 'eslint' then
+                            return true
+                        end
+
+                        if client.name == 'null-ls' then
+                            return not u.table.some(clients, function(_, other_client)
+                                return other_client.name == 'eslint'
+                            end)
+                        end
                     end,
                 })
             end
 
-            nls.setup({
-                debounce = 150,
-                save_after_format = false,
-                sources = {
-                    --- code actions
-                    b.code_actions.eslint,
-                    b.code_actions.gitrebase,
-                    b.code_actions.refactoring,
-                    b.code_actions.shellcheck,
-                    --- diagnostics
-                    b.diagnostics.gitlint,
-                    b.diagnostics.markdownlint,
-                    b.diagnostics.php,
-                    b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
-                    b.diagnostics.todo_comments,
-                    b.diagnostics.trail_space,
-                    b.diagnostics.tsc,
-                    b.diagnostics.zsh,
-                    --- formatting
-                    b.formatting.blade_formatter,
-                    b.formatting.eslint_d,
-                    b.formatting.fixjson,
-                    b.formatting.goimports,
-                    b.formatting.phpcsfixer.with({
-                        filetypes = { 'php' },
-                        command = 'php-cs-fixer',
-                        args = {
-                            '--no-interaction',
-                            '--quiet',
-                            '--using-cache=' .. 'no',
-                            '--config=' .. '$ROOT' .. '/.php-cs-fixer.php',
-                            'fix',
-                            '$FILENAME',
-                        },
-                        condition = function(utils)
-                            return utils.root_has_file('.php-cs-fixer.php')
-                        end,
-                    }),
-                    b.formatting.phpcsfixer.with({
-                        filetypes = { 'php' },
-                        command = 'php-cs-fixer',
-                        args = {
-                            '--no-interaction',
-                            '--quiet',
-                            '--using-cache=' .. 'no',
-                            '--rules=' .. '@PSR12,@Symfony',
-                            'fix',
-                            '$FILENAME',
-                        },
-                        condition = function(utils)
-                            return not utils.root_has_file('.php-cs-fixer.php')
-                        end,
-                    }),
-                    b.formatting.prettier.with({
-                        disabled_filetypes = { 'typescript', 'typescriptreact' },
-                    }),
-                    b.formatting.rustfmt,
-                    b.formatting.shfmt,
-                    b.formatting.sqlformat,
-                    with_root_file(b.formatting.stylua, 'stylua.toml'),
-                },
-            })
+            --- on_attach
+            local on_attach = function(client, bufnr)
+                local navic = require('nvim-navic')
+
+                -- capabilities
+                local capabilities = client.server_capabilities
+                capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+                -- lsp format
+                if capabilities.documentFormattingProvider then
+                    u.buf_command(bufnr, 'LspFormatting', function()
+                        lsp_formatting(bufnr)
+                    end)
+
+                    local augroup = 'auto_format_' .. bufnr
+                    vim.api.nvim_create_augroup(augroup, { clear = true })
+                    vim.api.nvim_create_autocmd('BufWritePre', {
+                        group = augroup,
+                        buffer = bufnr,
+                        command = 'LspFormatting',
+                    })
+                end
+
+                -- show definition of current symbol
+                if capabilities.definitionProvider then
+                    u.buf_command(bufnr, 'LspDef', function()
+                        vim.lsp.buf.definition()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>gd', '<cmd>LspDef<CR>')
+                end
+
+                -- show declaration of current symbol
+                if capabilities.declarationProvider then
+                    u.buf_command(bufnr, 'LspDef', function()
+                        vim.lsp.buf.declaration()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>gD', '<cmd>LspDef<CR>')
+                end
+
+                -- show definition of current type
+                if capabilities.typeDefinitionProvider then
+                    u.buf_command(bufnr, 'LspTypeDef', function()
+                        vim.lsp.buf.type_definition()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>lt', '<cmd>LspTypeDef<CR>')
+                    -- u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
+                end
+
+                -- show implementation fo current symbol
+                if capabilities.implementationProvider then
+                    u.buf_command(bufnr, 'LspImplementations', function()
+                        vim.lsp.buf.implementation()
+                    end)
+                    u.buf_map(bufnr, 'n', '<leader>li', '<cmd>LspImplementations<CR>')
+                end
+
+                -- hover current symbol details
+                if capabilities.hoverProvider then
+                    if client.name == 'rust-analyzer' then
+                        -- hover_with_actions has been deprecated from rust-tools settings
+                        u.buf_command(bufnr, 'LspHover', ':RustHoverActions<CR>')
+                    else
+                        u.buf_command(bufnr, 'LspHover', function()
+                            vim.lsp.buf.hover()
+                        end)
+                    end
+
+                    u.buf_map(bufnr, 'n', 'K', '<cmd>LspHover<CR>')
+                end
+
+                -- rename current symbol
+                if capabilities.renameProvider then
+                    u.buf_command(bufnr, 'LspRename', function()
+                        vim.lsp.buf.rename()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>R', ':LspRename<CR>')
+                end
+
+                -- show code actions available
+                if capabilities.codeActionProvider then
+                    u.buf_command(bufnr, 'LspAct', function()
+                        vim.lsp.buf.code_action()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
+                end
+
+                -- References of current symbol
+                if capabilities.referencesProvider then
+                    u.buf_command(bufnr, 'LspRefs', function()
+                        vim.lsp.buf.references()
+                    end)
+
+                    u.buf_map(bufnr, 'n', '<leader>lr', '<cmd>LspRefs<CR>')
+                    -- u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
+                end
+
+                -- show signature help
+                if capabilities.signatureHelpProvider then
+                    u.buf_command(bufnr, 'LspSignatureHelp', function()
+                        vim.lsp.buf.signature_help()
+                    end)
+                    u.buf_map(bufnr, 'i', '<C-x><C-x>', '<cmd>LspSignatureHelp<CR>')
+                end
+
+                -- diagnostics
+                u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
+                u.buf_map(bufnr, 'n', '[d', ':LspDiagPrev<CR>')
+
+                u.buf_command(bufnr, 'LspDiagNext', vim.diagnostic.goto_next)
+                u.buf_map(bufnr, 'n', ']d', ':LspDiagNext<CR>')
+
+                u.buf_command(bufnr, 'LspDiagLine', vim.diagnostic.open_float)
+                u.buf_map(bufnr, 'n', '<leader>D', ':LspDiagLine<CR>')
+
+                --- quickfix
+                u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
+                u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
+
+                -- show current context in statusline/winbar
+                if client.server_capabilities.documentSymbolProvider then
+                    navic.attach(client, bufnr)
+                end
+            end
+
+
+            -- required servers
+            for _, server in ipairs({
+                'bashls',
+                -- 'dockerls',
+                -- 'docker-compose',
+                'emmet',
+                'eslint',
+                'jsonls',
+                'typescript',
+                'null-ls',
+                'intelephense',
+                'rust-analyzer',
+                'gopls',
+                'neodev',
+            }) do
+                require('lsp.' .. server).setup(on_attach, capabilities)
+            end
         end,
     },
 }
