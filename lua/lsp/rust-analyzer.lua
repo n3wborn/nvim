@@ -78,7 +78,7 @@ local M = {
                     other_hints_prefix = '',
                 },
                 hover_actions = {
-                    border = 'single',
+                    border = 'rounded',
                 },
             },
             -- lsp
