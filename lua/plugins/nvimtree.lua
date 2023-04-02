@@ -1,13 +1,10 @@
 -- https://github.com/kyazdani42/nvim-tree.lua
-local u = require('utils')
-local nvim_tree_ok, nvim_tree = pcall(require, 'nvim-tree')
-
-if not nvim_tree_ok then
-    u.notif('Plugins :', 'Something went wrong with nvim-tree', vim.log.levels.WARN)
-    return
-else
-    -- config
-    local config = {
+return {
+    'kyazdani42/nvim-tree.lua',
+    keys = {
+        { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
+    },
+    opts = {
         filters = {
             dotfiles = false,
             custom = { 'node_modules', '.cache', 'build', 'var', 'vendor' },
@@ -36,17 +33,8 @@ else
                 inline_arrows = true,
             },
         },
-    }
-
-    -- setup
-    nvim_tree.setup(config)
-
-    -- mappings
-    u.map('n', '<leader>e', ':NvimTreeToggle<CR>')
-
-    vim.api.nvim_create_autocmd('BufEnter', {
-        desc = 'Quit nvim if nvim-tree is the last buffer',
-        command = 'if winnr("$") == 1 && bufname() == "NvimTree_" . tabpagenr() | quit | endif',
-        group = vim.api.nvim_create_augroup('nvim-tree', { clear = false }),
-    })
-end
+    },
+    config = function(_, opts)
+        require('nvim-tree').setup(opts)
+    end,
+}
