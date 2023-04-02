@@ -38,8 +38,6 @@ return {
             'b0o/schemastore.nvim',
         },
         config = function()
-            -- heavily inspired by jose-elias-alvarez config
-            -- https://github.com/jose-elias-alvarez/dotfiles/blob/main/config/nvim/lua/lsp/init.lua
             local u = require('utils')
             local lsp = vim.lsp
 
@@ -75,6 +73,7 @@ return {
             }
 
             -- lsp formatting
+            local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
             local lsp_formatting = function(bufnr)
                 local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
 
@@ -97,19 +96,20 @@ return {
             --- on_attach
             local on_attach = function(client, bufnr)
                 local navic = require('nvim-navic')
+                require('illuminate').on_attach(client)
 
                 -- capabilities
                 local capabilities = client.server_capabilities
                 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-                -- lsp format
-                if capabilities.documentFormattingProvider then
-                    u.buf_command(bufnr, 'LspFormatting', function()
+                if client.supports_method('textDocument/formatting') then
+                    local formatting_cb = function()
                         lsp_formatting(bufnr)
-                    end)
+                    end
+                    u.buf_command(bufnr, 'LspFormatting', formatting_cb)
+                    u.buf_map(bufnr, 'x', '<CR>', formatting_cb)
 
-                    local augroup = 'auto_format_' .. bufnr
-                    vim.api.nvim_create_augroup(augroup, { clear = true })
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                     vim.api.nvim_create_autocmd('BufWritePre', {
                         group = augroup,
                         buffer = bufnr,
@@ -187,7 +187,7 @@ return {
                     end)
 
                     u.buf_map(bufnr, 'n', '<leader>lr', '<cmd>LspRefs<CR>')
-                    -- u.buf_map(bufnr, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
+                    -- u.buf_map(buf, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
                 end
 
                 -- show signature help
