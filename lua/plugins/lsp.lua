@@ -4,10 +4,6 @@ return {
         requires = 'neovim/nvim-lspconfig',
     },
     {
-        'simrat39/rust-tools.nvim',
-        requires = 'neovim/nvim-lspconfig',
-    },
-    {
         'RRethy/vim-illuminate',
         opts = {
             providers = {
@@ -40,7 +36,6 @@ return {
             'jose-elias-alvarez/null-ls.nvim',
             'jose-elias-alvarez/typescript.nvim',
             'b0o/schemastore.nvim',
-            'simrat39/rust-tools.nvim,
         },
         config = function()
             -- heavily inspired by jose-elias-alvarez config
@@ -160,14 +155,9 @@ return {
 
                 -- hover current symbol details
                 if capabilities.hoverProvider then
-                    if client.name == 'rust-analyzer' then
-                        -- hover_with_actions has been deprecated from rust-tools settings
-                        u.buf_command(bufnr, 'LspHover', ':RustHoverActions<CR>')
-                    else
-                        u.buf_command(bufnr, 'LspHover', function()
-                            vim.lsp.buf.hover()
-                        end)
-                    end
+                    u.buf_command(bufnr, 'LspHover', function()
+                        vim.lsp.buf.hover()
+                    end)
 
                     u.buf_map(bufnr, 'n', 'K', '<cmd>LspHover<CR>')
                 end
@@ -240,7 +230,6 @@ return {
                 'typescript',
                 'null-ls',
                 'intelephense',
-                'rust-analyzer',
                 'gopls',
                 'neodev',
             }) do
