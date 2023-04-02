@@ -100,7 +100,7 @@ return {
 
                 -- capabilities
                 local capabilities = client.server_capabilities
-                capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+                capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
                 -- lsp format
                 if capabilities.documentFormattingProvider then
@@ -217,7 +217,6 @@ return {
                     navic.attach(client, bufnr)
                 end
             end
-
 
             -- required servers
             for _, server in ipairs({
