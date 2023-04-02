@@ -2,6 +2,7 @@ return {
     { 'nvim-tree/nvim-web-devicons', lazy = true },
     {
         'folke/noice.nvim',
+        event = 'VeryLazy',
         dependencies = {
             'MunifTanjim/nui.nvim',
             'rcarriga/nvim-notify',
@@ -26,7 +27,6 @@ return {
         end,
     },
     {
-        -- Better `vim.notify()`
         'rcarriga/nvim-notify',
         keys = {
             {
@@ -66,8 +66,8 @@ return {
                     local icons = require('custom.icons').diagnostics
                     local s = {}
                     local severities = {
-                        'error',
-                        'warning',
+                        'Error',
+                        'Warning',
                     }
 
                     for _, severity in ipairs(severities) do
@@ -114,14 +114,25 @@ return {
             show_current_context = true,
         },
     },
-    --[[ {
-        'tzachar/local-highlight.nvim',
-        config = function()
-            require('local-highlight').setup()
-        end,
-    }, ]]
+    -- {
+    --     'tzachar/local-highlight.nvim',
+    --     event = { 'BufRead' },
+    --     config = function()
+    --         require('local-highlight').setup()
+    --
+    --         vim.api.nvim_create_autocmd('BufRead', {
+    --             pattern = { '*.*' },
+    --             callback = function(data)
+    --                 require('local-highlight').attach(data.buf)
+    --             end,
+    --         })
+    --     end,
+    -- },
     {
         'nvim-lualine/lualine.nvim',
+        dependencies = {
+            'SmiteshP/nvim-navic',
+        },
         event = 'VeryLazy',
         opts = function()
             local navic = require('nvim-navic')
@@ -139,7 +150,7 @@ return {
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
                     lualine_c = { 'filename', { navic.get_location, cond = navic.is_available } },
                     lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                    lualine_y = { 'progress' },
+                    lualine_y = {},
                     lualine_z = { 'location' },
                 },
                 inactive_sections = {
@@ -156,26 +167,6 @@ return {
                     'nvim-tree',
                 },
             }
-
-            local function ins_left(component)
-                table.insert(config.sections.lualine_c, component)
-            end
-
-            ins_left({
-                'lsp_progress',
-                display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
-                separators = {
-                    component = ' ',
-                    progress = ' | ',
-                    percentage = { pre = '', post = '%% ' },
-                    title = { pre = '', post = ': ' },
-                    lsp_client_name = { pre = '[', post = ']' },
-                    spinner = { pre = '', post = '' },
-                    message = { commenced = 'In Progress', completed = 'Completed' },
-                },
-                timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-                spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-            })
         end,
         config = function(_, opts)
             require('lualine').setup(opts)

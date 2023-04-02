@@ -5,8 +5,8 @@ require('lazy').setup({
         -- { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
         -- import any extras modules here
         -- add typescript/json (https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins/extras/lang)
-        { import = 'lazyvim.plugins.extras.lang.typescript' },
-        { import = 'lazyvim.plugins.extras.lang.json' },
+        -- { import = 'lazyvim.plugins.extras.lang.typescript' },
+        -- { import = 'lazyvim.plugins.extras.lang.json' },
         -- import/override with your plugins
         { import = 'plugins' },
     },
@@ -21,7 +21,7 @@ require('lazy').setup({
     },
     install = {
         missing = true,
-        colorscheme = { 'catpuccin', 'material' },
+        colorscheme = { 'catpuccin' },
     },
     checker = { enabled = true }, -- automatically check for plugin updates
     performance = {
