@@ -55,8 +55,6 @@ return {
             end,
         },
     },
-
-    -- bufferline
     {
         'akinsho/nvim-bufferline.lua',
         event = 'VeryLazy',
@@ -65,7 +63,7 @@ return {
                 diagnostics = 'nvim_lsp',
                 always_show_bufferline = false,
                 diagnostics_indicator = function(_, _, diag)
-                    local icons = require('lazyvim.config').icons.diagnostics
+                    local icons = require('custom.icons').diagnostics
                     local s = {}
                     local severities = {
                         'error',
@@ -91,8 +89,6 @@ return {
             },
         },
     },
-
-    -- indent guides for Neovim
     {
         'lukas-reineke/indent-blankline.nvim',
         event = { 'BufReadPost', 'BufNewFile' },
@@ -118,6 +114,12 @@ return {
             show_current_context = true,
         },
     },
+    --[[ {
+        'tzachar/local-highlight.nvim',
+        config = function()
+            require('local-highlight').setup()
+        end,
+    }, ]]
     {
         'nvim-lualine/lualine.nvim',
         event = 'VeryLazy',
@@ -126,7 +128,7 @@ return {
             local config = {
                 options = {
                     icons_enabled = true,
-                    theme = 'material-nvim',
+                    theme = 'catpuccin',
                     component_separators = { left = '', right = '' },
                     section_separators = { left = '', right = '' },
                     disabled_filetypes = {},
