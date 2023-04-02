@@ -96,6 +96,13 @@ return {
             desc = '',
         },
         {
+            '<leader>b',
+            function()
+                require('telescope.builtin').buffers()
+            end,
+            desc = 'Find in Buffers',
+        },
+        {
             '<leader>gc',
             function()
                 require('telescope.builtin').git_commits()
