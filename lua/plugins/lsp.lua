@@ -131,7 +131,6 @@ return {
 
                 -- capabilities
                 local capabilities = client.server_capabilities
-                capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
                 if client.supports_method('textDocument/formatting') then
                     local formatting_cb = function()
@@ -248,6 +247,8 @@ return {
                     navic.attach(client, bufnr)
                 end
             end
+
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             -- required servers
             for _, server in ipairs({
