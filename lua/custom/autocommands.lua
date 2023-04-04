@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'spectre_panel',
         'startuptime',
         'tsplayground',
+        'Navbuddy',
     },
     callback = function()
         vim.cmd([[
@@ -106,6 +107,7 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt_local.wrap = true
         vim.opt_local.spell = true
         vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
         vim.opt_local.linebreak = true
     end,
 })
