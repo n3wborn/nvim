@@ -1,11 +1,12 @@
 return {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
-        'romgrk/nvim-treesitter-context',
         'nvim-treesitter/nvim-treesitter-textobjects',
         'windwp/nvim-ts-autotag',
         'windwp/nvim-autopairs',
         'JoosepAlviste/nvim-ts-context-commentstring',
+        'nvim-treesitter/nvim-treesitter-refactor',
+        'HiPhish/nvim-ts-rainbow2',
     },
     config = function()
         pcall(require('nvim-treesitter.install').update({ with_sync = true }))
@@ -102,7 +103,27 @@ return {
             },
             autopairs = { enable = true },
             autotag = { enable = true },
-            context_commentstring = { enable = true },
+            refactor = {
+                highlight_definitions = { enable = true },
+                clear_on_cursor_move = true,
+            },
+            context_commentstring = {
+                enable = true,
+                config = {
+                    javascriptreact = {
+                        style_element = '{/*%s*/}',
+                    },
+                },
+            },
+            rainbow = {
+                enable = true,
+                -- list of languages you want to disable the plugin for
+                disable = { 'jsx', 'cpp' },
+                -- Which query to use for finding delimiters
+                query = 'rainbow-parens',
+                -- Highlight the entire buffer all at once
+                strategy = require('ts-rainbow').strategy.global,
+            },
         })
     end,
 }
