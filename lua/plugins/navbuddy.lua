@@ -1,6 +1,5 @@
 return {
     'SmiteshP/nvim-navbuddy',
-    name = 'Navbuddy',
     dependencies = {
         'neovim/nvim-lspconfig',
         'SmiteshP/nvim-navic',
@@ -24,7 +23,7 @@ return {
                 ['q'] = actions.close,
                 ['esc'] = actions.close,
             },
-            lsp = { auto_attach = true, preference = 'nvim_lsp' },
+            -- lsp = { preference = 'nvim_lsp' },
         })
     end,
 }
