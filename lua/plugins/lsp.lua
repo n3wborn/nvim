@@ -67,6 +67,13 @@ return {
             'jose-elias-alvarez/null-ls.nvim',
             'jose-elias-alvarez/typescript.nvim',
             'b0o/schemastore.nvim',
+            {
+                'SmiteshP/nvim-navbuddy',
+                dependencies = {
+                    'SmiteshP/nvim-navic',
+                    'MunifTanjim/nui.nvim',
+                },
+            },
         },
         config = function()
             local u = require('utils')
@@ -245,6 +252,7 @@ return {
                 -- show current context in statusline/winbar
                 if client.server_capabilities.documentSymbolProvider then
                     navic.attach(client, bufnr)
+                    require('nvim-navbuddy').attach(client, bufnr)
                 end
             end
 
