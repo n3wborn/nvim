@@ -118,64 +118,6 @@ return {
             show_current_context = true,
         },
     },
-    -- {
-    --     'tzachar/local-highlight.nvim',
-    --     event = { 'BufRead' },
-    --     config = function()
-    --         require('local-highlight').setup()
-    --
-    --         vim.api.nvim_create_autocmd('BufRead', {
-    --             pattern = { '*.*' },
-    --             callback = function(data)
-    --                 require('local-highlight').attach(data.buf)
-    --             end,
-    --         })
-    --     end,
-    -- },
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = {
-            'SmiteshP/nvim-navic',
-        },
-        event = 'VeryLazy',
-        opts = function()
-            local navic = require('nvim-navic')
-            local config = {
-                options = {
-                    icons_enabled = true,
-                    theme = 'catpuccin',
-                    component_separators = { left = '', right = '' },
-                    section_separators = { left = '', right = '' },
-                    disabled_filetypes = {},
-                    always_divide_middle = true,
-                },
-                sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename', { navic.get_location, cond = navic.is_available } },
-                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                    lualine_y = {},
-                    lualine_z = { 'location' },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = { 'filename' },
-                    lualine_x = { 'location' },
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                tabline = {},
-                extensions = {
-                    'quickfix',
-                    'nvim-tree',
-                },
-            }
-        end,
-        config = function(_, opts)
-            require('lualine').setup(opts)
-        end,
-    },
     {
         'anuvyklack/windows.nvim',
         config = true,

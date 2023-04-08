@@ -1,5 +1,3 @@
-local autocmd = vim.api.nvim_create_autocmd
-
 -- Do not auto comment on new line
 vim.api.nvim_create_autocmd('BufEnter', {
     command = 'set fo-=c fo-=r fo-=o',

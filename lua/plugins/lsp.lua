@@ -1,9 +1,5 @@
 return {
     {
-        'SmiteshP/nvim-navic',
-        requires = 'neovim/nvim-lspconfig',
-    },
-    {
         'RRethy/vim-illuminate',
         opts = {
             providers = {
@@ -134,7 +130,6 @@ return {
 
             --- on_attach
             local on_attach = function(client, bufnr)
-                local navic = require('nvim-navic')
                 require('illuminate').on_attach(client)
 
                 -- capabilities
@@ -252,12 +247,11 @@ return {
 
                 -- show current context in statusline/winbar
                 if client.server_capabilities.documentSymbolProvider then
-                    navic.attach(client, bufnr)
                     require('nvim-navbuddy').attach(client, bufnr)
                 end
             end
 
-            local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             -- required servers
             for _, server in ipairs({
