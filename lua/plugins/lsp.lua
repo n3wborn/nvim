@@ -62,6 +62,7 @@ return {
     },
     {
         'neovim/nvim-lspconfig',
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'folke/neodev.nvim',
             'jose-elias-alvarez/null-ls.nvim',
@@ -256,13 +257,13 @@ return {
                 end
             end
 
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
             -- required servers
             for _, server in ipairs({
                 'bashls',
-                -- 'dockerls',
-                -- 'docker-compose',
+                'dockerls',
+                'docker-compose',
                 'emmet',
                 'eslint',
                 'jsonls',
