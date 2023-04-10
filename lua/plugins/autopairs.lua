@@ -1,5 +1,6 @@
 return {
     'windwp/nvim-autopairs',
+    event = 'VeryLazy',
     config = function()
         local ok, npairs = pcall(require, 'nvim-autopairs')
         local cmp_npairs = require('nvim-autopairs.completion.cmp')
