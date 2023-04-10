@@ -3,17 +3,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
     command = 'set fo-=c fo-=r fo-=o',
 })
 
--- Disable IndentLine for markdown files
-vim.api.nvim_create_autocmd({ 'FileType markdown' }, {
-    command = 'let g:indentLine_enabled=0',
-})
-
--- Disable editor settings for git commits
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-    pattern = 'gitcommit',
-    command = 'let b:EditorConfig_disable=1',
-})
-
 -- show cursor line only in active window
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
     callback = function()
@@ -107,5 +96,6 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false
         vim.opt_local.linebreak = true
+        vim.b.editorconfig = false
     end,
 })
