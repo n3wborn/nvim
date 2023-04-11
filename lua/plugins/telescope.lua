@@ -88,14 +88,14 @@ return {
             function()
                 require('telescope.builtin').grep_string()
             end,
-            desc = '',
+            desc = 'Grep current string',
         },
         {
             '<leader>o',
             function()
                 require('telescope.builtin').oldfiles()
             end,
-            desc = '',
+            desc = 'Old files opened',
         },
         {
             '<leader>b',
@@ -109,56 +109,56 @@ return {
             function()
                 require('telescope.builtin').git_commits()
             end,
-            desc = '',
+            desc = 'Git commits',
         },
         {
             '<leader>gp',
             function()
                 require('telescope.builtin').git_bcommits()
             end,
-            desc = '',
+            desc = 'Previous git commits',
         },
         {
             '<leader>gb',
             function()
                 require('telescope.builtin').git_branches()
             end,
-            desc = '',
+            desc = 'Git branch',
         },
         {
             '<leader>gS',
             function()
                 require('telescope.builtin').git_stash()
             end,
-            desc = '',
+            desc = 'List git stashes',
         },
         {
             '<leader>gs',
             function()
                 require('telescope.builtin').git_status()
             end,
-            desc = '',
+            desc = 'Show git status',
         },
         {
             '<leader>lr',
             function()
                 require('telescope.builtin').lsp_references()
             end,
-            desc = '',
+            desc = 'List symbol references',
         },
         {
             '<leader>ls',
             function()
                 require('telescope.builtin').lsp_workspace_symbols()
             end,
-            desc = '',
+            desc = 'List workspace symbols',
         },
         {
             '<leader>li',
             function()
                 require('telescope.builtin').lsp_implementations()
             end,
-            desc = '',
+            desc = 'List symbol implementations',
         },
     },
     config = function(opts)

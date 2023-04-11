@@ -179,14 +179,6 @@ return {
                     -- u.buf_map(bufnr, 'n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
                 end
 
-                -- show implementation fo current symbol
-                if capabilities.implementationProvider then
-                    u.buf_command(bufnr, 'LspImplementations', function()
-                        vim.lsp.buf.implementation()
-                    end)
-                    u.buf_map(bufnr, 'n', '<leader>li', '<cmd>LspImplementations<CR>')
-                end
-
                 -- hover current symbol details
                 if capabilities.hoverProvider then
                     u.buf_command(bufnr, 'LspHover', function()
@@ -212,16 +204,6 @@ return {
                     end)
 
                     u.buf_map(bufnr, 'n', '<leader>la', '<cmd>LspAct<CR>')
-                end
-
-                -- References of current symbol
-                if capabilities.referencesProvider then
-                    u.buf_command(bufnr, 'LspRefs', function()
-                        vim.lsp.buf.references()
-                    end)
-
-                    u.buf_map(bufnr, 'n', '<leader>lr', '<cmd>LspRefs<CR>')
-                    -- u.buf_map(buf, 'n', '<leader>lr', ':Telescope lsp_references<CR>')
                 end
 
                 -- show signature help
