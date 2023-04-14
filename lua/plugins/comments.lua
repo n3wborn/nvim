@@ -1,10 +1,5 @@
 return {
     {
-
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        lazy = false,
-    },
-    {
         'numToStr/Comment.nvim',
         event = 'VeryLazy',
         config = function()
