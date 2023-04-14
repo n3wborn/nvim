@@ -6,7 +6,6 @@ return {
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'windwp/nvim-ts-autotag',
-            'windwp/nvim-autopairs',
             'nvim-treesitter/nvim-treesitter-refactor',
             'HiPhish/nvim-ts-rainbow2',
         },
@@ -103,7 +102,6 @@ return {
                         },
                     },
                 },
-                autopairs = { enable = true },
                 autotag = { enable = true },
                 refactor = {
                     highlight_definitions = { enable = true },
