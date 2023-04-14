@@ -132,4 +132,12 @@ return {
             { '<C-w>=', '<cmd>WindowsEqualize<cr>', desc = 'Equalize Windows' },
         },
     },
+    {
+        'NvChad/nvim-colorizer.lua',
+        event = 'BufReadPre',
+        opts = {
+            filetypes = { '*', '!lazy' },
+            buftype = { '*', '!prompt', '!nofile' },
+        },
+    },
 }
