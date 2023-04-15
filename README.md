@@ -1,6 +1,6 @@
 # Nvim
 
-![startuptime](https://byob.yarr.is/n3wborn/nvim/startuptime)
+![](https://byob.yarr.is/n3wborn/nvim/startuptime)
 
 I use this repo to keep track of my own neovim config.
 Use it if you want but keep this in mind :
