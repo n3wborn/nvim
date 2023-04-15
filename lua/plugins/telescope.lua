@@ -26,6 +26,7 @@ return {
         },
         {
             'kdheepak/lazygit.nvim',
+            event = { 'VeryLazy' },
             config = function()
                 require('telescope').load_extension('lazygit')
 
@@ -36,8 +37,6 @@ return {
                     end,
                     group = vim.api.nvim_create_augroup('Lazygit', { clear = false }),
                 })
-
-                vim.keymap.set('n', '<space>G', '<cmd>Telescope lazygit<CR>')
             end,
         },
     },
@@ -69,6 +68,7 @@ return {
     cmd = { 'Telescope' },
     keys = {
         { '<Leader>T', ':Telescope<CR>', desc = 'Telescope' },
+        { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazygit' },
         {
             '<leader>f',
             function()
