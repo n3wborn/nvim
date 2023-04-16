@@ -51,9 +51,5 @@ u.map('i', '<C-c>', '<Esc>')
 u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 
 --- Copy-paste
-u.map('v', '<leader>p', '"_dP')
-u.map('n', '<leader>y', '"+y')
-u.map('v', '<leader>y', '"+y')
-u.map('n', '<leader>Y', 'gg"+yG')
-u.map('n', '<leader>d', '"_d')
-u.map('v', '<leader>d', '"_d')
+u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
+u.map('n', '<leader>d', '"_d', { desc = 'Delete without yank' })
