@@ -124,7 +124,7 @@ M.command = function(name, fn, opts)
 end
 
 M.t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
+    return vim.keycode(str)
 end
 
 M.input = function(keys, mode)
