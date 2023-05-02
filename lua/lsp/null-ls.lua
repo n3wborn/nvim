@@ -1,7 +1,6 @@
 -- null-ls
 local null_ls = require('null-ls')
 local b = null_ls.builtins
-local ts_code_actions = require('typescript.extensions.null-ls.code-actions')
 
 local with_root_file = function(builtin, file)
     return builtin.with({
@@ -17,7 +16,7 @@ local sources = {
     b.code_actions.gitrebase,
     b.code_actions.refactoring,
     b.code_actions.shellcheck,
-    ts_code_actions,
+    require('typescript.extensions.null-ls.code-actions'),
 
     --- diagnostics
     b.diagnostics.gitlint,
@@ -69,7 +68,7 @@ local sources = {
     }),
     b.formatting.rustfmt,
     b.formatting.shfmt,
-    b.formatting.sqlformat,
+    b.formatting.sqlfmt,
     with_root_file(b.formatting.stylua, 'stylua.toml'),
 }
 
