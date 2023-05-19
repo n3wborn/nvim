@@ -119,6 +119,8 @@ return {
                     CmpItemKindOperator = { fg = c.base, bg = c.blue },
                     CmpItemKindTypeParameter = { fg = c.base, bg = c.blue },
                     CmpItemKindCopilot = { fg = c.base, bg = c.teal },
+                    CursorLineNr = { fg = c.base, bg = c.surface1 },
+                    ColorColumn = { bg = c.surface0 },
                 }
             end,
         })
