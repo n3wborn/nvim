@@ -89,6 +89,9 @@ return {
                         warnings = { 'underline' },
                         information = { 'underline' },
                     },
+                    inlay_hints = {
+                        background = true,
+                    },
                 },
             },
             custom_highlights = function(c)
