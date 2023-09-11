@@ -53,3 +53,6 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
 u.map('n', '<leader>d', '"_d', { desc = 'Delete without yank' })
+
+--- Switch to previous buffer
+u.map('n', '<leader>B', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })

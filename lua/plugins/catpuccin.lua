@@ -54,6 +54,7 @@ return {
                 nvimtree = true,
                 overseer = false,
                 pounce = false,
+                rainbow_delimiters = true,
                 semantic_tokens = true,
                 symbols_outline = true,
                 telekasten = false,
