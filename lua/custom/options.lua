@@ -6,6 +6,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
 vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'number' --- @todo: use a fn to hide if new empty buffer
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true

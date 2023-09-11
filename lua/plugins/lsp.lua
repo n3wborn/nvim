@@ -136,6 +136,10 @@ return {
                 -- capabilities
                 local capabilities = client.server_capabilities
 
+                if capabilities.inlayHintProvider then
+                    vim.lsp.buf.inlay_hint(bufnr, true)
+                end
+
                 if client.supports_method('textDocument/formatting') then
                     local formatting_cb = function()
                         lsp_formatting(bufnr)

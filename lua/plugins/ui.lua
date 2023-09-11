@@ -136,8 +136,8 @@ return {
         'NvChad/nvim-colorizer.lua',
         event = 'BufReadPre',
         opts = {
-            filetypes = { '*', '!lazy' },
-            buftype = { '*', '!prompt', '!nofile' },
+            filetypes = { 'javascript', 'typescript', 'html', 'css', 'scss', '!lazy', '!prompt', '!nofile' },
+            buftype = { 'javascript', 'typescript', 'html', 'css', 'scss' },
         },
     },
 }

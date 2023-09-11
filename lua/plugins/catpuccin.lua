@@ -54,6 +54,7 @@ return {
                 nvimtree = true,
                 overseer = false,
                 pounce = false,
+                rainbow_delimiters = true,
                 semantic_tokens = true,
                 symbols_outline = true,
                 telekasten = false,
@@ -89,6 +90,9 @@ return {
                         warnings = { 'underline' },
                         information = { 'underline' },
                     },
+                    inlay_hints = {
+                        background = true,
+                    },
                 },
             },
             custom_highlights = function(c)
@@ -119,6 +123,8 @@ return {
                     CmpItemKindOperator = { fg = c.base, bg = c.blue },
                     CmpItemKindTypeParameter = { fg = c.base, bg = c.blue },
                     CmpItemKindCopilot = { fg = c.base, bg = c.teal },
+                    CursorLineNr = { fg = c.base, bg = c.surface1 },
+                    ColorColumn = { bg = c.surface0 },
                 }
             end,
         })
