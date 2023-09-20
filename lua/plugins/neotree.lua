@@ -162,8 +162,10 @@ return {
                     },
                     never_show = {}, -- remains hidden even if visible is toggled to true, this overrides always_show
                     never_show_by_pattern = {}, -- uses glob style patterns
+                    follow_current_file = {
+                        enabled = true,
+                    },
                 },
-                follow_current_file = true,
                 window = {
                     mappings = {
                         ['<bs>'] = 'navigate_up',
@@ -187,8 +189,9 @@ return {
                 },
             },
             buffers = {
-                follow_current_file = true, -- This will find and focus the file in the active buffer every
-                -- time the current file is changed while the tree is open.
+                follow_current_file = {
+                    enabled = true
+                },
                 group_empty_dirs = true, -- when true, empty folders will be grouped together
                 show_unloaded = true,
                 window = {
