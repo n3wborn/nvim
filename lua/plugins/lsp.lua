@@ -111,7 +111,7 @@ return {
             -- lsp formatting
             local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
             local lsp_formatting = function(bufnr)
-                local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+                local clients = vim.lsp.get_clients({ bufnr = bufnr })
 
                 lsp.buf.format({
                     bufnr = bufnr,
