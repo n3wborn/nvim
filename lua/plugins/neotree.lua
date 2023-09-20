@@ -190,7 +190,7 @@ return {
             },
             buffers = {
                 follow_current_file = {
-                    enabled = true
+                    enabled = true,
                 },
                 group_empty_dirs = true, -- when true, empty folders will be grouped together
                 show_unloaded = true,
