@@ -137,9 +137,9 @@ return {
                 -- capabilities
                 local capabilities = client.server_capabilities
 
-                if capabilities.inlayHintProvider then
-                    vim.lsp.buf.inlay_hint(bufnr, true)
-                end
+                u.map('n', '<leader>h', function()
+                    vim.lsp.inlay_hint(0, nil)
+                end, { desc = 'Toggle Inlay Hints' })
 
                 if client.supports_method('textDocument/formatting') then
                     local formatting_cb = function()

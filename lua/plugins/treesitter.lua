@@ -7,7 +7,6 @@ return {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'windwp/nvim-ts-autotag',
             'nvim-treesitter/nvim-treesitter-refactor',
-            'HiPhish/nvim-ts-rainbow2',
         },
         config = function()
             pcall(require('nvim-treesitter.install').update({ with_sync = true }))
@@ -25,7 +24,6 @@ return {
                     'gitattributes',
                     'gitignore',
                     'go',
-                    'help',
                     'html',
                     'java',
                     'javascript',
@@ -106,15 +104,6 @@ return {
                 refactor = {
                     highlight_definitions = { enable = true },
                     clear_on_cursor_move = true,
-                },
-                rainbow = {
-                    enable = true,
-                    -- list of languages you want to disable the plugin for
-                    disable = { 'jsx', 'cpp' },
-                    -- Which query to use for finding delimiters
-                    query = 'rainbow-parens',
-                    -- Highlight the entire buffer all at once
-                    strategy = require('ts-rainbow').strategy.global,
                 },
             })
         end,

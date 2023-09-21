@@ -144,32 +144,6 @@ M.is_file = function(path)
     return stat and stat.type == 'file'
 end
 
-M.make_floating_window = function(custom_window_config, height_ratio, width_ratio)
-    height_ratio = height_ratio or 0.8
-    width_ratio = width_ratio or 0.8
-
-    local height = math.ceil(vim.opt.lines:get() * height_ratio)
-    local width = math.ceil(vim.opt.columns:get() * width_ratio)
-    local window_config = {
-        relative = 'editor',
-        style = 'minimal',
-        border = 'rounded',
-        width = width,
-        height = height,
-        row = width / 2,
-        col = height / 2,
-    }
-    window_config = vim.tbl_extend('force', window_config, custom_window_config or {})
-
-    local bufnr = api.nvim_create_buf(false, true)
-    local winnr = api.nvim_open_win(bufnr, true, window_config)
-    return winnr, bufnr
-end
-
-M.get_system_output = function(cmd)
-    return vim.split(vim.fn.system(cmd), '\n')
-end
-
 M.get_cwd = function()
     return uv.cwd
 end
