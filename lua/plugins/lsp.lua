@@ -71,6 +71,7 @@ return {
                     'SmiteshP/nvim-navic',
                     'MunifTanjim/nui.nvim',
                 },
+                opts = { lsp = { auto_attach = true } },
             },
         },
         config = function()
@@ -231,11 +232,6 @@ return {
                 --- quickfix
                 u.buf_command(bufnr, 'LspDiagQuickfix', vim.diagnostic.setqflist)
                 u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
-
-                -- show current context in statusline/winbar
-                if client.server_capabilities.documentSymbolProvider then
-                    require('nvim-navbuddy').attach(client, bufnr)
-                end
             end
 
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
