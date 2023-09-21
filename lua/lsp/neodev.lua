@@ -13,7 +13,7 @@ local settings = {
         },
         completion = {
             showWord = 'Disable',
-            callSnippet = 'Disable',
+            callSnippet = 'Replace',
             keywordSnippet = 'Disable',
         },
         workspace = {
