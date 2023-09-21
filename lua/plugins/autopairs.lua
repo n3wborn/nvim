@@ -1,7 +1,6 @@
 return {
-    'echasnovski/mini.pairs',
-    event = 'VeryLazy',
-    config = function(_, opts)
-        require('mini.pairs').setup(opts)
-    end,
+    'altermo/ultimate-autopair.nvim',
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    branch = 'v0.6',
+    opts = {},
 }
