@@ -13,6 +13,7 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
         end
     end,
 })
+
 vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
     callback = function()
         local cl = vim.wo.cursorline
@@ -30,12 +31,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         vim.wo.spell = false
         vim.wo.conceallevel = 0
     end,
-})
-
--- Trim buffer whitespaces
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    pattern = '*',
-    command = 'TrimTrailingWhitespace',
 })
 
 -- Check if we need to reload the file when it changed

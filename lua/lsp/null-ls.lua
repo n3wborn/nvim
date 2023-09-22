@@ -14,23 +14,23 @@ local sources = {
     --- code actions
     b.code_actions.eslint,
     b.code_actions.gitrebase,
-    b.code_actions.refactoring,
+    -- b.code_actions.refactoring,
     b.code_actions.shellcheck,
     require('typescript.extensions.null-ls.code-actions'),
 
     --- diagnostics
     b.diagnostics.gitlint,
-    b.diagnostics.markdownlint,
+    -- b.diagnostics.markdownlint,
     b.diagnostics.php,
-    b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
+    -- b.diagnostics.shellcheck.with({ diagnostics_format = '#{m} [#{c}]' }),
     b.diagnostics.todo_comments,
-    b.diagnostics.trail_space,
+    -- b.diagnostics.trail_space,
     b.diagnostics.tsc,
     b.diagnostics.zsh,
 
     --- formatting
     b.formatting.blade_formatter,
-    b.formatting.eslint_d,
+    -- b.formatting.eslint_d,
     b.formatting.fixjson,
     b.formatting.goimports,
     b.formatting.phpcsfixer.with({
@@ -63,13 +63,13 @@ local sources = {
             return not utils.root_has_file('.php-cs-fixer.php')
         end,
     }),
-    b.formatting.prettier.with({
+    --[[ b.formatting.prettier.with({
         disabled_filetypes = { 'typescript', 'typescriptreact', 'markdown' },
     }),
     b.formatting.rustfmt,
     b.formatting.shfmt,
     b.formatting.sqlfmt,
-    with_root_file(b.formatting.stylua, 'stylua.toml'),
+    with_root_file(b.formatting.stylua, 'stylua.toml'), ]]
 }
 
 local M = {
