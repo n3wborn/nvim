@@ -8,7 +8,7 @@ return {
             markdown = { 'markdownlint' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
-            sql = { 'sql_formtter' },
+            sql = { 'sql_formatter' },
             typescript = { { 'eslint_d', 'eslint' } },
             typescriptreact = { { 'eslint_d', 'eslint' } },
             _ = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
