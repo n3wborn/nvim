@@ -16,15 +16,6 @@ return {
             end,
         },
         {
-            'nvim-telescope/telescope-project.nvim',
-            keys = {
-                { '<C-p>', '<cmd>Telescope project<CR>', desc = 'Telescope Projects' },
-            },
-            config = function()
-                require('telescope').load_extension('project')
-            end,
-        },
-        {
             'kdheepak/lazygit.nvim',
             event = { 'VeryLazy' },
             config = function()
