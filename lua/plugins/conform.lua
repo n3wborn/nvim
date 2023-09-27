@@ -11,12 +11,12 @@ return {
             sql = { 'sql_formatter' },
             typescript = { { 'eslint_d', 'eslint' } },
             typescriptreact = { { 'eslint_d', 'eslint' } },
-            _ = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
+            ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
-    },
-    format_on_save = {
-        timeout_ms = 1000,
-        lsp_fallback = true,
+        format_on_save = {
+            timeout_ms = 500,
+            lsp_fallback = true,
+        },
     },
     config = function(_, opts)
         require('conform').setup(opts)
