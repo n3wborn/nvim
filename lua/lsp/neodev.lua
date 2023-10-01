@@ -1,26 +1,21 @@
 local settings = {
     Lua = {
         diagnostics = {
-            globals = {
-                'vim',
-                'use',
-                'describe',
-                'it',
-                'assert',
-                'before_each',
-                'after_each',
+            globals = { 'vim' },
+        },
+        workspace = {
+            library = {
+                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                [vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy'] = true,
             },
+            maxPreload = 100000,
+            preloadFileSize = 10000,
         },
         completion = {
             showWord = 'Disable',
             callSnippet = 'Replace',
             keywordSnippet = 'Disable',
-        },
-        workspace = {
-            checkThirdParty = false,
-            library = {
-                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-            },
         },
     },
 }
