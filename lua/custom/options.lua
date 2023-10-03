@@ -45,6 +45,8 @@ vim.opt.updatetime = 250
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.completeopt = 'menu,menuone,noselect'
 
+vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
+
 vim.filetype.add({
     pattern = {
         ['.*twig'] = 'twig.html',
