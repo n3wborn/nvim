@@ -14,52 +14,6 @@ local get_map_options = function(custom_options)
     return options
 end
 
--- (see :h command-preview or https://github.com/neovim/neovim/commit/7380ebfc17723662f6fe1e38372f54b3d67fe082)
-local function trim_space(opts, preview_ns, preview_buf)
-    local line1 = opts.line1
-    local line2 = opts.line2
-    local buf = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(buf, line1 - 1, line2, true)
-    local new_lines = {}
-    local preview_buf_line = 0
-    for i, line in ipairs(lines) do
-        local startidx, endidx = string.find(line, '%s+$')
-        if startidx ~= nil then
-            -- Highlight the match if in command preview mode
-            if preview_ns ~= nil then
-                api.nvim_buf_add_highlight(buf, preview_ns, 'Substitute', line1 + i - 2, startidx - 1, endidx)
-                -- Add lines and highlight to the preview buffer
-                -- if inccommand=split
-                if preview_buf ~= nil then
-                    local prefix = string.format('|%d| ', line1 + i - 1)
-                    api.nvim_buf_set_lines(preview_buf, preview_buf_line, preview_buf_line, true, { prefix .. line })
-                    api.nvim_buf_add_highlight(
-                        preview_buf,
-                        preview_ns,
-                        'Substitute',
-                        preview_buf_line,
-                        #prefix + startidx - 1,
-                        #prefix + endidx
-                    )
-                    preview_buf_line = preview_buf_line + 1
-                end
-            end
-        end
-        if not preview_ns then
-            new_lines[#new_lines + 1] = string.gsub(line, '%s+$', '')
-        end
-    end
-    -- Don't make any changes to the buffer if previewing
-    if not preview_ns then
-        api.nvim_buf_set_lines(buf, line1 - 1, line2, true, new_lines)
-    end
-    -- When called as a preview callback, return the value of the
-    -- preview type
-    if preview_ns ~= nil then
-        return 2
-    end
-end
-
 local M = {}
 
 M.map = function(mode, target, source, opts)
@@ -147,9 +101,6 @@ end
 M.get_cwd = function()
     return uv.cwd
 end
-
-M.trim_trailing_whitespace =
-    M.command('TrimTrailingWhitespace', trim_space, { nargs = '?', range = '%', addr = 'lines', preview = trim_space })
 
 ---@param level number|nil
 ---@param msg string
