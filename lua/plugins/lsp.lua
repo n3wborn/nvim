@@ -67,6 +67,10 @@ return {
             'b0o/schemastore.nvim',
             {
                 'SmiteshP/nvim-navbuddy',
+                cmd = 'Navbuddy',
+                keys = {
+                    { '<leader>N', '<cmd>Navbuddy<cr>', desc = 'nabuddy' },
+                },
                 dependencies = {
                     'SmiteshP/nvim-navic',
                     'MunifTanjim/nui.nvim',
