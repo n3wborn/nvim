@@ -4,19 +4,15 @@ local b = null_ls.builtins
 
 local sources = {
     --- code actions
+    --- @todo: does not seem to work withh none-ls
     require('typescript.extensions.null-ls.code-actions'),
 
     --- diagnostics
+    --- @todo: remove these when available with mfussenegger/nvim-lint
     b.diagnostics.gitlint,
     b.diagnostics.php,
     b.diagnostics.todo_comments,
     b.diagnostics.tsc,
-    b.diagnostics.zsh,
-
-    --- formatting
-    b.formatting.blade_formatter,
-    b.formatting.fixjson,
-    b.formatting.goimports,
 }
 
 local M = {

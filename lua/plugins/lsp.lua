@@ -10,6 +10,8 @@ return {
             filetypes_denylist = {
                 'nvimTree',
                 'nvim-tree',
+                'neo-tree',
+                'lazy',
                 'telescope',
             },
         },
@@ -62,7 +64,7 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'folke/neodev.nvim',
-            'jose-elias-alvarez/null-ls.nvim',
+            'nvimtools/none-ls.nvim',
             'jose-elias-alvarez/typescript.nvim',
             'b0o/schemastore.nvim',
             {
@@ -78,7 +80,11 @@ return {
                 opts = { lsp = { auto_attach = true } },
             },
         },
+        opts = {
+            inlay_hints = { enabled = true },
+        },
         config = function()
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
             local u = require('utils')
             local lsp = vim.lsp
 
@@ -116,19 +122,11 @@ return {
             -- lsp formatting
             local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
             local lsp_formatting = function(bufnr)
-                local clients = vim.lsp.get_clients({ bufnr = bufnr })
-
                 lsp.buf.format({
                     bufnr = bufnr,
                     filter = function(client)
                         if client.name == 'eslint' then
                             return true
-                        end
-
-                        if client.name == 'null-ls' then
-                            return not u.table.some(clients, function(_, other_client)
-                                return other_client.name == 'eslint'
-                            end)
                         end
                     end,
                 })
@@ -137,9 +135,6 @@ return {
             --- on_attach
             local on_attach = function(client, bufnr)
                 require('illuminate').on_attach(client)
-
-                -- capabilities
-                local capabilities = client.server_capabilities
 
                 u.map('n', '<leader>h', function()
                     vim.lsp.inlay_hint(0, nil)
@@ -238,8 +233,6 @@ return {
                 u.buf_map(bufnr, 'n', '<leader>q', ':LspDiagQuickfix<CR>')
             end
 
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
             -- required servers
             for _, server in ipairs({
                 'bashls',
@@ -249,7 +242,7 @@ return {
                 'eslint',
                 'jsonls',
                 'typescript',
-                'null-ls',
+                'none-ls',
                 'intelephense',
                 'gopls',
                 'neodev',
