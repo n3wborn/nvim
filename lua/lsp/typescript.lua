@@ -15,26 +15,24 @@ local M = {
                 settings = {
                     typescript = {
                         inlayHints = {
-                            includeInlayParameterNameHints = 'all',
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = false,
-                            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
                             includeInlayEnumMemberValueHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayParameterNameHints = 'all', -- 'none' | 'literals' | 'all';
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayVariableTypeHints = false,
                         },
                     },
                     javascript = {
                         inlayHints = {
-                            includeInlayParameterNameHints = 'all',
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = false,
-                            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
                             includeInlayEnumMemberValueHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayParameterNameHints = 'all', -- 'none' | 'literals' | 'all';
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayVariableTypeHints = false,
                         },
                     },
                 },
