@@ -7,9 +7,9 @@ Use it if you want but keep this in mind :
 
 - It's made for **neovim nightly**
 - There's **no install script**
-- LSP servers must be installed/configured manually (I don't use [Mason](https://github.com/williamboman/mason.nvim))
+- LSP servers must be installed/configured manually (I don't use [Mason](https://github.com/williamboman/mason.nvim) at the moment)
 - I use [Lazy](https://github.com/folke/lazy.nvim) package manager
-- I still use [jose-elias-alvarez/null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim) and [jose-elias-alvarez/typescript.nvim](https://github.com/jose-elias-alvarez/typescript.nvim)
+- Linters and code actions depend on [none-ls](https://github.com/nvimtools/none-ls.nvim) (and [jose-elias-alvarez/typescript.nvim](https://github.com/jose-elias-alvarez/typescript.nvim)) which will be changed as soon as possible.
 - Some plugins are lazy loaded but there's still work to do
 
 Some parts of my config where taken from:
