@@ -1,5 +1,7 @@
 return {
     'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
     opts = {
         formatters_by_ft = {
             javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
@@ -14,14 +16,16 @@ return {
             typescriptreact = { { 'eslint_d', 'eslint' } },
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
-        format_on_save = {
-            timeout_ms = 500,
-            lsp_fallback = true,
-        },
+        format_on_save = function(bufnr)
+            -- Disable autoformat for files in a certain path
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
+            if bufname:match('/node_modules/') or bufname:match('/vendor/') then
+                return
+            end
+            return { async = true, timeout_ms = 500, lsp_fallback = true }
+        end,
     },
     config = function(_, opts)
-        require('conform').setup(opts)
-
         require('conform.formatters.php_cs_fixer').args = function(ctx)
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
             local found = vim.fs.find('.php-cs-fixer.php', { upward = true, path = ctx.dirname })[1]
@@ -35,11 +39,6 @@ return {
             return args
         end
 
-        vim.api.nvim_create_autocmd('BufWritePre', {
-            pattern = '*',
-            callback = function(args)
-                require('conform').format({ bufnr = args.buf })
-            end,
-        })
+        require('conform').setup(opts)
     end,
 }
