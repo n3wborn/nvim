@@ -94,3 +94,45 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.b.editorconfig = false
     end,
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local capabilities = client.server_capabilities
+
+        -- hover current symbol details
+        if capabilities.hoverProvider then
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = args.buf })
+        end
+
+        -- show definition of current symbol
+        if capabilities.definitionProvider then
+            vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { buffer = args.buf })
+        end
+
+        -- show declaration of current symbol
+        if capabilities.declarationProvider then
+            vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration, { buffer = args.buf })
+        end
+
+        -- show definition of current type
+        if capabilities.typeDefinitionProvider then
+            vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition, { buffer = args.buf })
+        end
+
+        -- rename current symbol
+        if capabilities.renameProvider then
+            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = args.buf })
+        end
+
+        -- show code actions available
+        if capabilities.codeActionProvider then
+            vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = args.buf })
+        end
+
+        -- show signature help
+        if capabilities.signatureHelpProvider then
+            vim.keymap.set('n', '<C-x><C-x>', vim.lsp.buf.signature_help, { buffer = args.buf })
+        end
+    end,
+})

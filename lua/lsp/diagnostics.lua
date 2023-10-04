@@ -11,12 +11,9 @@ function M.setup()
     end
 
     vim.lsp.handlers['textDocument/diagnostic'] = vim.lsp.with(vim.lsp.diagnostic.on_diagnostic, {
-        -- Use a function to dynamically turn signs off
-        -- and on, using buffer local variables
-        signs = function(namespace, bufnr)
+        signs = function(_, bufnr)
             return vim.b[bufnr].show_signs == true
         end,
-        -- Disable a feature
         update_in_insert = true,
     })
 end
