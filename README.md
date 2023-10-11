@@ -10,8 +10,6 @@ Use it if you want but keep this in mind :
 - LSP servers must be installed/configured manually (I don't use [Mason](https://github.com/williamboman/mason.nvim))
 - Linters:
   - depend on [none-ls](https://github.com/nvimtools/none-ls.nvim)
-- Lsp code actions
-  - still depend on [typescript.nvim](https://github.com/jose-elias-alvarez/typescript.nvim)
 
 Some parts of my config where taken from:
     - [Folke Lemaitre config](https://github.com/folke/dot/tree/master/nvim)
