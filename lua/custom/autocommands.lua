@@ -107,7 +107,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- show definition of current symbol
         if capabilities.definitionProvider then
-            vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { buffer = args.buf })
+            if client == 'typescript-tools' then
+                vim.keymap.set('n', '<leader>gd', '<cmd>TSToolsGoToSourceDefinition<cr>', { buffer = args.buf })
+            else
+                vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { buffer = args.buf })
+            end
         end
 
         -- show declaration of current symbol
