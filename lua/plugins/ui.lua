@@ -55,44 +55,6 @@ return {
         },
     },
     {
-        'akinsho/nvim-bufferline.lua',
-        event = 'VeryLazy',
-        keys = {
-            { '<C-PageUp>', '<cmd>BufferLineCyclePrev<CR>', desc = 'move to previous buffer' },
-            { '<C-PageDown>', '<cmd>BufferLineCycleNext<CR>', desc = 'move to next buffer' },
-        },
-        opts = {
-            options = {
-                diagnostics = 'nvim_lsp',
-                always_show_bufferline = false,
-                diagnostics_indicator = function(_, _, diag)
-                    local icons = require('custom.icons').diagnostics
-                    local s = {}
-                    local severities = {
-                        'Error',
-                        'Warning',
-                    }
-
-                    for _, severity in ipairs(severities) do
-                        if diag[severity] then
-                            table.insert(s, icons[severity] .. diag[severity])
-                        end
-                    end
-
-                    return table.concat(s, ' ')
-                end,
-                offsets = {
-                    {
-                        filetype = { 'neo-tree', 'NvimTree' },
-                        text = { 'Neo-tree', 'NvimTree' },
-                        highlight = 'Directory',
-                        text_align = 'left',
-                    },
-                },
-            },
-        },
-    },
-    {
         'lukas-reineke/indent-blankline.nvim',
         event = { 'BufReadPost', 'BufNewFile' },
         main = 'ibl',
