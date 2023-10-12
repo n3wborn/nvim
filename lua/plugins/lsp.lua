@@ -65,7 +65,6 @@ return {
         dependencies = {
             'folke/neodev.nvim',
             'nvimtools/none-ls.nvim',
-            'jose-elias-alvarez/typescript.nvim',
             'b0o/schemastore.nvim',
             {
                 'SmiteshP/nvim-navbuddy',
@@ -178,7 +177,6 @@ return {
                 'emmet',
                 'eslint',
                 'jsonls',
-                'typescript',
                 'none-ls',
                 'intelephense',
                 'gopls',
