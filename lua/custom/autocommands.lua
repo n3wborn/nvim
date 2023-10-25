@@ -1,9 +1,10 @@
--- Do not auto comment on new line
-vim.api.nvim_create_autocmd('BufEnter', {
-    command = 'set fo-=c fo-=r fo-=o',
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+    callback = function()
+        vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+    end,
+    desc = 'Do not auto comment on new line',
 })
 
--- show cursor line only in active window
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
     callback = function()
         local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
@@ -12,6 +13,7 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
             vim.api.nvim_win_del_var(0, 'auto-cursorline')
         end
     end,
+    desc = 'Show cursor line only in active window',
 })
 
 vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
@@ -22,36 +24,38 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
             vim.wo.cursorline = false
         end
     end,
+    desc = 'Show cursor line only in active window',
 })
 
--- Fix conceallevel for json an help files
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = { 'json', 'jsonc' },
     callback = function()
         vim.wo.spell = false
         vim.wo.conceallevel = 0
     end,
+    desc = 'Fix conceallevel for json an help files',
 })
 
--- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, { command = 'checktime' })
+vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+    command = 'checktime',
+    desc = 'Check if we need to reload the file when it changed',
+})
 
--- Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     callback = function()
         vim.highlight.on_yank()
     end,
+    desc = 'Highlight on yank',
 })
 
--- resize splits if window got resized
 vim.api.nvim_create_autocmd({ 'VimResized' }, {
     callback = function()
         vim.cmd('tabdo wincmd =')
     end,
+    desc = 'Resize splits if window got resized',
 })
 
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd('BufReadPost', {
+vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -59,9 +63,9 @@ vim.api.nvim_create_autocmd('BufReadPost', {
             pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
     end,
+    desc = 'Go to last loc when opening a buffer',
 })
 
--- close some filetypes with <q>
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
         'PlenaryTestPopup',
@@ -81,9 +85,10 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     set nobuflisted
     ]])
     end,
+    desc = 'Close some filetypes with <q>',
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = { 'gitcommit' },
     callback = function()
         vim.opt_local.wrap = true
@@ -93,9 +98,10 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt_local.linebreak = true
         vim.b.editorconfig = false
     end,
+    desc = 'Set gitcommit config',
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
+vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         local capabilities = client.server_capabilities
