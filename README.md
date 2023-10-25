@@ -22,3 +22,7 @@ If you're looking for an already configured neovim you may prefer these:
 - [NvChad](https://github.com/NvChad/NvChad)
 - [Lunarvim](https://github.com/LunarVim/LunarVim)
 - [Astrovim](https://github.com/AstroNvim/AstroNvim)
+
+Note about nvim-treesitter when switching from Packer to Lazy:
+
+If nvim-treesitter keeps compiling ever parsers when starting Neovim, [read this](https://shorturl.at/aKSTU)
