@@ -64,7 +64,6 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'folke/neodev.nvim',
-            'nvimtools/none-ls.nvim',
             'b0o/schemastore.nvim',
             {
                 'SmiteshP/nvim-navbuddy',
@@ -118,19 +117,6 @@ return {
                 TypeParameter = ' [type]',
             }
 
-            -- lsp formatting
-            local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-            local lsp_formatting = function(bufnr)
-                lsp.buf.format({
-                    bufnr = bufnr,
-                    filter = function(client)
-                        if client.name == 'eslint' then
-                            return true
-                        end
-                    end,
-                })
-            end
-
             --- on_attach
             local on_attach = function(client, bufnr)
                 require('illuminate').on_attach(client)
@@ -138,21 +124,6 @@ return {
                 u.map('n', '<leader>h', function()
                     vim.lsp.inlay_hint(0, nil)
                 end, { desc = 'Toggle Inlay Hints' })
-
-                if client.supports_method('textDocument/formatting') then
-                    local formatting_cb = function()
-                        lsp_formatting(bufnr)
-                    end
-                    u.buf_command(bufnr, 'LspFormatting', formatting_cb)
-                    u.buf_map(bufnr, 'x', '<CR>', formatting_cb)
-
-                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    vim.api.nvim_create_autocmd('BufWritePre', {
-                        group = augroup,
-                        buffer = bufnr,
-                        command = 'LspFormatting',
-                    })
-                end
 
                 -- diagnostics
                 u.buf_command(bufnr, 'LspDiagPrev', vim.diagnostic.goto_prev)
@@ -177,7 +148,6 @@ return {
                 'emmet',
                 'eslint',
                 'jsonls',
-                'none-ls',
                 'intelephense',
                 'gopls',
                 'neodev',

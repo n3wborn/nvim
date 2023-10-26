@@ -8,8 +8,6 @@ Use it if you want but keep this in mind :
 - It's made for **neovim nightly**
 - There's **no install script**
 - LSP servers must be installed/configured manually (I don't use [Mason](https://github.com/williamboman/mason.nvim))
-- Linters:
-  - depend on [none-ls](https://github.com/nvimtools/none-ls.nvim)
 
 Some parts of my config where taken from:
     - [Folke Lemaitre config](https://github.com/folke/dot/tree/master/nvim)
