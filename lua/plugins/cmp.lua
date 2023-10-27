@@ -20,42 +20,7 @@ return {
         local cmp_buffer = require('cmp_buffer')
         local compare = require('cmp.config.compare')
         local luasnip = require('luasnip')
-        local icons = {
-            Array = '  ',
-            Boolean = '  ',
-            Class = '  ',
-            Color = '  ',
-            Constant = '  ',
-            Constructor = '  ',
-            Enum = '  ',
-            EnumMember = '  ',
-            Event = '  ',
-            Field = '  ',
-            File = '  ',
-            Folder = '  ',
-            Function = '  ',
-            Interface = '  ',
-            Key = '  ',
-            Keyword = '  ',
-            Method = '  ',
-            Module = '  ',
-            Namespace = '  ',
-            Null = ' ﳠ ',
-            Number = '  ',
-            Object = '  ',
-            Operator = '  ',
-            Package = '  ',
-            Property = '  ',
-            Reference = '  ',
-            Snippet = '  ',
-            String = '  ',
-            Struct = '  ',
-            Text = '  ',
-            TypeParameter = '  ',
-            Unit = '  ',
-            Value = '  ',
-            Variable = '  ',
-        }
+        local icons = require('custom.icons').kinds
 
         luasnip.config.setup({})
 
