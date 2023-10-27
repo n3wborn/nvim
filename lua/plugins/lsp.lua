@@ -84,38 +84,8 @@ return {
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             local u = require('utils')
-            local lsp = vim.lsp
 
             require('lsp.diagnostics').setup()
-
-            -- lsp comp items
-            lsp.protocol.CompletionItemKind = {
-                Text = ' [text]',
-                Method = ' [method]',
-                Function = ' [function]',
-                Constructor = ' [constructor]',
-                Field = 'ﰠ [field]',
-                Variable = ' [variable]',
-                Class = ' [class]',
-                Interface = ' [interface]',
-                Module = ' [module]',
-                Property = ' [property]',
-                Unit = ' [unit]',
-                Value = ' [value]',
-                Enum = ' [enum]',
-                Keyword = ' [key]',
-                Snippet = ' [snippet]',
-                Color = ' [color]',
-                File = ' [file]',
-                Reference = ' [reference]',
-                Folder = ' [folder]',
-                EnumMember = ' [enum member]',
-                Constant = ' [constant]',
-                Struct = ' [struct]',
-                Event = '⌘ [event]',
-                Operator = ' [operator]',
-                TypeParameter = ' [type]',
-            }
 
             --- on_attach
             local on_attach = function(client, bufnr)
