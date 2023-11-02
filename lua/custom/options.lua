@@ -27,8 +27,6 @@ vim.opt.updatetime = 50
 vim.opt.inccommand = 'nosplit'
 vim.opt.errorbells = false
 vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.cmdheight = 1
 vim.opt.showbreak = '↪'
 vim.opt.guifont = 'FiraCode Nerd Font Regular'
 vim.opt.termguicolors = true
@@ -52,3 +50,9 @@ vim.filetype.add({
         ['.*twig'] = 'twig.html',
     },
 })
+
+if vim.fn.has('nvim-0.8') == 1 then
+    vim.opt.backup = true
+    vim.opt.cmdheight = 0
+    vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
+end
