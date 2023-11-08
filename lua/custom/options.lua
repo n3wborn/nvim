@@ -42,6 +42,9 @@ vim.opt.joinspaces = false
 vim.opt.updatetime = 250
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.completeopt = 'menu,menuone,noselect'
+vim.opt.autowrite = true
+vim.opt.confirm = true
+vim.g.markdown_recommended_style = 0
 
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
@@ -55,4 +58,8 @@ if vim.fn.has('nvim-0.8') == 1 then
     vim.opt.backup = true
     vim.opt.cmdheight = 0
     vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
+end
+
+if vim.fn.has('nvim-0.10') == 1 then
+    vim.opt.smoothscroll = true
 end
