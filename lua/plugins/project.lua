@@ -6,6 +6,7 @@ return {
             '~/dev/*',
             '~/da/dev/*',
             '~/.config/*',
+            '~/.local/share/nvim/lazy/*',
         },
     },
     init = function()
@@ -18,6 +19,6 @@ return {
     },
     priority = 100,
     keys = {
-        { '<C-p>', '<cmd>Telescope neovim-project history<CR>', desc = 'Projects history' },
+        { '<C-p>', '<cmd>Telescope neovim-project discover<CR>', desc = 'Projects history' },
     },
 }
