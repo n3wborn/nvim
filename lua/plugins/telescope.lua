@@ -1,5 +1,6 @@
 return {
     'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
     tag = '0.1.4',
     dependencies = {
         { 'nvim-lua/plenary.nvim' },
@@ -26,39 +27,52 @@ return {
             end,
         },
     },
-    opts = {
-        defaults = {
-            prompt_prefix = '❯ ',
-            selection_caret = '❯ ',
-            sorting_strategy = 'ascending',
-            mappings = {
-                i = {
-                    ['<C-u>'] = false,
-                    ['<C-d>'] = false,
+    opts = function()
+        local actions = require('telescope.actions')
+
+        return {
+            defaults = {
+                prompt_prefix = '❯ ',
+                selection_caret = '❯ ',
+                sorting_strategy = 'ascending',
+                mappings = {
+                    i = {
+                        ['<C-u>'] = false,
+                        ['<C-d>'] = false,
+                    },
+                    n = {
+                        ['q'] = actions.close,
+                    },
+                },
+                pickers = {
+                    git_files = {
+                        show_untracked = true,
+                    },
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                    },
                 },
             },
-        },
-        pickers = {
-            git_files = {
-                show_untracked = true,
-            },
-        },
-        extensions = {
-            fzf = {
-                fuzzy = true,
-                override_generic_sorter = true,
-                override_file_sorter = true,
-            },
-        },
-    },
-    cmd = { 'Telescope' },
+        }
+    end,
     keys = {
         { '<Leader>T', ':Telescope<CR>', desc = 'Telescope' },
         { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazygit' },
         {
-            '<leader>f',
+            '<leader>ff',
             function()
                 require('telescope.builtin').find_files()
+            end,
+            desc = 'Find Plugin File',
+        },
+        {
+            '<leader>fF',
+            function()
+                require('telescope.builtin').find_files({ cwd = false })
             end,
             desc = 'Find Plugin File',
         },
