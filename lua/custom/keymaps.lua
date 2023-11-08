@@ -55,7 +55,7 @@ u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
 u.map('n', '<leader>d', '"_d', { desc = 'Delete without yank' })
 
 --- Switch to previous buffer
-u.map('n', '<leader>B', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
+u.map('n', '<leader><leader>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
 
 --- keep cursor vertically centered while scrolling
 u.map('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
