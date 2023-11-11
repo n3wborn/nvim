@@ -121,7 +121,7 @@ return {
             })
 
             vim.api.nvim_create_autocmd('FileType', {
-                pattern = 'yaml,yml',
+                pattern = { 'yaml', 'yml' },
                 callback = function()
                     vim.lsp.start({
                         name = 'docker-compose-langserver',
@@ -157,7 +157,7 @@ return {
             })
 
             vim.api.nvim_create_autocmd('FileType', {
-                pattern = 'json,jsonc',
+                pattern = { 'json', 'jsonc' },
                 callback = function()
                     local config = {
                         name = 'jsonls',
@@ -175,7 +175,7 @@ return {
 
             vim.api.nvim_create_autocmd('FileType', {
                 -- https://github.com/olrtg/emmet-language-server
-                pattern = 'css,eruby,html,htmldjango,javascriptreact,less,pug,sass,scss,typescriptreact',
+                pattern = 'astro,css,eruby,html,htmldjango,javascriptreact,less,pug,sass,scss,svelte,typescriptreact,vue',
                 callback = function()
                     local config = {
                         name = 'emmet-language-server',
@@ -211,7 +211,12 @@ return {
 
             vim.api.nvim_create_autocmd('FileType', {
                 --  https://github.com/antonk52/cssmodules-language-server
-                pattern = 'javascript,javascriptreact,typescript,typescriptreact',
+                pattern = {
+                    'javascript',
+                    'javascriptreact',
+                    'typescript',
+                    'typescriptreact',
+                },
                 callback = function()
                     local config = {
                         name = 'cssmodules-language-server',
