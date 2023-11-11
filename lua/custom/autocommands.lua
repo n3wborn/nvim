@@ -106,9 +106,19 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         local capabilities = client.server_capabilities
 
-        -- hover current symbol details
-        if capabilities.hoverProvider then
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = args.buf })
+        -- diagnostics
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
+
+        --- quickfix
+        vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
+
+        -- inlay_hints
+        if capabilities.inlayHintProvider then
+            vim.keymap.set('n', '<leader>h', function()
+                vim.lsp.inlay_hint(0, nil)
+            end, { buffer = args.buf })
         end
 
         -- show definition of current symbol
