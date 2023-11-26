@@ -2,10 +2,7 @@ return {
     'coffebar/neovim-project',
     opts = {
         projects = {
-            '~/prog/git/*',
-            '~/dev/*',
-            '~/da/dev/*',
-            '~/.config/*',
+            '~/projects/*',
             '~/.local/share/nvim/lazy/*',
         },
     },
