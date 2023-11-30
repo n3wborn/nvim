@@ -3,6 +3,7 @@ return {
     opts = {
         projects = {
             '~/projects/*',
+            '~/.config/nvim',
             '~/.local/share/nvim/lazy/*',
         },
     },
