@@ -17,6 +17,7 @@ return {
     },
     priority = 100,
     keys = {
-        { '<C-p>', '<cmd>Telescope neovim-project discover<CR>', desc = 'Projects history' },
+        { '<C-p>', '<cmd>Telescope neovim-project history<CR>', desc = 'Projects history' },
+        { '<C-P>', '<cmd>Telescope neovim-project discover<CR>', desc = 'Projects discover' },
     },
 }
