@@ -5,7 +5,6 @@ return {
         event = { 'BufReadPost', 'BufNewFile' },
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'windwp/nvim-ts-autotag',
             'nvim-treesitter/nvim-treesitter-refactor',
         },
         config = function()
@@ -100,7 +99,6 @@ return {
                         },
                     },
                 },
-                autotag = { enable = true },
                 refactor = {
                     highlight_definitions = {
                         enable = true,
