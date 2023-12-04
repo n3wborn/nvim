@@ -1,2 +1,2 @@
-require('custom/lazy_bootstrap')
-require('custom/options')
+require('custom.lazy_bootstrap')
+require('custom.options')

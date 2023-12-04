@@ -6,5 +6,5 @@ _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = '
 require('custom')
 require('lazy').setup('plugins')
 
-require('custom/keymaps')
-require('custom/autocommands')
+require('custom.keymaps')
+require('custom.autocommands')
