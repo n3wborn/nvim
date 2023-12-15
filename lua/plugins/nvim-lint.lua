@@ -6,7 +6,7 @@ return {
         local lint = require('lint')
 
         lint.linters_by_ft = {
-            gitcommit = { 'gitlint' },
+            -- gitcommit = { 'gitlint' }, -- seems to break, maybe havce to check the docs (http://jorisroovers.github.io/gitlint)
             javascript = { 'eslint_d' },
             javascriptreact = { 'eslint_d' },
             php = { 'php' },
