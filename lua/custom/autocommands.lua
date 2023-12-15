@@ -161,7 +161,17 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- show code actions available
         if capabilities.codeActionProvider then
-            vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = args.buf })
+            vim.keymap.set('n', '<leader>ca', function()
+                require('fzf-lua').lsp_code_actions({
+                    winopts = {
+                        relative = 'cursor',
+                        width = 0.6,
+                        height = 0.6,
+                        row = 1,
+                        preview = { vertical = 'up:70%' },
+                    },
+                })
+            end, { buffer = args.buf })
         end
 
         -- show signature help
