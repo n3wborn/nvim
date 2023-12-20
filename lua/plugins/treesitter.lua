@@ -45,6 +45,7 @@ return {
                     'scss',
                     'solidity',
                     'sql',
+                    'styled',
                     'svelte',
                     'toml',
                     'tsx',
