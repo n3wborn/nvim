@@ -2,8 +2,11 @@ return {
     'coffebar/neovim-project',
     opts = {
         projects = {
-            '~/projects/*',
             '~/.config/nvim',
+            '~/projects/qk-safety',
+            '~/projects/qk-safety/plugins/*',
+            '~/projects/qk-safety-lcsb',
+            '~/projects/qk-safety-lcsb/plugins/*',
             '~/.local/share/nvim/lazy/*',
         },
     },
