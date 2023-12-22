@@ -49,6 +49,7 @@ return {
                     'twig',
                     'typescript',
                     'vim',
+                    'vimdoc',
                     'vue',
                     'yaml',
                 },
