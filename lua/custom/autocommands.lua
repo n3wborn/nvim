@@ -105,6 +105,8 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         local capabilities = client.server_capabilities
+        local map = vim.keymap.set
+        local opts = { buffer = args.buf, remap = false, silent = true }
 
         -- diagnostics
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -112,21 +114,21 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
 
         --- quickfix
-        vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
+        map('n', '<leader>q', vim.diagnostic.setqflist, opts)
 
         -- inlay_hints
         if capabilities.inlayHintProvider then
-            vim.keymap.set('n', '<leader>h', function()
+            map('n', '<leader>h', function()
                 vim.lsp.inlay_hint(0, nil)
-            end, { buffer = args.buf })
+            end, opts)
         end
 
         -- show definition of current symbol
         if capabilities.definitionProvider then
             if client == 'typescript-tools' then
-                vim.keymap.set('n', '<leader>gd', '<cmd>TSToolsGoToSourceDefinition<cr>', { buffer = args.buf })
+                map('n', '<leader>gd', '<cmd>TSToolsGoToSourceDefinition<cr>', opts)
             else
-                vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { buffer = args.buf })
+                map('n', '<leader>gd', vim.lsp.buf.definition, opts)
             end
         end
 
@@ -137,7 +139,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- show definition of current type
         if capabilities.typeDefinitionProvider then
-            vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition, { buffer = args.buf })
+            map('n', '<leader>lt', vim.lsp.buf.type_definition, opts)
         end
 
         -- rename current symbol
@@ -147,13 +149,13 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- show code actions available
         if capabilities.codeActionProvider then
-            vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = args.buf })
+            map('n', '<leader>la', vim.lsp.buf.code_action, opts)
         end
 
         -- show signature help
         if capabilities.signatureHelpProvider then
-            vim.keymap.set('n', '<C-x><C-x>', vim.lsp.buf.signature_help, { buffer = args.buf })
         end
+            map('n', '<C-x><C-x>', vim.lsp.buf.signature_help, opts)
     end,
 })
 

@@ -82,7 +82,11 @@ return {
             inlay_hints = { enabled = true },
         },
         config = function()
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local cmp = require('cmp_nvim_lsp')
+            local capabilities = cmp.default_capabilities()
+
+            -- lspconfig ui
+            require('lspconfig.ui.windows').default_options.border = global.float_border_opts.border
 
             -- diagnostics
             require('lsp.diagnostics').setup()

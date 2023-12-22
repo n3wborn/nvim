@@ -1,7 +1,12 @@
 local settings = {
     Lua = {
+        codeLens = { enable = true },
         diagnostics = {
             globals = { 'vim' },
+        },
+        telemetry = { enable = false },
+        runtime = {
+            version = 'LuaJIT',
         },
         workspace = {
             library = {
@@ -11,6 +16,23 @@ local settings = {
             },
             maxPreload = 100000,
             preloadFileSize = 10000,
+        },
+        format = {
+            enable = false,
+            defaultConfig = {
+                indent_size = '2',
+                indent_style = 'space',
+                quote_style = 'single',
+                max_line_length = '80',
+                trailing_table_separator = 'smart',
+                -- NOTE: some options break some formatting properties? :(
+                -- in fact a lot of things are buggy (removing `quote_style`
+                -- property allows trailing table separators to be more
+                -- comprehensive) but... good enough :)
+                -- break_all_list_when_line_exceed = true, --breaks things sadly
+                call_arg_parentheses = 'remove_table_only',
+                -- align_call_args = true, -- breaks things sadly
+            },
         },
         completion = {
             showWord = 'Disable',
