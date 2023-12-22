@@ -28,9 +28,17 @@ return {
             integrations = {
                 aerial = false,
                 barbar = false,
+                barbecue = {
+                    dim_dirname = true,
+                },
                 beacon = false,
                 cmp = true,
                 coc_nvim = false,
+                dap = true,
+                indent_blankline = {
+                    enabled = true,
+                    colored_indent_levels = false,
+                },
                 dashboard = true,
                 fern = false,
                 fidget = false,
@@ -46,6 +54,25 @@ return {
                 markdown = true,
                 mason = true,
                 mini = true,
+                native_lsp = {
+                    enabled = true,
+                    virtual_text = {
+                        errors = { 'italic' },
+                        hints = { 'italic' },
+                        warnings = { 'italic' },
+                        information = { 'italic' },
+                    },
+                    underlines = {
+                        errors = { 'underline' },
+                        hints = { 'underline' },
+                        warnings = { 'underline' },
+                        information = { 'underline' },
+                    },
+                    inlay_hints = {
+                        background = true,
+                    },
+                },
+                navic = true,
                 neogit = true,
                 neotest = false,
                 neotree = true,
@@ -65,35 +92,6 @@ return {
                 vim_sneak = false,
                 vimwiki = false,
                 which_key = false,
-                barbecue = {
-                    dim_dirname = true,
-                },
-                dap = {
-                    enabled = false,
-                    enable_ui = false,
-                },
-                indent_blankline = {
-                    enabled = true,
-                    colored_indent_levels = false,
-                },
-                native_lsp = {
-                    enabled = true,
-                    virtual_text = {
-                        errors = { 'italic' },
-                        hints = { 'italic' },
-                        warnings = { 'italic' },
-                        information = { 'italic' },
-                    },
-                    underlines = {
-                        errors = { 'underline' },
-                        hints = { 'underline' },
-                        warnings = { 'underline' },
-                        information = { 'underline' },
-                    },
-                    inlay_hints = {
-                        background = true,
-                    },
-                },
             },
             custom_highlights = function(c)
                 return {
