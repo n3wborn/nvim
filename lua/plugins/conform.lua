@@ -26,10 +26,11 @@ return {
         end,
     },
     config = function(_, opts)
-        require('conform.formatters.php_cs_fixer').args = function(ctx)
+        local cs_fixer = require('conform.formatters.php_cs_fixer')
+        cs_fixer.args = function(self, ctx)
+
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
             local found = vim.fs.find('.php-cs-fixer.php', { upward = true, path = ctx.dirname })[1]
-
             if found then
                 vim.list_extend(args, { '--config=' .. found })
             else
