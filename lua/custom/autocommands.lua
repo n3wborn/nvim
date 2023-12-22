@@ -155,7 +155,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         -- show signature help
         if capabilities.signatureHelpProvider then
         end
-            map('n', '<C-x><C-x>', vim.lsp.buf.signature_help, opts)
+        map('n', '<C-x><C-x>', vim.lsp.buf.signature_help, opts)
     end,
 })
 
