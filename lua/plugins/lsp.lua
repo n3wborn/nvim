@@ -83,6 +83,7 @@ return {
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local api, lsp = vim.api, vim.lsp
 
             -- diagnostics
             require('lsp.diagnostics').setup()
@@ -113,6 +114,16 @@ return {
                     }
 
                     vim.lsp.start(config, {
+            vim.api.nvim_create_autocmd({ 'FileType' }, {
+                pattern = { 'twig' },
+                callback = function()
+                    local config = {
+                        name = 'twig-language-server',
+                        cmd = { 'twig-language-server', '--stdio' },
+                        root_dir = vim.fs.dirname(vim.fs.find({ 'composer.json', '.git' }, { upward = true })[1]),
+                    }
+
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,

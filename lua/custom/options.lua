@@ -48,12 +48,6 @@ vim.g.markdown_recommended_style = 0
 
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
-vim.filetype.add({
-    pattern = {
-        ['.*twig'] = 'twig.html',
-    },
-})
-
 if vim.fn.has('nvim-0.8') == 1 then
     vim.opt.backup = true
     vim.opt.cmdheight = 0
