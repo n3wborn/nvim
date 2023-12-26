@@ -83,6 +83,7 @@ return {
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local api, lsp = vim.api, vim.lsp
 
             -- diagnostics
             require('lsp.diagnostics').setup()
@@ -93,17 +94,17 @@ return {
             end
 
             -- required servers
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 pattern = 'sh',
                 callback = function()
-                    vim.lsp.start({
+                    lsp.start({
                         name = 'bash-language-server',
                         cmd = { 'bash-language-server', 'start' },
                     })
                 end,
             })
 
-            vim.api.nvim_create_autocmd({ 'FileType' }, {
+            api.nvim_create_autocmd({ 'FileType' }, {
                 pattern = { 'dockerfile' },
                 callback = function()
                     local config = {
@@ -120,10 +121,10 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 pattern = 'yaml,yml',
                 callback = function()
-                    vim.lsp.start({
+                    lsp.start({
                         name = 'docker-compose-langserver',
                         cmd = { 'docker-compose-langserver', '--stdio' },
                         root_dir = vim.fs.dirname(vim.fs.find({
@@ -139,7 +140,7 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 pattern = 'php',
                 callback = function()
                     local config = {
@@ -148,7 +149,7 @@ return {
                         root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'composer.json' }, { upward = true })[1]),
                     }
 
-                    vim.lsp.start(config, {
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,
@@ -156,7 +157,7 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 pattern = 'json,jsonc',
                 callback = function()
                     local config = {
@@ -165,7 +166,7 @@ return {
                         root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
                     }
 
-                    vim.lsp.start(config, {
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,
@@ -173,7 +174,7 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 -- https://github.com/olrtg/emmet-language-server
                 pattern = 'css,eruby,html,htmldjango,javascriptreact,less,pug,sass,scss,typescriptreact',
                 callback = function()
@@ -201,7 +202,7 @@ return {
                         },
                     }
 
-                    vim.lsp.start(config, {
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,
@@ -209,7 +210,7 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 --  https://github.com/antonk52/cssmodules-language-server
                 pattern = 'javascript,javascriptreact,typescript,typescriptreact',
                 callback = function()
@@ -223,7 +224,7 @@ return {
                         },
                     }
 
-                    vim.lsp.start(config, {
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,
@@ -231,7 +232,7 @@ return {
                 end,
             })
 
-            vim.api.nvim_create_autocmd('FileType', {
+            api.nvim_create_autocmd('FileType', {
                 pattern = {
                     'javascript',
                     'javascriptreact',
@@ -266,7 +267,7 @@ return {
                         root_dir = get_root_dir(),
                     }
 
-                    vim.lsp.start(config, {
+                    lsp.start(config, {
                         reuse_client = function(client, conf)
                             return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
                         end,
