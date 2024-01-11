@@ -8,6 +8,7 @@ return {
             '~/projects/qk-safety-lcsb',
             '~/projects/qk-safety-lcsb/plugins/*',
             '~/.local/share/nvim/lazy/*',
+            '~/div/*',
         },
     },
     init = function()
