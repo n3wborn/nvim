@@ -101,6 +101,19 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Set gitcommit config',
 })
 
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+    pattern = {
+        'docker-compose.yml',
+        'docker-compose.yaml',
+        'compose.yml',
+        'compose.yaml',
+        -- stylua: ignore
+        'compose.*.yaml',
+        'compose.*.yml',
+    },
+    command = 'set filetype=yaml.docker-compose',
+})
+
 vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
