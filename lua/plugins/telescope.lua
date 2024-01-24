@@ -35,6 +35,15 @@ return {
                 prompt_prefix = '❯ ',
                 selection_caret = '❯ ',
                 sorting_strategy = 'ascending',
+                buffers = {
+                    show_all_buffers = true,
+                    sort_mru = true,
+                    mappings = {
+                        i = {
+                            ['<c-d>'] = 'delete_buffer',
+                        },
+                    },
+                },
                 mappings = {
                     i = {
                         ['<C-u>'] = false,
