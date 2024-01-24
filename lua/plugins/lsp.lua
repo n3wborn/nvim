@@ -147,7 +147,7 @@ return {
                         local cwd = vim.loop.cwd()
                         local util = require('lspconfig.util')
                         local root = util.root_pattern('composer.json', '.git')(fname)
-                        return util.path.is_descendant(cwd, root) and cwd or root
+                        return util.path.iterate_parents(cwd) and cwd or root
                     end
 
                     local config = {
