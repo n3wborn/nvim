@@ -143,10 +143,17 @@ return {
             api.nvim_create_autocmd('FileType', {
                 pattern = 'php',
                 callback = function()
+                    local get_root_dir = function(fname)
+                        local cwd = vim.loop.cwd()
+                        local util = require('lspconfig.util')
+                        local root = util.root_pattern('composer.json', '.git')(fname)
+                        return util.path.is_descendant(cwd, root) and cwd or root
+                    end
+
                     local config = {
                         name = 'intelephense',
                         cmd = { 'intelephense', '--stdio' },
-                        root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'composer.json' }, { upward = true })[1]),
+                        root_dir = get_root_dir(),
                     }
 
                     lsp.start(config, {
