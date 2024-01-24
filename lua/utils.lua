@@ -111,4 +111,13 @@ M.notif = function(title, msg, level)
     })
 end
 
+---@param files table
+---@param file_name string
+M.get_root_dir = function(files, file_name)
+    vim.fs.dirname(vim.fs.find(files or { '.git' }, {
+        upward = true,
+        path = vim.fs.dirname(file_name),
+    })[1])
+end
+
 return M
