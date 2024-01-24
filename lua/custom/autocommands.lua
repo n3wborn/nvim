@@ -42,8 +42,9 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
+    group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),
     callback = function()
-        vim.highlight.on_yank()
+        vim.highlight.on_yank({ higroup = 'Visual', priority = 250 }) --higher priority than lsp refs
     end,
     desc = 'Highlight on yank',
 })
