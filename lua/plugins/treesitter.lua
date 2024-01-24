@@ -35,6 +35,7 @@ return {
                     'perl',
                     'php',
                     'phpdoc',
+                    'php_only',
                     'python',
                     'query',
                     'regex',
