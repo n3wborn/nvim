@@ -82,13 +82,12 @@ return {
             '<leader>fF',
             function()
                 require('telescope.builtin').find_files({
-                    cwd = require('lazygit.utils').project_root_dir(),
                     search_dirs = { 'plugins', 'lib', 'modules' },
                     hidden = true,
-                    prompt_title = 'Find Files in plugins/lb/modules/',
+                    prompt_title = 'Find Files in plugins,lib,modules dirs',
                 })
             end,
-            desc = 'Find File in plugins,li,modules dirs',
+            desc = 'Find File in plugins,lib,modules dirs',
         },
         {
             '<leader>sp',
