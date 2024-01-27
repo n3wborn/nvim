@@ -8,7 +8,6 @@ return {
             -- json = { 'jq' },
             lua = { 'stylua' },
             markdown = { 'markdownlint' },
-            php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },
@@ -44,18 +43,6 @@ return {
         end, {
             desc = 'Re-enable autoformat-on-save',
         })
-
-        require('conform.formatters.php_cs_fixer').args = function(self, ctx)
-            local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
-            local found = vim.fs.find('.php-cs-fixer.php', { upward = true, path = ctx.dirname })[1]
-            if found then
-                vim.list_extend(args, { '--config=' .. found })
-            else
-                vim.list_extend(args, { '--rules=@PSR12,@Symfony' })
-            end
-
-            return args
-        end
 
         require('conform').setup(opts)
     end,
