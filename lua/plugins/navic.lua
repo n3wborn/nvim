@@ -1,6 +1,6 @@
 return {
     'SmiteshP/nvim-navic',
-    requires = 'neovim/nvim-lspconfig',
+    dependencies = 'neovim/nvim-lspconfig',
     opts = {
         lsp = {
             auto_attach = false,
