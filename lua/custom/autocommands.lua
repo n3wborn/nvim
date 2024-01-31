@@ -156,7 +156,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- rename current symbol
         if capabilities.renameProvider then
-            vim.keymap.set('n', '<leader>R', ':IncRename ', { buffer = args.buf })
+            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = args.buf })
         end
 
         -- show code actions available
