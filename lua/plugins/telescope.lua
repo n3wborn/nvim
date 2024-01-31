@@ -173,6 +173,13 @@ return {
             end,
             desc = 'List symbol implementations',
         },
+        {
+            '<leader>m',
+            function()
+                require('telescope.builtin').marks()
+            end,
+            desc = 'List marks',
+        },
     },
     config = function(opts)
         require('telescope').setup(opts)
