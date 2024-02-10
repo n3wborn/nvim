@@ -1,26 +1,20 @@
---[[ return {
+return {
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
             vim.list_extend(opts.ensure_installed, {
                 'typescript-language-server',
                 'eslint-lsp',
-                -- "biome",
-            })
-        end,
-    },
-    {
-        'nvimtools/none-ls.nvim',
-        opts = function(_, opts)
-            local nls = require('null-ls')
-            vim.list_extend(opts.sources, {
-                -- nls.builtins.formatting.biome,
             })
         end,
     },
     {
         'pmizio/typescript-tools.nvim',
-        dependencies = { 'oleggulevskyy/better-ts-errors.nvim' },
+        dependencies = {
+            'oleggulevskyy/better-ts-errors.nvim',
+            'nvim-lua/plenary.nvim',
+            'neovim/nvim-lspconfig',
+        },
         ft = {
             'javascript',
             'javascriptreact',
@@ -30,8 +24,17 @@
             'typescript.tsx',
         },
         opts = {
+            jsx_close_tag = { enable = true },
+            tsserver_plugins = {
+                '@styled/typescript-styled-plugin',
+            },
+            -- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3418
+            tsserver_format_options = {
+                allowIncompleteCompletions = false,
+                allowRenameOfImportPath = true,
+            },
+            --- https://github.com/microsoft/TypeScript/blob/v5.0.4/src/server/protocol.ts#L3439
             tsserver_file_preferences = {
-                includeInlayParameterNameHints = 'all',
                 includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                 includeInlayFunctionParameterTypeHints = true,
                 includeInlayVariableTypeHints = true,
@@ -39,12 +42,14 @@
                 includeInlayPropertyDeclarationTypeHints = true,
                 includeInlayFunctionLikeReturnTypeHints = true,
                 includeInlayEnumMemberValueHints = true,
+                includeCompletionsForModuleExports = true,
             },
             expose_as_code_action = 'all',
             complete_function_calls = true,
         },
         config = function(_, opts)
-            require('plugins.lsp.utils').on_attach('tsserver', function(_, bufnr)
+            local utils = require('utils')
+            utils.on_attach('tsserver', function(_, bufnr)
                 require('better-ts-errors').setup()
                 vim.keymap.set(
                     'n',
@@ -66,7 +71,7 @@
                 )
                 vim.keymap.set(
                     'n',
-                    '<leader>lz',
+                    '<leader>gd',
                     '<cmd>TSToolsGoToSourceDefinition<cr>',
                     { buffer = bufnr, desc = 'Go To Source Definition' }
                 )
@@ -83,6 +88,9 @@
                     '<cmd>TSToolsAddMissingImports<cr>',
                     { buffer = bufnr, desc = 'Add Missing Imports' }
                 )
+                if vim.fn.has('nvim-0.10') then
+                    vim.lsp.inlay_hint(bufnr, true)
+                end
             end)
             require('typescript-tools').setup(opts)
         end,
@@ -98,7 +106,6 @@
                         workingDirectory = { mode = 'auto' },
                     },
                 },
-                -- biome = {},
             },
             setup = {
                 eslint = function()
@@ -124,4 +131,4 @@
             },
         },
     },
-} ]]
+}
