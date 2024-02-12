@@ -5,6 +5,11 @@ lua_ls_dir="${HOME}/prog/git/"
 echo "[neovim requirements] -- install"
 sudo dnf -y install ninja-build cmake gcc make unzip gettext curl
 
+echo "[gh cli] -- install"
+sudo dnf install 'dnf-command(config-manager)'
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf install gh
+
 echo "[lua-language-server] -- install"
 mkdir -p "${lua_ls_dir}" &&
     git clone https://github.com/LuaLS/lua-language-server &&
