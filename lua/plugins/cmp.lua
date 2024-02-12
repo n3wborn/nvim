@@ -8,6 +8,7 @@ return {
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
+        'windwp/nvim-autopairs',
         {
             'onsails/lspkind-nvim',
             config = function()
@@ -15,16 +16,20 @@ return {
             end,
         },
     },
-    config = function()
+    opts = function()
         local cmp = require('cmp')
-        local cmp_buffer = require('cmp_buffer')
-        local compare = require('cmp.config.compare')
         local luasnip = require('luasnip')
+        local compare = require('cmp.config.compare')
+        local cmp_buffer = require('cmp_buffer')
         local icons = require('custom.icons').kinds
 
-        luasnip.config.setup({})
-
-        cmp.setup({
+        return {
+            enabled = function()
+                if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then
+                    return false
+                end
+                return true
+            end,
             formatting = {
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, item)
@@ -52,7 +57,7 @@ return {
             },
             snippet = {
                 expand = function(args)
-                    luasnip.lsp_expand(args.body)
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -83,7 +88,8 @@ return {
                 end, { 'i', 's' }),
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
+                { name = 'nvim_lsp', priority = 1000 },
+                { name = 'nvim_lsp_signature_help' },
                 { name = 'luasnip' },
                 { name = 'nvim_lua' },
             }, {
@@ -116,6 +122,17 @@ return {
                     compare.order,
                 },
             },
-        })
+            view = { entries = { name = 'custom', selection_order = 'near_cursor' } },
+        }
+    end,
+    config = function(_, opts)
+        local cmp = require('cmp')
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local autopairs = require('nvim-autopairs')
+
+        autopairs.setup({ fast_wrap = {} })
+        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+        cmp.setup(opts)
     end,
 }
