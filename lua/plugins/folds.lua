@@ -42,7 +42,7 @@ return {
             {
                 'zr',
                 function()
-                    require('ufo').openFoldsExceptKinds({ 'comment' })
+                    require('ufo').openFoldsExceptKinds({ 'imports', 'comment' })
                 end,
                 desc = ' 󱃄 Open All Folds except comments',
             },
