@@ -4,7 +4,7 @@ return {
     cmd = { 'ConformInfo' },
     opts = {
         formatters_by_ft = {
-            javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
+            -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
             lua = { 'stylua' },
             markdown = { 'markdownlint' },
