@@ -1,5 +1,11 @@
 return {
     {
+        'nvim-treesitter/nvim-treesitter',
+        opts = function(_, opts)
+            vim.list_extend(opts.ensure_installed or {}, { 'rust' })
+        end,
+    },
+    {
         'mrcjkb/rustaceanvim',
         version = '^3',
         ft = { 'rust' },
@@ -35,7 +41,13 @@ return {
             vim.g.rustaceanvim = vim.tbl_deep_extend('force', {}, opts or {})
         end,
     },
-
+    {
+        'williamboman/mason.nvim',
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'rust-analyzer', 'rustfmt' })
+        end,
+    },
     {
         'neovim/nvim-lspconfig',
         opts = {
