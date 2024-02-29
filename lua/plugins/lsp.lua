@@ -165,6 +165,30 @@ return {
             })
 
             api.nvim_create_autocmd('FileType', {
+                pattern = { 'twig', 'twig.html' },
+                callback = function()
+                    local get_root_dir = function(fname)
+                        local cwd = vim.loop.cwd()
+                        local util = require('lspconfig.util')
+                        local root = util.root_pattern('composer.json', '.git')(fname)
+                        return util.path.iterate_parents(cwd) and cwd or root
+                    end
+
+                    local config = {
+                        name = 'twiggy-language-server',
+                        cmd = { 'twiggy-language-server', '--stdio' },
+                        root_dir = get_root_dir(),
+                    }
+
+                    lsp.start(config, {
+                        reuse_client = function(client, conf)
+                            return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
+                        end,
+                    })
+                end,
+            })
+
+            api.nvim_create_autocmd('FileType', {
                 pattern = 'json,jsonc',
                 callback = function()
                     local config = {

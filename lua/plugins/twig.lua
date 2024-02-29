@@ -9,9 +9,9 @@ return {
         'neovim/nvim-lspconfig',
         opts = {
             servers = {
-                twig_language_server = {
+                twiggy_language_server = {
                     cmd = { 'twiggy-language-server', '--stdio' },
-                    filetypes = { 'twig.html' },
+                    filetypes = { 'twig,twig.html' },
                     root_dir = function()
                         local util = require('lspconfig.util')
                         util.root_dir('composer.json', '.git')
