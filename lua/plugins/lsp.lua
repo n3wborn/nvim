@@ -308,6 +308,7 @@ return {
 
             for _, server in ipairs({
                 'neodev',
+                'css',
             }) do
                 require('lsp.' .. server).setup(on_attach, capabilities)
             end
