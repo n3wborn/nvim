@@ -7,21 +7,6 @@ return {
             })
         end,
     },
-    {
-        'neovim/nvim-lspconfig',
-        opts = {
-            servers = {
-                intelephense = {
-                    cmd = { 'intelephense', '--stdio' },
-                    filetypes = { 'php' },
-                    root_dir = function()
-                        local util = require('lspconfig.util')
-                        util.root_dir('composer.json', '.git')
-                    end,
-                },
-            },
-        },
-    },
     -- Ensure PHP tools are installed
     {
         'williamboman/mason.nvim',
