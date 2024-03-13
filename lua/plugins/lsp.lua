@@ -105,6 +105,7 @@ return {
                 'eslint',
                 'intelephense',
                 'neodev',
+                'stimulus',
                 'tailwind',
                 'twig',
             }) do
