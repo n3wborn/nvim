@@ -96,7 +96,9 @@ return {
             for _, server in ipairs({
                 'bash',
                 'css',
+                'css_variables',
                 'css_modules',
+                'custom_elements',
                 'docker',
                 'docker_compose',
                 'emmet',
