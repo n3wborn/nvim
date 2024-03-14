@@ -25,24 +25,17 @@ return {
         end,
     },
     config = function(_, opts)
-        vim.api.nvim_create_user_command('FormatDisable', function(args)
-            -- FormatDisable! will disable formatting just for this buffer
-            if args.bang then
-                vim.b.disable_autoformat = true
+        require('conform.formatters.php_cs_fixer').args = function(self, ctx)
+            local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
+            local found = vim.fs.find('.php-cs-fixer.php', { upward = true, path = ctx.dirname })[1]
+            if found then
+                vim.list_extend(args, { '--config=' .. found })
             else
-                vim.g.disable_autoformat = true
+                vim.list_extend(args, { '--rules=@PSR12,@Symfony' })
             end
-        end, {
-            desc = 'Disable autoformat-on-save',
-            bang = true,
-        })
 
-        vim.api.nvim_create_user_command('FormatEnable', function()
-            vim.b.disable_autoformat = false
-            vim.g.disable_autoformat = false
-        end, {
-            desc = 'Re-enable autoformat-on-save',
-        })
+            return args
+        end
 
         require('conform').setup(opts)
     end,
