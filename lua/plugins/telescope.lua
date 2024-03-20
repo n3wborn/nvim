@@ -16,6 +16,7 @@ return {
             event = { 'VeryLazy' },
             config = function()
                 require('telescope').load_extension('lazygit')
+                require('telescope').load_extension('before')
 
                 vim.api.nvim_create_autocmd('BufEnter', {
                     desc = 'makes sure any opened buffer inside a git repo will be tracked by lazygit',
@@ -70,7 +71,8 @@ return {
     end,
     keys = {
         { '<Leader>T', ':Telescope<CR>', desc = 'Telescope' },
-        { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazygit' },
+        { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazy[G]it' },
+        { '<space>b', '<cmd>Telescope before<CR>', desc = 'Telescope [B]efore' },
         {
             '<leader>ff',
             function()
