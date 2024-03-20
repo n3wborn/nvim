@@ -128,13 +128,6 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         --- quickfix
         vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
 
-        -- inlay_hints
-        if capabilities.inlayHintProvider then
-            vim.keymap.set('n', '<leader>h', function()
-                vim.lsp.inlay_hint(0, nil)
-            end, { buffer = args.buf })
-        end
-
         -- show definition of current symbol
         if capabilities.definitionProvider then
             if client == 'typescript-tools' then
@@ -217,3 +210,18 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'TextChanged', 'Insert
         end
     end,
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'Enable inlay hints',
+    callback = function(event)
+        local id = vim.tbl_get(event, 'data', 'client_id')
+        local client = id and vim.lsp.get_client_by_id(id)
+        if client == nil or not client.supports_method('textDocument/inlayHint') then
+            return
+        end
+
+        vim.lsp.inlay_hint.enable(event.buf, true)
+    end,
+})
+
+vim.opt.updatetime = 400
