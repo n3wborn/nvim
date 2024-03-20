@@ -1,7 +1,7 @@
 -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/folding-plugins.lua
 local foldIcon = ''
 local hlgroup = 'NonText'
---[[ local function foldTextFormatter(virtText, lnum, endLnum, width, truncate)
+local function foldTextFormatter(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
     local suffix = '  ' .. foldIcon .. '  ' .. tostring(endLnum - lnum)
     local sufWidth = vim.fn.strdisplaywidth(suffix)
@@ -26,7 +26,7 @@ local hlgroup = 'NonText'
     end
     table.insert(newVirtText, { suffix, hlgroup })
     return newVirtText
-end ]]
+end
 
 return {
     {
@@ -104,9 +104,9 @@ return {
             end,
             -- open opening the buffer, close these fold kinds
             -- use `:UfoInspect` to get available fold kinds from the LSP
-            close_fold_kinds = { 'imports', 'comment' },
+            close_fold_kinds_for_ft = { lsp = { 'imports', 'comment' } },
             open_fold_hl_timeout = 800,
-            -- fold_virt_text_handler = foldTextFormatter,
+            fold_virt_text_handler = foldTextFormatter,
         },
     },
 }
