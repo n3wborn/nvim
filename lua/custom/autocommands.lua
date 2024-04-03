@@ -78,6 +78,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'spectre_panel',
         'startuptime',
         'tsplayground',
+        'trouble',
         'Navbuddy',
     },
     callback = function()
