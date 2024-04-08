@@ -98,15 +98,15 @@ return {
                 'css',
                 'css_modules',
                 'css_variables',
-                'custom_elements',
+                -- 'custom_elements',
                 'docker',
                 'docker_compose',
                 'emmet',
                 'eslint',
                 'intelephense',
                 'neodev',
-                'stimulus',
-                'tailwind',
+                -- 'stimulus',
+                -- 'tailwind',
                 'twig',
             }) do
                 require('lsp.' .. server).setup(on_attach, capabilities)
