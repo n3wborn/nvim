@@ -225,4 +225,42 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+local resession = require('resession')
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+    callback = function()
+        require('resession').save('last')
+    end,
+})
+
+vim.keymap.set('n', '<leader>ss', resession.save)
+vim.keymap.set('n', '<leader>sl', resession.load)
+vim.keymap.set('n', '<leader>sd', resession.delete)
+
+-- session per git branch
+-- (https://github.com/stevearc/resession.nvim/blob/492a2d6455ce7be3da3901402fd31a8dffb7f133/README.md#create-one-session-per-git-branch)
+local get_session_name = function()
+    local name = vim.fn.getcwd()
+    local branch = vim.trim(vim.fn.system('git branch --show-current'))
+    if vim.v.shell_error == 0 then
+        return name .. branch
+    else
+        return name
+    end
+end
+
+vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+        -- Only load the session if nvim was started with no args
+        if vim.fn.argc(-1) == 0 then
+            resession.load(get_session_name(), { dir = 'dirsession', silence_errors = true })
+        end
+    end,
+})
+vim.api.nvim_create_autocmd('VimLeavePre', {
+    callback = function()
+        resession.save(get_session_name(), { dir = 'dirsession', notify = false })
+    end,
+})
+
 vim.opt.updatetime = 400
