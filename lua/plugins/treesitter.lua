@@ -67,7 +67,7 @@ return {
                     lookahead = true,
                     lsp_interop = {
                         enable = true,
-                        border = 'rounded',
+                        border = _G.global.float_border_opts.border,
                         peek_definition_code = {
                             ['df'] = '@function.outer',
                             ['dF'] = '@class.outer',

@@ -47,11 +47,11 @@ return {
             },
             window = {
                 completion = {
-                    border = 'rounded',
+                    border = _G.global.float_border_opts.border,
                     winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                 },
                 documentation = {
-                    border = 'rounded',
+                    border = _G.global.float_border_opts.border,
                     winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                 },
             },

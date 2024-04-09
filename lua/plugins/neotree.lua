@@ -18,7 +18,7 @@ return {
         cmd = 'Neotree',
         opts = {
             close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-            popup_border_style = 'rounded',
+            popup_border_style = _G.global.float_border_opts.border,
             enable_git_status = true,
             enable_diagnostics = true,
             open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
