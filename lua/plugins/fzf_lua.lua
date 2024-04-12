@@ -2,79 +2,63 @@ return {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     cmd = 'FzfLua',
+    keys = {
+        { '<space>F', '<cmd>FzfLua<cr>', desc = 'open FzfLua' },
+        -- {
+        --     '<leader>fa',
+        --     function()
+        --         require('fzf-lua').files({
+        --             cwd_prompt = false,
+        --             cwd = '~/projects/qk-safety-lcsb/plugins/',
+        --             prompt = 'Action Files❯ ',
+        --             rg_ops = [[--files --hidden --follow -g "!.git" -t php ]],
+        --         })
+        --     end,
+        --     desc = 'open FzfLua',
+        -- },
+    },
     opts = function()
         local actions = require('fzf-lua.actions')
-
         return {
-            -- Make stuff better combine with the editor.
-            fzf_colors = {
-                bg = { 'bg', 'Normal' },
-                gutter = { 'bg', 'Normal' },
-                info = { 'fg', 'Conditional' },
-                scrollbar = { 'bg', 'Normal' },
-                separator = { 'fg', 'Comment' },
-            },
-            fzf_opts = {
-                ['--info'] = 'default',
-                ['--layout'] = 'reverse-list',
-            },
-            keymap = {
-                builtin = {
-                    ['<C-/>'] = 'toggle-help',
-                    ['<C-a>'] = 'toggle-fullscreen',
-                    ['<C-i>'] = 'toggle-preview',
-                    ['<C-f>'] = 'preview-page-down',
-                    ['<C-b>'] = 'preview-page-up',
-                },
-                fzf = {
-                    ['alt-s'] = 'toggle',
-                    ['alt-a'] = 'toggle-all',
-                },
-            },
             winopts = {
-                height = 0.7,
-                width = 0.55,
-                preview = {
-                    scrollbar = false,
-                    layout = 'vertical',
-                    vertical = 'up:40%',
-                },
+                preview = { default = 'bat_native' },
             },
-            global_git_icons = false,
-            -- Configuration for specific commands.
             files = {
-                winopts = {
-                    preview = { hidden = 'hidden' },
-                },
-                actions = {
-                    ['ctrl-g'] = actions.toggle_ignore,
+                fzf_opts = {
+                    ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-files-history',
                 },
             },
-            helptags = {
-                actions = {
-                    -- Open help pages in a vertical split.
-                    ['default'] = actions.help_vert,
+            grep = {
+                cmd = "rg --color=always --smart-case -g '!{.git,node_modules,vendor,.cache,var}/'",
+                fzf_opts = {
+                    ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-grep-history',
                 },
             },
-            lsp = {
-                code_actions = {
-                    previewer = 'codeaction_native',
-                    preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --file-style='omit'",
+            actions = {
+                files = {
+                    -- instead of the default action 'actions.file_edit_or_qf'
+                    -- it's important to define all other actions here as this
+                    -- table does not get merged with the global defaults
+                    ['default'] = actions.file_edit_or_qf,
+                    ['ctrl-x'] = actions.file_split,
+                    ['ctrl-v'] = actions.file_vsplit,
+                    ['ctrl-t'] = actions.file_tabedit,
+                    ['alt-q'] = actions.file_sel_to_qf,
+                    ['alt-l'] = actions.file_sel_to_ll,
                 },
-                symbols = {
-                    symbol_icons = require('custom.icons').kinds,
-                },
-            },
-            oldfiles = {
-                include_current_session = true,
-                winopts = {
-                    preview = { hidden = 'hidden' },
+                buffers = {
+                    -- providers that inherit these actions:
+                    --   buffers, tabs, lines, blines
+                    ['default'] = actions.buf_edit,
+                    ['ctrl-x'] = actions.buf_split,
+                    ['ctrl-v'] = actions.buf_vsplit,
+                    ['ctrl-t'] = actions.buf_tabedit,
                 },
             },
         }
     end,
-    config = function()
+    config = function(_, opts)
         -- calling `setup` is optional for customization
-        require('fzf-lua').setup({})
+        require('fzf-lua').setup(opts)
     end,
 }
