@@ -98,17 +98,21 @@ return {
                 'css',
                 'css_modules',
                 'css_variables',
-                -- 'custom_elements',
                 'docker',
                 'docker_compose',
                 'emmet',
                 'eslint',
                 'intelephense',
                 'neodev',
+                'twig',
+                --- @todo: find a better way to load when really needed
+                -- 'custom_elements',
                 -- 'stimulus',
                 -- 'tailwind',
-                'twig',
+                --- @todo: once path to generator.yml is done (best wuld be a function to determine it)
+                -- 'yamlls',
             }) do
+                --- @todo: refactor on_attach() as it is useless most of the time
                 require('lsp.' .. server).setup(on_attach, capabilities)
             end
         end,
