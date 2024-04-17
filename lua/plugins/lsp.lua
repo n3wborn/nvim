@@ -61,35 +61,35 @@ return {
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            local api, lsp = vim.api, vim.lsp
-
-            -- diagnostics
+            local lspconfig = require('lspconfig')
             require('lsp.diagnostics').setup()
 
-            --- on_attach
-            local on_attach = function(client) end
+            for _, server in ipairs({
+                'bashls',
+                'cssls',
+                'cssmodules_ls',
+                'css_variables',
+                'dockerls',
+                'docker_compose_language_service',
+                'intelephense',
+                --- @todo: find a better way to load when really needed
+                -- 'custom_elements_ls',
+                -- jsonls
+                -- 'stimulus_ls',
+            }) do
+                lspconfig[server].setup({ capabilities = capabilities })
+            end
 
             for _, server in ipairs({
-                'bash',
-                'css',
-                'css_modules',
-                'css_variables',
-                'docker',
-                'docker_compose',
                 'emmet',
                 'eslint',
-                'intelephense',
                 'neodev',
                 'twig',
-                --- @todo: find a better way to load when really needed
-                -- 'custom_elements',
-                -- 'stimulus',
                 -- 'tailwind',
                 --- @todo: once path to generator.yml is done (best wuld be a function to determine it)
                 -- 'yamlls',
             }) do
-                --- @todo: refactor on_attach() as it is useless most of the time
-                require('lsp.' .. server).setup(on_attach, capabilities)
+                require('lsp.' .. server).setup(capabilities)
             end
         end,
     },

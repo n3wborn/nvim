@@ -1,8 +1,7 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
 local M = {
-    setup = function(on_attach, capabilities)
+    setup = function(capabilities)
         require('lspconfig').eslint.setup({
-            on_attach = on_attach,
             capabilities = capabilities,
             cmd = { 'vscode-eslint-language-server', '--stdio' },
             filetypes = {

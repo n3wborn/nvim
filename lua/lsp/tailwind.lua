@@ -1,7 +1,6 @@
 local M = {
-    setup = function(on_attach, capabilities)
+    setup = function(capabilities)
         require('lspconfig').tailwindcss.setup({
-            on_attach = on_attach,
             capabilities = capabilities,
             cmd = { 'tailwindcss-language-server', '--stdio' },
             settings = {

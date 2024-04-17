@@ -21,7 +21,7 @@ local settings = {
 }
 
 local M = {
-    setup = function(on_attach, capabilities)
+    setup = function(capabilities)
         require('neodev').setup({
             override = function(root_dir, library)
                 if root_dir:match('dotfiles') then
@@ -32,7 +32,6 @@ local M = {
         })
 
         require('lspconfig').lua_ls.setup({
-            on_attach = on_attach,
             settings = settings,
             flags = {
                 debounce_text_changes = 150,

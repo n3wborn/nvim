@@ -1,5 +1,5 @@
 local M = {
-    setup = function(on_attach, capabilities)
+    setup = function(capabilities)
         require('lspconfig').yamlls.setup({
             settings = {
                 yaml = {
@@ -13,7 +13,6 @@ local M = {
                     }),
                 },
             },
-            on_attach = on_attach,
             capabilities = capabilities,
         })
     end,

@@ -1,7 +1,6 @@
 local M = {
-    setup = function(on_attach, capabilities)
+    setup = function(capabilities)
         require('lspconfig').emmet_language_server.setup({
-            on_attach = on_attach,
             capabilities = capabilities,
             init_options = {
                 --- @type string[]
