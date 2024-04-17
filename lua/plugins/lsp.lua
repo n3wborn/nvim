@@ -67,8 +67,7 @@ return {
             require('lsp.diagnostics').setup()
 
             --- on_attach
-            local on_attach = function(client)
-            end
+            local on_attach = function(client) end
 
             for _, server in ipairs({
                 'bash',
