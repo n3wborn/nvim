@@ -48,9 +48,20 @@ vim.g.markdown_recommended_style = 0
 
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
+-- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
+    extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi' },
+    filename = {
+        ['.env'] = 'dotenv',
+        ['vifmrc'] = 'vim',
+    },
     pattern = {
         ['.*twig'] = 'twig.html',
+        ['.*/waybar/config'] = 'jsonc',
+        ['.*/mako/config'] = 'dosini',
+        ['.*/kitty/*.conf'] = 'bash',
+        ['.*/hypr/.*%.conf'] = 'hyprlang',
+        ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 })
 
