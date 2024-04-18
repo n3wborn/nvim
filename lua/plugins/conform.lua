@@ -4,9 +4,11 @@ return {
     cmd = { 'ConformInfo' },
     opts = {
         formatters_by_ft = {
+            --- @todo: find a way to deal with work projects related config
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
             lua = { 'stylua' },
+            --- @todo: add hougesen/mdsf
             markdown = { 'markdownlint' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
