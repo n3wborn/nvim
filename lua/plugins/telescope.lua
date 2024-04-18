@@ -70,7 +70,7 @@ return {
         }
     end,
     keys = {
-        { '<Leader>T', ':Telescope<CR>', desc = 'Telescope' },
+        { '<space>T', ':Telescope<CR>', desc = '[T]elescope' },
         { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazy[G]it' },
         { '<space>b', '<cmd>Telescope before<CR>', desc = 'Telescope [B]efore' },
         {
