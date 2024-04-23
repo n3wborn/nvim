@@ -5,28 +5,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     desc = 'Do not auto comment on new line',
 })
 
-vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
-    callback = function()
-        local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
-        if ok and cl then
-            vim.wo.cursorline = true
-            vim.api.nvim_win_del_var(0, 'auto-cursorline')
-        end
-    end,
-    desc = 'Show cursor line only in active window',
-})
-
-vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
-    callback = function()
-        local cl = vim.wo.cursorline
-        if cl then
-            vim.api.nvim_win_set_var(0, 'auto-cursorline', cl)
-            vim.wo.cursorline = false
-        end
-    end,
-    desc = 'Show cursor line only in active window',
-})
-
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = { 'json', 'jsonc' },
     callback = function()
@@ -47,24 +25,6 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
         vim.highlight.on_yank({ higroup = 'Visual', priority = 250 }) --higher priority than lsp refs
     end,
     desc = 'Highlight on yank',
-})
-
-vim.api.nvim_create_autocmd({ 'VimResized' }, {
-    callback = function()
-        vim.cmd('tabdo wincmd =')
-    end,
-    desc = 'Resize splits if window got resized',
-})
-
-vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
-    callback = function()
-        local mark = vim.api.nvim_buf_get_mark(0, '"')
-        local lcount = vim.api.nvim_buf_line_count(0)
-        if mark[1] > 0 and mark[1] <= lcount then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        end
-    end,
-    desc = 'Go to last loc when opening a buffer',
 })
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
