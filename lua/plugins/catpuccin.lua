@@ -80,6 +80,7 @@ return {
                 nvimtree = true,
                 overseer = false,
                 pounce = false,
+                window_picker = true,
                 rainbow_delimiters = true,
                 semantic_tokens = true,
                 symbols_outline = true,
