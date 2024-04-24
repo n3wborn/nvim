@@ -1,4 +1,4 @@
-local uv = vim.loop
+local uv = vim.uv or vim.loop
 local api = vim.api
 
 -- global inspect fn

@@ -1,33 +1,20 @@
 return {
     'folke/trouble.nvim',
-    cmd = { 'TroubleToggle', 'Trouble' },
-    opts = { use_diagnostic_signs = true },
-    keys = {
-        { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
-        { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
-        { '<leader>xL', '<cmd>TroubleToggle loclist<cr>', desc = 'Location List (Trouble)' },
-        { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix List (Trouble)' },
-        {
-            '[q',
-            function()
-                if require('trouble').is_open() then
-                    require('trouble').previous({ skip_groups = true, jump = true })
-                else
-                    vim.cmd.cprev()
-                end
-            end,
-            desc = 'Previous trouble/quickfix item',
-        },
-        {
-            ']q',
-            function()
-                if require('trouble').is_open() then
-                    require('trouble').next({ skip_groups = true, jump = true })
-                else
-                    vim.cmd.cnext()
-                end
-            end,
-            desc = 'Next trouble/quickfix item',
-        },
+    cmd = { 'Trouble' },
+    branch = 'dev',
+    opts = {
+        auto_close = false, -- auto close when there are no items
+        auto_open = false, -- auto open when there are items
+        auto_preview = true, -- automatically open preview when on an item
+        auto_refresh = true, -- auto refresh when open
+        focus = true, -- Focus the window when opened
+        follow = true, -- Follow the current item
+        indent_guides = true, -- show indent guides
+        max_items = 100, -- limit number of items that can be displayed per section
+        multiline = true, -- render multi-line messages
+        pinned = true, -- When pinned, the opened trouble window will be bound to the current buffer
     },
+    config = function(_, opts)
+        require('trouble').setup(opts)
+    end,
 }

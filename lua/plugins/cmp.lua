@@ -3,11 +3,11 @@ return {
     event = 'InsertEnter',
     dependencies = {
         'hrsh7th/cmp-nvim-lsp',
-        'saadparwaiz1/cmp_luasnip',
         'lukas-reineke/cmp-under-comparator',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
+        'windwp/nvim-autopairs',
         {
             'onsails/lspkind-nvim',
             config = function()
@@ -15,23 +15,25 @@ return {
             end,
         },
     },
-    config = function()
+    opts = function()
         local cmp = require('cmp')
-        local cmp_buffer = require('cmp_buffer')
         local compare = require('cmp.config.compare')
-        local luasnip = require('luasnip')
+        local cmp_buffer = require('cmp_buffer')
         local icons = require('custom.icons').kinds
 
-        luasnip.config.setup({})
-
-        cmp.setup({
+        return {
+            enabled = function()
+                if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then
+                    return false
+                end
+                return true
+            end,
             formatting = {
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, item)
                     item.kind = string.format('%s', icons[item.kind])
                     item.menu = ({
                         buffer = '[Buffer]',
-                        luasnip = '[Snip]',
                         nvim_lsp = '[LSP]',
                         nvim_lua = '[API]',
                         path = '[Path]',
@@ -42,17 +44,17 @@ return {
             },
             window = {
                 completion = {
-                    border = 'rounded',
+                    border = _G.global.float_border_opts.border,
                     winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                 },
                 documentation = {
-                    border = 'rounded',
+                    border = _G.global.float_border_opts.border,
                     winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                 },
             },
             snippet = {
                 expand = function(args)
-                    luasnip.lsp_expand(args.body)
+                    vim.snippet.expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -66,8 +68,8 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
+                    elseif vim.snippet.jumpable(1) then
+                        vim.snippet.jump(1)
                     else
                         fallback()
                     end
@@ -75,16 +77,16 @@ return {
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
+                    elseif vim.snippet.jumpable(-1) then
+                        vim.snippet.jump(-1)
                     else
                         fallback()
                     end
                 end, { 'i', 's' }),
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' },
+                { name = 'nvim_lsp', priority = 1000 },
+                { name = 'nvim_lsp_signature_help' },
                 { name = 'nvim_lua' },
             }, {
                 {
@@ -116,6 +118,17 @@ return {
                     compare.order,
                 },
             },
-        })
+            view = { entries = { name = 'custom', selection_order = 'near_cursor' } },
+        }
+    end,
+    config = function(_, opts)
+        local cmp = require('cmp')
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local autopairs = require('nvim-autopairs')
+
+        autopairs.setup({ fast_wrap = {} })
+        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+        cmp.setup(opts)
     end,
 }

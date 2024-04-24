@@ -5,28 +5,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     desc = 'Do not auto comment on new line',
 })
 
-vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
-    callback = function()
-        local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
-        if ok and cl then
-            vim.wo.cursorline = true
-            vim.api.nvim_win_del_var(0, 'auto-cursorline')
-        end
-    end,
-    desc = 'Show cursor line only in active window',
-})
-
-vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
-    callback = function()
-        local cl = vim.wo.cursorline
-        if cl then
-            vim.api.nvim_win_set_var(0, 'auto-cursorline', cl)
-            vim.wo.cursorline = false
-        end
-    end,
-    desc = 'Show cursor line only in active window',
-})
-
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = { 'json', 'jsonc' },
     callback = function()
@@ -49,24 +27,6 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     desc = 'Highlight on yank',
 })
 
-vim.api.nvim_create_autocmd({ 'VimResized' }, {
-    callback = function()
-        vim.cmd('tabdo wincmd =')
-    end,
-    desc = 'Resize splits if window got resized',
-})
-
-vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
-    callback = function()
-        local mark = vim.api.nvim_buf_get_mark(0, '"')
-        local lcount = vim.api.nvim_buf_line_count(0)
-        if mark[1] > 0 and mark[1] <= lcount then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        end
-    end,
-    desc = 'Go to last loc when opening a buffer',
-})
-
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
         'PlenaryTestPopup',
@@ -78,6 +38,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'spectre_panel',
         'startuptime',
         'tsplayground',
+        'trouble',
         'Navbuddy',
     },
     callback = function()
@@ -128,13 +89,6 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         --- quickfix
         vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
 
-        -- inlay_hints
-        if capabilities.inlayHintProvider then
-            vim.keymap.set('n', '<leader>h', function()
-                vim.lsp.inlay_hint(0, nil)
-            end, { buffer = args.buf })
-        end
-
         -- show definition of current symbol
         if capabilities.definitionProvider then
             if client == 'typescript-tools' then
@@ -156,12 +110,22 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- rename current symbol
         if capabilities.renameProvider then
-            vim.keymap.set('n', '<leader>R', ':IncRename ', { buffer = args.buf })
+            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = args.buf })
         end
 
         -- show code actions available
         if capabilities.codeActionProvider then
-            vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = args.buf })
+            vim.keymap.set('n', '<leader>ca', function()
+                require('fzf-lua').lsp_code_actions({
+                    winopts = {
+                        relative = 'cursor',
+                        width = 0.6,
+                        height = 0.6,
+                        row = 1,
+                        preview = { vertical = 'up:70%' },
+                    },
+                })
+            end, { buffer = args.buf })
         end
 
         -- show signature help
@@ -207,3 +171,56 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'TextChanged', 'Insert
         end
     end,
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'Enable inlay hints',
+    callback = function(event)
+        local id = vim.tbl_get(event, 'data', 'client_id')
+        local client = id and vim.lsp.get_client_by_id(id)
+        if client == nil or not client.supports_method('textDocument/inlayHint') then
+            return
+        end
+
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(0))
+    end,
+})
+
+local resession = require('resession')
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+    callback = function()
+        require('resession').save('last')
+    end,
+})
+
+vim.keymap.set('n', '<leader>ss', resession.save)
+vim.keymap.set('n', '<leader>sl', resession.load)
+vim.keymap.set('n', '<leader>sd', resession.delete)
+
+-- session per git branch
+-- (https://github.com/stevearc/resession.nvim/blob/492a2d6455ce7be3da3901402fd31a8dffb7f133/README.md#create-one-session-per-git-branch)
+local get_session_name = function()
+    local name = vim.fn.getcwd()
+    local branch = vim.trim(vim.fn.system('git branch --show-current'))
+    if vim.v.shell_error == 0 then
+        return name .. branch
+    else
+        return name
+    end
+end
+
+vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+        -- Only load the session if nvim was started with no args
+        if vim.fn.argc(-1) == 0 then
+            resession.load(get_session_name(), { dir = 'dirsession', silence_errors = true })
+        end
+    end,
+})
+vim.api.nvim_create_autocmd('VimLeavePre', {
+    callback = function()
+        resession.save(get_session_name(), { dir = 'dirsession', notify = false })
+    end,
+})
+
+vim.opt.updatetime = 400

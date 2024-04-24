@@ -46,7 +46,6 @@ return {
                 gitsigns = true,
                 harpoon = false,
                 hop = false,
-                illuminate = true,
                 leap = false,
                 lightspeed = false,
                 lsp_saga = false,

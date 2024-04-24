@@ -5,13 +5,7 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.opt.cursorline = true
-vim.opt.cursorlineopt = 'number' --- @todo: use a fn to hide if new empty buffer
-vim.opt.list = true
-vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.wrap = false
-vim.opt.signcolumn = 'yes'
 vim.opt.undodir = vim.fn.expand('~') .. '/.local/share/nvim/undo'
 vim.opt.shortmess = 'filnxtToOFWIcC'
 vim.opt.hidden = true
@@ -48,9 +42,20 @@ vim.g.markdown_recommended_style = 0
 
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
+-- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
+    extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi' },
+    filename = {
+        ['.env'] = 'dotenv',
+        ['vifmrc'] = 'vim',
+    },
     pattern = {
         ['.*twig'] = 'twig.html',
+        ['.*/waybar/config'] = 'jsonc',
+        ['.*/mako/config'] = 'dosini',
+        ['.*/kitty/*.conf'] = 'bash',
+        ['.*/hypr/.*%.conf'] = 'hyprlang',
+        ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 })
 

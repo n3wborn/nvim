@@ -1,7 +1,7 @@
 return {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
-    tag = '0.1.4',
+    tag = '0.1.5',
     dependencies = {
         { 'nvim-lua/plenary.nvim' },
         {
@@ -16,6 +16,7 @@ return {
             event = { 'VeryLazy' },
             config = function()
                 require('telescope').load_extension('lazygit')
+                require('telescope').load_extension('before')
 
                 vim.api.nvim_create_autocmd('BufEnter', {
                     desc = 'makes sure any opened buffer inside a git repo will be tracked by lazygit',
@@ -69,21 +70,26 @@ return {
         }
     end,
     keys = {
-        { '<Leader>T', ':Telescope<CR>', desc = 'Telescope' },
-        { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazygit' },
+        { '<space>T', ':Telescope<CR>', desc = '[T]elescope' },
+        { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazy[G]it' },
+        { '<space>b', '<cmd>Telescope before<CR>', desc = 'Telescope [B]efore' },
         {
             '<leader>ff',
             function()
-                require('telescope.builtin').find_files()
+                require('telescope.builtin').find_files({ cwd = false })
             end,
-            desc = 'Find Plugin File',
+            desc = 'Find File',
         },
         {
             '<leader>fF',
             function()
-                require('telescope.builtin').find_files({ cwd = false })
+                require('telescope.builtin').find_files({
+                    search_dirs = { 'plugins', 'lib', 'modules' },
+                    hidden = true,
+                    prompt_title = 'Find Files in plugins,lib,modules dirs',
+                })
             end,
-            desc = 'Find Plugin File',
+            desc = 'Find File in plugins,lib,modules dirs',
         },
         {
             '<leader>sp',
@@ -168,6 +174,13 @@ return {
                 require('telescope.builtin').lsp_implementations()
             end,
             desc = 'List symbol implementations',
+        },
+        {
+            '<leader>m',
+            function()
+                require('telescope.builtin').marks()
+            end,
+            desc = 'List marks',
         },
     },
     config = function(opts)

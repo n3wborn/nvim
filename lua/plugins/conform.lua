@@ -4,11 +4,12 @@ return {
     cmd = { 'ConformInfo' },
     opts = {
         formatters_by_ft = {
-            javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
-            json = { 'jq' },
+            --- @todo: find a way to deal with work projects related config
+            -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
+            -- json = { 'jq' },
             lua = { 'stylua' },
+            --- @todo: add hougesen/mdsf
             markdown = { 'markdownlint' },
-            php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },
@@ -22,12 +23,11 @@ return {
             if bufname:match('/node_modules/') or bufname:match('/vendor/') then
                 return
             end
-            return { async = true, timeout_ms = 500, lsp_fallback = true }
+            return { async = true, timeout_ms = 500, lsp_fallback = false }
         end,
     },
     config = function(_, opts)
-        local cs_fixer = require('conform.formatters.php_cs_fixer')
-        cs_fixer.args = function(self, ctx)
+        require('conform.formatters.php_cs_fixer').args = function(self, ctx)
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
             local found = vim.fs.find('.php-cs-fixer.php', { upward = true, path = ctx.dirname })[1]
             if found then
