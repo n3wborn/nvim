@@ -3,7 +3,6 @@ return {
     event = 'InsertEnter',
     dependencies = {
         'hrsh7th/cmp-nvim-lsp',
-        'saadparwaiz1/cmp_luasnip',
         'lukas-reineke/cmp-under-comparator',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lua',
@@ -18,7 +17,6 @@ return {
     },
     opts = function()
         local cmp = require('cmp')
-        local luasnip = require('luasnip')
         local compare = require('cmp.config.compare')
         local cmp_buffer = require('cmp_buffer')
         local icons = require('custom.icons').kinds
@@ -36,7 +34,6 @@ return {
                     item.kind = string.format('%s', icons[item.kind])
                     item.menu = ({
                         buffer = '[Buffer]',
-                        luasnip = '[Snip]',
                         nvim_lsp = '[LSP]',
                         nvim_lua = '[API]',
                         path = '[Path]',
@@ -57,7 +54,7 @@ return {
             },
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
+                    vim.snippet.expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -71,8 +68,8 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
+                    elseif vim.snippet.jumpable(1) then
+                        vim.snippet.jump(1)
                     else
                         fallback()
                     end
@@ -80,8 +77,8 @@ return {
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
+                    elseif vim.snippet.jumpable(-1) then
+                        vim.snippet.jump(-1)
                     else
                         fallback()
                     end
@@ -90,7 +87,6 @@ return {
             sources = cmp.config.sources({
                 { name = 'nvim_lsp', priority = 1000 },
                 { name = 'nvim_lsp_signature_help' },
-                { name = 'luasnip' },
                 { name = 'nvim_lua' },
             }, {
                 {
