@@ -39,6 +39,9 @@ return {
                     ['<c-v>'] = function(state)
                         require('neo-tree.sources.filesystem.commands').vsplit_with_window_picker(state)
                     end,
+                    ['<c-t>'] = function(state)
+                        require('neo-tree.sources.filesystem.commands').open_tabnew(state)
+                    end,
                 },
             },
             nesting_rules = {},
