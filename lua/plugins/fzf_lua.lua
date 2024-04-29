@@ -4,25 +4,104 @@ return {
     cmd = 'FzfLua',
     keys = {
         { '<space>F', '<cmd>FzfLua<cr>', desc = 'open FzfLua' },
-        -- {
-        --     '<leader>fa',
-        --     function()
-        --         require('fzf-lua').files({
-        --             cwd_prompt = false,
-        --             cwd = '~/projects/qk-safety-lcsb/plugins/',
-        --             prompt = 'Action Files❯ ',
-        --             rg_ops = [[--files --hidden --follow -g "!.git" -t php ]],
-        --         })
-        --     end,
-        --     desc = 'open FzfLua',
-        -- },
+        {
+            '<leader>ff',
+            function()
+                require('fzf-lua').files()
+            end,
+            desc = 'Find File',
+        },
+        {
+            '<leader>sp',
+            function()
+                require('fzf-lua').grep_project()
+            end,
+            desc = 'Search Project',
+        },
+        {
+            '<leader>sd',
+            function()
+                require('fzf-lua').grep_cword()
+            end,
+            desc = 'Grep Current Word',
+        },
+        {
+            '<leader>o',
+            function()
+                require('fzf-lua').oldfiles()
+            end,
+            desc = 'Old files opened',
+        },
+        {
+            '<leader>b',
+            function()
+                require('fzf-lua').buffers()
+            end,
+            desc = 'Find in Buffers',
+        },
+        {
+            '<leader>gc',
+            function()
+                require('fzf-lua').git_commits()
+            end,
+            desc = 'Git Commits',
+        },
+        {
+            '<leader>gp',
+            function()
+                require('fzf-lua').git_bcommits()
+            end,
+            desc = 'Previous git commits',
+        },
+        {
+            '<leader>gb',
+            function()
+                require('fzf-lua').git_branches()
+            end,
+            desc = 'Git branch',
+        },
+        {
+            '<leader>gS',
+            function()
+                require('fzf-lua').git_stash()
+            end,
+            desc = 'List git stashes',
+        },
+        {
+            '<leader>gs',
+            function()
+                require('fzf-lua').git_status()
+            end,
+            desc = 'Show git status',
+        },
+        {
+            '<leader>lr',
+            function()
+                require('fzf-lua').lsp_references()
+            end,
+            desc = 'List symbol references',
+        },
+        {
+            '<leader>li',
+            function()
+                require('fzf-lua').lsp_implementations()
+            end,
+            desc = 'List symbol implementations',
+        },
+        {
+            '<leader>m',
+            function()
+                require('fzf-lua').marks()
+            end,
+            desc = 'List marks',
+        },
     },
     opts = function()
         local actions = require('fzf-lua.actions')
         return {
-            winopts = {
-                preview = { default = 'bat_native' },
-            },
+            -- winopts = {
+            --     preview = { default = 'maxperfs' },
+            -- },
             files = {
                 fzf_opts = {
                     ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-files-history',
