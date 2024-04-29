@@ -193,9 +193,9 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
     end,
 })
 
-vim.keymap.set('n', '<leader>ss', resession.save)
-vim.keymap.set('n', '<leader>sl', resession.load)
-vim.keymap.set('n', '<leader>sd', resession.delete)
+vim.keymap.set('n', '<space>Ss', resession.save)
+vim.keymap.set('n', '<space>Sl', resession.load)
+vim.keymap.set('n', '<space>Sd', resession.delete)
 
 -- session per git branch
 -- (https://github.com/stevearc/resession.nvim/blob/492a2d6455ce7be3da3901402fd31a8dffb7f133/README.md#create-one-session-per-git-branch)
