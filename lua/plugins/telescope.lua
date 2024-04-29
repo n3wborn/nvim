@@ -73,115 +73,116 @@ return {
         { '<space>T', ':Telescope<CR>', desc = '[T]elescope' },
         { '<space>G', '<cmd>Telescope lazygit<CR>', desc = 'Telescope Lazy[G]it' },
         { '<space>b', '<cmd>Telescope before<CR>', desc = 'Telescope [B]efore' },
-        {
-            '<leader>ff',
-            function()
-                require('telescope.builtin').find_files({ cwd = false })
-            end,
-            desc = 'Find File',
-        },
-        {
-            '<leader>fF',
-            function()
-                require('telescope.builtin').find_files({
-                    search_dirs = { 'plugins', 'lib', 'modules' },
-                    hidden = true,
-                    prompt_title = 'Find Files in plugins,lib,modules dirs',
-                })
-            end,
-            desc = 'Find File in plugins,lib,modules dirs',
-        },
-        {
-            '<leader>sp',
-            function()
-                require('telescope.builtin').live_grep()
-            end,
-            desc = 'Live Grep',
-        },
-        {
-            '<leader>sd',
-            function()
-                require('telescope.builtin').grep_string()
-            end,
-            desc = 'Grep current string',
-        },
-        {
-            '<leader>o',
-            function()
-                require('telescope.builtin').oldfiles()
-            end,
-            desc = 'Old files opened',
-        },
-        {
-            '<leader>b',
-            function()
-                require('telescope.builtin').buffers()
-            end,
-            desc = 'Find in Buffers',
-        },
-        {
-            '<leader>gc',
-            function()
-                require('telescope.builtin').git_commits()
-            end,
-            desc = 'Git commits',
-        },
-        {
-            '<leader>gp',
-            function()
-                require('telescope.builtin').git_bcommits()
-            end,
-            desc = 'Previous git commits',
-        },
-        {
-            '<leader>gb',
-            function()
-                require('telescope.builtin').git_branches()
-            end,
-            desc = 'Git branch',
-        },
-        {
-            '<leader>gS',
-            function()
-                require('telescope.builtin').git_stash()
-            end,
-            desc = 'List git stashes',
-        },
-        {
-            '<leader>gs',
-            function()
-                require('telescope.builtin').git_status()
-            end,
-            desc = 'Show git status',
-        },
-        {
-            '<leader>lr',
-            function()
-                require('telescope.builtin').lsp_references()
-            end,
-            desc = 'List symbol references',
-        },
-        {
-            '<leader>ls',
-            function()
-                require('telescope.builtin').lsp_workspace_symbols()
-            end,
-            desc = 'List workspace symbols',
-        },
-        {
-            '<leader>li',
-            function()
-                require('telescope.builtin').lsp_implementations()
-            end,
-            desc = 'List symbol implementations',
-        },
-        {
-            '<leader>m',
-            function()
-                require('telescope.builtin').marks()
-            end,
-            desc = 'List marks',
-        },
+        -- {
+        --     '<leader>ff',
+        --     function()
+        --         require('telescope.builtin').find_files({ cwd = false })
+        --     end,
+        --     desc = 'Find File',
+        -- },
+        -- {
+        --     '<leader>fF',
+        --     function()
+        --         require('telescope.builtin').find_files({
+        --             search_dirs = { 'plugins', 'lib', 'modules' },
+        --             hidden = true,
+        --             prompt_title = 'Find Files in plugins,lib,modules dirs',
+        --         })
+        --     end,
+        --     desc = 'Find File in plugins,lib,modules dirs',
+        -- },
+        -- {
+        --     '<leader>sp',
+        --     function()
+        --         require('telescope.builtin').live_grep()
+        --     end,
+        --     desc = 'Live Grep',
+        -- },
+        -- {
+        --     '<leader>sd',
+        --     function()
+        --         -- require('telescope.builtin').grep_string()
+        --         fzf.grep_cword()
+        --     end,
+        --     desc = 'Grep current string',
+        -- },
+        -- {
+        --     '<leader>o',
+        --     function()
+        --         require('telescope.builtin').oldfiles()
+        --     end,
+        --     desc = 'Old files opened',
+        -- },
+        -- {
+        --     '<leader>b',
+        --     function()
+        --         require('telescope.builtin').buffers()
+        --     end,
+        --     desc = 'Find in Buffers',
+        -- },
+        -- {
+        --     '<leader>gc',
+        --     function()
+        --         require('telescope.builtin').git_commits()
+        --     end,
+        --     desc = 'Git commits',
+        -- },
+        -- {
+        --     '<leader>gp',
+        --     function()
+        --         require('telescope.builtin').git_bcommits()
+        --     end,
+        --     desc = 'Previous git commits',
+        -- },
+        -- {
+        --     '<leader>gb',
+        --     function()
+        --         require('telescope.builtin').git_branches()
+        --     end,
+        --     desc = 'Git branch',
+        -- },
+        -- {
+        --     '<leader>gS',
+        --     function()
+        --         require('telescope.builtin').git_stash()
+        --     end,
+        --     desc = 'List git stashes',
+        -- },
+        -- {
+        --     '<leader>gs',
+        --     function()
+        --         require('telescope.builtin').git_status()
+        --     end,
+        --     desc = 'Show git status',
+        -- },
+        -- {
+        --     '<leader>lr',
+        --     function()
+        --         require('telescope.builtin').lsp_references()
+        --     end,
+        --     desc = 'List symbol references',
+        -- },
+        -- {
+        --     '<leader>ls',
+        --     function()
+        --         require('telescope.builtin').lsp_workspace_symbols()
+        --     end,
+        --     desc = 'List workspace symbols',
+        -- },
+        -- {
+        --     '<leader>li',
+        --     function()
+        --         require('telescope.builtin').lsp_implementations()
+        --     end,
+        --     desc = 'List symbol implementations',
+        -- },
+        -- {
+        --     '<leader>m',
+        --     function()
+        --         require('telescope.builtin').marks()
+        --     end,
+        --     desc = 'List marks',
+        -- },
     },
     config = function(opts)
         require('telescope').setup(opts)
