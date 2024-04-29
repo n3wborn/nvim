@@ -12,6 +12,13 @@ return {
             desc = 'Find File',
         },
         {
+            '<leader>fF²',
+            function()
+                require('fzf-lua').file({})
+            end,
+            desc = 'Find File',
+        },
+        {
             '<leader>sp',
             function()
                 require('fzf-lua').grep_project()
@@ -37,7 +44,7 @@ return {
             function()
                 require('fzf-lua').buffers()
             end,
-            desc = 'Find in Buffers',
+            desc = 'Find Buffers',
         },
         {
             '<leader>gc',
@@ -51,66 +58,71 @@ return {
             function()
                 require('fzf-lua').git_bcommits()
             end,
-            desc = 'Previous git commits',
+            desc = 'Git Previous commits',
         },
         {
             '<leader>gb',
             function()
                 require('fzf-lua').git_branches()
             end,
-            desc = 'Git branch',
+            desc = 'Git Branch',
         },
         {
             '<leader>gS',
             function()
                 require('fzf-lua').git_stash()
             end,
-            desc = 'List git stashes',
+            desc = 'Git Stashes',
         },
         {
             '<leader>gs',
             function()
                 require('fzf-lua').git_status()
             end,
-            desc = 'Show git status',
+            desc = 'Git Status',
         },
         {
             '<leader>lr',
             function()
                 require('fzf-lua').lsp_references()
             end,
-            desc = 'List symbol references',
+            desc = 'List symbol References',
         },
         {
             '<leader>li',
             function()
                 require('fzf-lua').lsp_implementations()
             end,
-            desc = 'List symbol implementations',
+            desc = 'List Implementations',
+        },
+        {
+            '<leader>lO',
+            function()
+                require('fzf-lua').lsp_outcoming_calls()
+            end,
+            desc = 'List Outcoming calls',
+        },
+        {
+            '<leader>lI',
+            function()
+                require('fzf-lua').lsp_incoming_calls()
+            end,
+            desc = 'List Incoming calls',
         },
         {
             '<leader>m',
             function()
                 require('fzf-lua').marks()
             end,
-            desc = 'List marks',
+            desc = 'List Marks',
         },
     },
     opts = function()
         local actions = require('fzf-lua.actions')
         return {
-            -- winopts = {
-            --     preview = { default = 'maxperfs' },
-            -- },
             files = {
                 fzf_opts = {
                     ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-files-history',
-                },
-            },
-            grep = {
-                cmd = "rg --color=always --smart-case -g '!{.git,node_modules,vendor,.cache,var}/'",
-                fzf_opts = {
-                    ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-grep-history',
                 },
             },
             actions = {
@@ -138,6 +150,6 @@ return {
     end,
     config = function(_, opts)
         -- calling `setup` is optional for customization
-        require('fzf-lua').setup(opts)
+        require('fzf-lua').setup({ 'default' }, opts)
     end,
 }
