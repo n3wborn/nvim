@@ -68,7 +68,7 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif vim.snippet.jumpable(1) then
+                    elseif vim.snippet.active({ direction = 1 }) then
                         vim.snippet.jump(1)
                     else
                         fallback()
@@ -77,7 +77,7 @@ return {
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif vim.snippet.jumpable(-1) then
+                    elseif vim.snippet.active({ direction = -1 }) then
                         vim.snippet.jump(-1)
                     else
                         fallback()
