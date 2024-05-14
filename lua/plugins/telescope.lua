@@ -1,16 +1,17 @@
 return {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
-    tag = '0.1.5',
+    tag = '0.1.6',
     dependencies = {
         { 'nvim-lua/plenary.nvim' },
-        {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            build = 'make',
-            config = function()
-                require('telescope').load_extension('fzf')
-            end,
-        },
+        --- @note: seems this can't live with fzf-lua
+        -- {
+        --     'nvim-telescope/telescope-fzf-native.nvim',
+        --     build = 'make',
+        --     config = function()
+        --         require('telescope').load_extension('fzf')
+        --     end,
+        -- },
         {
             'kdheepak/lazygit.nvim',
             event = { 'VeryLazy' },
@@ -60,11 +61,12 @@ return {
                     },
                 },
                 extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                    },
+                    --- @note: seems this can't live with fzf-lua
+                    -- fzf = {
+                    --     fuzzy = true,
+                    --     override_generic_sorter = true,
+                    --     override_file_sorter = true,
+                    -- },
                 },
             },
         }
