@@ -128,7 +128,12 @@ return {
 
         autopairs.setup({ fast_wrap = {} })
         cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
+        cmp.setup.filetype({ 'sql' }, {
+            sources = {
+                { name = 'vim-dadbod-completion' },
+                { name = 'buffer' },
+            },
+        })
         cmp.setup(opts)
     end,
 }
