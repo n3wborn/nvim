@@ -23,7 +23,7 @@ return {
             if bufname:match('/node_modules/') or bufname:match('/vendor/') then
                 return
             end
-            return { async = true, timeout_ms = 500, lsp_fallback = false }
+            return { async = false, timeout_ms = 500, lsp_fallback = false }
         end,
     },
     config = function(_, opts)
