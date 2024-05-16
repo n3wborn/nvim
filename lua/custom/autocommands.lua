@@ -210,4 +210,10 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
     end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'WinNew', 'VimResized' }, {
+    group = vim.api.nvim_create_augroup('VCenterCursor', { clear = true }),
+    pattern = { '*', '*.*' },
+    command = 'let &scrolloff=(winheight(win_getid())/2) + 1',
+})
+
 vim.opt.updatetime = 400
