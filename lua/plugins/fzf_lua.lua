@@ -21,7 +21,7 @@ return {
         {
             '<leader>sp',
             function()
-                require('fzf-lua').grep_project()
+                require('fzf-lua').live_grep_native()
             end,
             desc = 'Search Project',
         },
