@@ -34,6 +34,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'lspinfo',
         'man',
         'notify',
+        'oil',
         'qf',
         'spectre_panel',
         'startuptime',
@@ -83,9 +84,11 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- diagnostics
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 
         --- quickfix
-        vim.keymap.set('n', '<leader>q', '<cmd>Trouble qflist<cr>', { buffer = args.buf })
+        vim.keymap.set('n', '<leader>q', '<cmd>Trouble diagnostics<cr>', { buffer = args.buf })
 
         -- show definition of current symbol
         if capabilities.definitionProvider then
@@ -213,13 +216,13 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'WinNew', 'VimResized' }, 
     pattern = { '*', '*.*' },
     command = 'let &scrolloff=(winheight(win_getid())/2) + 1',
 })
-vim.api.nvim_create_autocmd('BufEnter', {
-    callback = function(ctx)
-        local root = vim.fs.root(ctx.buf, { '.git', 'Makefile' })
-        if root then
-            vim.uv.chdir(root)
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--     callback = function(ctx)
+--         local root = vim.fs.root(ctx.buf, { '.git', 'Makefile' })
+--         if root then
+--             vim.uv.chdir(root)
+--         end
+--     end,
+-- })
 
 vim.opt.updatetime = 100
