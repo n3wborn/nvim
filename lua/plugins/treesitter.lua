@@ -176,8 +176,7 @@ return {
     },
     {
         'windwp/nvim-ts-autotag',
-        -- event = { 'BufReadPost', 'BufNewFile' },
-        event = 'VeryLazy',
+        event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
     },
 }
