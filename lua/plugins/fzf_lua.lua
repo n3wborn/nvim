@@ -5,6 +5,13 @@ return {
     keys = {
         { '<space>F', '<cmd>FzfLua<cr>', desc = 'open FzfLua' },
         {
+            '<leader>lf',
+            function()
+                require('fzf-lua').lsp_finder({ regex_filter = 'func' })
+            end,
+            desc = 'Lsp Finder with function filter',
+        },
+        {
             '<leader>ff',
             function()
                 require('fzf-lua').files()
