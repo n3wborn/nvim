@@ -94,7 +94,7 @@ M.is_file = function(path)
         return false
     end
 
-    local stat = vim.loop.fs_stat(path)
+    local stat = vim.uv.fs_stat(path)
     return stat and stat.type == 'file'
 end
 
@@ -118,6 +118,10 @@ M.get_root_dir = function(files, file_name)
         upward = true,
         path = vim.fs.dirname(file_name),
     })[1])
+end
+
+M.getBufferPath = function()
+    return string.gsub(vim.api.nvim_buf_get_name(0), vim.uv.cwd(), '')
 end
 
 return M
