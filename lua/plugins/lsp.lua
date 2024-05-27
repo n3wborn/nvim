@@ -34,7 +34,6 @@ return {
                 'css_variables',
                 'dockerls',
                 'docker_compose_language_service',
-                'intelephense',
                 --- @todo: find a better way to load when really needed
                 -- 'custom_elements_ls',
                 -- jsonls
