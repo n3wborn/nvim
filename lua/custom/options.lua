@@ -56,6 +56,8 @@ vim.filetype.add({
     filename = {
         ['.env'] = 'dotenv',
         ['vifmrc'] = 'vim',
+        log = 'log',
+        conf = 'conf',
     },
     pattern = {
         ['.*twig'] = 'twig.html',
