@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 local config = {
     name = 'bash-language-server',
     cmd = { 'bash-language-server', 'start' },

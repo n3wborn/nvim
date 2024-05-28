@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 local config = {
     name = 'intelephense',
     cmd = { 'intelephense', '--stdio' },
