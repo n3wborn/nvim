@@ -29,18 +29,19 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
-        'PlenaryTestPopup',
+        'checkhealth',
         'help',
         'lspinfo',
         'man',
+        'Navbuddy',
         'notify',
         'oil',
+        'PlenaryTestPopup',
         'qf',
         'spectre_panel',
         'startuptime',
-        'tsplayground',
         'trouble',
-        'Navbuddy',
+        'tsplayground',
     },
     callback = function()
         vim.cmd([[
