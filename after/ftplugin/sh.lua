@@ -1,7 +1,12 @@
 ---@type vim.lsp.ClientConfig
 local config = {
-    name = 'intelephense',
-    cmd = { 'intelephense', '--stdio' },
+    name = 'bash-language-server',
+    cmd = { 'bash-language-server', 'start' },
+    settings = {
+        bashIde = {
+            globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command)',
+        },
+    },
     root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'composer.json' }, { upward = true })[1]),
 }
 

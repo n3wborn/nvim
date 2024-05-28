@@ -28,11 +28,9 @@ return {
             require('lsp.diagnostics').setup()
 
             for _, server in ipairs({
-                'bashls',
                 'cssls',
                 'cssmodules_ls',
                 'css_variables',
-                'dockerls',
                 'docker_compose_language_service',
                 --- @todo: find a better way to load when really needed
                 -- 'custom_elements_ls',
