@@ -28,7 +28,6 @@ return {
             require('lsp.diagnostics').setup()
 
             for _, server in ipairs({
-                'bashls',
                 'cssls',
                 'cssmodules_ls',
                 'css_variables',
