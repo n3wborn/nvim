@@ -18,6 +18,7 @@ local opts = {
     reuse_client = function(client, conf)
         return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
     end,
+    bufnr = vim.api.nvim_get_current_buf(),
 }
 
 vim.lsp.start(config, opts)
