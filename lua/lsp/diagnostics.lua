@@ -15,6 +15,7 @@ function M.setup()
         severity_sort = true,
         underline = false,
         update_in_insert = true,
+        jump = { float = true },
         float = _G.global.float_border_opts,
     })
 end

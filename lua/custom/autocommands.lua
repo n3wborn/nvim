@@ -85,8 +85,6 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
         -- diagnostics
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 
         --- quickfix
         vim.keymap.set('n', '<leader>q', '<cmd>Trouble diagnostics<cr>', { buffer = args.buf })
