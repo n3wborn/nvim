@@ -8,12 +8,6 @@ return {
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
         'windwp/nvim-autopairs',
-        {
-            'onsails/lspkind-nvim',
-            config = function()
-                require('lspkind').init()
-            end,
-        },
     },
     opts = function()
         local cmp = require('cmp')
