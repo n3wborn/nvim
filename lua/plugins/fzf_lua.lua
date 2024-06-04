@@ -123,6 +123,12 @@ return {
             end,
             desc = 'List Marks',
         },
+        {
+            '<leader>sH',
+            function()
+                require('fzf-lua').live_grep_glob({ filter = [[rg "*Helper.php"]] })
+            end,
+        },
     },
     opts = function()
         local actions = require('fzf-lua.actions')
