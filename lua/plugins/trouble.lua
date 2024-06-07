@@ -1,7 +1,7 @@
 return {
     'folke/trouble.nvim',
     cmd = { 'Trouble' },
-    branch = 'dev',
+    branch = false,
     opts = {
         auto_close = false, -- auto close when there are no items
         auto_open = false, -- auto open when there are items
