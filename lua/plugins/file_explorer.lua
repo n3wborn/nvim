@@ -1,27 +1,5 @@
 return {
     {
-        'Rizwanelansyah/simplyfile.nvim',
-        keys = {
-            {
-                '<leader>e',
-                function()
-                    require('simplyfile').open()
-                end,
-                { desc = 'open file explorer' },
-            },
-        },
-        config = function()
-            require('simplyfile').setup({
-                border = {
-                    left = 'rounded',
-                    main = 'double',
-                    right = 'rounded',
-                },
-                default_keymaps = true,
-            })
-        end,
-    },
-    {
         'nvim-neo-tree/neo-tree.nvim',
         branch = 'v3.x',
         dependencies = {
@@ -101,7 +79,7 @@ return {
             },
         },
         keys = {
-            { '<leader>E', '<cmd>Neotree toggle=true<cr>', desc = 'neotree' },
+            { '<leader>e', '<cmd>Neotree toggle=true<cr>', desc = 'neotree' },
         },
         config = function(_, opts)
             require('neo-tree').setup(opts)
