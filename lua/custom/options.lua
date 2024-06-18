@@ -47,6 +47,7 @@ vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
+vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
