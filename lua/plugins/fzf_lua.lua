@@ -168,6 +168,13 @@ return {
                     },
                     preview_opts = 'nohidden',
                 },
+                git_status = {
+                    actions = {
+                        ['ctrl-s'] = function(...)
+                            require('fzf-lua').actions.git_buf_split(...)
+                        end,
+                    },
+                },
             },
             -- autocmds = {
             --     winopts = {
