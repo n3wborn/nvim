@@ -14,14 +14,14 @@ return {
         {
             '<leader>ff',
             function()
-                require('fzf-lua').files()
+                require('fzf-lua').files({ formatter = 'path.filename_first' })
             end,
             desc = 'Find File',
         },
         {
             '<leader>fF',
             function()
-                require('fzf-lua').files()
+                require('fzf-lua').files({ formatter = 'path.filename_first' })
             end,
             desc = 'Find File',
         },
@@ -35,21 +35,21 @@ return {
         {
             '<leader>sd',
             function()
-                require('fzf-lua').grep_cword()
+                require('fzf-lua').grep_cword({ formatter = 'path.filename_first' })
             end,
             desc = 'Grep Current Word',
         },
         {
             '<leader>o',
             function()
-                require('fzf-lua').oldfiles()
+                require('fzf-lua').oldfiles({ formatter = 'path.filename_first' })
             end,
             desc = 'Old files opened',
         },
         {
             '<leader>b',
             function()
-                require('fzf-lua').buffers()
+                require('fzf-lua').buffers({ formatter = 'path.filename_first' })
             end,
             desc = 'Find Buffers',
         },
@@ -149,11 +149,11 @@ return {
             --     rg_opts = [[--color=never --files --hidden --follow -g "!.git"]],
             --     fd_opts = [[--color=never --type f --hidden --follow --exclude .git]],
             -- },
-            -- buffers = {
-            --     formatter = 'path.filename_first',
-            --     preview_opts = 'hidden',
-            --     fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
-            -- },
+            buffers = {
+                formatter = 'path.filename_first',
+                -- preview_opts = 'hidden',
+                -- fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
+            },
             git = {
                 bcommits = {
                     cmd = "git log --color --pretty=format:'%C(yellow)%h%Creset %Cgreen%><(12)%cr%><|(12)%Creset %s' <file>",
