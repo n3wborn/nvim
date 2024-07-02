@@ -9,7 +9,7 @@ return {
     },
     config = function()
         require('barbecue').setup({
-            attach_navic = false,
+            attach_navic = true,
             show_dirname = false,
             theme = 'catpuccin-mocha',
             create_autocmd = false,
