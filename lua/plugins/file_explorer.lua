@@ -34,7 +34,7 @@ return {
                 },
                 mappings = {
                     ['P'] = { 'toggle_preview', config = { use_float = true } },
-                    ['<c-x>'] = function(state)
+                    ['<c-s>'] = function(state)
                         require('neo-tree.sources.filesystem.commands').split_with_window_picker(state)
                     end,
                     ['<c-v>'] = function(state)
