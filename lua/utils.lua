@@ -120,8 +120,12 @@ M.get_root_dir = function(files, file_name)
     })[1])
 end
 
-M.getBufferPath = function()
-    return string.gsub(vim.api.nvim_buf_get_name(0), vim.uv.cwd(), '')
+M.yank_file_path = function()
+    local file_path = vim.api.nvim_buf_get_name(0)
+    vim.fn.setreg('+', file_path)
+    vim.notify('File path copied to clipboard: ' .. file_path, vim.log.levels.INFO)
+end
+
 end
 
 return M

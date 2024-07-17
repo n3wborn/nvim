@@ -110,3 +110,7 @@ u.map('n', '<leader>td', gitsigns.toggle_deleted)
 
 -- Text object
 u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+
+u.map('n', '<leader>B', function()
+    u.yank_file_path()
+end)
