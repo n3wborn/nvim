@@ -126,6 +126,4 @@ M.yank_file_path = function()
     vim.notify('File path copied to clipboard: ' .. file_path, vim.log.levels.INFO)
 end
 
-end
-
 return M
