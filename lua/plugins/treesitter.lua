@@ -169,10 +169,6 @@ return {
             end
             require('nvim-treesitter.configs').setup(opts)
         end,
-        -- config = function(_, opts)
-        --     local ts = require('nvim-treesitter.configs')
-        --     ts.setup(opts)
-        -- end,
     },
     {
         'windwp/nvim-ts-autotag',
