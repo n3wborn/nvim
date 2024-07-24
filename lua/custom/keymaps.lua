@@ -29,7 +29,8 @@ vim.keymap.set('n', '<C-c>', '<cmd>normal ciw<cr>a')
 u.map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
 u.map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>') -- *F*ix (Symfony)
 u.map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
-u.map('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
+-- u.map('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
+u.map('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
 
 --- Git
 u.map('n', '<leader>gh', ':diffget //3<cr>')
