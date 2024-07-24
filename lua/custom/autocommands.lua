@@ -52,19 +52,19 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Close some filetypes with <q>',
 })
 
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-    pattern = { 'gitcommit' },
-    callback = function()
-        vim.opt_local.wrap = true
-        vim.opt_local.spell = true
-        vim.opt_local.number = false
-        vim.opt_local.relativenumber = false
-        vim.opt_local.linebreak = true
-        vim.b.editorconfig = false
-    end,
-    desc = 'Set gitcommit config',
-})
-
+-- vim.api.nvim_create_autocmd({ 'FileType' }, {
+--     pattern = { 'gitcommit' },
+--     callback = function()
+--         vim.opt_local.wrap = true
+--         vim.opt_local.spell = true
+--         vim.opt_local.number = false
+--         vim.opt_local.relativenumber = false
+--         vim.opt_local.linebreak = true
+--         vim.b.editorconfig = false
+--     end,
+--     desc = 'Set gitcommit config',
+-- })
+--
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     pattern = {
         'docker-compose.yml',
@@ -109,7 +109,9 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         end
 
         -- rename current symbol
-        if capabilities.renameProvider then
+        if not capabilities.renameProvider then
+            vim.notify('Provider does not have rename capability', vim.log.levels.INFO)
+        else
             vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = args.buf })
         end
 
@@ -132,6 +134,15 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         if capabilities.signatureHelpProvider then
             vim.keymap.set('n', '<C-x><C-x>', vim.lsp.buf.signature_help, { buffer = args.buf })
         end
+
+        vim.keymap.set('n', '<leader>P', function()
+            if not capabilities.inlayHintProvider then
+                vim.notify('Inlay hints unavailable', vim.log.levels.INFO)
+            end
+
+            vim.notify('Inlay hints enabled', vim.log.levels.INFO)
+            vim.lsp.inlay_hint.enable(true, { bufnr = vim.api.nvim_get_current_buf() })
+        end, {})
     end,
 })
 
