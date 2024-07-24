@@ -7,6 +7,15 @@ return {
         event = { 'BufReadPost', 'BufNewFile' },
         dependencies = {
             {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+                config = function()
+                    require('ts_context_commentstring').setup()
+                end,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter-context',
+            },
+            {
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 config = function()
                     -- When in diff mode, we want to use the default
@@ -33,6 +42,9 @@ return {
             },
             {
                 'nvim-treesitter/nvim-treesitter-refactor',
+            },
+            {
+                'HiPhish/rainbow-delimiters.nvim',
             },
         },
         cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
@@ -168,6 +180,10 @@ return {
                 end, opts.ensure_installed)
             end
             require('nvim-treesitter.configs').setup(opts)
+
+            vim.keymap.set('n', ']c', function()
+                require('treesitter-context').go_to_context(vim.v.count1)
+            end, { silent = true })
         end,
     },
     {
