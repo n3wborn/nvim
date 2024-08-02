@@ -62,6 +62,7 @@ return {
                 neotree = true,
                 noice = true,
                 notify = true,
+                nvim_surround = true,
                 nvimtree = true,
                 window_picker = true,
                 rainbow_delimiters = true,
