@@ -14,6 +14,12 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Fix conceallevel for json an help files',
 })
 
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = { 'twig' },
+    command = 'set filetype=twig.html',
+    desc = 'set ft as twig',
+})
+
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     command = 'checktime',
     desc = 'Check if we need to reload the file when it changed',
@@ -52,19 +58,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Close some filetypes with <q>',
 })
 
--- vim.api.nvim_create_autocmd({ 'FileType' }, {
---     pattern = { 'gitcommit' },
---     callback = function()
---         vim.opt_local.wrap = true
---         vim.opt_local.spell = true
---         vim.opt_local.number = false
---         vim.opt_local.relativenumber = false
---         vim.opt_local.linebreak = true
---         vim.b.editorconfig = false
---     end,
---     desc = 'Set gitcommit config',
--- })
---
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     pattern = {
         'docker-compose.yml',
