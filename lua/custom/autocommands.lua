@@ -14,12 +14,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Fix conceallevel for json an help files',
 })
 
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-    pattern = { 'twig' },
-    command = 'set filetype=twig.html',
-    desc = 'set ft as twig',
-})
-
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     command = 'checktime',
     desc = 'Check if we need to reload the file when it changed',
