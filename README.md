@@ -10,9 +10,10 @@ Use it if you want but keep this in mind :
 - LSP servers must be installed/configured manually (I don't use [Mason](https://github.com/williamboman/mason.nvim))
 
 Some parts of my config where taken from:
-    - [Folke Lemaitre config](https://github.com/folke/dot/tree/master/nvim)
-    - [LazyVim/LazyVim](https://github.com/LazyVim/LazyVim)
-    - [dbalatero/dotfiles](https://github.com/dbalatero/dotfiles)
+
+- [Folke Lemaitre config](https://github.com/folke/dot/tree/master/nvim)
+- [LazyVim/LazyVim](https://github.com/LazyVim/LazyVim)
+- [dbalatero/dotfiles](https://github.com/dbalatero/dotfiles)
 
 If you're looking for an already configured neovim you may prefer these:
 
