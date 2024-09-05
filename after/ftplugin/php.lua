@@ -3,6 +3,12 @@ local config = {
     name = 'intelephense',
     cmd = { 'intelephense', '--stdio' },
     root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'composer.json' }, { upward = true })[1]),
+    settings = {
+        files = {
+            maxSize = 1000000000, -- 10 Mo
+        },
+        -- See https://github.com/bmewburn/intelephense-docs
+    },
 }
 
 vim.lsp.start(config, {
