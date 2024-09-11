@@ -5,7 +5,7 @@ local config = {
     root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'composer.json' }, { upward = true })[1]),
     settings = {
         files = {
-            maxSize = 1000000000, -- 10 Mo
+            maxSize = 10000000, -- 10Mo
         },
         -- See https://github.com/bmewburn/intelephense-docs
     },
