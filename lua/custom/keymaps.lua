@@ -115,3 +115,17 @@ u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 u.map('n', '<leader>B', function()
     u.yank_file_path()
 end)
+
+confirm_ctrl_z = function()
+    local choices = { 'Yes', 'No' }
+
+    vim.ui.select(choices, { prompt = 'Do you really want to suspend nvim ?' }, function(choice)
+        if choice == 'Yes' then
+            vim.cmd('stop')
+        else
+            print('Ctrl-Z ignored')
+        end
+    end)
+end
+
+u.map('n', '<C-z>', confirm_ctrl_z)
