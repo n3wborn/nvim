@@ -96,11 +96,13 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
         end
 
         -- rename current symbol
-        if not capabilities.renameProvider then
-            vim.notify('Provider does not have rename capability', vim.log.levels.INFO)
-        else
-            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = args.buf })
-        end
+        vim.keymap.set('n', '<leader>R', function()
+            if capabilities.renameProvider then
+                vim.lsp.buf.rename()
+            else
+                vim.notify('Provider does not have rename capability', vim.log.levels.INFO)
+            end
+        end, { buffer = args.buf })
 
         -- show code actions available
         if capabilities.codeActionProvider then
