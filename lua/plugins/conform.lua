@@ -10,6 +10,7 @@ return {
             lua = { 'stylua' },
             --- @todo: add hougesen/mdsf
             markdown = { 'markdownlint' },
+            php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },
@@ -27,11 +28,31 @@ return {
             end
             return { async = false, timeout_ms = 500, lsp_fallback = false }
         end,
+        formatters = {
+            php_cs_fixer = {
+                env = {
+                    PHP_CS_FIXER_IGNORE_ENV = 1,
+                },
+            },
+        },
     },
     config = function(_, opts)
         require('conform.formatters.php_cs_fixer').args = function(self, ctx)
+            local found
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
-            local found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
+            local core_dir = os.getenv('CORE_DIR')
+            local root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
+
+            if root_dir then
+                found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
+                vim.notify('Found corePlugin at: ' .. root_dir, vim.log.levels.INFO)
+            end
+
+            if not found then
+                found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
+                vim.notify('Using fallback php-cs-fixer config', vim.log.levels.WARN)
+            end
+
             if found then
                 vim.list_extend(args, { '--config=' .. found })
             else
