@@ -40,9 +40,8 @@ return {
         require('conform.formatters.php_cs_fixer').args = function(self, ctx)
             local found
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
-            local core_dir = os.getenv("CORE_DIR")
-            local root_dir =
-                vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
+            local core_dir = os.getenv('CORE_DIR')
+            local root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
 
             if root_dir then
                 found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
