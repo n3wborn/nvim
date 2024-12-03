@@ -1,4 +1,3 @@
-local uv = vim.uv or vim.loop
 local api = vim.api
 
 -- global inspect fn
@@ -57,18 +56,18 @@ M.table = {
 M.timer = {
     start_time = nil,
     start = function()
-        M.timer.start_time = uv.now()
+        M.timer.start_time = vim.loop.now()
     end,
     stop = function()
-        print(uv.now() - M.timer.start_time .. ' ms')
+        print(vim.loop.now() - M.timer.start_time .. ' ms')
         M.timer.start_time = nil
     end,
 
     start_nano = function()
-        M.timer.start_time = uv.hrtime()
+        M.timer.start_time = vim.loop.hrtime()
     end,
     stop_nano = function()
-        print(uv.hrtime() - M.timer.start_time .. ' ns')
+        print(vim.loop.hrtime() - M.timer.start_time .. ' ns')
         M.timer.start_time = nil
     end,
 }
@@ -94,7 +93,7 @@ M.is_file = function(path)
         return false
     end
 
-    local stat = vim.uv.fs_stat(path)
+    local stat = vim.loop.fs_stat(path)
     return stat and stat.type == 'file'
 end
 
