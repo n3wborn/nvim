@@ -47,7 +47,7 @@ return {
             desc = 'Old files opened',
         },
         {
-            '<leader>b',
+            'gb',
             function()
                 require('fzf-lua').buffers({ formatter = 'path.filename_first' })
             end,
