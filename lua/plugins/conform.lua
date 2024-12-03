@@ -2,6 +2,7 @@ return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
+    --- @type nil|conform.setupOpts
     opts = {
         formatters_by_ft = {
             --- @todo: find a way to deal with work projects related config
@@ -20,13 +21,14 @@ return {
             twig = { 'twig-cs-fixer' },
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
+        --- @type conform.FormatOpts|fun(bufnr: integer)
         format_on_save = function(bufnr)
             -- Disable autoformat for files in a certain path
             local bufname = vim.api.nvim_buf_get_name(bufnr)
             if bufname:match('/node_modules/') or bufname:match('/vendor/') then
                 return
             end
-            return { async = false, timeout_ms = 500, lsp_fallback = false }
+            return { async = false, timeout_ms = 1500, lsp_fallback = false }
         end,
         formatters = {
             php_cs_fixer = {
