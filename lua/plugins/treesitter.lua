@@ -66,6 +66,7 @@ return {
                 'gitignore',
                 'go',
                 'html',
+                'http',
                 'java',
                 'javascript',
                 'jq',
