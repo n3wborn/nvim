@@ -124,14 +124,14 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
             vim.keymap.set('n', '<C-x><C-x>', vim.lsp.buf.signature_help, { buffer = args.buf })
         end
 
-        vim.keymap.set('n', '<leader>P', function()
-            if not capabilities.inlayHintProvider then
-                vim.notify('Inlay hints unavailable', vim.log.levels.INFO)
-            end
-
-            vim.notify('Inlay hints enabled', vim.log.levels.INFO)
-            vim.lsp.inlay_hint.enable(true, { bufnr = vim.api.nvim_get_current_buf() })
-        end, {})
+        -- vim.keymap.set('n', '<leader>P', function()
+        --     if not capabilities.inlayHintProvider then
+        --         vim.notify('Inlay hints unavailable', vim.log.levels.INFO)
+        --     end
+        --
+        --     vim.notify('Inlay hints enabled', vim.log.levels.INFO)
+        --     vim.lsp.inlay_hint.enable(true, { bufnr = vim.api.nvim_get_current_buf() })
+        -- end, {})
     end,
 })
 
