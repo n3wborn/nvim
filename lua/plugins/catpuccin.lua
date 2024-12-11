@@ -67,6 +67,7 @@ return {
                 window_picker = true,
                 rainbow_delimiters = true,
                 semantic_tokens = true,
+                snacks = true,
                 symbols_outline = true,
                 telescope = true,
                 treesitter = true,
