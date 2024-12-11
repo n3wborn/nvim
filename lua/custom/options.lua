@@ -45,13 +45,8 @@ vim.o.winwidth = 10
 vim.o.winminwidth = 10
 vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
-vim.o.foldcolumn = '1'
-vim.o.foldenable = true
-vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldmethod = 'expr'
-vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
+
+vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
