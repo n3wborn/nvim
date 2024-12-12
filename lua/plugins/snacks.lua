@@ -9,6 +9,8 @@ return {
         dashboard = { enabled = false },
         indent = { enabled = true },
         input = { enabled = true },
+        ---@type snacks.lazygit.Config
+        lazygit = { enabled = true, interactive = true },
         notifier = {
             enabled = true,
             timeout = 3000,
@@ -17,9 +19,10 @@ return {
         scroll = { enabled = true },
         statuscolumn = { enabled = true },
         words = { enabled = true },
+        scope = { enabled = true },
         styles = {
             notification = {
-                -- wo = { wrap = true } -- Wrap notifications
+                relative = 'editor',
             }
         }
     },
