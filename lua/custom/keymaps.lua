@@ -64,7 +64,10 @@ u.map('n', '<C-u>', '<C-u>zz', { desc = 'Center cursor after moving up half-page
 u.map('n', '<C-f>', '<C-f>zz', { desc = 'Center cursor after moving forward page' })
 u.map('n', '<C-b>', '<C-b>zz', { desc = 'Center cursor after moving backward page' })
 
---- previsou on_attach gitsigns mapping here
+--- lazygit
+u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
+
+--- previous on_attach gitsigns mapping here
 local gitsigns = require('gitsigns')
 local jump_hunk_opts = { preview = true, navigation_message = 'f' }
 
