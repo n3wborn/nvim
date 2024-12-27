@@ -68,13 +68,6 @@ return {
             desc = 'Git commit log (buffer)',
         },
         {
-            '<leader>gB',
-            function()
-                require('fzf-lua').git_blame()
-            end,
-            desc = 'Git Blame',
-        },
-        {
             '<leader>gb',
             function()
                 require('fzf-lua').git_branches()
