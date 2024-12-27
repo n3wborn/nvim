@@ -6,6 +6,7 @@ local config = {
     settings = {
         -- See https://github.com/bmewburn/intelephense-docs
         intelephense = {
+            licenseKey = vim.env.INTELEPHENSE_LICENSE_KEY,
             files = {
                 maxSize = 10485760, -- 10Mo
             },
