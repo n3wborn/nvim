@@ -44,7 +44,8 @@ return {
         { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
         { "*",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
         { "#",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
-        init = function()
+    },
+    init = function()
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
                 callback = function()
@@ -71,6 +72,5 @@ return {
                     Snacks.toggle.dim():map("<leader>uD")
                 end,
             })
-        end,
-    }
+        end
 }
