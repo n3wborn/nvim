@@ -68,13 +68,6 @@ return {
             desc = 'Git commit log (buffer)',
         },
         {
-            '<leader>gb',
-            function()
-                require('fzf-lua').git_branches()
-            end,
-            desc = 'Git Branches',
-        },
-        {
             '<leader>gS',
             function()
                 require('fzf-lua').git_stash()
