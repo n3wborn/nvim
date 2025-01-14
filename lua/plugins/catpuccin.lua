@@ -26,9 +26,9 @@ return {
                 functions = { 'italic' },
             },
             integrations = {
-                barbecue = {
-                    dim_dirname = true,
-                },
+                -- barbecue = {
+                --     dim_dirname = true,
+                -- },
                 cmp = true,
                 coc_nvim = false,
                 diffview = true,
