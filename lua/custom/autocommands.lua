@@ -27,6 +27,13 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     desc = 'Highlight on yank',
 })
 
+vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
+    callback = vim.schedule_wrap(function()
+        vim.cmd.nohlsearch()
+    end),
+    desc = 'Remove hl search when enter Insert',
+})
+
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
         'checkhealth',
