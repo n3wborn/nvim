@@ -128,6 +128,14 @@ return {
                 { name = 'buffer' },
             },
         })
+
+        -- disable when playing with typr
+        cmp.setup.filetype({ 'typr' }, {
+            completion = {
+                autocomplete = false,
+            },
+        })
+
         cmp.setup(opts)
     end,
 }
