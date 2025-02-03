@@ -17,7 +17,6 @@ function M.setup()
         update_in_insert = true,
         jump = { float = true },
         float = _G.global.float_border_opts,
-        virtual_lines = true,
     })
 end
 
