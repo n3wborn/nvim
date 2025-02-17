@@ -27,10 +27,6 @@ return {
             },
         })
 
-        -- lspconfig.twiggy_language_server.setup({
-        --     capabilities = capabilities,
-        --     filetypes = { 'twig', 'twig.html' },
-        -- })
         lspconfig.docker_compose_language_service.setup({})
 
         lspconfig.dockerls.setup({
@@ -40,6 +36,12 @@ return {
                 },
             },
         })
+
+        lspconfig.twiggy_language_server.setup({
+            capabilities = capabilities,
+            filetypes = { 'twig', 'twig.html' },
+        })
+
         lspconfig.tailwindcss.setup({
             settings = {
                 tailwindCSS = {
