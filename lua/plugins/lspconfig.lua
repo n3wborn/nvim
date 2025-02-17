@@ -27,10 +27,30 @@ return {
             },
         })
 
-        -- lspconfig.twiggy_language_server.setup({
-        --     capabilities = capabilities,
-        --     filetypes = { 'twig', 'twig.html' },
-        -- })
+        lspconfig.docker_compose_language_service.setup({})
+
+        lspconfig.dockerls.setup({
+            languageserver = {
+                formatter = {
+                    ignoreMultilineInstructions = true,
+                },
+            },
+        })
+
+        lspconfig.eslint.setup({
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                vim.api.nvim_create_autocmd('BufWritePre', {
+                    buffer = bufnr,
+                    command = 'EslintFixAll',
+                })
+            end,
+        })
+
+        lspconfig.twiggy_language_server.setup({
+            capabilities = capabilities,
+            filetypes = { 'twig', 'twig.html' },
+        })
 
         lspconfig.tailwindcss.setup({
             settings = {
@@ -75,7 +95,6 @@ return {
             'cssls',
             'cssmodules_ls',
             'css_variables',
-            'docker_compose_language_service',
             --- @todo: find a better way to load when really needed
             -- 'custom_elements_ls',
             -- jsonls
@@ -86,7 +105,6 @@ return {
 
         for _, server in ipairs({
             'emmet',
-            'eslint',
             'neodev',
             --- @todo: once path to generator.yml is done (best wuld be a function to determine it)
         }) do
