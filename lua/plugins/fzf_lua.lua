@@ -47,13 +47,6 @@ return {
             desc = 'Old files opened',
         },
         {
-            'gb',
-            function()
-                require('fzf-lua').buffers({ formatter = 'path.filename_first' })
-            end,
-            desc = 'Find Buffers',
-        },
-        {
             '<leader>gc',
             function()
                 require('fzf-lua').git_commits()
