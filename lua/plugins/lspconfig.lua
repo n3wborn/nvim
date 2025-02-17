@@ -31,7 +31,15 @@ return {
         --     capabilities = capabilities,
         --     filetypes = { 'twig', 'twig.html' },
         -- })
+        lspconfig.docker_compose_language_service.setup({})
 
+        lspconfig.dockerls.setup({
+            languageserver = {
+                formatter = {
+                    ignoreMultilineInstructions = true,
+                },
+            },
+        })
         lspconfig.tailwindcss.setup({
             settings = {
                 tailwindCSS = {
@@ -75,7 +83,6 @@ return {
             'cssls',
             'cssmodules_ls',
             'css_variables',
-            'docker_compose_language_service',
             --- @todo: find a better way to load when really needed
             -- 'custom_elements_ls',
             -- jsonls
