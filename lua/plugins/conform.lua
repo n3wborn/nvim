@@ -28,7 +28,7 @@ return {
             if bufname:match('/node_modules/') or bufname:match('/vendor/') then
                 return
             end
-            return { async = false, timeout_ms = 1500, lsp_fallback = false }
+            return { timeout_ms = 2000, lsp_fallback = false }
         end,
         formatters = {
             php_cs_fixer = {
