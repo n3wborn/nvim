@@ -37,6 +37,16 @@ return {
             },
         })
 
+        lspconfig.eslint.setup({
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                vim.api.nvim_create_autocmd('BufWritePre', {
+                    buffer = bufnr,
+                    command = 'EslintFixAll',
+                })
+            end,
+        })
+
         lspconfig.twiggy_language_server.setup({
             capabilities = capabilities,
             filetypes = { 'twig', 'twig.html' },
@@ -95,7 +105,6 @@ return {
 
         for _, server in ipairs({
             'emmet',
-            'eslint',
             'neodev',
             --- @todo: once path to generator.yml is done (best wuld be a function to determine it)
         }) do
