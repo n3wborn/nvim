@@ -8,6 +8,7 @@ return {
         'hrsh7th/cmp-nvim-lua',
         'lukas-reineke/cmp-rg',
         'windwp/nvim-autopairs',
+        'zbirenbaum/copilot-cmp',
     },
     opts = function()
         local cmp = require('cmp')
@@ -32,6 +33,7 @@ return {
                         nvim_lua = '[API]',
                         path = '[Path]',
                         rg = '[RG]',
+                        copilot = '[Copilot]',
                     })[entry.source.name]
                     return item
                 end,
@@ -62,6 +64,8 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
+                    elseif require('copilot.suggestion').is_visible() then
+                        require('copilot.suggestion').accept()
                     elseif vim.snippet.active({ direction = 1 }) then
                         vim.snippet.jump(1)
                     else
@@ -79,6 +83,7 @@ return {
                 end, { 'i', 's' }),
             }),
             sources = cmp.config.sources({
+                { name = 'copilot' },
                 { name = 'nvim_lsp', priority = 1000 },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'nvim_lua' },
@@ -95,6 +100,7 @@ return {
             }),
             sorting = {
                 comparators = {
+                    require('copilot_cmp.comparators').prioritize,
                     -- Sort by distance of the word from the cursor
                     -- https://github.com/hrsh7th/cmp-buffer#locality-bonus-comparator-distance-based-sorting
                     function(...)
