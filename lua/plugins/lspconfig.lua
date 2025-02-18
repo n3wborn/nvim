@@ -91,6 +91,31 @@ return {
             },
         })
 
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' },
+                    },
+                    workspace = {
+                        library = {
+                            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                            [vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy'] = true,
+                        },
+                        maxPreload = 100000,
+                        preloadFileSize = 10000,
+                    },
+                    completion = {
+                        showWord = 'Disable',
+                        callSnippet = 'Replace',
+                        keywordSnippet = 'Disable',
+                    },
+                },
+            },
+        })
+
         for _, server in ipairs({
             'cssls',
             'cssmodules_ls',
@@ -105,7 +130,6 @@ return {
 
         for _, server in ipairs({
             'emmet',
-            'neodev',
             --- @todo: once path to generator.yml is done (best wuld be a function to determine it)
         }) do
             require('lsp.' .. server).setup({ capabilities = capabilities })
