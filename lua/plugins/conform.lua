@@ -40,19 +40,25 @@ return {
     },
     config = function(_, opts)
         require('conform.formatters.php_cs_fixer').args = function(self, ctx)
-            local found
             local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
-            local core_dir = os.getenv('CORE_DIR')
-            local root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
+            local found = nil
 
-            if root_dir then
-                found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
-                vim.notify('Found corePlugin at: ' .. root_dir, vim.log.levels.INFO)
+            local core_dir = os.getenv('CORE_DIR')
+            local root_dir = nil
+
+            if core_dir then
+                root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
+                if root_dir then
+                    found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
+                    vim.notify('Found corePlugin at: ' .. root_dir, vim.log.levels.INFO)
+                end
             end
 
             if not found then
                 found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
-                vim.notify('Using fallback php-cs-fixer config', vim.log.levels.WARN)
+                if found then
+                    vim.notify('Using fallback php-cs-fixer config: ' .. found, vim.log.levels.WARN)
+                end
             end
 
             if found then
