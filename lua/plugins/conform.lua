@@ -4,6 +4,10 @@ return {
     cmd = { 'ConformInfo' },
     --- @type nil|conform.setupOpts
     opts = {
+        exclude_path_patterns = {
+            '/node_modules/',
+            '/vendor/',
+        },
         formatters_by_ft = {
             --- @todo: find a way to deal with work projects related config
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
