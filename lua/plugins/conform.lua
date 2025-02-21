@@ -26,14 +26,7 @@ return {
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
         --- @type conform.FormatOpts|fun(bufnr: integer)
-        format_on_save = function(bufnr)
-            -- Disable autoformat for files in a certain path
-            local bufname = vim.api.nvim_buf_get_name(bufnr)
-            if bufname:match('/node_modules/') or bufname:match('/vendor/') then
-                return
-            end
-            return { timeout_ms = 2000, lsp_fallback = false }
-        end,
+        format_on_save = { timeout_ms = 2000, lsp_fallback = false },
         formatters = {
             php_cs_fixer = {
                 env = {
