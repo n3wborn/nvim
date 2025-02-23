@@ -93,27 +93,6 @@ return {
 
         lspconfig.lua_ls.setup({
             capabilities = capabilities,
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { 'vim' },
-                    },
-                    workspace = {
-                        library = {
-                            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                            [vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy'] = true,
-                        },
-                        maxPreload = 100000,
-                        preloadFileSize = 10000,
-                    },
-                    completion = {
-                        showWord = 'Disable',
-                        callSnippet = 'Replace',
-                        keywordSnippet = 'Disable',
-                    },
-                },
-            },
         })
 
         for _, server in ipairs({
