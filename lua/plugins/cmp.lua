@@ -143,6 +143,12 @@ return {
             },
         })
 
+        -- disable when playing with nvim-rip-substitute
+        cmp.setup.filetype({ 'rip-substitute' }, {
+            completion = {
+                autocomplete = false,
+            },
+        })
         cmp.setup(opts)
     end,
 }
