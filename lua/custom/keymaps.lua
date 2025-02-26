@@ -23,7 +23,6 @@ u.map('n', '<space>-', '<cmd>resize -5<cr>')
 -- save in insert mode
 vim.keymap.set('i', '<C-s>', '<cmd>:w<cr><esc>')
 vim.keymap.set('n', '<C-s>', '<cmd>:w<cr><esc>')
-vim.keymap.set('n', '<C-c>', '<cmd>normal ciw<cr>a')
 
 --- Phpcbf - Php-cs-fixer
 u.map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
