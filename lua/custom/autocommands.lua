@@ -143,6 +143,9 @@ vim.api.nvim_create_autocmd('LspProgress', {
     ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
     callback = function(ev)
         local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+        if vim.lsp.get_client_by_id(ev.data.client_id).name == 'lua_ls' then
+            return
+        end
         vim.notify(vim.lsp.status(), 'info', {
             id = 'lsp_progress',
             title = 'LSP Progress',
