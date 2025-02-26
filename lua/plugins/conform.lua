@@ -26,7 +26,7 @@ return {
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
         --- @type conform.FormatOpts|fun(bufnr: integer)
-        format_on_save = { timeout_ms = 2000, lsp_fallback = false },
+        format_on_save = { async = false, timeout_ms = 2000, lsp_fallback = false },
         formatters = {
             php_cs_fixer = {
                 env = {
