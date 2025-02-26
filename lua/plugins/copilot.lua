@@ -12,7 +12,7 @@ return {
                     jump_next = ']]',
                     accept = '<CR>',
                     refresh = 'gr',
-                    open = '<M-CR>',
+                    open = false,
                 },
                 layout = {
                     position = 'bottom', -- | top | left | right | horizontal | vertical
