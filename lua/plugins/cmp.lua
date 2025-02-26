@@ -91,7 +91,6 @@ return {
                     { name = 'nvim_lsp', priority = 1000 },
                     { name = 'nvim_lsp_signature_help' },
                     { name = 'nvim_lua' },
-                    -- { name = 'git' },
                 }, {
                     {
                         name = 'buffer',
