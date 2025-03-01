@@ -125,4 +125,34 @@ M.yank_file_path = function()
     vim.notify('File path copied to clipboard: ' .. file_path, vim.log.levels.INFO)
 end
 
+-- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/folding-plugins.lua
+M.foldTextFormatter = function(virtText, lnum, endLnum, width, truncate)
+    local foldIcon = ''
+    local hlgroup = 'NonText'
+    local newVirtText = {}
+    local suffix = '  ' .. foldIcon .. '  ' .. tostring(endLnum - lnum)
+    local sufWidth = vim.fn.strdisplaywidth(suffix)
+    local targetWidth = width - sufWidth
+    local curWidth = 0
+    for _, chunk in ipairs(virtText) do
+        local chunkText = chunk[1]
+        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+        if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+        else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, { chunkText, hlGroup })
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            if curWidth + chunkWidth < targetWidth then
+                suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+        end
+        curWidth = curWidth + chunkWidth
+    end
+    table.insert(newVirtText, { suffix, hlgroup })
+    return newVirtText
+end
+
 return M
