@@ -1,5 +1,19 @@
 return {
     {
+        'sindrets/diffview.nvim',
+        cmd = {
+            'DiffviewOpen',
+            'DiffviewClose',
+            'DiffviewRefresh',
+            'DiffviewFileHistory',
+            'DiffviewFocusFiles',
+            'DiffviewToggleFiles',
+        },
+        config = function()
+            require('diffview')
+        end,
+    },
+    {
         'akinsho/git-conflict.nvim',
         event = 'BufReadPre',
         opts = {
