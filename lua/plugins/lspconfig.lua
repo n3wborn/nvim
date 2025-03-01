@@ -153,34 +153,10 @@ return {
                     end
                 end, { buffer = args.buf })
 
-                -- show code actions available
-                -- if capabilities.codeActionProvider then
-                --     vim.keymap.set('n', '<leader>ca', function()
-                --         require('fzf-lua').lsp_code_actions({
-                --             winopts = {
-                --                 relative = 'cursor',
-                --                 width = 0.6,
-                --                 height = 0.6,
-                --                 row = 1,
-                --                 preview = { vertical = 'up:70%' },
-                --             },
-                --         })
-                --     end, { buffer = args.buf })
-                -- end
-
                 -- show signature help
                 if capabilities.signatureHelpProvider then
                     vim.keymap.set('n', '<C-x><C-x>', vim.lsp.buf.signature_help, { buffer = args.buf })
                 end
-
-                -- vim.keymap.set('n', '<leader>P', function()
-                --     if not capabilities.inlayHintProvider then
-                --         vim.notify('Inlay hints unavailable', vim.log.levels.INFO)
-                --     end
-                --
-                --     vim.notify('Inlay hints enabled', vim.log.levels.INFO)
-                --     vim.lsp.inlay_hint.enable(true, { bufnr = vim.api.nvim_get_current_buf() })
-                -- end, {})
             end,
         })
     end,
