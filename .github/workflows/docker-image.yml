@@ -18,12 +18,12 @@ jobs:
         run: |
           docker run -d  --name neovim  neovim tail -f /dev/null
           docker exec -i neovim /bin/sh -c "nvim --headless --startuptime log +qa || exit 0"
-          echo  "##[set-output name=startuptime;]$(docker exec -i neovim /bin/sh -c "cat log" | tail -n 1 |awk '{print $1}' |sed 's/\..*//' | sed 's/^0*//' )"
+          echo  "##[set-output name=data;]$(docker exec -i neovim /bin/sh -c "cat log" | tail -n2 | head -n1 | awk '{print $1}' | sed 's/\..*//' | sed 's/^0*//' )"
       - name: Bring Your Own Badge
         uses: RubbaBoy/BYOB@v1.3.0
         with:
           NAME: "startuptime"
           LABEL: "startuptime"
-          STATUS: ${{ steps.record.outputs.startuptime }} ms
+          STATUS: ${{ steps.record.outputs.data }} ms
           COLOR: blue
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
