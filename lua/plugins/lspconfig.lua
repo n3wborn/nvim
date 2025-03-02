@@ -18,7 +18,7 @@ return {
                     validate = true,
                     schemas = require('schemastore').yaml.schemas({
                         extra = {
-                            url = 'file:///home/stephane/projects/qk-safety/plugins/surfaceCorePlugin/src/Resources/cheatsheet/generator.schema.json',
+                            url = vim.env.SFC_GENERATOR_SCHEMA,
                             name = 'Generator',
                             fileMatch = 'generator.yml',
                         },

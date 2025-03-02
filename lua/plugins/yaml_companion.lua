@@ -3,7 +3,6 @@ return {
     dependencies = {
         { 'neovim/nvim-lspconfig' },
         { 'nvim-lua/plenary.nvim' },
-        { 'nvim-telescope/telescope.nvim' },
     },
     opts = {
         -- Built in file matchers
@@ -45,6 +44,17 @@ return {
     },
     config = function(_, opts)
         require('yaml-companion').setup(opts)
-        require('telescope').load_extension('yaml_schema')
+
+        vim.keymap.set('n', '<space>gs', function()
+            local schema = require('yaml-companion').get_buf_schema(0)
+            if schema.result[1].name == 'none' then
+                return ''
+            end
+            return schema.result[1].name
+        end, { desc = 'Get current buffer schema' })
+
+        vim.keymap.set('n', '<space>ss', function()
+            require('yaml-companion').open_ui_select()
+        end, { desc = 'Set current buffer schema' })
     end,
 }
