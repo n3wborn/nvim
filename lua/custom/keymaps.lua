@@ -68,7 +68,7 @@ u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
 
 --- previous on_attach gitsigns mapping here
 local gitsigns = require('gitsigns')
-local jump_hunk_opts = { preview = true, navigation_message = 'f' }
+local jump_hunk_opts = { preview = true, navigation_message = 'f', target = 'all' }
 
 u.map('n', '<leader>hn', function()
     if vim.wo.diff then
@@ -97,7 +97,7 @@ u.map('v', '<leader>hr', function()
     gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
 end)
 u.map('n', '<leader>hS', gitsigns.stage_buffer)
-u.map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+u.map('n', '<leader>hu', gitsigns.stage_hunk)
 u.map('n', '<leader>hR', gitsigns.reset_buffer)
 u.map('n', '<leader>hr', gitsigns.reset_hunk)
 u.map('n', '<leader>hp', gitsigns.preview_hunk)
@@ -109,7 +109,7 @@ u.map('n', '<leader>hd', gitsigns.diffthis)
 u.map('n', '<leader>hD', function()
     gitsigns.diffthis('~')
 end)
-u.map('n', '<leader>td', gitsigns.toggle_deleted)
+u.map('n', '<leader>td', gitsigns.preview_hunk_inline)
 
 -- Text object
 u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
@@ -118,7 +118,7 @@ u.map('n', '<leader>B', function()
     u.yank_file_path()
 end)
 
-confirm_ctrl_z = function()
+local confirm_ctrl_z = function()
     local choices = { 'Yes', 'No' }
 
     vim.ui.select(choices, { prompt = 'Do you really want to suspend nvim ?' }, function(choice)
