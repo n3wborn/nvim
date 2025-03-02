@@ -62,6 +62,7 @@ return {
                     ignore_whitespace = false,
                     virt_text_priority = 99,
                 },
+                watch_gitdir = { enabled = true, follow_files = true },
             })
         end,
     },
