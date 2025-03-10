@@ -27,7 +27,10 @@ return {
         }
     },
     keys = {
-        { "gb",         function() Snacks.picker.buffers() end, desc = "List Marks" },
+        { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
+        { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
+        { "<space>s", function() Snacks.picker.smart() end, desc = "Smart Picker" },
+        { "gb",         function() Snacks.picker.buffers() end, desc = "List Buffers" },
         { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
         { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
