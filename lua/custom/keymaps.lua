@@ -68,7 +68,7 @@ u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
 
 --- previous on_attach gitsigns mapping here
 local gitsigns = require('gitsigns')
-local jump_hunk_opts = { preview = true, navigation_message = 'f', target = 'all' }
+local jump_hunk_opts = { preview = true, navigation_message = 'f', target = 'all', greedy = false }
 
 u.map('n', '<leader>hn', function()
     if vim.wo.diff then
