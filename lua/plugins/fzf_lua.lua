@@ -3,39 +3,26 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     cmd = 'FzfLua',
     keys = {
-        { '<space>F', '<cmd>FzfLua<cr>', desc = 'open FzfLua' },
-        {
-            '<leader>lf',
-            function()
-                require('fzf-lua').lsp_finder({ regex_filter = 'func' })
-            end,
-            desc = 'Lsp Finder with function filter',
-        },
-        {
-            '<leader>ff',
-            function()
-                require('fzf-lua').files({ formatter = 'path.filename_first' })
-            end,
-            desc = 'Find File',
-        },
-        {
-            '<leader>fF',
-            function()
-                require('fzf-lua').files({ formatter = 'path.filename_first' })
-            end,
-            desc = 'Find File',
-        },
+        { '<leader>R', ':FzfLua live_grep_resume<cr>' },
         {
             '<leader>sp',
             function()
-                require('fzf-lua').live_grep_native()
+                -- Ex: `pcall -- *.lua !*spec*` will search for `pcall` in any lua file that doesn't contain `spec`
+                require('fzf-lua').live_grep_glob()
+            end,
+            desc = 'Search Project',
+        },
+        {
+            '<leader>sP',
+            function()
+                require('fzf-lua').grep_project()
             end,
             desc = 'Search Project',
         },
         {
             '<leader>sd',
             function()
-                require('fzf-lua').grep_cword({ formatter = 'path.filename_first' })
+                require('fzf-lua').grep_cword()
             end,
             desc = 'Grep Current Word',
         },
@@ -112,7 +99,19 @@ return {
         {
             '<leader>sH',
             function()
-                require('fzf-lua').live_grep_glob({ filter = [[rg "*Helper.php"]] })
+                require('fzf-lua').grep_cword({ filter = [[rg "Helper.php"]], regex_filter = true })
+            end,
+        },
+        {
+            '<leader>sA',
+            function()
+                require('fzf-lua').grep_cword({ filter = [[rg "actions.class.php"]], regex_filter = true })
+            end,
+        },
+        {
+            '<leader>sG',
+            function()
+                require('fzf-lua').grep_cword({ filter = [[rg "generator.yml"]], regex_filter = true })
             end,
         },
     },
