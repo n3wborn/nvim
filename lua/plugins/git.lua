@@ -9,6 +9,19 @@ return {
             'DiffviewFocusFiles',
             'DiffviewToggleFiles',
         },
+        keys = {
+            {
+                '<leader><leader>v',
+                function()
+                    if next(require('diffview.lib').views) == nil then
+                        vim.cmd('DiffviewOpen')
+                    else
+                        vim.cmd('DiffviewClose')
+                    end
+                end,
+                desc = 'toogle diffview',
+            },
+        },
         config = function()
             require('diffview')
         end,
