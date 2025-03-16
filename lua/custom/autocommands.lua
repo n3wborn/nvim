@@ -156,4 +156,14 @@ vim.api.nvim_create_autocmd('LspProgress', {
         })
     end,
 })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Auto indent on paste',
+    group = vim.api.nvim_create_augroup('AutoIndentPaste', { clear = true }),
+    pattern = '*',
+    callback = function()
+        vim.cmd('silent! normal! `[v`]=')
+    end,
+})
+
 vim.opt.updatetime = 100
