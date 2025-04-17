@@ -131,3 +131,5 @@ local confirm_ctrl_z = function()
 end
 
 u.map('n', '<C-z>', confirm_ctrl_z)
+
+u.map('n', '<leader>D', vim.diagnostic.open_float)

@@ -20,7 +20,6 @@ vim.opt.shiftround = true
 vim.opt.smartcase = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.updatetime = 50
 vim.opt.inccommand = 'nosplit'
 vim.opt.errorbells = false
 vim.opt.swapfile = false
@@ -46,7 +45,7 @@ vim.o.winminwidth = 10
 vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
-
+vim.o.winborder = 'rounded'
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 
@@ -78,21 +77,3 @@ end
 if vim.fn.has('nvim-0.10') == 1 then
     vim.opt.smoothscroll = true
 end
-
-local signs = require('custom.icons').diagnostics
-vim.diagnostic.config({
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = signs.Error,
-            [vim.diagnostic.severity.WARN] = signs.Warn,
-            [vim.diagnostic.severity.HINT] = signs.Hint,
-            [vim.diagnostic.severity.INFO] = signs.Info,
-        },
-    },
-    virtual_text = false,
-    severity_sort = true,
-    underline = false,
-    update_in_insert = true,
-    jump = { float = true },
-    float = _G.global.float_border_opts,
-})

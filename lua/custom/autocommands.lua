@@ -139,30 +139,30 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-vim.api.nvim_create_autocmd('LspProgress', {
-    ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(ev)
-        local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
-        if vim.lsp.get_client_by_id(ev.data.client_id).name == 'lua_ls' then
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client == nil then
             return
         end
-        vim.notify(vim.lsp.status(), 'info', {
-            id = 'lsp_progress',
-            title = 'LSP Progress',
-            opts = function(notif)
-                notif.icon = ev.data.params.value.kind == 'end' and ' '
-                    or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
-            end,
-        })
-    end,
-})
 
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Auto indent on paste',
-    group = vim.api.nvim_create_augroup('AutoIndentPaste', { clear = true }),
-    pattern = '*',
-    callback = function()
-        vim.cmd('silent! normal! `[v`]=')
+        if client:supports_method('textDocument/documentSymbol') then
+            local navic = require('nvim-navic')
+            navic.attach(client, ev.buf)
+        end
+
+        if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, ev.buf, {
+                autotrigger = true,
+                convert = function(item)
+                    return { abbr = item.label:gsub('%b()', '') }
+                end,
+            })
+        end
+
+        vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })
+        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
+        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
 })
 
