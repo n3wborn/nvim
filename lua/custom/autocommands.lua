@@ -151,6 +151,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
             navic.attach(client, ev.buf)
         end
 
+        if client:supports_method('textDocument/definition') then
+            vim.keymap.set('n', 'gd', function()
+                vim.lsp.buf.definition()
+            end, { buffer = ev.buf })
+        end
+
         if client:supports_method('textDocument/completion') then
             vim.lsp.completion.enable(true, client.id, ev.buf, {
                 autotrigger = true,
