@@ -98,7 +98,11 @@ M.is_file = function(path)
 end
 
 M.get_cwd = function()
-    return uv.cwd
+    return vim.uv.cwd
+end
+
+M.notif = function(msg)
+    vim.api.nvim_echo(msg, true, {})
 end
 
 ---@param files table
