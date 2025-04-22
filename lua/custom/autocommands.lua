@@ -73,11 +73,10 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client == nil then
-            return
-        end
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         if client:supports_method('textDocument/documentSymbol') then
             local navic = require('nvim-navic')
@@ -97,6 +96,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
                     return { abbr = item.label:gsub('%b()', '') }
                 end,
             })
+        end
+
+        if client:supports_method('textDocument/inlayHint') then
+            vim.keymap.set('n', '<leader>P', function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end)
         end
 
         vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })

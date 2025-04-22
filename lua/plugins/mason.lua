@@ -24,6 +24,7 @@ return {
                     'php-cs-fixer',
                     'twigcs',
                     'twiggy-language-server',
+                    'emmet_language_server',
                 },
             })
         end,

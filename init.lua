@@ -57,24 +57,24 @@ vim.diagnostic.config({
     jump = { float = true },
 })
 
-vim.lsp.config('*', {
-    capabilities = {
-        textDocument = {
-            completion = {
-                completionItem = {
-                    snippetSupport = true,
-                },
-            },
-        },
-    },
-    root_markers = { '.git' },
-    reuse_client = function(client, conf)
-        return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
-    end,
-})
-
-local servers = { 'intelephense', 'lua_ls', 'twiggy_language_server' }
-
-for _, server in ipairs(servers) do
-    vim.lsp.enable(server)
-end
+-- vim.lsp.config('*', {
+--     capabilities = {
+--         textDocument = {
+--             completion = {
+--                 completionItem = {
+--                     snippetSupport = true,
+--                 },
+--             },
+--         },
+--     },
+--     root_markers = { '.git' },
+--     reuse_client = function(client, conf)
+--         return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
+--     end,
+-- })
+--
+-- local servers = { 'intelephense', 'lua_ls', 'twiggy_language_server', 'emmet_language_server' }
+--
+-- for _, server in ipairs(servers) do
+--     vim.lsp.enable(server)
+-- end
