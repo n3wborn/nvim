@@ -48,33 +48,23 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.INFO] = signs.Info,
         },
     },
-    virtual_lines = {
-        current_line = true,
-    },
+    virtual_text = false,
     severity_sort = true,
     underline = false,
     update_in_insert = true,
     jump = { float = true },
 })
 
--- vim.lsp.config('*', {
---     capabilities = {
---         textDocument = {
---             completion = {
---                 completionItem = {
---                     snippetSupport = true,
---                 },
---             },
---         },
---     },
---     root_markers = { '.git' },
---     reuse_client = function(client, conf)
---         return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
---     end,
--- })
---
--- local servers = { 'intelephense', 'lua_ls', 'twiggy_language_server', 'emmet_language_server' }
---
--- for _, server in ipairs(servers) do
---     vim.lsp.enable(server)
--- end
+vim.lsp.config('*', {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    root_markers = { '.git' },
+    reuse_client = function(client, conf)
+        return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
+    end,
+})
+
+local servers = { 'intelephense', 'lua_ls', 'twiggy_language_server', 'emmet_language_server', 'basedpyright' }
+
+for _, server in ipairs(servers) do
+    vim.lsp.enable(server)
+end

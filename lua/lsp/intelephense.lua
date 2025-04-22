@@ -1,7 +1,7 @@
 return {
+    name = 'intelephense',
     cmd = { 'intelephense', '--stdio' },
     filetypes = { 'php' },
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     -- root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
