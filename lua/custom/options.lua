@@ -45,7 +45,6 @@ vim.o.winminwidth = 10
 vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
-vim.o.winborder = 'rounded'
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 
