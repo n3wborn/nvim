@@ -98,16 +98,11 @@ M.is_file = function(path)
 end
 
 M.get_cwd = function()
-    return uv.cwd
+    return vim.uv.cwd
 end
 
----@param level number|nil
----@param msg string
----@param title string
-M.notif = function(title, msg, level)
-    vim.notify(msg, level, {
-        title = title,
-    })
+M.notif = function(msg)
+    vim.api.nvim_echo(msg, true, {})
 end
 
 ---@param files table
@@ -122,7 +117,7 @@ end
 M.yank_file_path = function()
     local file_path = vim.api.nvim_buf_get_name(0)
     vim.fn.setreg('+', file_path)
-    vim.notify('File path copied to clipboard: ' .. file_path, vim.log.levels.INFO)
+    vim.api.nvim_echo({ 'File path copied to clipboard: ' .. file_path }, true, {})
 end
 
 -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/folding-plugins.lua

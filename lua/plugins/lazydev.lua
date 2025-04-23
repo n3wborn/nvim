@@ -15,7 +15,7 @@ return {
                 -- Fixes lspconfig's workspace management for LuaLS
                 -- Only create a new workspace if the buffer is not part
                 -- of an existing workspace or one of its libraries
-                lspconfig = true,
+                lspconfig = false,
                 -- add the cmp source for completion of:
                 -- `require "modname"`
                 -- `---@module "modname"`

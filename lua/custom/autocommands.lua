@@ -72,97 +72,41 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     command = 'set filetype=yaml.docker-compose',
 })
 
--- https://www.reddit.com/r/neovim/comments/1fhy2xi/comment/lnea46c/
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'qf',
-    desc = 'navigate and preview qf-list results using <C-p> and <C-n>',
-    callback = function(event)
-        local opts = { buffer = event.buf, silent = true }
-        local init_bufnr = vim.fn.bufnr('#')
-        vim.keymap.set('n', '<C-n>', function()
-            if vim.fn.line('.') == vim.fn.line('$') then
-                vim.notify('E553: No more items', vim.log.levels.ERROR)
-                return
-            end
-            vim.cmd('wincmd p') -- jump to current displayed file
-            vim.cmd(
-                (vim.fn.bufnr('%') ~= init_bufnr and vim.bo.filetype ~= 'qf')
-                        and ('bd | wincmd p | cn | res %d'):format(
-                            math.floor(
-                                (
-                                    vim.o.lines
-                                    - vim.o.cmdheight
-                                    - (vim.o.laststatus == 0 and 0 or 1)
-                                    - (vim.o.tabline == '' and 0 or 1)
-                                )
-                                        / 3
-                                        * 2
-                                    + 0.5
-                            ) - 1
-                        )
-                    or 'cn'
-            )
-            vim.cmd('execute "normal! zz"')
-            if vim.bo.filetype ~= 'qf' then
-                vim.cmd('wincmd p')
-            end
-        end, opts)
-
-        vim.keymap.set('n', '<C-p>', function()
-            if vim.fn.line('.') == 1 then
-                vim.notify('E553: No more items', vim.log.levels.ERROR)
-                return
-            end
-            vim.cmd('wincmd p') -- jump to current displayed file
-            vim.cmd(
-                (vim.fn.bufnr('%') ~= init_bufnr and vim.bo.filetype ~= 'qf')
-                        and ('bd | wincmd p | cN | res %d'):format(
-                            math.floor(
-                                (
-                                    vim.o.lines
-                                    - vim.o.cmdheight
-                                    - (vim.o.laststatus == 0 and 0 or 1)
-                                    - (vim.o.tabline == '' and 0 or 1)
-                                )
-                                        / 3
-                                        * 2
-                                    + 0.5
-                            ) - 1
-                        )
-                    or 'cN'
-            )
-            vim.cmd('execute "normal! zz"')
-            if vim.bo.filetype ~= 'qf' then
-                vim.cmd('wincmd p')
-            end
-        end, opts)
-    end,
-})
-
-vim.api.nvim_create_autocmd('LspProgress', {
-    ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(ev)
-        local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
-        if vim.lsp.get_client_by_id(ev.data.client_id).name == 'lua_ls' then
-            return
-        end
-        vim.notify(vim.lsp.status(), 'info', {
-            id = 'lsp_progress',
-            title = 'LSP Progress',
-            opts = function(notif)
-                notif.icon = ev.data.params.value.kind == 'end' and ' '
-                    or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
-            end,
-        })
-    end,
-})
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Auto indent on paste',
-    group = vim.api.nvim_create_augroup('AutoIndentPaste', { clear = true }),
-    pattern = '*',
-    callback = function()
-        vim.cmd('silent! normal! `[v`]=')
+        if client:supports_method('textDocument/documentSymbol') then
+            local navic = require('nvim-navic')
+            navic.attach(client, ev.buf)
+        end
+
+        if client:supports_method('textDocument/definition') then
+            vim.keymap.set('n', 'gd', function()
+                vim.lsp.buf.definition()
+            end, { buffer = ev.buf })
+        end
+
+        if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, ev.buf, {
+                autotrigger = true,
+                convert = function(item)
+                    return { abbr = item.label:gsub('%b()', '') }
+                end,
+            })
+        end
+
+        if client:supports_method('textDocument/inlayHint') then
+            vim.keymap.set('n', '<leader>P', function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end)
+        end
+
+        vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })
+        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
+        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
 })
 
