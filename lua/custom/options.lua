@@ -36,7 +36,7 @@ vim.opt.redrawtime = 3000
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.joinspaces = false
 vim.opt.updatetime = 250
-vim.opt.wildmode = 'longest:full,full'
+vim.opt.wildmode = { 'longest:full', 'full' }
 vim.opt.completeopt = 'menu,menuone,nearest,noselect'
 vim.opt.autowrite = true
 vim.opt.confirm = true
@@ -46,6 +46,7 @@ vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
+vim.o.winborder = 'rounded'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
