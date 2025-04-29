@@ -41,9 +41,6 @@ return {
                 end,
             },
             {
-                'nvim-treesitter/nvim-treesitter-refactor',
-            },
-            {
                 'HiPhish/rainbow-delimiters.nvim',
             },
         },
