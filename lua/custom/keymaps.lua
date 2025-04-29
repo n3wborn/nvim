@@ -21,7 +21,6 @@ u.map('n', '<space>+', '<cmd>resize +5<cr>')
 u.map('n', '<space>-', '<cmd>resize -5<cr>')
 
 -- save in insert mode
-vim.keymap.set('i', '<C-s>', '<cmd>:w<cr><esc>')
 vim.keymap.set('n', '<C-s>', '<cmd>:w<cr><esc>')
 
 --- Phpcbf - Php-cs-fixer

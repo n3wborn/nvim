@@ -3,29 +3,8 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     cmd = 'FzfLua',
     keys = {
-        { '<leader>R', ':FzfLua live_grep_resume<cr>' },
-        {
-            '<leader>sp',
-            function()
-                -- Ex: `pcall -- *.lua !*spec*` will search for `pcall` in any lua file that doesn't contain `spec`
-                require('fzf-lua').live_grep_glob()
-            end,
-            desc = 'Search Project',
-        },
-        {
-            '<leader>sP',
-            function()
-                require('fzf-lua').grep_project()
-            end,
-            desc = 'Search Project',
-        },
-        {
-            '<leader>sd',
-            function()
-                require('fzf-lua').grep_cword()
-            end,
-            desc = 'Grep Current Word',
-        },
+        { '<space>R', ':FzfLua live_grep_resume<cr>' },
+        { '<space>F', ':FzfLua<cr>' },
         {
             '<leader>o',
             function()
@@ -55,23 +34,23 @@ return {
             desc = 'Git Stashes',
         },
         {
-            '<leader>gs',
+            '<leader>gf',
             function()
-                require('fzf-lua').git_status()
+                require('fzf-lua').git_bcommits()
             end,
             desc = 'Git Status',
         },
         {
             '<leader>lr',
             function()
-                require('fzf-lua').lsp_references()
+                require('fzf-lua').lsp_references() --- nvim default grr
             end,
             desc = 'List symbol References',
         },
         {
             '<leader>li',
             function()
-                require('fzf-lua').lsp_implementations()
+                require('fzf-lua').lsp_implementations() --- nvim default gri
             end,
             desc = 'List Implementations',
         },
@@ -99,19 +78,61 @@ return {
         {
             '<leader>sH',
             function()
-                require('fzf-lua').grep_cword({ filter = [[rg "Helper.php"]], regex_filter = true })
+                require('fzf-lua').grep_project({
+                    filter = [[rg "Helper.php"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search in [H]elpers' },
+                })
             end,
         },
         {
             '<leader>sA',
             function()
-                require('fzf-lua').grep_cword({ filter = [[rg "actions.class.php"]], regex_filter = true })
+                require('fzf-lua').grep_project({
+                    filter = [[rg "actions.class.php"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search in [A]ctions' },
+                })
             end,
         },
         {
             '<leader>sG',
             function()
-                require('fzf-lua').grep_cword({ filter = [[rg "generator.yml"]], regex_filter = true })
+                require('fzf-lua').grep_project({
+                    filter = [[rg "generator.yml"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search in [G]enerators' },
+                })
+            end,
+        },
+        {
+            '<leader>sh',
+            function()
+                require('fzf-lua').grep_cword({
+                    filter = [[rg "Helper.php"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search Current Word in [H]elpers' },
+                })
+            end,
+        },
+        {
+            '<leader>sa',
+            function()
+                require('fzf-lua').grep_cword({
+                    filter = [[rg "actions.class.php"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search Current Word in [A]ctions' },
+                })
+            end,
+        },
+        {
+            '<leader>sg',
+            function()
+                require('fzf-lua').grep_cword({
+                    filter = [[rg "generator.yml"]],
+                    regex_filter = true,
+                    winopts = { title = 'Search Current Word in [G]enerators' },
+                })
             end,
         },
     },
