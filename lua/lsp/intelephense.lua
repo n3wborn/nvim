@@ -14,7 +14,6 @@ return {
     init_options = {
         licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
     },
-    -- capabilities = require('cmp_nvim_lsp').default_capabilities(),
     settings = {
         intelephense = {
             files = {

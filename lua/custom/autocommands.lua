@@ -76,35 +76,51 @@ vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(ev)
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-        if client:supports_method('textDocument/documentSymbol') then
-            local navic = require('nvim-navic')
-            navic.attach(client, ev.buf)
+        -- diagnostics
+        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
+
+        -- completion
+        if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
         end
+
+        -- navic
+        local navic = require('nvim-navic')
+        navic.attach(client, ev.buf)
+
+        -- default keymaps
+        -- grn = vim.lsp.buf.rename()
+        -- gra = vim.lsp.buf.code_action()
+        -- grr = vim.lsp.buf.references()
+        -- gri = vim.lsp.buf.implementation()
+        -- g0 = vim.lsp.buf.document_symbol()
+        -- C_S = (insert)  vim.lsp.buf.signature_help()
 
         if client:supports_method('textDocument/definition') then
-            vim.keymap.set('n', 'gd', function()
-                vim.lsp.buf.definition()
-            end, { buffer = ev.buf })
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = ev.buf })
         end
 
-        if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, ev.buf, {
-                autotrigger = true,
-                convert = function(item)
-                    return { abbr = item.label:gsub('%b()', '') }
-                end,
-            })
+        if client:supports_method('textDocument/declaration') then
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = ev.buf })
         end
 
-        if client:supports_method('textDocument/inlayHint') then
-            vim.keymap.set('n', '<leader>P', function()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-            end)
+        if client:supports_method('textDocument/typeDefinition') then
+            vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })
         end
 
-        vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })
+        if client:supports_method('textDocument/implementation') then
+            vim.keymap.set('n', 'gri', vim.lsp.buf.implementation, { buffer = ev.buf })
+        end
+
+        if client:supports_method('textDocument/rename') then
+            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = ev.buf })
+        end
+
+        if client:supports_method('textDocument/documentSymbol') then
+            vim.keymap.set('n', 'g0', vim.lsp.buf.rename, { buffer = ev.buf })
+        end
+
         vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
