@@ -1,5 +1,5 @@
 return {
-    'SmiteshP/nvim-navbuddy',
+    'hasansujon786/nvim-navbuddy',
     cmd = 'Navbuddy',
     keys = {
         { '<leader>N', '<cmd>Navbuddy<cr>', desc = 'nabuddy' },
