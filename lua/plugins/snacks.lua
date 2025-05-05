@@ -62,6 +62,13 @@ return {
         { "<leader>sp", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>sP", function() Snacks.picker.git_grep() end, desc = "git grep" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
+        { '<leader>ff', function ()
+            if Snacks.git.get_root() then
+                Snacks.picker.git_files({ untracked = true })
+            else
+                Snacks.picker.files({ hidden = true, ignored = true, debug = true })
+            end
+        end, desc = 'Show files in git dir or cwd', mode = {'n'}},
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
         { "<space>S", function() Snacks.picker.smart({ multi = { "recent", "files" },  matcher = {cwd_bonus = false, frecency = true, sort_empty = true} }) end, desc = "Smart Picker" },
         { "gb",         function() Snacks.picker.buffers() end, desc = "List Buffers" },
