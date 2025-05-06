@@ -38,7 +38,7 @@ return {
             previewers = {
                 file = {
                     max_size = 1024 * 1024, -- 1MB
-                    max_line_length = 100, -- max line length
+                    max_line_length = 300, -- max line length
                     ft = nil, ---@type string? filetype for highlighting. Use `nil` for auto detect
                 },
             },

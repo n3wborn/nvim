@@ -57,6 +57,7 @@ vim.diagnostic.config({
 
 vim.lsp.config('*', {
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
     root_markers = { '.git' },
     reuse_client = function(client, conf)
         return (client.name == conf.name and (client.config.root_dir == conf.root_dir))

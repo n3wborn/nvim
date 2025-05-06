@@ -48,14 +48,14 @@ return {
                 root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
                 if root_dir then
                     found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
-                    utils.notif('Found corePlugin at: ' .. root_dir)
+                    vim.api.nvim_echo({ { 'Found corePlugin at:\n' }, { root_dir } }, true, {})
                 end
             end
 
             if not found then
                 found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
                 if found then
-                    utils.notif('Using fallback php-cs-fixer config: ' .. found)
+                    vim.api.nvim_echo({ { 'Using fallback php-cs-fixer config:\n' }, { found } }, true, {})
                 end
             end
 

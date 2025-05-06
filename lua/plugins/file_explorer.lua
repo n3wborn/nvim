@@ -41,17 +41,16 @@ return {
             },
         },
         cmd = 'Neotree',
+        lazy = false,
         opts = {
+            auto_clean_after_session_restore = true, -- Automatically clean up broken neo-tree buffers saved in sessions
             close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-            popup_border_style = _G.global.float_border_opts.border,
-            enable_git_status = true,
-            enable_diagnostics = true,
             open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
             sort_case_insensitive = false, -- used when sorting files and directories in the tree
             sort_function = nil, -- use a custom function for sorting files and directories in the tree
             window = {
                 position = 'left',
-                width = 40,
+                width = 60,
                 mapping_options = {
                     noremap = true,
                     nowait = true,
@@ -105,8 +104,5 @@ return {
         keys = {
             { '<leader>e', '<cmd>Neotree toggle=true<cr>', desc = 'neotree' },
         },
-        config = function(_, opts)
-            require('neo-tree').setup(opts)
-        end,
     },
 }
