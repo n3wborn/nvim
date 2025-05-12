@@ -64,7 +64,14 @@ vim.lsp.config('*', {
     end,
 })
 
-local servers = { 'intelephense', 'lua_ls', 'twiggy_language_server', 'emmet_language_server', 'basedpyright' }
+local servers = {
+    'bash_language_server',
+    'intelephense',
+    'lua_ls',
+    'twiggy_language_server',
+    'emmet_language_server',
+    'basedpyright',
+}
 
 for _, server in ipairs(servers) do
     vim.lsp.enable(server)
