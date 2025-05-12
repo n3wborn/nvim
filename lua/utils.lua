@@ -98,11 +98,7 @@ M.is_file = function(path)
 end
 
 M.get_cwd = function()
-    return vim.uv.cwd
-end
-
-M.notif = function(msg)
-    vim.api.nvim_echo(msg, true, {})
+    return assert(vim.uv.cwd)
 end
 
 ---@param files table
@@ -117,7 +113,7 @@ end
 M.yank_file_path = function()
     local file_path = vim.api.nvim_buf_get_name(0)
     vim.fn.setreg('+', file_path)
-    vim.api.nvim_echo({ 'File path copied to clipboard: ' .. file_path }, true, {})
+    vim.api.nvim_echo({ { 'File path copied to clipboard: ' .. file_path } }, true, {})
 end
 
 -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/folding-plugins.lua
