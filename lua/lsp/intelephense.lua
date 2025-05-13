@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
     name = 'intelephense',
     cmd = { 'intelephense', '--stdio' },
