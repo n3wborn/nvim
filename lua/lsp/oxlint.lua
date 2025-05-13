@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 --- https://oxc.rs
 return {
     name = { 'oxc' },

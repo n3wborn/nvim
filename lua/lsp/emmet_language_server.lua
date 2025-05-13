@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
     name = 'emmet_language_server',
     init_options = {

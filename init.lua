@@ -65,12 +65,16 @@ vim.lsp.config('*', {
 })
 
 local servers = {
+    'basedpyright',
     'bash_language_server',
+    'cssls',
+    'emmet_language_server',
+    'eslint',
+    'html',
     'intelephense',
+    'jsonls',
     'lua_ls',
     'twiggy_language_server',
-    'emmet_language_server',
-    'basedpyright',
 }
 
 for _, server in ipairs(servers) do
