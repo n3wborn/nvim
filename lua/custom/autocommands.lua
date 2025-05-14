@@ -36,6 +36,8 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {
+        'gitsigns-blame',
+        'git',
         'checkhealth',
         'help',
         'lspinfo',
