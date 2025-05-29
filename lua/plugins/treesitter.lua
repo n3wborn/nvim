@@ -1,54 +1,31 @@
 -- heavily inspired by LazyVim/LazyVim config
 return {
     {
+
         'nvim-treesitter/nvim-treesitter',
-        version = false,
+        version = false, -- last release is way too old and doesn't work on Windows
         build = ':TSUpdate',
-        event = { 'BufReadPost', 'BufNewFile' },
-        dependencies = {
-            {
-                'JoosepAlviste/nvim-ts-context-commentstring',
-                config = function()
-                    require('ts_context_commentstring').setup()
-                end,
-            },
-            {
-                'nvim-treesitter/nvim-treesitter-context',
-            },
-            {
-                'nvim-treesitter/nvim-treesitter-textobjects',
-                config = function()
-                    -- When in diff mode, we want to use the default
-                    -- vim text objects c & C instead of the treesitter ones.
-                    local move = require('nvim-treesitter.textobjects.move') ---@type table<string,fun(...)>
-                    local configs = require('nvim-treesitter.configs')
-                    for name, fn in pairs(move) do
-                        if name:find('goto') == 1 then
-                            move[name] = function(q, ...)
-                                if vim.wo.diff then
-                                    local config = configs.get_module('textobjects.move')[name] ---@type table<string,string>
-                                    for key, query in pairs(config or {}) do
-                                        if q == query and key:find('[%]%[][cC]') then
-                                            vim.cmd('normal! ' .. key)
-                                            return
-                                        end
-                                    end
-                                end
-                                return fn(q, ...)
-                            end
-                        end
-                    end
-                end,
-            },
-            {
-                'HiPhish/rainbow-delimiters.nvim',
-            },
-        },
+        event = { 'VeryLazy' },
+        lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+        init = function(plugin)
+            -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+            -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+            -- no longer trigger the **nvim-treesitter** module to be loaded in time.
+            -- Luckily, the only things that those plugins need are the custom queries, which we make available
+            -- during startup.
+            require('lazy.core.loader').add_to_rtp(plugin)
+            require('nvim-treesitter.query_predicates')
+        end,
         cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+        keys = {
+            { '<c-space>', desc = 'Increment Selection' },
+            { '<bs>', desc = 'Decrement Selection', mode = 'x' },
+        },
         ---@type TSConfig
         ---@diagnostic disable-next-line: missing-fields
         opts = {
-            auto_install = true,
+            highlight = { enable = true },
+            indent = { enable = true },
             ensure_installed = {
                 'awk',
                 'bash',
@@ -96,11 +73,14 @@ return {
                 'vue',
                 'yaml',
             },
-            highlight = {
+            incremental_selection = {
                 enable = true,
-            },
-            indent = {
-                enable = true,
+                keymaps = {
+                    init_selection = '<C-space>',
+                    node_incremental = '<C-space>',
+                    scope_incremental = false,
+                    node_decremental = '<bs>',
+                },
             },
             textobjects = {
                 lookahead = true,
@@ -146,27 +126,94 @@ return {
         },
         ---@param opts TSConfig
         config = function(_, opts)
-            if type(opts.ensure_installed) == 'table' then
-                ---@type table<string, boolean>
-                local added = {}
-                opts.ensure_installed = vim.tbl_filter(function(lang)
-                    if added[lang] then
-                        return false
-                    end
-                    added[lang] = true
-                    return true
-                end, opts.ensure_installed)
-            end
             require('nvim-treesitter.configs').setup(opts)
-
-            vim.keymap.set('n', ']c', function()
-                require('treesitter-context').go_to_context(vim.v.count1)
-            end, { silent = true })
+        end,
+    },
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        event = 'VeryLazy',
+        enabled = true,
+        config = function()
+            local textobjects = {
+                lookahead = true,
+                lsp_interop = {
+                    enable = true,
+                    border = _G.global.float_border_opts.border,
+                    peek_definition_code = {
+                        ['df'] = '@function.outer',
+                        ['dF'] = '@class.outer',
+                    },
+                },
+                select = {
+                    enable = true,
+                    lookahead = true,
+                    keymaps = {
+                        ['af'] = '@function.outer',
+                        ['if'] = '@function.inner',
+                        ['ac'] = '@class.outer',
+                        ['ic'] = '@class.inner',
+                    },
+                },
+                move = {
+                    enable = true,
+                    set_jumps = true,
+                    goto_next_start = {
+                        [']m'] = '@function.outer',
+                        [']]'] = '@class.outer',
+                    },
+                    goto_next_end = {
+                        [']M'] = '@function.outer',
+                        [']['] = '@class.outer',
+                    },
+                    goto_previous_start = {
+                        ['[m'] = '@function.outer',
+                        ['[['] = '@class.outer',
+                    },
+                    goto_previous_end = {
+                        ['[M'] = '@function.outer',
+                        ['[]'] = '@class.outer',
+                    },
+                },
+            }
+            require('nvim-treesitter.configs').setup({ textobjects = textobjects })
         end,
     },
     {
         'windwp/nvim-ts-autotag',
         event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
+    },
+    {
+        'windwp/nvim-ts-autotag',
+        event = 'VeryLazy',
+        opts = {},
+    },
+    {
+        'folke/ts-comments.nvim',
+        event = 'VeryLazy',
+        opts = {},
+    },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        event = 'VeryLazy',
+        opts = function()
+            local tsc = require('treesitter-context')
+            Snacks.toggle({
+                name = 'Treesitter Context',
+                get = tsc.enabled,
+                set = function(state)
+                    if state then
+                        tsc.enable()
+                    else
+                        tsc.disable()
+                    end
+                end,
+            }):map('<leader>ut')
+            return { mode = 'cursor', max_lines = 3 }
+        end,
+    },
+    {
+        'HiPhish/rainbow-delimiters.nvim',
+        event = 'VeryLazy',
     },
 }
