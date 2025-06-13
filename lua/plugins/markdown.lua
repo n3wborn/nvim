@@ -5,18 +5,4 @@ return {
         'nvim-treesitter/nvim-treesitter',
         'nvim-tree/nvim-web-devicons',
     },
-    opts = {
-        Checkboxes = {
-            custom = {
-                {
-                    match = '~',
-                    text = '◕',
-                    hl = 'CheckboxProgress',
-                },
-            },
-        },
-    },
-    config = function(opts)
-        require('markview').setup(opts)
-    end,
 }

@@ -128,4 +128,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
+    group = vim.api.nvim_create_augroup('StatuslineUpdate', { clear = true }),
+    pattern = '*',
+    callback = vim.schedule_wrap(function()
+        vim.cmd('redrawstatus')
+    end),
+    desc = 'Update statusline/winbar',
+})
+
 vim.opt.updatetime = 100

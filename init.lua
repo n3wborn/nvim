@@ -52,7 +52,7 @@ vim.diagnostic.config({
     severity_sort = true,
     underline = false,
     update_in_insert = true,
-    jump = { float = true },
+    jump = { severity = vim.log.levels.ERROR },
 })
 
 vim.lsp.config('*', {

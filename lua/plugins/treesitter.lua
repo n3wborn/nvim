@@ -16,7 +16,7 @@ return {
             require('lazy.core.loader').add_to_rtp(plugin)
             require('nvim-treesitter.query_predicates')
         end,
-        cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+        cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall', 'TSContext' },
         keys = {
             { '<c-space>', desc = 'Increment Selection' },
             { '<bs>', desc = 'Decrement Selection', mode = 'x' },
@@ -86,7 +86,7 @@ return {
                 lookahead = true,
                 lsp_interop = {
                     enable = true,
-                    border = _G.global.float_border_opts.border,
+                    border = 'rounded',
                     peek_definition_code = {
                         ['df'] = '@function.outer',
                         ['dF'] = '@class.outer',
@@ -138,7 +138,7 @@ return {
                 lookahead = true,
                 lsp_interop = {
                     enable = true,
-                    border = _G.global.float_border_opts.border,
+                    border = 'rounded',
                     peek_definition_code = {
                         ['df'] = '@function.outer',
                         ['dF'] = '@class.outer',
@@ -185,11 +185,6 @@ return {
     },
     {
         'windwp/nvim-ts-autotag',
-        event = 'VeryLazy',
-        opts = {},
-    },
-    {
-        'folke/ts-comments.nvim',
         event = 'VeryLazy',
         opts = {},
     },
