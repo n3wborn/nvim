@@ -80,6 +80,7 @@ return {
                     },
                     gitsigns = true,
                     markdown = true,
+                    markview = true,
                     mason = true,
                     mini = true,
                     native_lsp = {

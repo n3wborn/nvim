@@ -146,4 +146,11 @@ M.foldTextFormatter = function(virtText, lnum, endLnum, width, truncate)
     return newVirtText
 end
 
+---@param msg string
+M.notif = function(msg)
+    vim.schedule(function()
+        vim.notify(msg)
+    end)
+end
+
 return M
