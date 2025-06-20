@@ -71,6 +71,7 @@ u.map('n', '<C-b>', '<C-b>zz', { desc = 'Center cursor after moving backward pag
 
 u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
 
+-- folds
 u.map('n', '<Left>', function()
     require('origami').h()
 end)
