@@ -71,6 +71,14 @@ u.map('n', '<C-b>', '<C-b>zz', { desc = 'Center cursor after moving backward pag
 
 u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
 
+u.map('n', '<Left>', function()
+    require('origami').h()
+end)
+
+u.map('n', '<Right>', function()
+    require('origami').l()
+end)
+
 --- previous on_attach gitsigns mapping here
 local gitsigns = require('gitsigns')
 local jump_hunk_opts = { preview = true, navigation_message = 'f', target = 'all', greedy = true }
