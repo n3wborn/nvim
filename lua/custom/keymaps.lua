@@ -80,52 +80,6 @@ u.map('n', '<Right>', function()
     require('origami').l()
 end)
 
---- previous on_attach gitsigns mapping here
-local gitsigns = require('gitsigns')
-local jump_hunk_opts = { preview = true, navigation_message = 'f', target = 'all', greedy = true }
-
-u.map('n', '<leader>hn', function()
-    if vim.wo.diff then
-        vim.cmd.normal({ ']c', bang = true })
-    else
-        gitsigns.nav_hunk('next', jump_hunk_opts)
-    end
-    return 'Ignore'
-end)
-
-u.map('n', '<leader>hN', function()
-    if vim.wo.diff then
-        vim.cmd.normal({ '[c', bang = true })
-    else
-        gitsigns.nav_hunk('prev', jump_hunk_opts)
-    end
-    return 'Ignore'
-end)
-
--- Actions
-u.map('n', '<leader>hs', gitsigns.stage_hunk)
-u.map('v', '<leader>hs', function()
-    gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-end)
-u.map('v', '<leader>hr', function()
-    gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-end)
-u.map('n', '<leader>hS', gitsigns.stage_buffer)
-u.map('n', '<leader>hu', gitsigns.stage_hunk)
-u.map('n', '<leader>hR', gitsigns.reset_buffer)
-u.map('n', '<leader>hr', gitsigns.reset_hunk)
-u.map('n', '<leader>hp', gitsigns.preview_hunk)
-u.map('n', '<leader>hB', gitsigns.blame)
-u.map('n', '<leader>hb', function()
-    gitsigns.blame_line({ full = true })
-end)
-u.map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-u.map('n', '<leader>hd', gitsigns.diffthis)
-u.map('n', '<leader>hD', function()
-    gitsigns.diffthis('~')
-end)
-u.map('n', '<leader>td', gitsigns.preview_hunk_inline)
-
 -- Text object
 u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 
@@ -148,3 +102,4 @@ end
 u.map('n', '<C-z>', confirm_ctrl_z)
 
 u.map('n', '<leader>D', vim.diagnostic.open_float)
+
