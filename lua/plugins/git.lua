@@ -106,7 +106,7 @@ return {
                 mode = 'v',
                 '<leader>hs',
                 function()
-                    gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
                 end,
             },
             {
@@ -123,7 +123,7 @@ return {
                 mode = 'n',
                 '<leader>hr',
                 function()
-                    gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
                 end,
             },
             {
