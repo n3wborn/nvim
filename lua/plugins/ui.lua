@@ -112,7 +112,6 @@ return {
                     semantic_tokens = true,
                     snacks = true,
                     symbols_outline = true,
-                    telescope = true,
                     treesitter = true,
                     treesitter_context = true,
                 },
