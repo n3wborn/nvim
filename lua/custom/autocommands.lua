@@ -51,6 +51,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'startuptime',
         'trouble',
         'tsplayground',
+        'quickfix',
     },
     callback = function()
         vim.cmd([[
