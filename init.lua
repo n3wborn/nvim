@@ -7,6 +7,91 @@ require('custom')
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
+        {
+            'bloznelis/before.nvim',
+            keys = {
+                {
+                    '<C-j>',
+                    function()
+                        require('before').jump_to_last_edit()
+                    end,
+                },
+                {
+                    '<C-k>',
+                    function()
+                        require('before').jump_to_next_edit()
+                    end,
+                },
+            },
+        },
+        {
+            'famiu/bufdelete.nvim',
+        },
+        {
+            'OXY2DEV/markview.nvim',
+            lazy = false, -- (already lazy-loaded)
+            dependencies = {
+                'nvim-treesitter/nvim-treesitter',
+                'nvim-tree/nvim-web-devicons',
+            },
+            opts = {
+                experimental = {
+                    check_rtp_message = false,
+                },
+            },
+        },
+        {
+            'hasansujon786/nvim-navbuddy',
+            cmd = 'Navbuddy',
+            keys = {
+                { '<leader>N', '<cmd>Navbuddy<cr>', desc = 'nabuddy' },
+            },
+            dependencies = {
+                'SmiteshP/nvim-navic',
+                'MunifTanjim/nui.nvim',
+            },
+            opts = { lsp = { auto_attach = true } },
+        },
+        {
+            'folke/persistence.nvim',
+            event = 'BufReadPre', -- this will only start session saving when an actual file was opened
+            opts = {
+                dir = vim.fn.stdpath('state') .. '/sessions/', -- directory where session files are saved
+                -- minimum number of file buffers that need to be open to save
+                -- Set to 0 to always save
+                need = 1,
+                branch = true, -- use git branch to save session
+            },
+        },
+        {
+            'kylechui/nvim-surround',
+            version = '*',
+            event = 'VeryLazy',
+            config = function()
+                require('nvim-surround').setup({})
+            end,
+        },
+        {
+            'folke/todo-comments.nvim',
+            lazy = true,
+            config = true,
+        },
+        {
+            'nvzone/typr',
+            dependencies = 'nvzone/volt',
+            opts = {},
+            cmd = { 'Typr', 'TyprStats' },
+            {
+                'mbbill/undotree',
+                keys = {
+                    {
+                        '<leader>U',
+                        '<cmd>UndotreeToggle<cr>',
+                        desc = 'Toggles undotree',
+                    },
+                },
+            },
+        },
     },
     defaults = {
         lazy = true,
