@@ -43,7 +43,7 @@ return {
         cmd = 'Neotree',
         lazy = false,
         opts = {
-            auto_clean_after_session_restore = true, -- Automatically clean up broken neo-tree buffers saved in sessions
+            auto_clean_after_session_restore = false, -- Automatically clean up broken neo-tree buffers saved in sessions
             close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
             open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
             sort_case_insensitive = false, -- used when sorting files and directories in the tree
@@ -98,7 +98,15 @@ return {
                     enabled = true,
                 },
                 group_empty_dirs = true, -- when true, empty folders will be grouped together
-                show_unloaded = true,
+                show_unloaded = false,
+            },
+            event_handlers = {
+                {
+                    event = 'file_opened',
+                    handler = function()
+                        require('neo-tree.command').execute({ action = 'close' })
+                    end,
+                },
             },
         },
         keys = {
