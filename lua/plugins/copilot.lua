@@ -2,7 +2,7 @@ return {
     {
         'zbirenbaum/copilot.lua',
         cmd = 'Copilot',
-        enabled = false,
+        enabled = false, -- disable by default, enable manually with :Copilot setup
         event = 'InsertEnter',
         opts = {
             panel = {
@@ -57,16 +57,6 @@ return {
         },
         config = function(_, opts)
             require('copilot').setup(opts)
-        end,
-    },
-    {
-        'zbirenbaum/copilot-cmp',
-        config = function()
-            require('copilot_cmp').setup({
-                --- do not change default config
-                event = { 'InsertEnter', 'LspAttach' },
-                fix_pairs = true,
-            })
         end,
     },
 }
