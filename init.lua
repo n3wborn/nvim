@@ -28,19 +28,6 @@ require('lazy').setup({
             'famiu/bufdelete.nvim',
         },
         {
-            'OXY2DEV/markview.nvim',
-            lazy = false, -- (already lazy-loaded)
-            dependencies = {
-                'nvim-treesitter/nvim-treesitter',
-                'nvim-tree/nvim-web-devicons',
-            },
-            opts = {
-                experimental = {
-                    check_rtp_message = false,
-                },
-            },
-        },
-        {
             'hasansujon786/nvim-navbuddy',
             cmd = 'Navbuddy',
             keys = {
@@ -139,9 +126,29 @@ vim.diagnostic.config({
     update_in_insert = true,
     jump = { severity = vim.log.levels.ERROR },
 })
+local capabilities = {
+    textDocument = {
+        foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+        },
+    },
+}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
+capabilities = vim.tbl_deep_extend('force', capabilities, {
+    textDocument = {
+        foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+        },
+    },
+})
 
 vim.lsp.config('*', {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    capabilities = capabilities,
     root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
     root_markers = { '.git' },
     reuse_client = function(client, conf)

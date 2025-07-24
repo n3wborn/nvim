@@ -8,39 +8,6 @@ return {
         end,
     },
     {
-        'utilyre/barbecue.nvim',
-        name = 'barbecue',
-        event = { 'BufEnter' },
-        version = '*',
-        dependencies = {
-            'SmiteshP/nvim-navic',
-            'nvim-tree/nvim-web-devicons',
-        },
-        config = function()
-            require('barbecue').setup({
-                attach_navic = true,
-                show_dirname = false,
-                theme = 'catpuccin-mocha',
-                create_autocmd = false,
-            })
-
-            vim.api.nvim_create_autocmd({
-                'WinResized',
-                'BufWinEnter',
-                'CursorHold',
-                'InsertLeave',
-
-                -- include this if you have set `show_modified` to `true`
-                'BufModifiedSet',
-            }, {
-                group = vim.api.nvim_create_augroup('barbecue.updater', {}),
-                callback = function()
-                    require('barbecue.ui').update()
-                end,
-            })
-        end,
-    },
-    {
         'catppuccin/nvim',
         lazy = false,
         priority = 1000,
@@ -67,86 +34,6 @@ return {
                     conditionals = {},
                     functions = { 'italic' },
                 },
-                integrations = {
-                    barbecue = {
-                        dim_dirname = true,
-                    },
-                    cmp = true,
-                    coc_nvim = false,
-                    diffview = true,
-                    indent_blankline = {
-                        enabled = true,
-                        colored_indent_levels = false,
-                    },
-                    gitsigns = true,
-                    markdown = true,
-                    markview = true,
-                    mason = true,
-                    mini = true,
-                    native_lsp = {
-                        enabled = true,
-                        virtual_text = {
-                            errors = { 'italic' },
-                            hints = { 'italic' },
-                            warnings = { 'italic' },
-                            information = { 'italic' },
-                        },
-                        underlines = {
-                            errors = { 'underline' },
-                            hints = { 'underline' },
-                            warnings = { 'underline' },
-                            information = { 'underline' },
-                        },
-                        inlay_hints = {
-                            background = true,
-                        },
-                    },
-                    navic = true,
-                    neotree = true,
-                    noice = true,
-                    notify = true,
-                    nvim_surround = true,
-                    nvimtree = true,
-                    window_picker = true,
-                    rainbow_delimiters = true,
-                    semantic_tokens = true,
-                    snacks = true,
-                    symbols_outline = true,
-                    treesitter = true,
-                    treesitter_context = true,
-                },
-                custom_highlights = function(c)
-                    return {
-                        CmpItemKindSnippet = { fg = c.base, bg = c.mauve },
-                        CmpItemKindKeyword = { fg = c.base, bg = c.red },
-                        CmpItemKindText = { fg = c.base, bg = c.teal },
-                        CmpItemKindMethod = { fg = c.base, bg = c.blue },
-                        CmpItemKindConstructor = { fg = c.base, bg = c.blue },
-                        CmpItemKindFunction = { fg = c.base, bg = c.blue },
-                        CmpItemKindFolder = { fg = c.base, bg = c.blue },
-                        CmpItemKindModule = { fg = c.base, bg = c.blue },
-                        CmpItemKindConstant = { fg = c.base, bg = c.peach },
-                        CmpItemKindField = { fg = c.base, bg = c.green },
-                        CmpItemKindProperty = { fg = c.base, bg = c.green },
-                        CmpItemKindEnum = { fg = c.base, bg = c.green },
-                        CmpItemKindUnit = { fg = c.base, bg = c.green },
-                        CmpItemKindClass = { fg = c.base, bg = c.yellow },
-                        CmpItemKindVariable = { fg = c.base, bg = c.flamingo },
-                        CmpItemKindFile = { fg = c.base, bg = c.blue },
-                        CmpItemKindInterface = { fg = c.base, bg = c.yellow },
-                        CmpItemKindColor = { fg = c.base, bg = c.red },
-                        CmpItemKindReference = { fg = c.base, bg = c.red },
-                        CmpItemKindEnumMember = { fg = c.base, bg = c.red },
-                        CmpItemKindStruct = { fg = c.base, bg = c.blue },
-                        CmpItemKindValue = { fg = c.base, bg = c.peach },
-                        CmpItemKindEvent = { fg = c.base, bg = c.blue },
-                        CmpItemKindOperator = { fg = c.base, bg = c.blue },
-                        CmpItemKindTypeParameter = { fg = c.base, bg = c.blue },
-                        CmpItemKindCopilot = { fg = c.base, bg = c.teal },
-                        CursorLineNr = { fg = c.base, bg = c.surface1 },
-                        ColorColumn = { bg = c.surface0 },
-                    }
-                end,
             })
 
             vim.cmd.colorscheme('catppuccin')
@@ -240,13 +127,6 @@ return {
             depth_limit_indicator = '..',
             safe_output = true,
         },
-    },
-    {
-        'wurli/contextindent.nvim',
-        -- This is the only config option; you can use it to restrict the files
-        -- which this plugin will affect (see :help autocommand-pattern).
-        opts = { pattern = '*' },
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
     },
     {
         'nvim-tree/nvim-web-devicons',
