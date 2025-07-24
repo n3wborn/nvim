@@ -9,8 +9,6 @@ return {
         signature = {
             appearance = {
                 window = { border = vim.o.winborder },
-            },
-            appearance = {
                 nerd_font_variant = 'mono',
             },
             completion = {
