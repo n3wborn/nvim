@@ -1,6 +1,8 @@
 return {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = {
+        'Kaiser-Yang/blink-cmp-git',
+    },
     version = '1.*',
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -31,7 +33,25 @@ return {
                 },
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                default = {
+                    'lsp',
+                    'buffer',
+                    'path',
+                    'snippets',
+                    'conventional_commits',
+                },
+            },
+            providers = {
+                conventional_commits = {
+                    name = 'Conventional Commits',
+                    module = 'blink-cmp-conventional-commits',
+                    enabled = function()
+                        return vim.bo.filetype == 'gitcommit'
+                    end,
+                    ---@module 'blink-cmp-conventional-commits'
+                    ---@type blink-cmp-conventional-commits.Options
+                    opts = {}, -- none so far
+                },
             },
             fuzzy = { implementation = 'prefer_rust_with_warning' },
             opts_extend = { 'sources.default' },
