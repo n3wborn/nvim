@@ -1,7 +1,6 @@
 return {
     'saghen/blink.cmp',
     dependencies = {
-        'Kaiser-Yang/blink-cmp-git',
         'disrupted/blink-cmp-conventional-commits',
     },
     version = '1.*',
