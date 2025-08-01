@@ -137,5 +137,3 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
     end),
     desc = 'Update statusline/winbar',
 })
-
-vim.opt.updatetime = 100
