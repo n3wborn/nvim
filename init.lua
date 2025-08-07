@@ -126,34 +126,24 @@ vim.diagnostic.config({
     update_in_insert = true,
     jump = { severity = vim.log.levels.ERROR },
 })
-local capabilities = {
-    textDocument = {
-        foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-        },
-    },
-}
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('blink.cmp').get_lsp_capabilities({}, false)
+)
 
-capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
-capabilities = vim.tbl_deep_extend('force', capabilities, {
-    textDocument = {
-        foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-        },
-    },
-})
-
+--- @type vim.lsp.Config
 vim.lsp.config('*', {
     capabilities = capabilities,
-    root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
-    root_markers = { '.git' },
-    reuse_client = function(client, conf)
-        return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local cwd = vim.uv.cwd()
+        local root = vim.fs.root(fname, { '.git' })
+
+        on_dir(root and vim.fs.relpath(cwd, root) and cwd)
     end,
+    root_markers = { '.git' },
 })
 
 local servers = {
@@ -163,7 +153,6 @@ local servers = {
     'emmet_language_server',
     'eslint',
     'html',
-    'intelephense',
     'jsonls',
     'lua_ls',
     'twiggy_language_server',
@@ -172,3 +161,22 @@ local servers = {
 for _, server in ipairs(servers) do
     vim.lsp.enable(server)
 end
+
+-- intelephense
+vim.lsp.config('intelephense', {
+    name = 'intelephense',
+    cmd = { 'intelephense', '--stdio' },
+    filetypes = { 'php' },
+    init_options = {
+        licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
+    },
+    settings = {
+        intelephense = {
+            files = {
+                maxSize = 10485760, -- 10Mo
+            },
+        },
+    },
+})
+
+vim.lsp.enable('intelephense')
