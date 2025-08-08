@@ -148,8 +148,6 @@ vim.lsp.config('*', {
 
 local servers = {
     'basedpyright',
-    'bash_language_server',
-    'cssls',
     'emmet_language_server',
     'eslint',
     'html',
@@ -178,5 +176,32 @@ vim.lsp.config('intelephense', {
         },
     },
 })
-
 vim.lsp.enable('intelephense')
+
+vim.lsp.config('bash_language_server', {
+    name = 'bash_language_server',
+    cmd = { 'bash-language-server', 'start' },
+    filetypes = { 'bash', 'sh' },
+    settings = {
+        bashIde = {
+            globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command)',
+        },
+    },
+})
+vim.lsp.enable('bash_language_server')
+
+---@type vim.lsp.Config
+vim.lsp.config('cssls', {
+    cmd = { 'vscode-css-language-server', '--stdio' },
+    filetypes = { 'css', 'scss', 'less' },
+    init_options = { provideFormatter = false },
+    settings = {
+        css = {
+            validate = true,
+            vendorPrefix = 'ignore',
+            duplicateProperties = 'warning',
+            zeroUnits = 'warning',
+        },
+    },
+})
+vim.lsp.enable('cssls')
