@@ -62,19 +62,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Close some filetypes with <q>',
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-    pattern = {
-        'docker-compose.yml',
-        'docker-compose.yaml',
-        'compose.yml',
-        'compose.yaml',
-        -- stylua: ignore
-        'compose.*.yaml',
-        'compose.*.yml',
-    },
-    command = 'set filetype=yaml.docker-compose',
-})
-
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(ev)
