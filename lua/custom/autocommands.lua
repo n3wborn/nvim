@@ -91,6 +91,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
         end
 
+        if client:supports_method('callHierarchy/incomingCalls') then
+            vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, { buffer = ev.buf })
+        end
+
         -- navic
         local navic = require('nvim-navic')
         navic.attach(client, ev.buf)
