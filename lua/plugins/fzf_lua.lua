@@ -3,7 +3,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     cmd = 'FzfLua',
     keys = {
-        { '<space>R', ':FzfLua live_grep_resume<cr>' },
+        { '<space>R', ':FzfLua live_grep resume=true<cr>' },
         { '<space>F', ':FzfLua<cr>' },
         {
             '<leader>o',
