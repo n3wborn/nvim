@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     desc = 'Remove hl search when enter Insert',
 })
 
-vim.api.nvim_create_autocmd({ 'FileType' }, {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = {
         'gitsigns-blame',
         'git',
@@ -52,27 +52,30 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
         'trouble',
         'tsplayground',
         'quickfix',
+        'lazy',
     },
-    callback = function()
-        vim.cmd([[
-    nnoremap <silent> <buffer> q <cmd>close<CR>
-    set nobuflisted
-    ]])
-    end,
-    desc = 'Close some filetypes with <q>',
-})
+    callback = function(event)
+        local bufnr = event.buf
+        local ft = vim.bo[bufnr].filetype
+        vim.bo[bufnr].buflisted = false
 
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-    pattern = {
-        'docker-compose.yml',
-        'docker-compose.yaml',
-        'compose.yml',
-        'compose.yaml',
-        -- stylua: ignore
-        'compose.*.yaml',
-        'compose.*.yml',
-    },
-    command = 'set filetype=yaml.docker-compose',
+        -- Map 'q' to close for all filetypes
+        vim.keymap.set('n', 'q', '<cmd>close<CR>', {
+            buffer = bufnr,
+            silent = true,
+            desc = 'Close window',
+        })
+
+        -- Map <ESC> to close for lazy (ex: plugins diff buffer)
+        if ft == 'lazy' then
+            vim.keymap.set('n', '<ESC>', '<cmd>close<CR>', {
+                buffer = bufnr,
+                silent = true,
+                desc = 'Close window with ESC',
+            })
+        end
+    end,
+    desc = 'Configure special buffers to close with q (and ESC for lazy)',
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -86,6 +89,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- completion
         if client:supports_method('textDocument/completion') then
             vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+        end
+
+        if client:supports_method('callHierarchy/incomingCalls') then
+            vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, { buffer = ev.buf })
         end
 
         -- navic
@@ -138,4 +145,78 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
     desc = 'Update statusline/winbar',
 })
 
-vim.opt.updatetime = 100
+vim.api.nvim_create_autocmd('FocusGained', {
+    desc = 'User: Close all non-existing buffers on `FocusGained`.',
+    callback = function()
+        local closedBuffers = {}
+        local allBufs = vim.fn.getbufinfo({ buflisted = 1 })
+        vim.iter(allBufs):each(function(buf)
+            if not vim.api.nvim_buf_is_valid(buf.bufnr) then
+                return
+            end
+            local stillExists = vim.uv.fs_stat(buf.name) ~= nil
+            local specialBuffer = vim.bo[buf.bufnr].buftype ~= ''
+            local newBuffer = buf.name == ''
+            if stillExists or specialBuffer or newBuffer then
+                return
+            end
+            table.insert(closedBuffers, vim.fs.basename(buf.name))
+            vim.api.nvim_buf_delete(buf.bufnr, { force = false })
+        end)
+        if #closedBuffers == 0 then
+            return
+        end
+
+        if #closedBuffers == 1 then
+            vim.notify(closedBuffers[1], nil, { title = 'Buffer closed', icon = '󰅗' })
+        else
+            local text = '- ' .. table.concat(closedBuffers, '\n- ')
+            vim.notify(text, nil, { title = 'Buffers closed', icon = '󰅗' })
+        end
+
+        -- If ending up in empty buffer, re-open the first oldfile that exists
+        vim.schedule(function()
+            if vim.api.nvim_buf_get_name(0) ~= '' then
+                return
+            end
+            for _, file in ipairs(vim.v.oldfiles) do
+                if vim.uv.fs_stat(file) and vim.fs.basename(file) ~= 'COMMIT_EDITMSG' then
+                    vim.cmd.edit(file)
+                    return
+                end
+            end
+        end)
+    end,
+})
+
+-- https://github.com/chrisgrieser/.config/blob/main/nvim/lua/config/autocmds.lua#L84
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLost' }, {
+    desc = 'User: Auto-save',
+    callback = function(ctx)
+        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
+        local bufnr = ctx.buf
+        local bo, b = vim.bo[bufnr], vim.b[bufnr]
+        local bufname = ctx.file
+        if bo.buftype ~= '' or bo.ft == 'gitcommit' or bo.readonly then
+            return
+        end
+        if b.saveQueued and not saveInstantly then
+            return
+        end
+
+        b.saveQueued = true
+        vim.defer_fn(function()
+            if not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+            end
+
+            vim.api.nvim_buf_call(bufnr, function()
+                -- saving with explicit name prevents issues when changing `cwd`
+                -- `:update!` suppresses "The file has been changed since reading it!!!"
+                local vimCmd = ('silent! noautocmd lockmarks update! %q'):format(bufname)
+                vim.cmd(vimCmd)
+            end)
+            b.saveQueued = false
+        end, saveInstantly and 0 or 2000)
+    end,
+})

@@ -28,19 +28,6 @@ require('lazy').setup({
             'famiu/bufdelete.nvim',
         },
         {
-            'OXY2DEV/markview.nvim',
-            lazy = false, -- (already lazy-loaded)
-            dependencies = {
-                'nvim-treesitter/nvim-treesitter',
-                'nvim-tree/nvim-web-devicons',
-            },
-            opts = {
-                experimental = {
-                    check_rtp_message = false,
-                },
-            },
-        },
-        {
             'hasansujon786/nvim-navbuddy',
             cmd = 'Navbuddy',
             keys = {
@@ -140,23 +127,30 @@ vim.diagnostic.config({
     jump = { severity = vim.log.levels.ERROR },
 })
 
+local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('blink.cmp').get_lsp_capabilities({}, false)
+)
+
+--- @type vim.lsp.Config
 vim.lsp.config('*', {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-    root_dir = vim.fs.dirname(vim.fs.find({ '.git' }, { upward = true })[1]),
-    root_markers = { '.git' },
-    reuse_client = function(client, conf)
-        return (client.name == conf.name and (client.config.root_dir == conf.root_dir))
+    capabilities = capabilities,
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local cwd = vim.uv.cwd()
+        local root = vim.fs.root(fname, { '.git' })
+
+        on_dir(root and vim.fs.relpath(cwd, root) and cwd)
     end,
+    root_markers = { '.git' },
 })
 
 local servers = {
     'basedpyright',
-    'bash_language_server',
-    'cssls',
     'emmet_language_server',
     'eslint',
     'html',
-    'intelephense',
     'jsonls',
     'lua_ls',
     'twiggy_language_server',
@@ -165,3 +159,49 @@ local servers = {
 for _, server in ipairs(servers) do
     vim.lsp.enable(server)
 end
+
+-- intelephense
+vim.lsp.config('intelephense', {
+    name = 'intelephense',
+    cmd = { 'intelephense', '--stdio' },
+    filetypes = { 'php' },
+    init_options = {
+        licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
+    },
+    settings = {
+        intelephense = {
+            files = {
+                maxSize = 10485760, -- 10Mo
+            },
+        },
+    },
+})
+vim.lsp.enable('intelephense')
+
+vim.lsp.config('bash_language_server', {
+    name = 'bash_language_server',
+    cmd = { 'bash-language-server', 'start' },
+    filetypes = { 'bash', 'sh' },
+    settings = {
+        bashIde = {
+            globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command)',
+        },
+    },
+})
+vim.lsp.enable('bash_language_server')
+
+---@type vim.lsp.Config
+vim.lsp.config('cssls', {
+    cmd = { 'vscode-css-language-server', '--stdio' },
+    filetypes = { 'css', 'scss', 'less' },
+    init_options = { provideFormatter = false },
+    settings = {
+        css = {
+            validate = true,
+            vendorPrefix = 'ignore',
+            duplicateProperties = 'warning',
+            zeroUnits = 'warning',
+        },
+    },
+})
+vim.lsp.enable('cssls')
