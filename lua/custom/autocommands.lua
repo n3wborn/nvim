@@ -137,6 +137,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
+
+        if client:supports_method('textDocument/colorPresentation') then
+            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(ev.buf), ev.buf)
+        end
+
+        if client:supports_method('textDocument/inlayHint') then
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end
     end,
 })
 
