@@ -131,6 +131,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', 'g0', vim.lsp.buf.rename, { buffer = ev.buf })
         end
 
+        if client:supports_method('textDocument/documentColor') then
+            vim.lsp.document_color.enable(true, ev.buf)
+        end
+
         vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
