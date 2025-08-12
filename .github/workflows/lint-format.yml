@@ -6,26 +6,26 @@ jobs:
   stylua:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: JohnnyMorganz/stylua-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: .
           version: 2.0.2
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: "chore(style): stylua format"
           branch: ${{ github.head_ref }}
   markdownlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DavidAnson/markdownlint-cli2-action@v19
         with:
           command: fix
           globs: |
             *.md
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: "chore(style): markdownlint format"
           branch: ${{ github.head_ref }}
