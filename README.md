@@ -1,6 +1,6 @@
 # Nvim
 
-<img width="686" height="478" alt="Capture d’écran_2025-07-19_14-32-31" src="https://github.com/user-attachments/assets/7f1b89b6-5928-42bb-aae0-d4fb65de90d6" />
+![capture][capture-url]
 
 I use this repo to keep track of my own neovim config.
 Use it if you want but keep this in mind :
@@ -21,3 +21,5 @@ If you're looking for an already configured neovim you may prefer these:
 - [NvChad](https://github.com/NvChad/NvChad)
 - [Lunarvim](https://github.com/LunarVim/LunarVim)
 - [Astrovim](https://github.com/AstroNvim/AstroNvim)
+
+[capture-url]: https://github.com/user-attachments/assets/7f1b89b6-5928-42bb-aae0-d4fb65de90d6
