@@ -67,7 +67,7 @@ vim.api.nvim_create_autocmd('FileType', {
         })
 
         -- Map <ESC> to close for lazy (ex: plugins diff buffer)
-        if ft == 'lazy' then
+        if ft == 'lazy' or ft == 'qf' then
             vim.keymap.set('n', '<ESC>', '<cmd>close<CR>', {
                 buffer = bufnr,
                 silent = true,
@@ -143,7 +143,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         if client:supports_method('textDocument/inlayHint') then
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            vim.lsp.inlay_hint.enable(true)
         end
     end,
 })
