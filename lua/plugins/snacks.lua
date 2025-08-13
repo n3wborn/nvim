@@ -68,6 +68,7 @@ return {
         { "<leader>gj", function() Snacks.picker.jumps() end, desc = "List Jumps" },
         { "<leader>gm", function() Snacks.picker.marks() end, desc = "List Marks" },
         { '<leader>gr', function() Snacks.picker.registers() end, desc = "List Registers" },
+        { "<leader>k", function() Snacks.picker.keymaps() end, desc = "List mappings" },
         { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
         { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
