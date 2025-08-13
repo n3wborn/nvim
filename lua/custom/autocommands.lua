@@ -14,17 +14,24 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     desc = 'Fix conceallevel for json an help files',
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+    desc = 'User: Restore cursor position',
+    callback = function(ctx)
+        if vim.bo[ctx.buf].buftype ~= '' then
+            return
+        end
+        vim.cmd([[silent! normal! g`"]])
+    end,
+})
+
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     command = 'checktime',
     desc = 'Check if we need to reload the file when it changed',
 })
 
-vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
-    group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank({ higroup = 'Visual', priority = 250 }) --higher priority than lsp refs
-    end,
-    desc = 'Highlight on yank',
+vim.api.nvim_create_autocmd('VimResized', {
+    desc = 'User: keep splits equally sized on window resize',
+    command = 'wincmd =',
 })
 
 vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
