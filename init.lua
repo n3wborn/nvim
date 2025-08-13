@@ -171,7 +171,7 @@ vim.lsp.config('intelephense', {
     settings = {
         intelephense = {
             files = {
-                maxSize = 10485760, -- 10Mo
+                maxSize = 10 * 1024 * 1024, -- 10Mo
             },
         },
     },
