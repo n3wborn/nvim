@@ -1,3 +1,4 @@
+    ---@type LazyPluginSpec
 return {
     'folke/trouble.nvim',
     cmd = { 'Trouble' },

@@ -1,4 +1,5 @@
 -- stylua: ignore
+---@type LazyPluginSpec
 return {
     "folke/snacks.nvim",
     priority = 1000,

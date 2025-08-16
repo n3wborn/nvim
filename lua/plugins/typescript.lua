@@ -1,7 +1,9 @@
 return {
+    ---@type LazyPluginSpec
     {
         'dmmulroy/ts-error-translator.nvim',
     },
+    ---@type LazyPluginSpec
     {
         'pmizio/typescript-tools.nvim',
         dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },

@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'sindrets/diffview.nvim',
         cmd = {
@@ -26,6 +27,7 @@ return {
             require('diffview')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'akinsho/git-conflict.nvim',
         event = 'BufReadPre',
@@ -43,6 +45,7 @@ return {
         ]]
         },
     },
+    ---@type LazyPluginSpec
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },

@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         cmd = {
@@ -13,6 +14,7 @@ return {
             require('mason').setup()
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason-lspconfig.nvim',
         config = function()

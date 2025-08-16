@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'akinsho/toggleterm.nvim',
         version = '*',

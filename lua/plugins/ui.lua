@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'echasnovski/mini.align',
         version = false,
@@ -7,6 +8,7 @@ return {
             require('mini.align').setup()
         end,
     },
+    ---@type LazyPluginSpec
     {
         'catppuccin/nvim',
         lazy = false,
@@ -39,6 +41,7 @@ return {
             vim.cmd.colorscheme('catppuccin')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
         dependencies = {
@@ -79,6 +82,7 @@ return {
             require('lualine').setup(opts)
         end,
     },
+    ---@type LazyPluginSpec
     {
         'NvChad/nvim-colorizer.lua',
         event = 'BufReadPre',
@@ -87,6 +91,7 @@ return {
             buftype = { 'javascript', 'typescript', 'html', 'css', 'scss' },
         },
     },
+    ---@type LazyPluginSpec
     {
         'folke/noice.nvim',
         event = 'VeryLazy',
@@ -113,6 +118,7 @@ return {
             })
         end,
     },
+    ---@type LazyPluginSpec
     {
         'SmiteshP/nvim-navic',
         dependencies = 'neovim/nvim-lspconfig',
@@ -127,11 +133,14 @@ return {
             depth_limit_indicator = '..',
             safe_output = true,
         },
+        ---@type LazyPluginSpec
     },
+    ---@type LazyPluginSpec
     {
         'nvim-tree/nvim-web-devicons',
         lazy = true,
     },
+    ---@type LazyPluginSpec
     {
         'chrisgrieser/nvim-origami',
         event = 'VeryLazy',

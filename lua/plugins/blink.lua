@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
     'saghen/blink.cmp',
     dependencies = {
