@@ -11,12 +11,12 @@ return {
     ---@type LazyPluginSpec
     {
         'catppuccin/nvim',
-        lazy = false,
         priority = 1000,
         name = 'catppuccin',
         config = function()
             require('catppuccin').setup({
                 flavour = 'mocha',
+                auto_integrations = true,
                 background = {
                     light = 'latte',
                     dark = 'mocha',
@@ -53,7 +53,7 @@ return {
             local config = {
                 options = {
                     icons_enabled = true,
-                    theme = 'catpuccin',
+                    theme = 'catppuccin',
                     component_separators = { left = '', right = '' },
                     section_separators = { left = '', right = '' },
                     disabled_filetypes = {},
@@ -77,6 +77,7 @@ return {
                 },
                 tabline = {},
             }
+            return config
         end,
         config = function(_, opts)
             require('lualine').setup(opts)
@@ -124,7 +125,7 @@ return {
         dependencies = 'neovim/nvim-lspconfig',
         opts = {
             lsp = {
-                auto_attach = false,
+                auto_attach = true,
                 preference = nil,
             },
             highlight = true,
