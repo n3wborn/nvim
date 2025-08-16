@@ -80,24 +80,16 @@ return {
         },
         keys = {
             {
-                mode = 'n',
                 '<leader>hn',
                 function()
-                    require('gitsigns').nav_hunk(
-                        'next',
-                        { preview = true, navigation_message = 'f', target = 'all', greedy = true }
-                    )
+                    require('gitsigns').nav_hunk('next', { preview = true })
                 end,
                 desc = 'Gitsigns next hunk',
             },
             {
-                mode = 'n',
                 '<leader>hN',
                 function()
-                    require('gitsigns').nav_hunk(
-                        'prev',
-                        { preview = true, navigation_message = 'f', target = 'all', greedy = true }
-                    )
+                    require('gitsigns').nav_hunk('prev', { preview = true })
                 end,
             },
             {
@@ -106,10 +98,10 @@ return {
                 ':Gitsigns stage_hunk<CR>',
             },
             {
-                mode = 'v',
+                mode = { 'x', 'v' },
                 '<leader>hs',
                 function()
-                    require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').stage_hunk()
                 end,
             },
             {
@@ -123,10 +115,10 @@ return {
                 ':Gitsigns stage_hunk<CR>',
             },
             {
-                mode = 'n',
+                mode = { 'x', 'v' },
                 '<leader>hr',
                 function()
-                    require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').reset_hunk()
                 end,
             },
             {
@@ -141,19 +133,16 @@ return {
                 ':Gitsigns preview_hunk<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hB',
-                ':Gitsigns blame<CR>',
+                ':Gitsigns blame <CR>',
             },
             {
-                mode = 'n',
                 '<leader>hb',
                 ':Gitsigns blame_line<CR>',
             },
             {
-                mode = 'n',
                 '<leader>tb',
-                ':Gitsigns toogle_current_line_blame<CR>',
+                ':Gitsigns toggle_current_line_blame<CR>',
             },
             {
                 mode = 'n',
