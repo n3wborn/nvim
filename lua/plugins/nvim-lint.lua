@@ -1,4 +1,4 @@
-    ---@type LazyPluginSpec
+---@type LazyPluginSpec
 return {
     'mfussenegger/nvim-lint',
     lazy = true,
