@@ -64,7 +64,7 @@ return {
         { "<leader>sP", function() Snacks.picker.git_grep() end, desc = "git grep" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
-        { "<space>S", function() Snacks.picker.smart({ multi = { "recent", "files" },  matcher = {cwd_bonus = false, frecency = true, sort_empty = true} }) end, desc = "Smart Picker" },
+        { "<space>S", function() Snacks.picker.smart({ multi = { "recent", "files" },  matcher = {cwd_bonus = true, frecency = true, sort_empty = true} }) end, desc = "Smart Picker" },
         { "gb",         function() Snacks.picker.buffers() end, desc = "List Buffers" },
         { "<leader>gj", function() Snacks.picker.jumps() end, desc = "List Jumps" },
         { "<leader>gm", function() Snacks.picker.marks() end, desc = "List Marks" },
