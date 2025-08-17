@@ -102,10 +102,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, { buffer = ev.buf })
         end
 
-        -- navic
-        local navic = require('nvim-navic')
-        navic.attach(client, ev.buf)
-
         -- default keymaps
         -- grn = vim.lsp.buf.rename()
         -- gra = vim.lsp.buf.code_action()
