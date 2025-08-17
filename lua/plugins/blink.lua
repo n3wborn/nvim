@@ -2,10 +2,8 @@
 return {
     'saghen/blink.cmp',
     dependencies = {
-        'Kaiser-Yang/blink-cmp-git',
         'rafamadriz/friendly-snippets',
         'mikavilpas/blink-ripgrep.nvim',
-        'disrupted/blink-cmp-conventional-commits',
     },
 
     version = '1.*',
@@ -110,14 +108,8 @@ return {
                 'ripgrep',
                 'path',
                 'snippets',
-                'conventional_commits',
             },
             providers = {
-                conventional_commits = {
-                    name = 'Conventional Commits',
-                    module = 'blink-cmp-conventional-commits',
-                    enabled = function()
-                        return vim.bo.filetype == 'gitcommit'
                     end,
                     ---@module 'blink-cmp-conventional-commits'
                     ---@type blink-cmp-conventional-commits.Options
