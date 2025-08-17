@@ -131,7 +131,7 @@ local capabilities = vim.tbl_deep_extend(
     require('blink.cmp').get_lsp_capabilities({}, false)
 )
 
---- @type vim.lsp.Config
+---@type vim.lsp.Config
 vim.lsp.config('*', {
     capabilities = capabilities,
     root_dir = function(bufnr, on_dir)
@@ -186,3 +186,6 @@ vim.lsp.config('cssls', {
     },
 })
 vim.lsp.enable('cssls')
+
+require('custom.keymaps')
+require('custom.autocommands')
