@@ -7,6 +7,7 @@ require('custom')
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
+        { 'neovim/nvim-lspconfig' },
         {
             'bloznelis/before.nvim',
             keys = {
@@ -106,9 +107,6 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
-require('custom.keymaps')
-require('custom.autocommands')
-
 local signs = require('custom.icons').diagnostics
 
 vim.diagnostic.config({
@@ -151,6 +149,7 @@ local servers = {
     'emmet_language_server',
     'eslint',
     'html',
+    'intelephense',
     'jsonls',
     'lua_ls',
     'twiggy_language_server',
@@ -159,24 +158,6 @@ local servers = {
 for _, server in ipairs(servers) do
     vim.lsp.enable(server)
 end
-
--- intelephense
-vim.lsp.config('intelephense', {
-    name = 'intelephense',
-    cmd = { 'intelephense', '--stdio' },
-    filetypes = { 'php' },
-    init_options = {
-        licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
-    },
-    settings = {
-        intelephense = {
-            files = {
-                maxSize = 10485760, -- 10Mo
-            },
-        },
-    },
-})
-vim.lsp.enable('intelephense')
 
 vim.lsp.config('bash_language_server', {
     name = 'bash_language_server',
