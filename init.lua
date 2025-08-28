@@ -107,24 +107,6 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
-local signs = require('custom.icons').diagnostics
-
-vim.diagnostic.config({
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = signs.Error,
-            [vim.diagnostic.severity.WARN] = signs.Warn,
-            [vim.diagnostic.severity.HINT] = signs.Hint,
-            [vim.diagnostic.severity.INFO] = signs.Info,
-        },
-    },
-    virtual_text = false,
-    severity_sort = true,
-    underline = false,
-    update_in_insert = true,
-    jump = { severity = vim.log.levels.ERROR },
-})
-
 local capabilities = vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),
@@ -139,13 +121,14 @@ vim.lsp.config('*', {
         local cwd = vim.uv.cwd()
         local root = vim.fs.root(fname, { '.git' })
 
-        on_dir(root and vim.fs.relpath(cwd, root) and cwd)
+        on_dir(root and vim.fs.relpath(cwd or {}, root) and cwd)
     end,
     root_markers = { '.git' },
 })
 
 local servers = {
     'basedpyright',
+    'bash-language-server',
     'emmet_language_server',
     'eslint',
     'html',
@@ -159,33 +142,24 @@ for _, server in ipairs(servers) do
     vim.lsp.enable(server)
 end
 
-vim.lsp.config('bash_language_server', {
-    name = 'bash_language_server',
-    cmd = { 'bash-language-server', 'start' },
-    filetypes = { 'bash', 'sh' },
-    settings = {
-        bashIde = {
-            globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command)',
-        },
-    },
-})
-vim.lsp.enable('bash_language_server')
+local signs = require('custom.icons').diagnostics
 
----@type vim.lsp.Config
-vim.lsp.config('cssls', {
-    cmd = { 'vscode-css-language-server', '--stdio' },
-    filetypes = { 'css', 'scss', 'less' },
-    init_options = { provideFormatter = false },
-    settings = {
-        css = {
-            validate = true,
-            vendorPrefix = 'ignore',
-            duplicateProperties = 'warning',
-            zeroUnits = 'warning',
+vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = signs.Error,
+            [vim.diagnostic.severity.WARN] = signs.Warn,
+            [vim.diagnostic.severity.HINT] = signs.Hint,
+            [vim.diagnostic.severity.INFO] = signs.Info,
         },
     },
+
+    severity_sort = true,
+    underline = false,
+    update_in_insert = true,
+    float = true,
+    jump = { on_jump = vim.diagnostic.open_float },
 })
-vim.lsp.enable('cssls')
 
 require('custom.keymaps')
 require('custom.autocommands')
