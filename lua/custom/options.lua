@@ -39,13 +39,13 @@ vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.o.winwidth = 10
 vim.o.winminwidth = 10
-vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.winborder = 'rounded'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 vim.opt.updatetime = 100
+vim.opt.equalalways = true
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
