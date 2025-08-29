@@ -7,9 +7,9 @@ return {
         local lint = require('lint')
 
         lint.linters_by_ft = {
+            gitcommit = { 'gitlint' },
             javascript = { 'eslint_d' },
             javascriptreact = { 'eslint_d' },
-            gitcommit = { 'gitlint' },
             php = { 'php' },
             typescript = { 'eslint_d' },
             typescriptreact = { 'eslint_d' },
