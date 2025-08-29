@@ -15,7 +15,24 @@ return {
         ---@type blink.cmp.Config
         opts = {
             keymap = {
-                preset = 'enter',
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-e>'] = { 'hide', 'fallback' },
+                ['<CR>'] = { 'accept', 'fallback' },
+
+                ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+
+                ['<Up>'] = { 'select_prev', 'fallback' },
+                ['<Down>'] = { 'select_next', 'fallback' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-UP>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-DOWN>'] = { 'scroll_documentation_down', 'fallback' },
+
+                ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
             completion = {
                 keyword = { range = 'full' },
@@ -24,7 +41,7 @@ return {
                 ghost_text = { enabled = true },
                 list = {
                     selection = {
-                        preselect = true,
+                        preselect = false,
                         auto_insert = true,
                     },
                 },
@@ -51,6 +68,7 @@ return {
                         max_items = 2,
                     },
                     buffer = {
+                        module = 'blink.cmp.sources.buffer',
                         score_offset = -3,
                         max_items = 3,
                         opts = {
@@ -68,6 +86,7 @@ return {
                         ---@module "blink-ripgrep"
                         ---@type blink-ripgrep.Options
                         opts = {},
+                        score_offset = -4,
                         max_items = 3,
                     },
                 },
