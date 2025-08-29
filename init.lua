@@ -7,7 +7,10 @@ require('custom')
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
-        { 'neovim/nvim-lspconfig' },
+        {
+            'neovim/nvim-lspconfig',
+            dependencies = { 'saghen/blink.cmp' },
+        },
         {
             'bloznelis/before.nvim',
             keys = {
@@ -107,15 +110,16 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
-local capabilities = vim.tbl_deep_extend(
-    'force',
-    vim.lsp.protocol.make_client_capabilities(),
-    require('blink.cmp').get_lsp_capabilities({}, false)
-)
-
+-- local capabilities = vim.tbl_deep_extend(
+--     'force',
+--     vim.lsp.protocol.make_client_capabilities(),
+--     require('blink.cmp').get_lsp_capabilities({}, false)
+-- )
+--
+--
 ---@type vim.lsp.Config
 vim.lsp.config('*', {
-    capabilities = capabilities,
+    capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities(), false),
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
         local cwd = vim.uv.cwd()
