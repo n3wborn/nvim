@@ -13,32 +13,39 @@ return {
         'selene.yml',
         '.git',
     },
-
-    -- done through lazydev
-    -- on_init = function(client)
-    --     if client.workspace_folders then
-    --         local path = client.workspace_folders[1].name
-    --         if
-    --             path ~= vim.fn.stdpath('config')
-    --             and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-    --         then
-    --             return
-    --         end
-    --     end
-    --
-    --     client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-    --         runtime = {
-    --             version = 'LuaJIT',
-    --         },
-    --         workspace = {
-    --             checkThirdParty = false,
-    --             library = {
-    --                 vim.env.VIMRUNTIME,
-    --             },
-    --         },
-    --     })
-    -- end,
-    -- settings = {
-    --     Lua = {},
-    -- },
+    -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lsp/lua_ls.lua
+    on_attach = function(client)
+        -- disable formatting in favor of `stylua`
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+    end,
+    settings = {
+        Lua = {
+            completion = {
+                callSnippet = 'Disable', -- signature help more useful here
+                keywordSnippet = 'Replace',
+                showWord = 'Disable', -- already done by completion plugin
+                workspaceWord = false, -- already done by completion plugin
+                postfix = '.', -- useful for `table.insert` and the like
+                enable = true,
+            },
+            diagnostics = {
+                unusedLocalExclude = { '_*' },
+                disable = {
+                    -- formatter already handles that
+                    'trailing-space',
+                    -- don't dim content of unused functions
+                    -- (no loss of diagnostic, `unused-local` still informs about these functions)
+                    'unused-function',
+                },
+                globals = { 'vim' }, -- when working on nvim plugins that lack a `.luarc.json`
+            },
+            hint = { -- inlay hints
+                enable = true,
+                setType = true,
+                arrayIndex = 'Disable', -- too noisy
+                semicolon = 'Disable', -- mostly wrong on invalid code
+            },
+        },
+    },
 }
