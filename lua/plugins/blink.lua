@@ -4,6 +4,10 @@ return {
         'saghen/blink.cmp',
         dependencies = {
             'rafamadriz/friendly-snippets',
+            {
+                'mikavilpas/blink-ripgrep.nvim',
+                version = '*',
+            },
         },
         version = '1.*',
         build = 'cargo build --release',
@@ -18,41 +22,37 @@ return {
                 documentation = { auto_show = true },
                 accept = { auto_brackets = { enabled = true } },
                 ghost_text = { enabled = true },
-                -- list = {
-                --     selection = {
-                --         preselect = true,
-                --         auto_insert = true,
-                --     },
-                -- },
+                list = {
+                    selection = {
+                        preselect = true,
+                        auto_insert = true,
+                    },
+                },
                 menu = {
                     draw = {
                         columns = {
                             { 'label', 'label_description', gap = 1 },
-                            { 'kind_icon', 'kind' },
+                            { 'source_name', 'kind_icon', gap = 1, 'kind' },
                         },
                     },
                 },
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets' },
+                default = { 'lsp', 'path', 'snippets', 'ripgrep' },
+
                 providers = {
                     lsp = {
                         name = 'LSP',
                         module = 'blink.cmp.sources.lsp',
-                        -- transform_items = function(_, items)
-                        --     return vim.tbl_filter(function(item)
-                        --         return item.kind ~= require('blink.cmp.types').CompletionItemKind.Keyword
-                        --     end, items)
-                        -- end,
-                        -- override = {
-                        --     get_trigger_characters = function(self)
-                        --         local trigger_characters = self:get_trigger_characters()
-                        --         vim.list_extend(trigger_characters, { '\n', '\t', ' ' })
-                        --         return trigger_characters
-                        --     end,
-                        -- },
+                    },
+                    snippets = {
+                        module = 'blink.cmp.sources.snippets',
+                        score_offset = -1, -- receives a -3 from top level snippets.score_offset
+                        max_items = 2,
                     },
                     buffer = {
+                        score_offset = -3,
+                        max_items = 3,
                         opts = {
                             get_bufnrs = function()
                                 return vim.tbl_filter(function(bufnr)
@@ -60,6 +60,15 @@ return {
                                 end, vim.api.nvim_list_bufs())
                             end,
                         },
+                    },
+                    ripgrep = {
+                        module = 'blink-ripgrep',
+                        name = 'Ripgrep',
+                        -- see the full configuration below for all available options
+                        ---@module "blink-ripgrep"
+                        ---@type blink-ripgrep.Options
+                        opts = {},
+                        max_items = 3,
                     },
                 },
             },
