@@ -127,10 +127,10 @@ vim.lsp.config('*', {
 })
 
 local servers = {
-    'basedpyright',
+    'basedpyright', -- default config
     'bashls',
     'emmet_language_server',
-    'eslint',
+    'eslint', -- default config
     'html',
     'intelephense',
     'jsonls',
