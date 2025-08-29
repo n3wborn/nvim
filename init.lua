@@ -128,7 +128,7 @@ vim.lsp.config('*', {
 
 local servers = {
     'basedpyright',
-    'bash-language-server',
+    'bashls',
     'emmet_language_server',
     'eslint',
     'html',
