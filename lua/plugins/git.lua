@@ -79,23 +79,25 @@ return {
             watch_gitdir = { enabled = true, follow_files = true },
         },
         keys = {
+            ---@diagnostic disable: param-type-mismatch
             {
                 '<leader>hn',
                 function()
                     require('gitsigns').nav_hunk('next', { preview = true })
                 end,
-                desc = 'Gitsigns next hunk',
+                desc = '󰊢 Next hunk',
             },
             {
                 '<leader>hN',
                 function()
                     require('gitsigns').nav_hunk('prev', { preview = true })
                 end,
+                desc = '󰊢 Previous hunk',
             },
             {
-                mode = 'n',
                 '<leader>hs',
-                ':Gitsigns stage_hunk<CR>',
+                '<cmd>Gitsigns stage_hunk<CR>',
+                desc = '󰊢 (Un-)Stage hunk',
             },
             {
                 mode = { 'x', 'v' },
@@ -105,7 +107,6 @@ return {
                 end,
             },
             {
-                mode = 'n',
                 '<leader>hS',
                 ':Gitsigns stage_buffer<CR>',
             },
@@ -115,50 +116,48 @@ return {
                 ':Gitsigns stage_hunk<CR>',
             },
             {
-                mode = { 'x', 'v' },
+                mode = 'n',
                 '<leader>hr',
                 function()
                     require('gitsigns').reset_hunk()
                 end,
             },
             {
-                mode = 'n',
                 '<leader>hR',
-                ':Gitsigns reset_buffer<CR>',
+                '<cmd>Gitsigns reset_buffer<CR>',
             },
 
             {
-                mode = 'n',
                 '<leader>hp',
-                ':Gitsigns preview_hunk<CR>',
+                '<cmd>Gitsigns preview_hunk<CR>',
             },
             {
                 '<leader>hB',
-                ':Gitsigns blame <CR>',
+                '<cmd>Gitsigns blame<CR>',
             },
             {
                 '<leader>hb',
-                ':Gitsigns blame_line<CR>',
+                '<cmd>Gitsigns blame_line<CR>',
             },
             {
                 '<leader>tb',
-                ':Gitsigns toggle_current_line_blame<CR>',
+                '<cmd>Gitsigns toogle_current_line_blame<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hd',
-                ':Gitsigns diffthis<CR>',
+                '<cmd>Gitsigns diffthis<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hD',
-                ':Gitsigns diffthis ~<CR>',
+                '<cmd>Gitsigns diffthis ~<CR>',
             },
             {
-                mode = 'n',
                 '<leader>td',
-                ':Gitsigns preview_hunk_inline<CR>',
+                '<cmd>Gitsigns preview_hunk_inline<CR>',
             },
         },
+        config = function(_, opts)
+            require('gitsigns').setup(opts)
+        end,
     },
 }
