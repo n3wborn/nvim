@@ -15,7 +15,7 @@ return {
             -- json = { 'jq' },
             lua = { 'stylua' },
             --- @todo: add hougesen/mdsf
-            markdown = { 'markdownlint' },
+            markdown = { 'markdownlint-cli2', 'markdownfmt' },
             php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
