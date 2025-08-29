@@ -22,7 +22,6 @@ return {
             sql = { 'sql_formatter' },
             typescript = { 'eslint_d', 'eslint' },
             typescriptreact = { 'eslint_d', 'eslint' },
-            ['twig.html'] = { 'twig-cs-fixer' },
             twig = { 'twig-cs-fixer' },
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
