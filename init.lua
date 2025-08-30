@@ -131,17 +131,17 @@ vim.lsp.config('*', {
 })
 
 local servers = {
-    'basedpyright', -- default config
-    'bashls',
-    'cssls',
-    'emmet_language_server',
-    'eslint', -- default config
-    'html',
-    'intelephense',
-    'jsonls',
-    'lua_ls',
-    'oxlint', -- default config
-    'twiggy_language_server',
+    'basedpyright', -- https://detachhead.github.io/basedpyright
+    'bashls', -- npm i -g bash-language-server
+    'cssls', -- npm i -g vscode-langservers-extracted
+    'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
+    'eslint', -- npm i -g vscode-langservers-extracted
+    'html', -- npm i -g vscode-langservers-extracted
+    'intelephense', -- npm i -g intelephense
+    'jsonls', -- npm i -g vscode-langservers-extracted
+    'lua_ls', -- https://luals.github.io/#neovim-install
+    'oxlint', -- npm i -g oxlint
+    'twiggy_language_server', -- npm i -g twiggy-language-server
 }
 
 for _, server in ipairs(servers) do
