@@ -22,8 +22,8 @@ return {
                 ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
                 ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
 
-                ['<Up>'] = { 'select_prev', 'fallback' },
-                ['<Down>'] = { 'select_next', 'fallback' },
+                ['<Up>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                ['<Down>'] = { 'select_next', 'snippet_forward', 'fallback' },
                 ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
                 ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
 
@@ -41,7 +41,7 @@ return {
                 ghost_text = { enabled = true },
                 list = {
                     selection = {
-                        preselect = false,
+                        preselect = true,
                         auto_insert = true,
                     },
                 },
@@ -61,6 +61,7 @@ return {
                     lsp = {
                         name = 'LSP',
                         module = 'blink.cmp.sources.lsp',
+                        min_keyword_length = 0,
                     },
                     snippets = {
                         module = 'blink.cmp.sources.snippets',
