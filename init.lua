@@ -110,16 +110,17 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
--- local capabilities = vim.tbl_deep_extend(
---     'force',
---     vim.lsp.protocol.make_client_capabilities(),
---     require('blink.cmp').get_lsp_capabilities({}, false)
--- )
---
---
+local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('blink.cmp').get_lsp_capabilities({}, false)
+)
+
+capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
+
 ---@type vim.lsp.Config
 vim.lsp.config('*', {
-    capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities(), false),
+    capabilities = capabilities,
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
         local cwd = vim.uv.cwd()
@@ -130,10 +131,13 @@ vim.lsp.config('*', {
     root_markers = { '.git' },
 })
 
+vim.lsp.on_type_formatting.enable()
+
 local servers = {
     -- 'basedpyright', -- https://detachhead.github.io/basedpyright
     'bashls', -- npm i -g bash-language-server
     'cssls', -- npm i -g vscode-langservers-extracted
+    -- 'phptools', -- npm i -g devsense-php-ls
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
     'eslint', -- npm i -g vscode-langservers-extracted
     'html', -- npm i -g vscode-langservers-extracted
