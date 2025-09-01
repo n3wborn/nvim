@@ -130,8 +130,76 @@ vim.lsp.config('*', {
     root_markers = { '.git' },
 })
 
+--- @type vim.lsp.Config
+vim.lsp.config('intelephense', {
+    cmd = { 'intelephense', '--stdio' },
+    filetypes = { 'php' },
+    root_markers = { '.git', 'composer.json' },
+    init_options = {
+        licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
+    },
+    settings = {
+        intelephense = {
+            files = {
+                maxSize = 10485760, -- 10Mo
+                associations = { '*.php', '*.phtml' },
+            },
+        },
+    },
+})
+
+vim.lsp.config('lua_la', {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = {
+        '.luarc.json',
+        '.luarc.jsonc',
+        '.luacheckrc',
+        '.stylua.toml',
+        'stylua.toml',
+        'selene.toml',
+        'selene.yml',
+        '.git',
+    },
+    -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lsp/lua_ls.lua
+    on_attach = function(client)
+        -- disable formatting in favor of `stylua`
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+    end,
+    settings = {
+        Lua = {
+            completion = {
+                callSnippet = 'Disable', -- signature help more useful here
+                keywordSnippet = 'Replace',
+                showWord = 'Disable', -- already done by completion plugin
+                workspaceWord = false, -- already done by completion plugin
+                postfix = '.', -- useful for `table.insert` and the like
+                enable = true,
+            },
+            diagnostics = {
+                unusedLocalExclude = { '_*' },
+                disable = {
+                    -- formatter already handles that
+                    'trailing-space',
+                    -- don't dim content of unused functions
+                    -- (no loss of diagnostic, `unused-local` still informs about these functions)
+                    'unused-function',
+                },
+                globals = { 'vim' }, -- when working on nvim plugins that lack a `.luarc.json`
+            },
+            hint = { -- inlay hints
+                enable = true,
+                setType = true,
+                arrayIndex = 'Disable', -- too noisy
+                semicolon = 'Disable', -- mostly wrong on invalid code
+            },
+        },
+    },
+})
+
 local servers = {
-    'basedpyright', -- https://detachhead.github.io/basedpyright
+    -- 'basedpyright', -- https://detachhead.github.io/basedpyright
     'bashls', -- npm i -g bash-language-server
     'cssls', -- npm i -g vscode-langservers-extracted
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
