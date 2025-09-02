@@ -46,6 +46,10 @@ vim.o.winborder = 'rounded'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
+vim.opt.backup = true
+vim.opt.cmdheight = 0
+vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
+vim.opt.smoothscroll = true
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
@@ -65,13 +69,3 @@ vim.filetype.add({
         ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 })
-
-if vim.fn.has('nvim-0.8') == 1 then
-    vim.opt.backup = true
-    vim.opt.cmdheight = 0
-    vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
-end
-
-if vim.fn.has('nvim-0.10') == 1 then
-    vim.opt.smoothscroll = true
-end

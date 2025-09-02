@@ -3,7 +3,21 @@ vim.g.mapleader = ','
 _G.global = {}
 _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
-require('custom')
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        'git',
+        'clone',
+        '--filter=blob:none',
+        '--single-branch',
+        'https://github.com/folke/lazy.nvim.git',
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
+
+require('custom.options')
+
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
@@ -106,6 +120,9 @@ require('lazy').setup({
                 'zipPlugin',
             },
         },
+    },
+    keys = {
+        { 'n', '<leader>L', '<cmd>Lazy<cr>', desc = 'Start Lazy' },
     },
     ui = { border = 'rounded' },
 })

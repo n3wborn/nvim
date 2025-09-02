@@ -63,14 +63,6 @@ vim.keymap.set('x', '/', '<Esc>/\\%V')
 vim.keymap.set('n', ';;', 'A;<ESC>')
 vim.keymap.set('n', ',,', 'A,<ESC>')
 
---- keep cursor vertically centered while scrolling
-u.map('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
-u.map('n', '<C-u>', '<C-u>zz', { desc = 'Center cursor after moving up half-page' })
-u.map('n', '<C-f>', '<C-f>zz', { desc = 'Center cursor after moving forward page' })
-u.map('n', '<C-b>', '<C-b>zz', { desc = 'Center cursor after moving backward page' })
-
-u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
-
 -- folds
 u.map('n', '<Left>', function()
     require('origami').h()
@@ -79,9 +71,6 @@ end)
 u.map('n', '<Right>', function()
     require('origami').l()
 end)
-
--- Text object
-u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 
 u.map('n', '<leader>B', function()
     u.yank_file_path()
