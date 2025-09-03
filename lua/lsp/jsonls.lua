@@ -9,4 +9,7 @@ return {
             schemas = require('schemastore').json.schemas(),
         },
     },
+    init_options = {
+        provideFormatter = false,
+    },
 }

@@ -1,5 +1,6 @@
 -- heavily inspired by LazyVim/LazyVim config
 return {
+    ---@type LazyPluginSpec
     {
 
         'nvim-treesitter/nvim-treesitter',
@@ -129,6 +130,7 @@ return {
             require('nvim-treesitter.configs').setup(opts)
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
         event = 'VeryLazy',
@@ -178,16 +180,19 @@ return {
             require('nvim-treesitter.configs').setup({ textobjects = textobjects })
         end,
     },
+    ---@type LazyPluginSpec
     {
         'windwp/nvim-ts-autotag',
         event = { 'BufReadPre', 'BufNewFile' },
         opts = {},
     },
+    ---@type LazyPluginSpec
     {
         'windwp/nvim-ts-autotag',
         event = 'VeryLazy',
         opts = {},
     },
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter-context',
         event = 'VeryLazy',
@@ -207,6 +212,7 @@ return {
             return { mode = 'cursor', max_lines = 3 }
         end,
     },
+    ---@type LazyPluginSpec
     {
         'HiPhish/rainbow-delimiters.nvim',
         event = 'VeryLazy',

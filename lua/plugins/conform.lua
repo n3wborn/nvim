@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -14,14 +15,13 @@ return {
             -- json = { 'jq' },
             lua = { 'stylua' },
             --- @todo: add hougesen/mdsf
-            markdown = { 'markdownlint' },
+            markdown = { 'markdownlint-cli2', 'markdownfmt' },
             php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },
             typescript = { 'eslint_d', 'eslint' },
             typescriptreact = { 'eslint_d', 'eslint' },
-            ['twig.html'] = { 'twig-cs-fixer' },
             twig = { 'twig-cs-fixer' },
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },

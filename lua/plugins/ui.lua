@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'echasnovski/mini.align',
         version = false,
@@ -7,14 +8,16 @@ return {
             require('mini.align').setup()
         end,
     },
+    ---@type LazyPluginSpec
     {
         'catppuccin/nvim',
-        lazy = false,
         priority = 1000,
+        lazy = false,
         name = 'catppuccin',
         config = function()
             require('catppuccin').setup({
                 flavour = 'mocha',
+                auto_integrations = true,
                 background = {
                     light = 'latte',
                     dark = 'mocha',
@@ -39,6 +42,49 @@ return {
             vim.cmd.colorscheme('catppuccin')
         end,
     },
+
+    -- filename
+    {
+        'b0o/incline.nvim',
+        dependencies = { 'catppuccin/nvim', 'nvim-tree/nvim-web-devicons' },
+        event = 'BufReadPre',
+        priority = 1200,
+        config = function()
+            require('incline').setup({
+                window = { margin = { vertical = 0, horizontal = 1 } },
+                hide = {
+                    cursorline = true,
+                },
+                render = function(props)
+                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+                    if vim.bo[props.buf].modified then
+                        filename = '[+] ' .. filename
+                    end
+
+                    local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+                    return { { icon, guifg = color }, { ' ' }, { filename } }
+                end,
+            })
+        end,
+    },
+    {
+        'akinsho/bufferline.nvim',
+        event = 'VeryLazy',
+        keys = {
+            { '<Tab>', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next tab' },
+            { '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev tab' },
+        },
+        opts = {
+            options = {
+                mode = 'tabs',
+                -- separator_style = "slant",
+                show_buffer_close_icons = false,
+                show_close_icon = false,
+            },
+        },
+    },
+
+    ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
         dependencies = {
@@ -50,7 +96,7 @@ return {
             local config = {
                 options = {
                     icons_enabled = true,
-                    theme = 'catpuccin',
+                    theme = 'catppuccin',
                     component_separators = { left = '', right = '' },
                     section_separators = { left = '', right = '' },
                     disabled_filetypes = {},
@@ -67,18 +113,16 @@ return {
                 inactive_sections = {
                     lualine_a = {},
                     lualine_b = {},
-                    -- lualine_c = { 'filename' },
-                    lualine_x = { 'location' },
+                    lualine_c = {},
+                    lualine_x = {},
                     lualine_y = {},
                     lualine_z = {},
                 },
                 tabline = {},
             }
         end,
-        config = function(_, opts)
-            require('lualine').setup(opts)
-        end,
     },
+    ---@type LazyPluginSpec
     {
         'NvChad/nvim-colorizer.lua',
         event = 'BufReadPre',
@@ -87,6 +131,7 @@ return {
             buftype = { 'javascript', 'typescript', 'html', 'css', 'scss' },
         },
     },
+    ---@type LazyPluginSpec
     {
         'folke/noice.nvim',
         event = 'VeryLazy',
@@ -113,12 +158,13 @@ return {
             })
         end,
     },
+    ---@type LazyPluginSpec
     {
         'SmiteshP/nvim-navic',
         dependencies = 'neovim/nvim-lspconfig',
         opts = {
             lsp = {
-                auto_attach = false,
+                auto_attach = true,
                 preference = nil,
             },
             highlight = true,
@@ -127,11 +173,14 @@ return {
             depth_limit_indicator = '..',
             safe_output = true,
         },
+        ---@type LazyPluginSpec
     },
+    ---@type LazyPluginSpec
     {
         'nvim-tree/nvim-web-devicons',
         lazy = true,
     },
+    ---@type LazyPluginSpec
     {
         'chrisgrieser/nvim-origami',
         event = 'VeryLazy',

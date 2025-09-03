@@ -3,10 +3,28 @@ vim.g.mapleader = ','
 _G.global = {}
 _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
-require('custom')
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        'git',
+        'clone',
+        '--filter=blob:none',
+        '--single-branch',
+        'https://github.com/folke/lazy.nvim.git',
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
+
+require('custom.options')
+
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
+        {
+            'neovim/nvim-lspconfig',
+            dependencies = { 'saghen/blink.cmp' },
+        },
         {
             'bloznelis/before.nvim',
             keys = {
@@ -106,8 +124,47 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
-require('custom.keymaps')
-require('custom.autocommands')
+local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('blink.cmp').get_lsp_capabilities({}, false)
+)
+
+capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
+
+---@type vim.lsp.Config
+vim.lsp.config('*', {
+    capabilities = capabilities,
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local cwd = vim.uv.cwd()
+        local root = vim.fs.root(fname, { '.git' })
+
+        on_dir(root and vim.fs.relpath(cwd or {}, root) and cwd)
+    end,
+    root_markers = { '.git' },
+})
+
+vim.lsp.on_type_formatting.enable()
+
+local servers = {
+    -- 'basedpyright', -- https://detachhead.github.io/basedpyright
+    'bashls', -- npm i -g bash-language-server
+    'cssls', -- npm i -g vscode-langservers-extracted
+    -- 'phptools', -- npm i -g devsense-php-ls
+    'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
+    'eslint', -- npm i -g vscode-langservers-extracted
+    'html', -- npm i -g vscode-langservers-extracted
+    'intelephense', -- npm i -g intelephense
+    'jsonls', -- npm i -g vscode-langservers-extracted
+    'lua_ls', -- https://luals.github.io/#neovim-install
+    'oxlint', -- npm i -g oxlint
+    'twiggy_language_server', -- npm i -g twiggy-language-server
+}
+
+for _, server in ipairs(servers) do
+    vim.lsp.enable(server)
+end
 
 local signs = require('custom.icons').diagnostics
 
@@ -120,88 +177,13 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.INFO] = signs.Info,
         },
     },
-    virtual_text = false,
+
     severity_sort = true,
     underline = false,
     update_in_insert = true,
-    jump = { severity = vim.log.levels.ERROR },
+    float = true,
+    jump = { on_jump = vim.diagnostic.open_float },
 })
 
-local capabilities = vim.tbl_deep_extend(
-    'force',
-    vim.lsp.protocol.make_client_capabilities(),
-    require('blink.cmp').get_lsp_capabilities({}, false)
-)
-
---- @type vim.lsp.Config
-vim.lsp.config('*', {
-    capabilities = capabilities,
-    root_dir = function(bufnr, on_dir)
-        local fname = vim.api.nvim_buf_get_name(bufnr)
-        local cwd = vim.uv.cwd()
-        local root = vim.fs.root(fname, { '.git' })
-
-        on_dir(root and vim.fs.relpath(cwd, root) and cwd)
-    end,
-    root_markers = { '.git' },
-})
-
-local servers = {
-    'basedpyright',
-    'emmet_language_server',
-    'eslint',
-    'html',
-    'jsonls',
-    'lua_ls',
-    'twiggy_language_server',
-}
-
-for _, server in ipairs(servers) do
-    vim.lsp.enable(server)
-end
-
--- intelephense
-vim.lsp.config('intelephense', {
-    name = 'intelephense',
-    cmd = { 'intelephense', '--stdio' },
-    filetypes = { 'php' },
-    init_options = {
-        licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
-    },
-    settings = {
-        intelephense = {
-            files = {
-                maxSize = 10485760, -- 10Mo
-            },
-        },
-    },
-})
-vim.lsp.enable('intelephense')
-
-vim.lsp.config('bash_language_server', {
-    name = 'bash_language_server',
-    cmd = { 'bash-language-server', 'start' },
-    filetypes = { 'bash', 'sh' },
-    settings = {
-        bashIde = {
-            globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command)',
-        },
-    },
-})
-vim.lsp.enable('bash_language_server')
-
----@type vim.lsp.Config
-vim.lsp.config('cssls', {
-    cmd = { 'vscode-css-language-server', '--stdio' },
-    filetypes = { 'css', 'scss', 'less' },
-    init_options = { provideFormatter = false },
-    settings = {
-        css = {
-            validate = true,
-            vendorPrefix = 'ignore',
-            duplicateProperties = 'warning',
-            zeroUnits = 'warning',
-        },
-    },
-})
-vim.lsp.enable('cssls')
+require('custom.keymaps')
+require('custom.autocommands')

@@ -1,4 +1,5 @@
 -- stylua: ignore
+---@type LazyPluginSpec
 return {
     "folke/snacks.nvim",
     priority = 1000,
@@ -63,11 +64,12 @@ return {
         { "<leader>sP", function() Snacks.picker.git_grep() end, desc = "git grep" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
-        { "<space>S", function() Snacks.picker.smart({ multi = { "recent", "files" },  matcher = {cwd_bonus = false, frecency = true, sort_empty = true} }) end, desc = "Smart Picker" },
+        { "<space>S", function() Snacks.picker.smart({ multi = { "recent", "files" },  matcher = {cwd_bonus = true, frecency = true, sort_empty = true} }) end, desc = "Smart Picker" },
         { "gb",         function() Snacks.picker.buffers() end, desc = "List Buffers" },
         { "<leader>gj", function() Snacks.picker.jumps() end, desc = "List Jumps" },
         { "<leader>gm", function() Snacks.picker.marks() end, desc = "List Marks" },
         { '<leader>gr', function() Snacks.picker.registers() end, desc = "List Registers" },
+        { "<leader>k", function() Snacks.picker.keymaps() end, desc = "List mappings" },
         { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
         { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
@@ -102,7 +104,6 @@ return {
                     Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
                     Snacks.toggle.diagnostics():map("<leader>ud")
                     Snacks.toggle.line_number():map("<leader>ul")
-                    Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
                     Snacks.toggle.treesitter():map("<leader>T")
                     Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
                     Snacks.toggle.inlay_hints():map("<leader>P")

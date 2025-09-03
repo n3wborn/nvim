@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
     'jellydn/hurl.nvim',
     dependencies = {

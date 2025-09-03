@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'sindrets/diffview.nvim',
         cmd = {
@@ -26,6 +27,7 @@ return {
             require('diffview')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'akinsho/git-conflict.nvim',
         event = 'BufReadPre',
@@ -43,6 +45,7 @@ return {
         ]]
         },
     },
+    ---@type LazyPluginSpec
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
@@ -76,41 +79,34 @@ return {
             watch_gitdir = { enabled = true, follow_files = true },
         },
         keys = {
+            ---@diagnostic disable: param-type-mismatch
             {
-                mode = 'n',
                 '<leader>hn',
                 function()
-                    require('gitsigns').nav_hunk(
-                        'next',
-                        { preview = true, navigation_message = 'f', target = 'all', greedy = true }
-                    )
+                    require('gitsigns').nav_hunk('next', { preview = true })
                 end,
-                desc = 'Gitsigns next hunk',
+                desc = '󰊢 Next hunk',
             },
             {
-                mode = 'n',
                 '<leader>hN',
                 function()
-                    require('gitsigns').nav_hunk(
-                        'prev',
-                        { preview = true, navigation_message = 'f', target = 'all', greedy = true }
-                    )
+                    require('gitsigns').nav_hunk('prev', { preview = true })
                 end,
+                desc = '󰊢 Previous hunk',
             },
             {
-                mode = 'n',
                 '<leader>hs',
-                ':Gitsigns stage_hunk<CR>',
+                '<cmd>Gitsigns stage_hunk<CR>',
+                desc = '󰊢 (Un-)Stage hunk',
             },
             {
-                mode = 'v',
+                mode = { 'x', 'v' },
                 '<leader>hs',
                 function()
-                    require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').stage_hunk()
                 end,
             },
             {
-                mode = 'n',
                 '<leader>hS',
                 ':Gitsigns stage_buffer<CR>',
             },
@@ -123,50 +119,45 @@ return {
                 mode = 'n',
                 '<leader>hr',
                 function()
-                    require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+                    require('gitsigns').reset_hunk()
                 end,
             },
             {
-                mode = 'n',
                 '<leader>hR',
-                ':Gitsigns reset_buffer<CR>',
+                '<cmd>Gitsigns reset_buffer<CR>',
             },
 
             {
-                mode = 'n',
                 '<leader>hp',
-                ':Gitsigns preview_hunk<CR>',
+                '<cmd>Gitsigns preview_hunk<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hB',
-                ':Gitsigns blame<CR>',
+                '<cmd>Gitsigns blame<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hb',
-                ':Gitsigns blame_line<CR>',
+                '<cmd>Gitsigns blame_line<CR>',
             },
             {
-                mode = 'n',
                 '<leader>tb',
-                ':Gitsigns toogle_current_line_blame<CR>',
+                '<cmd>Gitsigns toogle_current_line_blame<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hd',
-                ':Gitsigns diffthis<CR>',
+                '<cmd>Gitsigns diffthis<CR>',
             },
             {
-                mode = 'n',
                 '<leader>hD',
-                ':Gitsigns diffthis ~<CR>',
+                '<cmd>Gitsigns diffthis ~<CR>',
             },
             {
-                mode = 'n',
                 '<leader>td',
-                ':Gitsigns preview_hunk_inline<CR>',
+                '<cmd>Gitsigns preview_hunk_inline<CR>',
             },
         },
+        config = function(_, opts)
+            require('gitsigns').setup(opts)
+        end,
     },
 }

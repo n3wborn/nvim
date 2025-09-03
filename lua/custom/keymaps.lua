@@ -34,6 +34,9 @@ u.map('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
 u.map('n', '<leader>gh', ':diffget //3<cr>')
 u.map('n', '<leader>gu', ':diffget //2<cr>')
 
+-- Lazy UI
+u.map('n', '<leader>L', '<cmd>Lazy<cr>')
+
 --- keep text selected after indentation
 u.map('v', '<', '<gv')
 u.map('v', '>', '>gv')
@@ -63,14 +66,6 @@ vim.keymap.set('x', '/', '<Esc>/\\%V')
 vim.keymap.set('n', ';;', 'A;<ESC>')
 vim.keymap.set('n', ',,', 'A,<ESC>')
 
---- keep cursor vertically centered while scrolling
-u.map('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
-u.map('n', '<C-u>', '<C-u>zz', { desc = 'Center cursor after moving up half-page' })
-u.map('n', '<C-f>', '<C-f>zz', { desc = 'Center cursor after moving forward page' })
-u.map('n', '<C-b>', '<C-b>zz', { desc = 'Center cursor after moving backward page' })
-
-u.map('n', '<leader>L', ':Lazy<CR>', { desc = 'Show Lazy UI' })
-
 -- folds
 u.map('n', '<Left>', function()
     require('origami').h()
@@ -79,9 +74,6 @@ end)
 u.map('n', '<Right>', function()
     require('origami').l()
 end)
-
--- Text object
-u.map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 
 u.map('n', '<leader>B', function()
     u.yank_file_path()
@@ -98,6 +90,44 @@ local confirm_ctrl_z = function()
         end
     end)
 end
+
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function(ev)
+        local opts = { buffer = ev.buf, silent = true }
+
+        local function is_loclist()
+            return vim.fn.getwininfo(vim.fn.win_getid())[1].loclist == 1
+        end
+
+        local function open_in_split(split_cmd)
+            local line = vim.fn.line('.')
+            local winnr = vim.fn.winnr('#') -- Fenêtre précédente
+
+            if winnr > 0 then
+                vim.cmd(winnr .. 'wincmd w')
+            end
+
+            vim.cmd(split_cmd)
+
+            if is_loclist() then
+                vim.cmd('ll ' .. line)
+            else
+                vim.cmd('cc ' .. line)
+            end
+        end
+
+        vim.keymap.set('n', '<C-v>', function()
+            open_in_split('vsplit')
+        end, opts)
+        vim.keymap.set('n', '<C-s>', function()
+            open_in_split('split')
+        end, opts)
+        vim.keymap.set('n', '<C-t>', function()
+            open_in_split('tabnew')
+        end, opts)
+    end,
+    pattern = 'qf',
+})
 
 u.map('n', '<C-z>', confirm_ctrl_z)
 

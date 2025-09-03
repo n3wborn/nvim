@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
     'mfussenegger/nvim-lint',
     lazy = true,
@@ -6,7 +7,7 @@ return {
         local lint = require('lint')
 
         lint.linters_by_ft = {
-            -- gitcommit = { 'gitlint' }, -- seems to break, maybe havce to check the docs (http://jorisroovers.github.io/gitlint)
+            gitcommit = { 'gitlint' },
             javascript = { 'eslint_d' },
             javascriptreact = { 'eslint_d' },
             php = { 'php' },

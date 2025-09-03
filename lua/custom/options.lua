@@ -6,7 +6,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
 vim.opt.cursorline = true
-vim.o.cursorlineopt = 'number'
+vim.o.cursorlineopt = 'both'
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -39,13 +39,18 @@ vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.o.winwidth = 10
 vim.o.winminwidth = 10
-vim.o.equalalways = false
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.winborder = 'rounded'
 vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 vim.opt.updatetime = 100
+vim.opt.equalalways = true
+vim.opt.backup = true
+vim.opt.cmdheight = 0
+vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
+vim.opt.smoothscroll = true
+vim.g.lsp_inlay_hints = false
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
@@ -65,13 +70,3 @@ vim.filetype.add({
         ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 })
-
-if vim.fn.has('nvim-0.8') == 1 then
-    vim.opt.backup = true
-    vim.opt.cmdheight = 0
-    vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
-end
-
-if vim.fn.has('nvim-0.10') == 1 then
-    vim.opt.smoothscroll = true
-end
