@@ -50,6 +50,7 @@ vim.opt.backup = true
 vim.opt.cmdheight = 0
 vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
 vim.opt.smoothscroll = true
+vim.g.lsp_inlay_hints = false
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({

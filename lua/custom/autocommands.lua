@@ -145,7 +145,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(ev.buf), ev.buf)
         end
 
-        if client:supports_method('textDocument/inlayHint') then
+        if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
             vim.lsp.inlay_hint.enable(true)
         end
     end,
