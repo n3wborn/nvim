@@ -121,9 +121,6 @@ require('lazy').setup({
             },
         },
     },
-    keys = {
-        { 'n', '<leader>L', '<cmd>Lazy<cr>', desc = 'Start Lazy' },
-    },
     ui = { border = 'rounded' },
 })
 

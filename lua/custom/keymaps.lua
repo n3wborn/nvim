@@ -34,6 +34,9 @@ u.map('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
 u.map('n', '<leader>gh', ':diffget //3<cr>')
 u.map('n', '<leader>gu', ':diffget //2<cr>')
 
+-- Lazy UI
+u.map('n', '<leader>L', '<cmd>Lazy<cr>')
+
 --- keep text selected after indentation
 u.map('v', '<', '<gv')
 u.map('v', '>', '>gv')
