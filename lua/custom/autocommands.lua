@@ -242,6 +242,34 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.hl.on_yank()
     end,
-    group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
+    group = vim.api.nvim_create_augroup('my.yankHighlight', { clear = true }),
     pattern = '*',
+})
+
+local aug = vim.api.nvim_create_augroup('my.config', {})
+
+vim.api.nvim_create_autocmd('FocusGained', {
+    desc = 'Reload files from disk when we focus vim',
+    pattern = '*',
+    command = "if getcmdwintype() == '' | checktime | endif",
+    group = aug,
+})
+vim.api.nvim_create_autocmd('BufEnter', {
+    desc = 'Every time we enter an unmodified buffer, check if it changed on disk',
+    pattern = '*',
+    command = "if &buftype == '' && !&modified && expand('%') != '' | exec 'checktime ' . expand('<abuf>') | endif",
+    group = aug,
+})
+
+vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
+    desc = 'Highlight the cursor line in the active window',
+    pattern = '*',
+    command = 'setlocal cursorline',
+    group = aug,
+})
+vim.api.nvim_create_autocmd('WinLeave', {
+    desc = 'Clear the cursor line highlight when leaving a window',
+    pattern = '*',
+    command = "if &bt != 'quickfix' | setlocal nocursorline | endif",
+    group = aug,
 })

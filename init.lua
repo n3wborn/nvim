@@ -47,7 +47,11 @@ require('lazy').setup({
         },
         {
             'neovim/nvim-lspconfig',
-            dependencies = { 'saghen/blink.cmp' },
+            dependencies = {
+                'b0o/SchemaStore.nvim',
+                'saghen/blink.cmp',
+            },
+            event = { 'BufReadPre', 'BufNewFile' },
         },
         {
             'bloznelis/before.nvim',
