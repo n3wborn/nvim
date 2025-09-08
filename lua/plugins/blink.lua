@@ -4,6 +4,7 @@ return {
         'saghen/blink.cmp',
         dependencies = {
             'rafamadriz/friendly-snippets',
+            'giuxtaposition/blink-cmp-copilot',
             {
                 'mikavilpas/blink-ripgrep.nvim',
                 version = '*',
@@ -55,18 +56,19 @@ return {
                 },
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'ripgrep' },
 
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
                 providers = {
                     lsp = {
                         name = 'LSP',
                         module = 'blink.cmp.sources.lsp',
+                        score_offset = 200,
                         min_keyword_length = 0,
                     },
                     snippets = {
                         module = 'blink.cmp.sources.snippets',
                         score_offset = -1, -- receives a -3 from top level snippets.score_offset
-                        max_items = 2,
+                        max_items = 1,
                     },
                     buffer = {
                         module = 'blink.cmp.sources.buffer',
@@ -90,6 +92,14 @@ return {
                         score_offset = -4,
                         max_items = 3,
                     },
+                    copilot = {
+                        name = 'copilot',
+                        module = 'blink-cmp-copilot',
+                        enabled = vim.g.copilot_enabled,
+                        kind = 'Copilot',
+                        score_offset = 100,
+                        async = true,
+                    },
                 },
             },
             fuzzy = {
@@ -104,7 +114,6 @@ return {
     },
     {
         'madmaxieee/blink.pairs',
-        -- "saghen/blink.pairs",
         event = { 'InsertEnter', 'CmdlineEnter' },
         build = 'cargo build --release',
         --- @module 'blink.pairs'

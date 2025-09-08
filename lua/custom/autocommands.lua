@@ -148,6 +148,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
             vim.lsp.inlay_hint.enable(true)
         end
+
+        if client:supports_method('textDocument/inlineCompletion') and vim.g.copilot_enable then
+            vim.lsp.inline_completion.enable(true)
+        end
     end,
 })
 
