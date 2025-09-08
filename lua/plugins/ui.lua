@@ -173,7 +173,6 @@ return {
             depth_limit_indicator = '..',
             safe_output = true,
         },
-        ---@type LazyPluginSpec
     },
     ---@type LazyPluginSpec
     {
