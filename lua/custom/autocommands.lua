@@ -235,3 +235,11 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLo
         end, saveInstantly and 0 or 2000)
     end,
 })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.hl.on_yank()
+    end,
+    group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
+    pattern = '*',
+})
