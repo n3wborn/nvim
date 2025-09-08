@@ -55,14 +55,25 @@ return {
             end,
         })
     end,
+    ---@module "neo-tree"
+    ---@type neotree.Config?
     opts = {
+        event_handlers = {
+            {
+                event = 'file_open_requested',
+                handler = function()
+                    require('neo-tree.command').execute({ action = 'close' })
+                end,
+            },
+        },
         sources = { 'filesystem', 'buffers', 'git_status' },
-        open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' },
+        open_files_do_not_replace_types = { 'terminal', 'qf', 'Outline' },
         filesystem = {
             bind_to_cwd = false,
             follow_current_file = { enabled = true },
             use_libuv_file_watcher = true,
         },
+        close_if_last_window = true,
         window = {
             mappings = {
                 ['l'] = 'open',

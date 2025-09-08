@@ -22,8 +22,36 @@ require('lazy').setup({
     spec = {
         { import = 'plugins' },
         {
+            'zbirenbaum/copilot.lua',
+            cmd = 'Copilot',
+            build = ':Copilot auth',
+            event = 'BufReadPost',
+            enabled = vim.g.copilot_enabled,
+            opts = {
+                suggestion = {
+                    enabled = vim.g.copilot_enabled,
+                    auto_trigger = true,
+                    hide_during_completion = vim.g.ai_cmp,
+                    keymap = {
+                        accept = false,
+                        next = '<M-j>',
+                        prev = '<M-k)>',
+                    },
+                },
+                panel = { enabled = false },
+                filetypes = {
+                    markdown = true,
+                    help = true,
+                },
+            },
+        },
+        {
             'neovim/nvim-lspconfig',
-            dependencies = { 'saghen/blink.cmp' },
+            dependencies = {
+                'b0o/SchemaStore.nvim',
+                'saghen/blink.cmp',
+            },
+            event = { 'BufReadPre', 'BufNewFile' },
         },
         {
             'bloznelis/before.nvim',
@@ -151,6 +179,7 @@ local servers = {
     -- 'basedpyright', -- https://detachhead.github.io/basedpyright
     'bashls', -- npm i -g bash-language-server
     'cssls', -- npm i -g vscode-langservers-extracted
+    'copilot', -- npm i -g @github/copilot-language-server
     -- 'phptools', -- npm i -g devsense-php-ls
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
     'eslint', -- npm i -g vscode-langservers-extracted

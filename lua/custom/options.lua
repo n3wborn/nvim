@@ -5,7 +5,6 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.opt.cursorline = true
 vim.o.cursorlineopt = 'both'
 vim.opt.list = true
 vim.opt.number = true
@@ -34,6 +33,9 @@ vim.opt.redrawtime = 3000
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.joinspaces = false
 vim.opt.wildmode = { 'longest:full', 'full' }
+vim.opt.wildignore:append(
+    '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
+)
 vim.opt.completeopt = 'menu,menuone,nearest,noselect'
 vim.opt.autowrite = true
 vim.opt.confirm = true
@@ -51,6 +53,7 @@ vim.opt.cmdheight = 0
 vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
 vim.opt.smoothscroll = true
 vim.g.lsp_inlay_hints = false
+vim.g.copilot_enabled = false
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({

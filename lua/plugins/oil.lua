@@ -24,21 +24,4 @@ return {
             vim.keymap.set('n', '<space>-', require('oil').toggle_float)
         end,
     },
-    {
-        'A7Lavinraj/fyler.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        opts = {
-            icon_provider = 'nvim-web-devicons',
-        },
-        keys = {
-            {
-                '<leader>e',
-                function()
-                    local fyler = require('fyler')
-                    fyler.open()
-                end,
-                desc = 'Fyler',
-            },
-        },
-    },
 }
