@@ -49,7 +49,6 @@ require('lazy').setup({
             'neovim/nvim-lspconfig',
             dependencies = {
                 'b0o/SchemaStore.nvim',
-                'saghen/blink.cmp',
             },
             event = { 'BufReadPre', 'BufNewFile' },
         },
@@ -155,7 +154,7 @@ require('lazy').setup({
 local capabilities = vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),
-    require('blink.cmp').get_lsp_capabilities({}, false)
+    require('cmp_nvim_lsp').default_capabilities()
 )
 
 capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
