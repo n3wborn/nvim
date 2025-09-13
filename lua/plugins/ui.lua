@@ -183,6 +183,20 @@ return {
     {
         'chrisgrieser/nvim-origami',
         event = 'VeryLazy',
+        keys = {
+            {
+                '<LEFT>',
+                function()
+                    require('origami').h()
+                end,
+            },
+            {
+                '<RIGHT>',
+                function()
+                    require('origami').l()
+                end,
+            },
+        },
         opts = {}, -- needed even when using default config
         init = function()
             vim.opt.foldlevel = 99

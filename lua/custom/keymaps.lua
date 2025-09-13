@@ -70,15 +70,6 @@ vim.keymap.set('x', '/', '<Esc>/\\%V')
 vim.keymap.set('n', ';;', 'A;<ESC>')
 vim.keymap.set('n', ',,', 'A,<ESC>')
 
--- folds
-u.map('n', '<Left>', function()
-    require('origami').h()
-end)
-
-u.map('n', '<Right>', function()
-    require('origami').l()
-end)
-
 u.map('n', '<leader>B', function()
     u.yank_file_path()
 end)
