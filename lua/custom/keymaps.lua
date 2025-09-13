@@ -54,7 +54,7 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
-u.map('n', '<leader>d', '"_d', { desc = 'Delete without yank' })
+u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
 u.map('n', 'p', 'p`[=`]', { desc = 'Paste and indent' })
 u.map('n', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
 u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
