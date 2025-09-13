@@ -27,6 +27,11 @@ return {
             }
         },
         picker = {
+            win = {
+                input = {
+                    keys = { ["<F1>"] =  "toggle_help_input" }, -- as `?` default keybind, <ESC> is still needed
+                },
+            },
             layout = {
                 preset = "vscode",  -- default, sidebar, telescope, ivy, ivy_split, dropdown, select, vscode
                 cycle = true,
