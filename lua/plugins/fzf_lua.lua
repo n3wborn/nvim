@@ -158,8 +158,6 @@ return {
             -- },
             buffers = {
                 formatter = 'path.filename_first',
-                -- preview_opts = 'hidden',
-                -- fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
             },
             git = {
                 bcommits = {
@@ -183,19 +181,6 @@ return {
                     },
                 },
             },
-            -- autocmds = {
-            --     winopts = {
-            --         width = 0.8,
-            --         height = 0.7,
-            --     },
-            -- },
-            -- grep = {
-            --     rg_glob = false,
-            --     glob_flag = '--iglob', -- for case sensitive globs use '--glob'
-            --     glob_separator = '%s%-%-', -- query separator pattern (lua): ' --'
-            --     grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
-            --     rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-            -- },
             actions = {
                 files = {
                     ['default'] = actions.file_edit_or_qf,
