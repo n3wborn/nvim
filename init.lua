@@ -53,26 +53,6 @@ require('lazy').setup({
             event = { 'BufReadPre', 'BufNewFile' },
         },
         {
-            'bloznelis/before.nvim',
-            keys = {
-                {
-                    '<C-j>',
-                    function()
-                        require('before').jump_to_last_edit()
-                    end,
-                },
-                {
-                    '<C-k>',
-                    function()
-                        require('before').jump_to_next_edit()
-                    end,
-                },
-            },
-        },
-        {
-            'famiu/bufdelete.nvim',
-        },
-        {
             'hasansujon786/nvim-navbuddy',
             cmd = 'Navbuddy',
             keys = {
