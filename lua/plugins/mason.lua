@@ -23,7 +23,7 @@ return {
                     'basedpyright',
                     'bash_language_server',
                     'css-lsp',
-                    'lua_ls',
+                    -- 'lua_ls',
                     'rust_analyzer',
                     'intelephense',
                     'php-cs-fixer',

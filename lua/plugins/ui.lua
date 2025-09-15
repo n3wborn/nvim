@@ -148,7 +148,7 @@ return {
         opts = {
             lsp = {
                 auto_attach = true,
-                preference = nil,
+                preference = { 'emmylua_ls' },
             },
             highlight = true,
             separator = '❯ ',
