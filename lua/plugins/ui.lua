@@ -67,23 +67,6 @@ return {
             })
         end,
     },
-    {
-        'akinsho/bufferline.nvim',
-        event = 'VeryLazy',
-        keys = {
-            { '<C-Right>', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next tab' },
-            { '<C-Left>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev tab' },
-        },
-        opts = {
-            options = {
-                mode = 'tabs',
-                -- separator_style = "slant",
-                show_buffer_close_icons = false,
-                show_close_icon = false,
-            },
-        },
-    },
-
     ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
