@@ -27,10 +27,10 @@ return {
         optional = true,
         opts = function()
             local dap = require('dap')
-            local path = require('mason-registry').get_package('php-debug-adapter'):get_install_path()
             dap.adapters.php = {
                 type = 'executable',
-                command = vim.fn.exepath('php-debug-adapter'),
+                command = 'node',
+                args = { vim.env.HOME .. '/div/bin/vscode-php-debug/out/phpDebug.js' },
             }
         end,
 
