@@ -5,18 +5,9 @@ return {
         dependencies = 'mason.nvim',
         cmd = { 'DapInstall', 'DapUninstall' },
         opts = {
-            -- Makes a best effort to setup the various debuggers with
-            -- reasonable debug configurations
             automatic_installation = true,
-
-            -- You can provide additional configuration to the handlers,
-            -- see mason-nvim-dap README for more information
-            handlers = {},
-
-            -- You'll need to check that you have the required things installed
-            -- online, please don't ask me how to install them :)
             ensure_installed = {
-                -- Update this to ensure that you have the debuggers for the langs you want
+                'php',
             },
         },
         -- mason-nvim-dap is loaded when nvim-dap loads
@@ -26,10 +17,8 @@ return {
         'mfussenegger/nvim-dap',
         recommended = true,
         desc = 'Debugging support. Requires language specific adapters to be configured. (see lang extras)',
-
         dependencies = {
             'rcarriga/nvim-dap-ui',
-            -- virtual text for the debugger
             {
                 'theHamsta/nvim-dap-virtual-text',
                 opts = {},
@@ -41,8 +30,7 @@ return {
             local path = require('mason-registry').get_package('php-debug-adapter'):get_install_path()
             dap.adapters.php = {
                 type = 'executable',
-                command = 'node',
-                args = { path .. '/extension/out/phpDebug.js' },
+                command = vim.fn.exepath('php-debug-adapter'),
             }
         end,
 
