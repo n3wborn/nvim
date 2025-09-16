@@ -49,29 +49,8 @@ require('lazy').setup({
             'neovim/nvim-lspconfig',
             dependencies = {
                 'b0o/SchemaStore.nvim',
-                'saghen/blink.cmp',
             },
             event = { 'BufReadPre', 'BufNewFile' },
-        },
-        {
-            'bloznelis/before.nvim',
-            keys = {
-                {
-                    '<C-j>',
-                    function()
-                        require('before').jump_to_last_edit()
-                    end,
-                },
-                {
-                    '<C-k>',
-                    function()
-                        require('before').jump_to_next_edit()
-                    end,
-                },
-            },
-        },
-        {
-            'famiu/bufdelete.nvim',
         },
         {
             'hasansujon786/nvim-navbuddy',
@@ -155,7 +134,7 @@ require('lazy').setup({
 local capabilities = vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),
-    require('blink.cmp').get_lsp_capabilities({}, false)
+    require('cmp_nvim_lsp').default_capabilities()
 )
 
 capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }

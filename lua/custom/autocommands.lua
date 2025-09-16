@@ -41,46 +41,36 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     desc = 'Remove hl search when enter Insert',
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {
-        'gitsigns-blame',
-        'git',
-        'checkhealth',
-        'help',
-        'lspinfo',
-        'man',
-        'Navbuddy',
-        'notify',
-        'oil',
-        'PlenaryTestPopup',
-        'qf',
-        'spectre_panel',
-        'startuptime',
-        'quickfix',
-        'lazy',
-    },
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    pattern = '*',
     callback = function(event)
+        local filetypes = {
+            'gitsigns-blame',
+            'git',
+            'checkhealth',
+            'help',
+            'lspinfo',
+            'man',
+            'Navbuddy',
+            'notify',
+            'oil',
+            'PlenaryTestPopup',
+            'startuptime',
+            'quickfix',
+            'lazy',
+        }
         local bufnr = event.buf
-        local ft = vim.bo[bufnr].filetype
         vim.bo[bufnr].buflisted = false
 
-        -- Map 'q' to close for all filetypes
-        vim.keymap.set('n', 'q', '<cmd>close<CR>', {
-            buffer = bufnr,
-            silent = true,
-            desc = 'Close window',
-        })
-
-        -- Map <ESC> to close for lazy (ex: plugins diff buffer)
-        if ft == 'lazy' or ft == 'qf' then
-            vim.keymap.set('n', '<ESC>', '<cmd>close<CR>', {
-                buffer = bufnr,
-                silent = true,
-                desc = 'Close window with ESC',
-            })
+        for _, ft in ipairs(filetypes) do
+            if vim.bo.filetype == ft then
+                vim.keymap.set('n', 'q', '<cmd>quit<CR>', { buffer = true })
+                vim.keymap.set('n', '<ESC>', '<cmd>quit<CR>', { buffer = true })
+                break
+            end
         end
     end,
-    desc = 'Configure special buffers to close with q (and ESC for lazy)',
+    desc = 'Configure some buffers to be more closed easily',
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {

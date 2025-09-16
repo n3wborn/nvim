@@ -67,23 +67,6 @@ return {
             })
         end,
     },
-    {
-        'akinsho/bufferline.nvim',
-        event = 'VeryLazy',
-        keys = {
-            { '<Tab>', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next tab' },
-            { '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev tab' },
-        },
-        opts = {
-            options = {
-                mode = 'tabs',
-                -- separator_style = "slant",
-                show_buffer_close_icons = false,
-                show_close_icon = false,
-            },
-        },
-    },
-
     ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
@@ -165,7 +148,7 @@ return {
         opts = {
             lsp = {
                 auto_attach = true,
-                preference = nil,
+                preference = { 'emmylua_ls' },
             },
             highlight = true,
             separator = '❯ ',
@@ -183,6 +166,20 @@ return {
     {
         'chrisgrieser/nvim-origami',
         event = 'VeryLazy',
+        keys = {
+            {
+                '<LEFT>',
+                function()
+                    require('origami').h()
+                end,
+            },
+            {
+                '<RIGHT>',
+                function()
+                    require('origami').l()
+                end,
+            },
+        },
         opts = {}, -- needed even when using default config
         init = function()
             vim.opt.foldlevel = 99

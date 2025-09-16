@@ -54,7 +54,11 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
-u.map('n', '<leader>d', '"_d', { desc = 'Delete without yank' })
+u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
+u.map('n', 'p', 'p`[=`]', { desc = 'Paste and indent' })
+u.map('n', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
+u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
@@ -65,15 +69,6 @@ vim.keymap.set('x', '/', '<Esc>/\\%V')
 -- Automatically add semicolon or comma at the end of the line
 vim.keymap.set('n', ';;', 'A;<ESC>')
 vim.keymap.set('n', ',,', 'A,<ESC>')
-
--- folds
-u.map('n', '<Left>', function()
-    require('origami').h()
-end)
-
-u.map('n', '<Right>', function()
-    require('origami').l()
-end)
 
 u.map('n', '<leader>B', function()
     u.yank_file_path()
