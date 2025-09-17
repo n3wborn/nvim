@@ -41,36 +41,36 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     desc = 'Remove hl search when enter Insert',
 })
 
-vim.api.nvim_create_autocmd('BufWinEnter', {
-    pattern = '*',
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {
+        'gitsigns-blame',
+        'git',
+        'checkhealth',
+        'help',
+        'lspinfo',
+        'man',
+        'Navbuddy',
+        'notify',
+        'oil',
+        'PlenaryTestPopup',
+        'qf',
+        'spectre_panel',
+        'startuptime',
+        'quickfix',
+        'lazy',
+    },
     callback = function(event)
-        local filetypes = {
-            'gitsigns-blame',
-            'git',
-            'checkhealth',
-            'help',
-            'lspinfo',
-            'man',
-            'Navbuddy',
-            'notify',
-            'oil',
-            'PlenaryTestPopup',
-            'startuptime',
-            'quickfix',
-            'lazy',
-        }
         local bufnr = event.buf
+        local ft = vim.bo[bufnr].filetype
         vim.bo[bufnr].buflisted = false
 
-        for _, ft in ipairs(filetypes) do
-            if vim.bo.filetype == ft then
-                vim.keymap.set('n', 'q', '<cmd>quit<CR>', { buffer = true })
-                vim.keymap.set('n', '<ESC>', '<cmd>quit<CR>', { buffer = true })
-                break
-            end
-        end
+        vim.keymap.set('n', 'q', '<cmd>close<CR>', {
+            buffer = bufnr,
+            silent = true,
+            desc = 'Close window',
+        })
     end,
-    desc = 'Configure some buffers to be more closed easily',
+    desc = 'Configure special buffers to close with q (and ESC for lazy)',
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
