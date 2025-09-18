@@ -1,18 +1,20 @@
+---@type LazyPluginSpec
 return {
     {
         'hrsh7th/nvim-cmp',
+        version = false, -- last release is way too old
         event = 'InsertEnter',
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
             'lukas-reineke/cmp-under-comparator',
             'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lua',
             'lukas-reineke/cmp-rg',
             'windwp/nvim-autopairs',
             -- 'zbirenbaum/copilot-cmp',
             'petertriho/cmp-git',
         },
         opts = function()
+            vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
             local cmp = require('cmp')
             local compare = require('cmp.config.compare')
             local cmp_buffer = require('cmp_buffer')
@@ -27,15 +29,16 @@ return {
                 end,
                 formatting = {
                     fields = { 'kind', 'abbr', 'menu' },
+                    expandable_indicator = true,
                     format = function(entry, item)
                         item.kind = string.format('%s', icons[item.kind])
                         item.menu = ({
                             buffer = '[Buffer]',
+                            lazydev = '[Lazydev]',
                             nvim_lsp = '[LSP]',
-                            nvim_lua = '[API]',
                             path = '[Path]',
                             rg = '[RG]',
-                            copilot = '[Copilot]',
+                            -- copilot = '[Copilot]',
                             git = '[Git]',
                         })[entry.source.name]
                         return item
@@ -89,16 +92,18 @@ return {
                     { name = 'lazydev', group_index = 0, priority = 1000 },
                     -- { name = 'copilot' },
                     { name = 'nvim_lsp', priority = 999 },
-                    { name = 'nvim_lsp_signature_help' },
                 }, {
                     {
                         name = 'buffer',
                         option = {
-                            -- Complete from all visible buffers.
                             get_bufnrs = function()
                                 return vim.api.nvim_list_bufs()
                             end,
                         },
+                    },
+                    {
+                        name = 'rg',
+                        max_item_count = 3,
                     },
                 }),
                 sorting = {
@@ -122,6 +127,12 @@ return {
                     },
                 },
                 view = { entries = { name = 'custom', selection_order = 'near_cursor' } },
+                experimental = {
+                    -- only show ghost text when we show ai completions
+                    ghost_text = vim.g.ai_cmp and {
+                        hl_group = 'CmpGhostText',
+                    } or false,
+                },
             }
         end,
         config = function(_, opts)
@@ -152,31 +163,6 @@ return {
                 },
             })
             cmp.setup(opts)
-        end,
-    },
-    {
-        'petertriho/cmp-git',
-        dependencies = { 'hrsh7th/nvim-cmp' },
-        init = function()
-            table.insert(require('cmp').get_config().sources, { name = 'git' })
-        end,
-        opts = {
-            filetypes = { 'gitcommit', 'octo', 'NeogitCommitMessage' },
-            remotes = { 'upstream', 'origin' }, -- in order of most to least prioritized
-            git = {
-                commits = {
-                    limit = 100,
-                    sha_length = 7,
-                },
-            },
-            gitlab = {
-                hosts = {
-                    vim.env.GITLAB_HOST,
-                },
-            },
-        },
-        config = function(_, opts)
-            require('cmp_git').setup(opts)
         end,
     },
 }
