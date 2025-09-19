@@ -7,7 +7,7 @@ return {
     ---@type snacks.Config
     opts = {
         bigfile = { enabled = true },
-        dashboard = { enabled = true },
+        dashboard = { enabled = false },
         indent = { enabled = true },
         input = { enabled = true },
         ---@type snacks.lazygit.Config
