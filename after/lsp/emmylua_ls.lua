@@ -1,21 +1,26 @@
 ---@type vim.lsp.Config
 return {
     settings = {
-        runtime = {
-            version = 'LuaJIT',
-            requirePattern = {
-                'lua/?.lua',
-                'lua/?/init.lua',
-                '?/lua/?.lua',
-                '?/lua/?/init.lua',
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' },
             },
-        },
-        workspace = {
-            library = {
-                '$VIMRUNTIME',
-                '$HOME/.local/share/nvim/lazy',
+            runtime = {
+                version = 'LuaJIT',
+                requirePattern = {
+                    'lua/?.lua',
+                    'lua/?/init.lua',
+                    '?/lua/?.lua',
+                    '?/lua/?/init.lua',
+                },
             },
-            ignoreGlobs = { '**/*_spec.lua' },
+            workspace = {
+                library = {
+                    '$VIMRUNTIME',
+                    '$HOME/.local/share/nvim/lazy',
+                },
+                ignoreGlobs = { '**/*_spec.lua' },
+            },
         },
     },
 }
