@@ -1,4 +1,4 @@
---- @type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 return {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },

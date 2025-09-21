@@ -1,5 +1,5 @@
 -- npm i -g twiggy-language-server
----@type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 return {
     cmd = { 'twiggy-language-server', '--stdio' },
     filetypes = { 'twig' },

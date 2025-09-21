@@ -35,7 +35,7 @@ require('lazy').setup({
                     keymap = {
                         accept = false,
                         next = '<M-j>',
-                        prev = '<M-k)>',
+                        prev = '<M-k>',
                     },
                 },
                 panel = { enabled = false },
@@ -183,7 +183,7 @@ local capabilities = vim.tbl_deep_extend(
 
 capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
 
----@type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 vim.lsp.config('*', {
     capabilities = capabilities,
     root_dir = function(bufnr, on_dir)

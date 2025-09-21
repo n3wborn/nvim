@@ -1,5 +1,5 @@
 -- npm i -g vscode-langservers-extracted
----@type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 return {
     cmd = { 'vscode-html-language-server', '--stdio' },
     filetypes = { 'html', 'templ' },
