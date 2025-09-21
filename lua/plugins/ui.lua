@@ -70,40 +70,81 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
+
         dependencies = {
             'nvim-tree/nvim-web-devicons',
         },
         event = 'VeryLazy',
-        opts = function()
-            local navic = require('nvim-navic')
-            local config = {
-                options = {
-                    icons_enabled = true,
-                    theme = 'catppuccin',
-                    component_separators = { left = '', right = '' },
-                    section_separators = { left = '', right = '' },
-                    disabled_filetypes = {},
-                    always_divide_middle = true,
+        opts = {
+            options = {
+                icons_enabled = true,
+                theme = 'catppuccin',
+                globalstatus = vim.o.laststatus == 3,
+                disabled_filetypes = {
+                    statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard', 'gitcommit' },
                 },
-                sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename', { navic.get_location, cond = navic.is_available } },
-                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                    lualine_y = {},
-                    lualine_z = { 'location' },
+                component_separators = { left = '', right = '' },
+                section_separators = { left = '', right = '' },
+                always_divide_middle = true,
+            },
+            sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'branch' },
+                lualine_c = { 'filename' },
+                lualine_x = {
+                    require('snacks').profiler.status(),
+                    -- stylua: ignore
+                    {
+                        function() return require("noice").api.status.command.get() end,
+                        cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+                        color = function() return { fg = require('snacks').util.color("Statement") } end,
+                    },
+                    -- stylua: ignore
+                    {
+                        function() return require("noice").api.status.mode.get() end,
+                        cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+                        color = function() return { fg = require('snacks').util.color("Constant") } end,
+                    },
+                    -- stylua: ignore
+                    {
+                        function() return "  " .. require("dap").status() end,
+                        cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
+                        color = function() return { fg = require('snacks').util.color("Debug") } end,
+                    },
+                    -- stylua: ignore
+                    {
+                        require("lazy.status").updates,
+                        cond = require("lazy.status").has_updates,
+                        color = function() return { fg = require('snacks').util.color("Special") } end,
+                    },
+                    {
+                        'diff',
+                        source = function()
+                            local gitsigns = vim.b.gitsigns_status_dict
+
+                            symbols = {
+                                added = ' ',
+                                modified = ' ',
+                                removed = ' ',
+                            }
+
+                            if gitsigns then
+                                return {
+                                    added = gitsigns.added,
+                                    modified = gitsigns.changed,
+                                    removed = gitsigns.removed,
+                                }
+                            end
+                        end,
+                    },
                 },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {},
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {},
+                lualine_y = {
+                    { 'progress', separator = ' ', padding = { left = 1, right = 1 } },
                 },
-                tabline = {},
-            }
-        end,
+                lualine_z = { 'encoding', 'fileformat', 'filetype' },
+            },
+            extensions = { 'neo-tree', 'lazy', 'fzf' },
+        },
     },
     ---@type LazyPluginSpec
     {
@@ -125,6 +166,7 @@ return {
         config = function()
             require('noice').setup({
                 lsp = {
+                    progress = { enabled = false },
                     override = {
                         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
                         ['vim.lsp.util.stylize_markdown'] = true,
@@ -143,18 +185,29 @@ return {
     },
     ---@type LazyPluginSpec
     {
-        'SmiteshP/nvim-navic',
-        dependencies = 'neovim/nvim-lspconfig',
-        opts = {
-            lsp = {
-                auto_attach = true,
-                preference = { 'emmylua_ls' },
-            },
-            highlight = true,
-            separator = '❯ ',
-            depth_limit = 0,
-            depth_limit_indicator = '..',
-            safe_output = true,
+        {
+            'SmiteshP/nvim-navic',
+            lazy = true,
+            opts = function()
+                local icons = require('custom.icons')
+                return {
+                    separator = ' ',
+                    highlight = true,
+                    depth_limit = 5,
+                    icons = icons.kinds,
+                    lazy_update_context = true,
+                }
+            end,
+        },
+        -- lualine integration
+        {
+            'nvim-lualine/lualine.nvim',
+            optional = true,
+            opts = function(_, opts)
+                if not vim.g.trouble_lualine then
+                    table.insert(opts.sections.lualine_c, { 'navic', color_correction = 'dynamic' })
+                end
+            end,
         },
     },
     ---@type LazyPluginSpec

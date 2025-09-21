@@ -1,4 +1,4 @@
---- @type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 return {
     cmd = { 'intelephense', '--stdio' },
     filetypes = { 'php' },
@@ -9,7 +9,7 @@ return {
     settings = {
         intelephense = {
             files = {
-                maxSize = 10485760, -- 10Mo
+                maxSize = 20 * 1024 * 1024, -- 20Mo
                 associations = { '*.php', '*.phtml' },
             },
         },

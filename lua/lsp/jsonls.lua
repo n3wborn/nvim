@@ -1,5 +1,5 @@
 -- npm i -g vscode-langservers-extracted
----@type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 return {
     cmd = { 'vscode-json-language-server', '--stdio' },
     filetypes = { 'json', 'jsonc' },

@@ -35,7 +35,7 @@ require('lazy').setup({
                     keymap = {
                         accept = false,
                         next = '<M-j>',
-                        prev = '<M-k)>',
+                        prev = '<M-k>',
                     },
                 },
                 panel = { enabled = false },
@@ -53,40 +53,84 @@ require('lazy').setup({
             event = { 'BufReadPre', 'BufNewFile' },
         },
         {
-            'hasansujon786/nvim-navbuddy',
-            cmd = 'Navbuddy',
-            keys = {
-                { '<leader>N', '<cmd>Navbuddy<cr>', desc = 'nabuddy' },
-            },
-            dependencies = {
-                'SmiteshP/nvim-navic',
-                'MunifTanjim/nui.nvim',
-            },
-            opts = { lsp = { auto_attach = true } },
-        },
-        {
-            'folke/persistence.nvim',
-            event = 'BufReadPre', -- this will only start session saving when an actual file was opened
-            opts = {
-                dir = vim.fn.stdpath('state') .. '/sessions/', -- directory where session files are saved
-                -- minimum number of file buffers that need to be open to save
-                -- Set to 0 to always save
-                need = 1,
-                branch = true, -- use git branch to save session
-            },
-        },
-        {
             'kylechui/nvim-surround',
             version = '*',
             event = 'VeryLazy',
             config = function()
-                require('nvim-surround').setup({})
+                require('nvim-surround').setup()
             end,
         },
         {
-            'folke/todo-comments.nvim',
-            lazy = true,
-            config = true,
+            {
+                'nvim-mini/mini.comment',
+                event = 'VeryLazy',
+                opts = {
+                    options = {
+                        custom_commentstring = function()
+                            return require('ts_context_commentstring.internal').calculate_commentstring()
+                                or vim.bo.commentstring
+                        end,
+                    },
+                },
+            },
+            {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+                lazy = true,
+                opts = {
+                    enable_autocmd = false,
+                },
+            },
+        },
+        {
+            'folke/trouble.nvim',
+            cmd = { 'Trouble' },
+            opts = {
+                modes = {
+                    lsp = {
+                        win = { position = 'right' },
+                    },
+                },
+            },
+            keys = {
+                { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+                {
+                    '<leader>xX',
+                    '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+                    desc = 'Buffer Diagnostics (Trouble)',
+                },
+                { '<leader>cs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
+                { '<leader>cS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
+                { '<leader>xL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
+                { '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
+                {
+                    '[q',
+                    function()
+                        if require('trouble').is_open() then
+                            require('trouble').prev({ skip_groups = true, jump = true })
+                        else
+                            local ok, err = pcall(vim.cmd.cprev)
+                            if not ok then
+                                vim.notify(err, vim.log.levels.ERROR)
+                            end
+                        end
+                    end,
+                    desc = 'Previous Trouble/Quickfix Item',
+                },
+                {
+                    ']q',
+                    function()
+                        if require('trouble').is_open() then
+                            require('trouble').next({ skip_groups = true, jump = true })
+                        else
+                            local ok, err = pcall(vim.cmd.cnext)
+                            if not ok then
+                                vim.notify(err, vim.log.levels.ERROR)
+                            end
+                        end
+                    end,
+                    desc = 'Next Trouble/Quickfix Item',
+                },
+            },
         },
         {
             'nvzone/typr',
@@ -139,7 +183,7 @@ local capabilities = vim.tbl_deep_extend(
 
 capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
 
----@type vim.lsp.Config
+---@type vim.lsp.ClientConfig
 vim.lsp.config('*', {
     capabilities = capabilities,
     root_dir = function(bufnr, on_dir)
@@ -161,11 +205,11 @@ local servers = {
     'copilot', -- npm i -g @github/copilot-language-server
     -- 'phptools', -- npm i -g devsense-php-ls
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
+    'emmylua_ls', -- cargo install emmylua_ls
     'eslint', -- npm i -g vscode-langservers-extracted
     'html', -- npm i -g vscode-langservers-extracted
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
-    'lua_ls', -- https://luals.github.io/#neovim-install
     'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
 }
