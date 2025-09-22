@@ -60,6 +60,7 @@ return {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
+
                     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete({}),
@@ -89,9 +90,9 @@ return {
                     end, { 'i', 's' }),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'lazydev', group_index = 0, priority = 1000 },
                     -- { name = 'copilot' },
                     { name = 'nvim_lsp', priority = 999 },
+                    -- { name = 'copilot' },
                 }, {
                     {
                         name = 'buffer',

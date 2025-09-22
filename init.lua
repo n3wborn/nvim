@@ -205,11 +205,12 @@ local servers = {
     'copilot', -- npm i -g @github/copilot-language-server
     -- 'phptools', -- npm i -g devsense-php-ls
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
-    'emmylua_ls', -- cargo install emmylua_ls
+    -- 'emmylua_ls', -- cargo install emmylua_ls
     'eslint', -- npm i -g vscode-langservers-extracted
     'html', -- npm i -g vscode-langservers-extracted
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
+    'lua_ls',
     'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
 }

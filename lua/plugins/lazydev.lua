@@ -3,7 +3,6 @@ return {
     {
         'folke/lazydev.nvim',
         ft = 'lua',
-        ---@class lazydev.Config
         opts = {
             runtime = vim.env.VIMRUNTIME,--[[@as string]]
             library = {
@@ -25,9 +24,9 @@ return {
                 cmp = true,
             },
             -- disable when a .luarc.json file is found (eg: for emmylua_ls)
-            -- enabled = function(root_dir)
-            --     return not vim.uv.fs_stat(root_dir .. "/.luarc.json")
-            -- end,
+            enabled = function(root_dir)
+                return not vim.uv.fs_stat(root_dir .. '/.luarc.json')
+            end,
         },
     },
     { -- optional cmp completion source for require statements and module annotations
@@ -36,6 +35,8 @@ return {
             opts.sources = opts.sources or {}
             table.insert(opts.sources, {
                 name = 'lazydev',
+                group_index = 0,
+                priority = 1000,
             })
         end,
     },
