@@ -1,5 +1,5 @@
----@type LazyPluginSpec
 return {
+    ---@type LazyPluginSpec
     {
         'folke/lazydev.nvim',
         ft = 'lua',
@@ -12,6 +12,7 @@ return {
                 -- Only load the lazyvim library when the `LazyVim` global is found
                 { path = 'LazyVim', words = { 'LazyVim' } },
                 'snacks.nvim',
+                'lazy.nvim',
             },
             integrations = {
                 -- Fixes lspconfig's workspace management for LuaLS
@@ -29,6 +30,7 @@ return {
             end,
         },
     },
+    ---@type LazyPluginSpec
     { -- optional cmp completion source for require statements and module annotations
         'hrsh7th/nvim-cmp',
         opts = function(_, opts)
