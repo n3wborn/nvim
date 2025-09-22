@@ -2,41 +2,29 @@
 return {
     'zerochae/endpoint.nvim',
     dependencies = {
-        'folke/snacks.nvim', -- For snacks picker
+        'folke/snacks.nvim',
     },
+    lazy = true,
     cmd = { 'Endpoint' },
+    keys = {
+        { '<space>E', '<cmd>Endpoint<cr>', desc = 'Find API endpoints' },
+        { '<space>Eg', '<cmd>Endpoint Get<cr>', desc = 'Find GET endpoints' },
+        { '<space>Ep', '<cmd>Endpoint Post<cr>', desc = 'Find POST endpoints' },
+        { '<space>Ed', '<cmd>Endpoint Delete<cr>', desc = 'Find DELETE endpoints' },
+    },
     opts = {
-        -- New improved config structure (v1.1+)
         cache = {
-            mode = 'none', -- "none", "session", "persistent"
+            mode = 'none',
         },
         picker = {
-            type = 'telescope', -- "telescope", "vim_ui_select", "snacks"
+            type = 'snacks',
             options = {
-                telescope = { theme = 'dropdown' },
                 snacks = { preview = 'file' },
             },
         },
         ui = {
             show_icons = false,
             show_method = true,
-            -- methods = {
-            --     GET = { icon = '📥', color = 'TelescopeResultsNumber' },
-            --     POST = { icon = '📤', color = 'TelescopeResultsConstant' },
-            --     PUT = { icon = '✏️', color = 'TelescopeResultsKeyword' },
-            --     DELETE = { icon = '🗑️', color = 'TelescopeResultsSpecialChar' },
-            --     PATCH = { icon = '🔧', color = 'TelescopeResultsFunction' },
-            -- },
-        },
-
-        frameworks = {
-            rails = {
-                display_format = 'smart',
-                show_action_annotation = true,
-            },
         },
     },
-    config = function()
-        require('endpoint').setup()
-    end,
 }
