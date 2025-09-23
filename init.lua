@@ -31,7 +31,7 @@ require('lazy').setup({
                 suggestion = {
                     enabled = vim.g.copilot_enabled,
                     auto_trigger = true,
-                    hide_during_completion = vim.g.ai_cmp,
+                    hide_during_completion = vim.g.cursor_enabled,
                     keymap = {
                         accept = false,
                         next = '<M-j>',
