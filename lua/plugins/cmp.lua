@@ -19,6 +19,27 @@ return {
             local compare = require('cmp.config.compare')
             local cmp_buffer = require('cmp_buffer')
             local icons = require('custom.icons').kinds
+            local sources = {
+                { name = 'nvim_lsp' },
+                { name = 'buffer' },
+                { name = 'path' },
+            }
+
+            local comparators = {
+                function(...)
+                    return cmp_buffer:compare_locality(...)
+                end,
+                compare.offset,
+                compare.exact,
+                compare.score,
+                require('cmp-under-comparator').under,
+                compare.recently_used,
+                compare.locality,
+                compare.kind,
+                compare.sort_text,
+                compare.length,
+                compare.order,
+            }
 
             return {
                 enabled = function()
@@ -46,11 +67,11 @@ return {
                 },
                 window = {
                     completion = {
-                        border = _G.global.float_border_opts.border,
+                        border = vim.o.winborder,
                         winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                     documentation = {
-                        border = _G.global.float_border_opts.border,
+                        border = vim.o.winborder,
                         winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                 },
@@ -60,7 +81,6 @@ return {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
-
                     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete({}),
@@ -96,50 +116,10 @@ return {
                         end
                     end),
                 }),
-                sources = cmp.config.sources({
-                    -- { name = 'copilot' },
-                    { name = 'nvim_lsp', priority = 999 },
-                    -- { name = 'copilot' },
-                }, {
-                    {
-                        name = 'buffer',
-                        option = {
-                            get_bufnrs = function()
-                                return vim.api.nvim_list_bufs()
-                            end,
-                        },
-                    },
-                    {
-                        name = 'rg',
-                        max_item_count = 3,
-                    },
-                }),
+                sources = sources,
                 sorting = {
-                    comparators = {
-                        -- require('copilot_cmp.comparators').prioritize,
-                        -- Sort by distance of the word from the cursor
-                        -- https://github.com/hrsh7th/cmp-buffer#locality-bonus-comparator-distance-based-sorting
-                        function(...)
-                            return cmp_buffer:compare_locality(...)
-                        end,
-                        compare.offset,
-                        compare.exact,
-                        compare.score,
-                        require('cmp-under-comparator').under,
-                        compare.recently_used,
-                        compare.locality,
-                        compare.kind,
-                        compare.sort_text,
-                        compare.length,
-                        compare.order,
-                    },
-                },
-                view = { entries = { name = 'custom', selection_order = 'near_cursor' } },
-                experimental = {
-                    -- only show ghost text when we show ai completions
-                    ghost_text = vim.g.ai_cmp and {
-                        hl_group = 'CmpGhostText',
-                    } or false,
+                    comparators = comparators,
+                    priority_weight = 2,
                 },
             }
         end,
