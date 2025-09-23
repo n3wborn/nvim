@@ -196,8 +196,6 @@ vim.lsp.config('*', {
     root_markers = { '.git' },
 })
 
-vim.lsp.on_type_formatting.enable()
-
 local servers = {
     -- 'basedpyright', -- https://detachhead.github.io/basedpyright
     'bashls', -- npm i -g bash-language-server

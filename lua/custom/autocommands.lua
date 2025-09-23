@@ -118,6 +118,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = ev.buf })
         end
 
+        if client:supports_method('textDocument/rangesFormatting') then
+            local win = vim.api.nvim_get_current_win()
+            vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+        end
+
+        if client:supports_method('textDocument/onTypeFormatting') then
+            vim.lsp.on_type_formatting.enable()
+        end
+
         if client:supports_method('textDocument/documentSymbol') then
             local navic = require('nvim-navic')
             navic.attach(client, ev.buf)
@@ -129,9 +138,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.document_color.enable(true, ev.buf)
         end
 
-        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
-        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
-
         if client:supports_method('textDocument/colorPresentation') then
             vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(ev.buf), ev.buf)
         end
@@ -140,9 +146,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.inlay_hint.enable(true)
         end
 
-        if client:supports_method('textDocument/inlineCompletion') and vim.g.copilot_enabled then
+        if
+            client:supports_method('textDocument/inlineCompletion')
+            and (vim.g.copilot_enabled or vim.g.cursor_enabled)
+        then
             vim.lsp.inline_completion.enable(true)
         end
+
+        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
+        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
 })
 
