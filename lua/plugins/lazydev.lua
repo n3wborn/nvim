@@ -11,7 +11,6 @@ return {
                 { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
                 -- Only load the lazyvim library when the `LazyVim` global is found
                 { path = 'LazyVim', words = { 'LazyVim' } },
-                'snacks.nvim',
                 'lazy.nvim',
             },
             integrations = {

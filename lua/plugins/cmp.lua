@@ -12,6 +12,7 @@ return {
             'windwp/nvim-autopairs',
             -- 'zbirenbaum/copilot-cmp',
             'petertriho/cmp-git',
+            'garymjr/nvim-snippets',
         },
         opts = function()
             vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
@@ -19,10 +20,13 @@ return {
             local compare = require('cmp.config.compare')
             local cmp_buffer = require('cmp_buffer')
             local icons = require('custom.icons').kinds
+            ---@type cmp.SourceConfig sources
             local sources = {
-                { name = 'nvim_lsp' },
-                { name = 'buffer' },
-                { name = 'path' },
+                { name = 'nvim_lsp', priority = 900 },
+                { name = 'buffer', max_item_count = 2, priority = 800 },
+                { name = 'rg', max_item_count = 2, priority = 800 },
+                { name = 'path', max_item_count = 2, priority = 500 },
+                { name = 'snippets', max_item_count = 2, priority = 500 },
             }
 
             local comparators = {
@@ -57,6 +61,7 @@ return {
                             buffer = '[Buffer]',
                             lazydev = '[Lazydev]',
                             nvim_lsp = '[LSP]',
+                            snippets = '[Snippets]',
                             path = '[Path]',
                             rg = '[RG]',
                             -- copilot = '[Copilot]',
@@ -68,24 +73,26 @@ return {
                 window = {
                     completion = {
                         border = vim.o.winborder,
-                        winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+                        -- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                     documentation = {
                         border = vim.o.winborder,
-                        winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+                        -- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                 },
+                ---@type cmp.SnippetConfig
                 snippet = {
                     expand = function(args)
                         vim.snippet.expand(args.body)
                     end,
                 },
+                ---@type cmp.Mapping
                 mapping = cmp.mapping.preset.insert({
                     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete({}),
                     ['<CR>'] = cmp.mapping.confirm({
-                        behavior = cmp.ConfirmBehavior.Replace,
+                        behavior = cmp.ConfirmBehavior.insert,
                         select = true,
                     }),
                     ['<Tab>'] = cmp.mapping(function(fallback)
@@ -134,6 +141,14 @@ return {
                 sources = {
                     { name = 'vim-dadbod-completion' },
                     { name = 'buffer' },
+                },
+            })
+
+            cmp.setup.filetype({ 'gitcommit' }, {
+                sources = {
+                    { name = 'snippets', max_item_count = 2, priority = 800 },
+                    { name = 'buffer', priority = 200 },
+                    { name = 'rg', priority = 200 },
                 },
             })
 
