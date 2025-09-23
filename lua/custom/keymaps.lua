@@ -65,6 +65,11 @@ u.map('n', '<leader><space>', function()
     utils.enable_copilot()
 end, { desc = 'Ask to enable Copilot or not' })
 
+u.map('n', '<space><leader>', function()
+    local utils = require('utils')
+    utils.enable_cursor()
+end, { desc = 'Ask to enable Cursor cli or not' })
+
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
 

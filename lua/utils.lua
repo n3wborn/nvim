@@ -168,4 +168,18 @@ M.enable_copilot = function()
     end)
 end
 
+M.enable_cursor = function()
+    return vim.ui.select({ 'Yes', 'No' }, {
+        prompt = 'Enable Cursor: ',
+        format_item = function(item)
+            return item
+        end,
+    }, function(choice)
+        if choice == 'Yes' then
+            vim.g.cursor_enabled = true
+        else
+            vim.g.cursor_enabled = false
+        end
+    end)
+end
 return M

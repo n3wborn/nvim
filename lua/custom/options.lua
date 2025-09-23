@@ -63,6 +63,7 @@ vim.opt.sessionoptions = {
 
 vim.g.lsp_inlay_hints = false
 vim.g.copilot_enabled = false
+vim.g.cursor_enabled = false
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
