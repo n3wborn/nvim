@@ -104,7 +104,7 @@ return {
                 ':Gitsigns stage_hunk<CR>',
             },
             {
-                mode = 'n',
+                mode = { 'n', 'v' },
                 '<leader>hr',
                 function()
                     require('gitsigns').reset_hunk()
