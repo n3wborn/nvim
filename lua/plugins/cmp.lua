@@ -73,11 +73,9 @@ return {
                 window = {
                     completion = {
                         border = vim.o.winborder,
-                        -- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                     documentation = {
                         border = vim.o.winborder,
-                        -- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
                     },
                 },
                 ---@type cmp.SnippetConfig

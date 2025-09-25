@@ -36,7 +36,7 @@ vim.opt.wildmode = { 'longest:full', 'full' }
 vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
-vim.opt.completeopt = 'menu,menuone,nearest,noselect'
+vim.opt.completeopt = { 'menuone', 'fuzzy', 'noinsert', 'preview' }
 vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.o.winwidth = 10

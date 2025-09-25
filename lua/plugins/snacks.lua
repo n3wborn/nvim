@@ -64,6 +64,7 @@ return {
     },
 
     keys = {
+        { "<space>s",  function() Snacks.picker.lsp_symbols() end, desc = "List Symbols" },
         { "<leader>sd", function() Snacks.picker.grep_word() end, desc = "Search current word" },
         { "<leader>sp", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>sP", function() Snacks.picker.git_grep() end, desc = "git grep" },

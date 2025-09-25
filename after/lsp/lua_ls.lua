@@ -25,7 +25,7 @@ return {
             },
             diagnostics = {
                 enable = true,
-                globals = { 'vim' }, -- when working on nvim plugins that lack a `.luarc.json`
+                globals = { 'vim', 'Snacks' }, -- when working on nvim plugins that lack a `.luarc.json`
             },
             workspace = {
                 library = vim.api.nvim_get_runtime_file('', true),
