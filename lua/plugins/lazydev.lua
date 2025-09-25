@@ -12,6 +12,7 @@ return {
                 -- Only load the lazyvim library when the `LazyVim` global is found
                 { path = 'LazyVim', words = { 'LazyVim' } },
                 'lazy.nvim',
+                'Snacks',
             },
             integrations = {
                 -- Fixes lspconfig's workspace management for LuaLS
