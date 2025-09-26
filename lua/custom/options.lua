@@ -52,6 +52,7 @@ vim.opt.backup = true
 vim.opt.cmdheight = 0
 vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
 vim.opt.smoothscroll = true
+vim.opt.scrollbind = false
 vim.opt.sessionoptions = {
     'buffers',
     'curdir',
