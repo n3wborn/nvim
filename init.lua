@@ -174,11 +174,13 @@ require('lazy').setup({
     },
     ui = { border = 'rounded' },
 })
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local capabilities = vim.tbl_deep_extend(
+capabilities = vim.tbl_deep_extend(
     'force',
-    vim.lsp.protocol.make_client_capabilities(),
-    require('cmp_nvim_lsp').default_capabilities()
+    capabilities,
+    vim.g.blink_enabled and require('blink.cmp').get_lsp_capabilities({}, false)
+        or vim.g.nvim_cmp_enabled and require('cmp_nvim_lsp').default_capabilities()
 )
 
 capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
