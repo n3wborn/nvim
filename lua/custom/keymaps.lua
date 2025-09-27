@@ -137,3 +137,5 @@ vim.api.nvim_create_autocmd('FileType', {
 u.map('n', '<C-z>', confirm_ctrl_z)
 
 u.map('n', '<leader>D', vim.diagnostic.open_float)
+
+u.map('n', '<leader>hd', ':GitsignsDiffToggle<CR>', { desc = 'Toggle Gitsigns diff' })

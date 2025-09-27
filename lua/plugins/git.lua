@@ -100,10 +100,7 @@ return {
                 map('n', '<leader>tb', function()
                     gs.toogle_current_line_blame()
                 end, '󰊢 Toogle Current B')
-                map('n', '<leader>hd', gs.diffthis, '󰊢 Diff This')
-                map('n', '<leader>hD', function()
-                    gs.diffthis('~')
-                end, 'Diff This ~')
+                map('n', '<leader>hd', '<cmd>GitsignsDiffToggle<cr>', '󰊢 Diff This')
                 map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', '󰊢 GitSigns Select Hunk')
             end,
         },
