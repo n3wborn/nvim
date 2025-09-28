@@ -14,30 +14,75 @@ return {
         priority = 1000,
         lazy = false,
         name = 'catppuccin',
-        config = function()
-            require('catppuccin').setup({
-                flavour = 'mocha',
-                auto_integrations = true,
-                background = {
-                    light = 'latte',
-                    dark = 'mocha',
+        opts = {
+            flavour = 'mocha',
+            transparent_background = true,
+            float = {
+                transparent = true,
+            },
+
+            lsp_styles = {
+                underlines = {
+                    errors = { 'undercurl' },
+                    hints = { 'undercurl' },
+                    warnings = { 'undercurl' },
+                    information = { 'undercurl' },
                 },
-                transparent_background = true,
-                show_end_of_buffer = false,
-                term_colors = false,
-                dim_inactive = {
-                    enabled = false,
-                    shade = 'dark',
-                    percentage = 0.15,
+            },
+            styles = {
+                conditionals = {},
+                functions = { 'italic' },
+            },
+            auto_integrations = true,
+            integrations = {
+                aerial = true,
+                alpha = true,
+                blink_cmp = {
+                    style = 'bordered',
                 },
-                no_italic = false,
-                no_bold = false,
-                styles = {
-                    comments = { 'italic' },
-                    conditionals = {},
-                    functions = { 'italic' },
+                cmp = true,
+                dap = true,
+                dashboard = true,
+                diffview = true,
+                flash = true,
+                fzf = true,
+                gitsigns = {
+                    enabled = true,
+                    -- align with the transparent_background option by default
+                    transparent = true,
                 },
-            })
+                grug_far = true,
+                headlines = true,
+                illuminate = true,
+                -- indent_blankline = { enabled = true },
+                indent_blankline = {
+                    enabled = true,
+                    -- scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+                    colored_indent_levels = true,
+                },
+                leap = true,
+                lsp_trouble = true,
+                mason = true,
+                mini = true,
+                navic = { enabled = true, custom_bg = 'lualine' },
+                neogit = true,
+                neotest = true,
+                neotree = true,
+                noice = true,
+                notify = true,
+                nvimtree = true,
+                rainbow_delimiters = true,
+                snacks = true,
+                telescope = true,
+                treesitter_context = true,
+                lsp_trouble = true,
+                ts_rainbow = true,
+                ts_rainbow2 = true,
+                which_key = true,
+            },
+        },
+        config = function(_, opts)
+            require('catppuccin').setup(opts)
 
             vim.cmd.colorscheme('catppuccin')
         end,
@@ -70,7 +115,6 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-lualine/lualine.nvim',
-
         dependencies = {
             'nvim-tree/nvim-web-devicons',
         },
