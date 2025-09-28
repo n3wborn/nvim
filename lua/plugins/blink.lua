@@ -10,8 +10,19 @@ return {
             preset = 'enter',
             ['<Down>'] = { 'select_next', 'fallback' },
             ['<Up'] = { 'select_prev', 'fallback' },
-            ['<Tab>'] = { 'select_next' },
-            ['<S-Tab'] = { 'select_prev' },
+            ['<Tab>'] = { 'select_next', 'fallback' },
+            ['<S-Tab'] = { 'select_prev', 'fallback' },
+        },
+
+        completion = {
+            menu = {
+                draw = {
+                    columns = {
+                        { 'label', 'label_description', gap = 1 },
+                        { 'kind_icon', gap = 1, 'kind' },
+                    },
+                },
+            },
         },
 
         appearance = {
