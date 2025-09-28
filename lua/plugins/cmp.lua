@@ -4,6 +4,7 @@ return {
         'hrsh7th/nvim-cmp',
         version = false, -- last release is way too old
         event = 'InsertEnter',
+        enabled = not vim.g.blink_enabled,
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
             'lukas-reineke/cmp-under-comparator',
