@@ -183,35 +183,4 @@ M.enable_cursor = function()
     end)
 end
 
-M.command('GitsignsDiffToggle', function()
-    local wins = vim.api.nvim_tabpage_list_wins(0)
-    local diff_win = nil
-
-    for _, win in ipairs(wins) do
-        local bufnr = vim.api.nvim_win_get_buf(win)
-        local name = vim.api.nvim_buf_get_name(bufnr)
-        if name:match('^gitsigns://') then
-            diff_win = win
-            break
-        end
-    end
-
-    if diff_win then
-        pcall(vim.api.nvim_win_close, diff_win, false)
-
-        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-            local bufnr = vim.api.nvim_win_get_buf(win)
-            local name = vim.api.nvim_buf_get_name(bufnr)
-            if not name:match('^gitsigns://') then
-                vim.api.nvim_set_current_win(win)
-                vim.cmd('diffoff')
-                vim.cmd('redraw!')
-                break
-            end
-        end
-    else
-        vim.cmd('Gitsigns diffthis')
-    end
-end, { desc = 'Toggle Gitsigns diff: close or open diffthis' })
-
 return M

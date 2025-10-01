@@ -22,6 +22,30 @@ return {
                 end,
                 desc = 'toogle diffview',
             },
+            {
+                '<leader>hD',
+                function()
+                    local ok, lib = pcall(require, 'diffview.lib')
+                    if not ok then
+                        vim.notify('diffview.nvim not installed', vim.log.levels.WARN)
+                        return
+                    end
+
+                    local view = lib.get_current_view()
+                    if view then
+                        vim.cmd('DiffviewClose')
+                        return
+                    end
+
+                    local file = vim.api.nvim_buf_get_name(0)
+                    if file == '' then
+                        vim.cmd('DiffviewOpen')
+                    else
+                        vim.cmd('DiffviewFileHistory ' .. vim.fn.fnameescape(file))
+                    end
+                end,
+                desc = 'Toggle DiffviewFileHistory on current file',
+            },
         },
         config = function()
             require('diffview')
@@ -388,7 +412,36 @@ return {
                 map('n', '<leader>tb', function()
                     gs.toogle_current_line_blame()
                 end, '󰊢 Toogle Current B')
-                map('n', '<leader>hd', '<cmd>GitsignsDiffToggle<cr>', '󰊢 Diff This')
+                map('n', '<leader>hd', function()
+                    local wins = vim.api.nvim_tabpage_list_wins(0)
+                    local diff_win = nil
+
+                    for _, win in ipairs(wins) do
+                        local bufnr = vim.api.nvim_win_get_buf(win)
+                        local name = vim.api.nvim_buf_get_name(bufnr)
+                        if name:match('^gitsigns://') then
+                            diff_win = win
+                            break
+                        end
+                    end
+
+                    if diff_win then
+                        pcall(vim.api.nvim_win_close, diff_win, false)
+
+                        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                            local bufnr = vim.api.nvim_win_get_buf(win)
+                            local name = vim.api.nvim_buf_get_name(bufnr)
+                            if not name:match('^gitsigns://') then
+                                vim.api.nvim_set_current_win(win)
+                                vim.cmd('diffoff')
+                                vim.cmd('redraw!')
+                                break
+                            end
+                        end
+                    else
+                        vim.cmd('Gitsigns diffthis')
+                    end
+                end, '󰊢 Diff This')
                 map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', '󰊢 GitSigns Select Hunk')
             end,
         },
