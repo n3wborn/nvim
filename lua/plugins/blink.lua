@@ -92,6 +92,21 @@ return {
             signature = { enabled = true },
         },
         config = function(_, opts)
+            -- setup compat sources
+            local enabled = opts.sources.default
+            for _, source in ipairs(opts.sources.compat or {}) do
+                opts.sources.providers[source] = vim.tbl_deep_extend(
+                    'force',
+                    { name = source, module = 'blink.compat.source' },
+                    opts.sources.providers[source] or {}
+                )
+                if type(enabled) == 'table' and not vim.tbl_contains(enabled, source) then
+                    table.insert(enabled, source)
+                end
+            end
+
+            -- Unset custom prop to pass blink.cmp validation
+            opts.sources.compat = nil
             local icons_kinds = require('custom.icons').kind
             -- check if we need to override symbol kinds
             for _, provider in pairs(opts.sources.providers or {}) do
