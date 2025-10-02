@@ -1,7 +1,7 @@
 return {
     ---@type LazyPluginSpec
     {
-        'echasnovski/mini.align',
+        'nvim-mini/mini.align',
         version = false,
         event = 'VeryLazy',
         config = function()
