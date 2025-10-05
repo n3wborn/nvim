@@ -83,101 +83,10 @@ return {
                     node_decremental = '<bs>',
                 },
             },
-            textobjects = {
-                lookahead = true,
-                lsp_interop = {
-                    enable = true,
-                    border = 'rounded',
-                    peek_definition_code = {
-                        ['df'] = '@function.outer',
-                        ['dF'] = '@class.outer',
-                    },
-                },
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        ['af'] = '@function.outer',
-                        ['if'] = '@function.inner',
-                        ['ac'] = '@class.outer',
-                        ['ic'] = '@class.inner',
-                    },
-                },
-                move = {
-                    enable = true,
-                    set_jumps = true,
-                    goto_next_start = {
-                        [']m'] = '@function.outer',
-                        [']]'] = '@class.outer',
-                    },
-                    goto_next_end = {
-                        [']M'] = '@function.outer',
-                        [']['] = '@class.outer',
-                    },
-                    goto_previous_start = {
-                        ['[m'] = '@function.outer',
-                        ['[['] = '@class.outer',
-                    },
-                    goto_previous_end = {
-                        ['[M'] = '@function.outer',
-                        ['[]'] = '@class.outer',
-                    },
-                },
-            },
         },
         ---@param opts TSConfig
         config = function(_, opts)
             require('nvim-treesitter.configs').setup(opts)
-        end,
-    },
-    ---@type LazyPluginSpec
-    {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        event = 'VeryLazy',
-        enabled = true,
-        config = function()
-            local textobjects = {
-                lookahead = true,
-                lsp_interop = {
-                    enable = true,
-                    border = 'rounded',
-                    peek_definition_code = {
-                        ['df'] = '@function.outer',
-                        ['dF'] = '@class.outer',
-                    },
-                },
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        ['af'] = '@function.outer',
-                        ['if'] = '@function.inner',
-                        ['ac'] = '@class.outer',
-                        ['ic'] = '@class.inner',
-                    },
-                },
-                move = {
-                    enable = true,
-                    set_jumps = true,
-                    goto_next_start = {
-                        [']m'] = '@function.outer',
-                        [']]'] = '@class.outer',
-                    },
-                    goto_next_end = {
-                        [']M'] = '@function.outer',
-                        [']['] = '@class.outer',
-                    },
-                    goto_previous_start = {
-                        ['[m'] = '@function.outer',
-                        ['[['] = '@class.outer',
-                    },
-                    goto_previous_end = {
-                        ['[M'] = '@function.outer',
-                        ['[]'] = '@class.outer',
-                    },
-                },
-            }
-            require('nvim-treesitter.configs').setup({ textobjects = textobjects })
         end,
     },
     ---@type LazyPluginSpec
@@ -195,7 +104,8 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter-context',
-        event = 'VeryLazy',
+        event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
+        cmd = { 'TSContext' },
         opts = function()
             local tsc = require('treesitter-context')
             Snacks.toggle({
@@ -209,7 +119,10 @@ return {
                     end
                 end,
             }):map('<leader>ut')
-            return { mode = 'cursor', max_lines = 3 }
+
+            return {
+                max_lines = 3,
+            }
         end,
     },
     ---@type LazyPluginSpec
