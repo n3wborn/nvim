@@ -54,10 +54,12 @@ return {
     {
         'NeogitOrg/neogit',
         cmd = { 'Neogit' },
+        keys = {
+            { '<space>G', ':Neogit<CR>', desc = 'Open Neogit' },
+        },
         dependencies = {
-            'nvim-lua/plenary.nvim', -- required
-            'sindrets/diffview.nvim', -- optional - Diff integration
-            'nvim-mini/mini.pick', -- optional
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim', -- optional integrations: 'sindrets/diffview.nvim' or 'nvim-mini/mini.pick'
         },
         opts = {
 

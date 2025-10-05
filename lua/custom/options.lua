@@ -68,6 +68,7 @@ vim.g.nvim_cmp_enabled = not vim.g.blink_enabled
 vim.g.lsp_inlay_hints = false
 vim.g.copilot_enabled = false
 vim.g.cursor_enabled = false
+vim.g.ai_enabled = vim.g.copilot_enabled or vim.g.cursor_enabled
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({

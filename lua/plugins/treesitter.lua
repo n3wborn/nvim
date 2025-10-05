@@ -92,12 +92,6 @@ return {
     ---@type LazyPluginSpec
     {
         'windwp/nvim-ts-autotag',
-        event = { 'BufReadPre', 'BufNewFile' },
-        opts = {},
-    },
-    ---@type LazyPluginSpec
-    {
-        'windwp/nvim-ts-autotag',
         event = 'VeryLazy',
         opts = {},
     },

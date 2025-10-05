@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     callback = function()
         vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
@@ -63,7 +61,6 @@ vim.api.nvim_create_autocmd('FileType', {
     },
     callback = function(event)
         local bufnr = event.buf
-        local ft = vim.bo[bufnr].filetype
         vim.bo[bufnr].buflisted = false
 
         vim.keymap.set('n', 'q', '<cmd>close<CR>', {
@@ -148,11 +145,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.inlay_hint.enable(true)
         end
 
-        if
-            client:supports_method('textDocument/inlineCompletion')
-            and (vim.g.copilot_enabled or vim.g.cursor_enabled)
-        then
-            vim.lsp.inline_completion.enable(true)
+        if client:supports_method('textDocument/inlineCompletion') and vim.g.ai_enabled then
+            vim.lsp.inline_completion.enable(true, { bufnr = ev.buf })
+            vim.keymap.set(
+                'i',
+                '<C-F>',
+                vim.lsp.inline_completion.get,
+                { desc = 'LSP: accept inline completion', buffer = ev.buf }
+            )
+            vim.keymap.set(
+                'i',
+                '<C-G>',
+                vim.lsp.inline_completion.select,
+                { desc = 'LSP: switch inline completion', buffer = ev.buf }
+            )
         end
 
         vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
