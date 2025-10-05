@@ -137,4 +137,20 @@ vim.api.nvim_create_autocmd('FileType', {
 u.map('n', '<C-z>', confirm_ctrl_z)
 
 u.map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
+
+local diagnostic_goto = function(next, severity)
+    return function()
+        vim.diagnostic.jump({
+            count = (next and 1 or -1) * vim.v.count1,
+            severity = severity and vim.diagnostic.severity[severity] or nil,
+            float = true,
+        })
+    end
+end
+
+u.map('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
+u.map('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })
+u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
+u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
+
 u.map('n', '<leader>D', vim.diagnostic.open_float)
