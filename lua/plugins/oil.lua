@@ -26,7 +26,7 @@ return {
         {
             '<space>-',
             function()
-                require('oil').open()
+                require('oil').open_float()
             end,
             { desc = 'Open Float window' },
         },
