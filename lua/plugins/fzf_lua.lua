@@ -34,13 +34,6 @@ return {
             desc = 'Git Stashes',
         },
         {
-            '<leader>gf',
-            function()
-                require('fzf-lua').git_bcommits()
-            end,
-            desc = 'Git Status',
-        },
-        {
             '<leader>lr',
             function()
                 require('fzf-lua').lsp_references() --- nvim default grr
