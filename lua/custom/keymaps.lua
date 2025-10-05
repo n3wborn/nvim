@@ -136,5 +136,5 @@ vim.api.nvim_create_autocmd('FileType', {
 
 u.map('n', '<C-z>', confirm_ctrl_z)
 
-u.map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
+u.map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 u.map('n', '<leader>D', vim.diagnostic.open_float)
