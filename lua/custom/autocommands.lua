@@ -98,7 +98,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- C_S = (insert)  vim.lsp.buf.signature_help()
 
         if client:supports_method('textDocument/definition') then
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, keymap_opts)
+            vim.keymap.set('n', 'gd', function()
+                require('fzf-lua').lsp_definitions({ jump1 = true })
+            end)
+            vim.keymap.set('n', 'gD', function()
+                require('fzf-lua').lsp_definitions({ jump1 = false })
+            end)
         end
 
         if client:supports_method('textDocument/declaration') then
@@ -145,28 +150,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.inlay_hint.enable(true)
         end
 
-        if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, buffer) then
-            vim.lsp.inline_completion.enable(true, { bufnr = buffer })
+        if client:supports_method('textDocument/inlineCompletion', buffer) and vim.g.ai_enabled then
+            vim.lsp.inline_completion.enable(true, keymap_opts)
 
             vim.keymap.set(
                 'i',
                 '<C-F>',
                 vim.lsp.inline_completion.get,
-                { desc = 'LSP: accept inline completion', buffer = buffer }
+                { desc = 'LSP: accept inline completion', keymap_opts }
             )
             vim.keymap.set(
                 'i',
                 '<C-G>',
                 vim.lsp.inline_completion.select,
-                { desc = 'LSP: switch inline completion', buffer = buffer }
+                { desc = 'LSP: switch inline completion', keymap_opts }
             )
-        end
-
-        if
-            client:supports_method('textDocument/inlineCompletion')
-            and (vim.g.copilot_enabled or vim.g.cursor_enabled)
-        then
-            vim.lsp.inline_completion.enable(true)
         end
 
         vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, keymap_opts)
