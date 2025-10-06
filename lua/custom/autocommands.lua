@@ -76,17 +76,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(ev)
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+        local buffer = ev.buf
+        local keymap_opts = { buffer = ev.buf }
 
         -- diagnostics
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
 
         -- completion
-        if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
-        end
+        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
 
         if client:supports_method('callHierarchy/incomingCalls') then
-            vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, { buffer = ev.buf })
+            vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, keymap_opts)
         end
 
         -- default keymaps
@@ -98,23 +98,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- C_S = (insert)  vim.lsp.buf.signature_help()
 
         if client:supports_method('textDocument/definition') then
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = ev.buf })
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, keymap_opts)
         end
 
         if client:supports_method('textDocument/declaration') then
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = ev.buf })
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, keymap_opts)
         end
 
         if client:supports_method('textDocument/typeDefinition') then
-            vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, { buffer = ev.buf })
+            vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, keymap_opts)
         end
 
         if client:supports_method('textDocument/implementation') then
-            vim.keymap.set('n', 'gri', vim.lsp.buf.implementation, { buffer = ev.buf })
+            vim.keymap.set('n', 'gri', vim.lsp.buf.implementation, keymap_opts)
         end
 
         if client:supports_method('textDocument/rename') then
-            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, { buffer = ev.buf })
+            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, keymap_opts)
         end
 
         if client:supports_method('textDocument/rangesFormatting') then
@@ -128,40 +128,48 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         if client:supports_method('textDocument/documentSymbol') then
             local navic = require('nvim-navic')
-            navic.attach(client, ev.buf)
+            navic.attach(client, buffer)
 
-            vim.keymap.set('n', 'g0', vim.lsp.buf.rename, { buffer = ev.buf })
+            vim.keymap.set('n', 'g0', vim.lsp.buf.rename, keymap_opts)
         end
 
         if client:supports_method('textDocument/documentColor') then
-            vim.lsp.document_color.enable(true, ev.buf)
+            vim.lsp.document_color.enable(true, buffer)
         end
 
         if client:supports_method('textDocument/colorPresentation') then
-            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(ev.buf), ev.buf)
+            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(buffer), buffer)
         end
 
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
             vim.lsp.inlay_hint.enable(true)
         end
 
-        if client:supports_method('textDocument/inlineCompletion') and vim.g.ai_enabled then
-            vim.lsp.inline_completion.enable(true, { bufnr = ev.buf })
+        if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, buffer) then
+            vim.lsp.inline_completion.enable(true, { bufnr = buffer })
+
             vim.keymap.set(
                 'i',
                 '<C-F>',
                 vim.lsp.inline_completion.get,
-                { desc = 'LSP: accept inline completion', buffer = ev.buf }
+                { desc = 'LSP: accept inline completion', buffer = buffer }
             )
             vim.keymap.set(
                 'i',
                 '<C-G>',
                 vim.lsp.inline_completion.select,
-                { desc = 'LSP: switch inline completion', buffer = ev.buf }
+                { desc = 'LSP: switch inline completion', buffer = buffer }
             )
         end
 
-        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, { buffer = ev.buf })
+        if
+            client:supports_method('textDocument/inlineCompletion')
+            and (vim.g.copilot_enabled or vim.g.cursor_enabled)
+        then
+            vim.lsp.inline_completion.enable(true)
+        end
+
+        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, keymap_opts)
         vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
     end,
 })
