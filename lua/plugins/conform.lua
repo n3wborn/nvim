@@ -10,6 +10,7 @@ return {
             '/vendor/',
         },
         formatters_by_ft = {
+            go = { 'gofmt' },
             --- @todo: find a way to deal with work projects related config
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
