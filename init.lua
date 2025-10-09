@@ -185,6 +185,7 @@ local servers = {
     'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
     -- 'emmylua_ls', -- cargo install emmylua_ls
     'eslint', -- npm i -g vscode-langservers-extracted
+    'gopls', -- go install golang.org/x/tools/gopls@latest
     'html', -- npm i -g vscode-langservers-extracted
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
