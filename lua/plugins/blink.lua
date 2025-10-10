@@ -16,7 +16,6 @@ return {
         },
         dependencies = {
             'rafamadriz/friendly-snippets',
-            -- add blink.compat to dependencies
             {
                 'saghen/blink.compat',
                 optional = true, -- make optional so it's only enabled if any extras need it
@@ -26,13 +25,19 @@ return {
         },
         event = { 'InsertEnter', 'CmdlineEnter' },
         enabled = not vim.g.nvim_cmp_enabled,
-
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
             appearance = {
                 nerd_font_variant = 'mono',
             },
+
+            snippets = {
+                expand = function(snippet, _)
+                    return vim.snippet.expand(snippet)
+                end,
+            },
+
             completion = {
                 accept = {
                     -- experimental auto-brackets support
