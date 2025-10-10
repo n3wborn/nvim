@@ -72,7 +72,7 @@ vim.g.ai_enabled = vim.g.copilot_enabled or vim.g.cursor_enabled
 
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 vim.filetype.add({
-    extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', mdc = 'markdown' },,
+    extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', mdc = 'markdown' },
     filename = {
         ['.env'] = 'dotenv',
         ['vifmrc'] = 'vim',
