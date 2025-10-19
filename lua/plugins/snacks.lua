@@ -15,55 +15,18 @@ return {
         lazygit = { enabled = true, interactive = true },
         notifier = {
             enabled = true,
-            timeout = 3000,
         },
         quickfile = { enabled = true },
         scroll = { enabled = true },
         statuscolumn = { enabled = true },
         words = { enabled = true },
         scope = { enabled = true },
-        styles = {
-            notification = {
-                relative = 'editor',
-            },
-        },
         picker = {
-            win = {
-                input = {
-                    keys = { ['<F1>'] = 'toggle_help_input' }, -- as `?` default keybind, <ESC> is still needed
-                },
-            },
-            layout = {
-                preset = 'vscode', -- default, sidebar, telescope, ivy, ivy_split, dropdown, select, vscode
-                cycle = true,
-                preview = true,
-                layout = {
-                    width = 0.7,
-                    height = 0.7,
-                },
-            },
-            previewers = {
-                file = {
-                    max_size = 1024 * 1024, -- 1MB
-                    max_line_length = 300, -- max line length
-                    ft = nil, ---@type string? filetype for highlighting. Use `nil` for auto detect
-                },
-            },
-            formatters = {
-                text = {
-                    ft = nil, ---@type string? filetype for highlighting
-                },
-                file = {
-                    filename_first = false, -- display filename before the file path
-                    truncate = 200, -- truncate the file path to (roughly) this length
-                    filename_only = false, -- only show the filename
-                    icon_width = 2, -- width of the icon (in characters)
-                    git_status_hl = true, -- use the git status highlight group for the filename
-                },
+            layouts = {
+                preset = "vscode",
             },
         },
     },
-
     keys = {
         { "<space>s",    function() Snacks.picker.lsp_symbols() end, desc = "List Symbols" },
         { "<leader>sd",  function() Snacks.picker.grep_word() end, desc = "Search current word" },
@@ -97,7 +60,8 @@ return {
         { "<leader>bd",  function() Snacks.bufdelete() end, desc = "Delete Buffer" },
         { "<leader>cR",  function() Snacks.rename.rename_file() end, desc = "Rename File" },
         { "<leader>gB",  function() Snacks.gitbrowse() end, desc = "Git Browse" },
-        { "<leader>gb",  function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
+        -- { "<leader>gb",  function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
+        { "<leader>gb",  function() Snacks.picker.git_log_line({ preview = "git_show" }) end, desc = "Git Log Line" },
         { "<leader>gd",  function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
         { "<leader>gg",  function() Snacks.lazygit() end, desc = "Lazygit" },
         { "<leader>gl",  function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
