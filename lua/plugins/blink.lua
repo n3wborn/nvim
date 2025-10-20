@@ -33,9 +33,7 @@ return {
             },
 
             snippets = {
-                expand = function(snippet, _)
-                    return vim.snippet.expand(snippet)
-                end,
+                preset = 'default',
             },
 
             completion = {
