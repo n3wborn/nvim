@@ -1,10 +1,5 @@
 return {
     {
-        'kylechui/nvim-surround',
-        version = '*',
-        event = 'VeryLazy',
-    },
-    {
         'nvim-mini/mini.comment',
         version = '*',
         event = 'VeryLazy',
