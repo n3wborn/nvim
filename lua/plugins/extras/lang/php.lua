@@ -76,12 +76,10 @@ return {
     {
         'nvim-neotest/neotest',
         dependencies = {
-            'V13Axel/neotest-pest',
             'olimorris/neotest-phpunit',
         },
         opts = {
             adapters = {
-                'neotest-pest',
                 ['neotest-phpunit'] = {
                     root_ignore_files = { 'tests/Pest.php' },
                 },
