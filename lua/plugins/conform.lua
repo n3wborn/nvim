@@ -25,17 +25,15 @@ return {
             twig = { 'twig-cs-fixer' },
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
-        --- @type conform.FormatOpts|fun(bufnr: integer)
         format_on_save = { async = false, timeout_ms = 2000, lsp_fallback = false },
-        formatters = {
-            php_cs_fixer = {
-                env = {
-                    PHP_CS_FIXER_IGNORE_ENV = 1,
-                },
-            },
-        },
+        formatters = {},
     },
     config = function(_, opts)
+        local ok, php_conf = pcall(require, 'plugins.conform.php')
+        if ok and type(php_conf.extend) == 'function' then
+            php_conf.extend(opts)
+        end
+
         require('conform').setup(opts)
     end,
 }

@@ -5,17 +5,20 @@ return {
     },
     {
         'stevearc/conform.nvim',
-        opts = {
-            formatters_by_ft = {
-                php = { 'php_cs_fixer' },
-            },
-        },
-        config = function()
-            require('conform.formatters.php_cs_fixer').args = function(self, ctx)
+        optional = true,
+        opts = function(_, opts)
+            opts.formatters_by_ft = opts.formatters_by_ft or {}
+            opts.formatters_by_ft.php = { 'php_cs_fixer' }
+
+            opts.formatters = opts.formatters or {}
+            opts.formatters.php_cs_fixer = {
+                env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
+            }
+
+            -- Définir les arguments dynamiques du fixer
+            require('conform.formatters.php_cs_fixer').args = function(_, ctx)
                 local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
                 local found = nil
-                local utils = require('utils')
-
                 local core_dir = os.getenv('CORE_DIR')
                 local root_dir = nil
 
@@ -44,7 +47,6 @@ return {
             end
         end,
     },
-
     {
         'mfussenegger/nvim-dap',
         opts = function()
