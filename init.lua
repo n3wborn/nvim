@@ -202,6 +202,7 @@ local servers = {
     'lua_ls',
     'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
+    'zls', -- prebuilt binary https://zigtools.org/zls/releases/
 }
 
 for _, server in ipairs(servers) do
