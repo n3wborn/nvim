@@ -5,7 +5,9 @@ return {
     cmd = 'Oil',
     event = 'VeryLazy',
     opts = {
+        skip_confirm_for_simple_edits = true,
         prompt_save_on_select_new_entry = false,
+        autosave_changes = true,
         columns = { 'icon' },
         keymaps = {
             ['<C-h>'] = false,

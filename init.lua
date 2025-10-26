@@ -200,6 +200,7 @@ local servers = {
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
     'lua_ls',
+    'marksman',
     'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
     'zls', -- prebuilt binary https://zigtools.org/zls/releases/

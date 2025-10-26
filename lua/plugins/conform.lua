@@ -15,8 +15,6 @@ return {
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
             lua = { 'stylua' },
-            --- @todo: add hougesen/mdsf
-            markdown = { 'markdownlint-cli2', 'markdownfmt' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },

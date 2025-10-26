@@ -4,7 +4,7 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
+    ---@type snacks.plugins.Config
     opts = {
         animate = { enabled = true, duration = 10 },
         bigfile = { enabled = true },
