@@ -14,15 +14,6 @@ return {
             'sources.compat',
             'sources.default',
         },
-        dependencies = {
-            'rafamadriz/friendly-snippets',
-            {
-                'saghen/blink.compat',
-                optional = true, -- make optional so it's only enabled if any extras need it
-                opts = {},
-                version = not vim.g.lazyvim_blink_main and '*',
-            },
-        },
         event = { 'InsertEnter', 'CmdlineEnter' },
         enabled = not vim.g.nvim_cmp_enabled,
         ---@module 'blink.cmp'
@@ -31,18 +22,7 @@ return {
             appearance = {
                 nerd_font_variant = 'mono',
             },
-
-            snippets = {
-                preset = 'default',
-            },
-
             completion = {
-                accept = {
-                    -- experimental auto-brackets support
-                    auto_brackets = {
-                        enabled = true,
-                    },
-                },
                 menu = {
                     draw = {
                         columns = {
@@ -94,6 +74,12 @@ return {
                             return vim.bo.omnifunc
                         end,
                     },
+                per_filetype = {
+                    sql = { 'dadbod' },
+                },
+                providers = {
+                    dadbod = { module = 'vim_dadbod_completion.blink' },
+                    buffer = { max_items = 3 },
                 },
             },
             cmdline = {
@@ -125,10 +111,7 @@ return {
                 end
             end
 
-            -- Unset custom prop to pass blink.cmp validation
-            opts.sources.compat = nil
             local icons_kinds = require('custom.icons').kind
-            -- check if we need to override symbol kinds
             for _, provider in pairs(opts.sources.providers or {}) do
                 ---@cast provider blink.cmp.SourceProviderConfig|{kind?:string}
                 if provider.kind then
