@@ -1,5 +1,11 @@
 return {
     {
+        'nvim-mini/mini.pairs',
+        version = false,
+        event = 'VeryLazy',
+        opts = {},
+    },
+    {
         'nvim-mini/mini.comment',
         version = '*',
         event = 'VeryLazy',
