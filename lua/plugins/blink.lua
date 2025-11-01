@@ -15,7 +15,6 @@ return {
             'sources.default',
         },
         dependencies = {
-            'rafamadriz/friendly-snippets',
             {
                 'saghen/blink.compat',
                 optional = true, -- make optional so it's only enabled if any extras need it
@@ -37,12 +36,6 @@ return {
             },
 
             completion = {
-                accept = {
-                    -- experimental auto-brackets support
-                    auto_brackets = {
-                        enabled = true,
-                    },
-                },
                 menu = {
                     draw = {
                         columns = {
@@ -83,7 +76,7 @@ return {
                 -- adding any nvim-cmp sources here will enable them
                 -- with blink.compat
                 compat = {},
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                default = { 'lsp', 'path', 'buffer' },
 
                 omni = {
                     module = 'blink.cmp.sources.complete_func',
