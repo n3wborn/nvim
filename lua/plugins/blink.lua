@@ -37,9 +37,9 @@ return {
 
                 documentation = {
                     auto_show = true,
-                ghost_text = {
-                    enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
-                },
+                    ghost_text = {
+                        enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
+                    },
                 },
             },
             keymap = {
