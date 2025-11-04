@@ -15,26 +15,16 @@ return {
             'sources.default',
         },
         dependencies = {
-            {
-                'saghen/blink.compat',
-                optional = true, -- make optional so it's only enabled if any extras need it
-                opts = {},
-                version = not vim.g.lazyvim_blink_main and '*',
-            },
+            'saghen/blink.compat',
+            optional = true, -- make optional so it's only enabled if any extras need it
+            opts = {},
+            version = not vim.g.lazyvim_blink_main and '*',
         },
         event = { 'InsertEnter', 'CmdlineEnter' },
         enabled = not vim.g.nvim_cmp_enabled,
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
-            appearance = {
-                nerd_font_variant = 'mono',
-            },
-
-            snippets = {
-                preset = 'default',
-            },
-
             completion = {
                 menu = {
                     draw = {
@@ -47,62 +37,33 @@ return {
 
                 documentation = {
                     auto_show = true,
-                    auto_show_delay_ms = 200,
-                },
                 ghost_text = {
                     enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
                 },
-            },
-            fuzzy = {
-                implementation = 'prefer_rust_with_warning',
-                sorts = {
-                    'score', -- Primary sort: by fuzzy matching score
-                    'sort_text', -- Secondary sort: by sortText field if scores are equal
-                    'label', -- Tertiary sort: by label if still tied
-                },
-                frecency = {
-                    enabled = true,
                 },
             },
             keymap = {
-                preset = 'enter',
-                ['<Down>'] = { 'select_next', 'fallback' },
-                ['<Up'] = { 'select_prev', 'fallback' },
-                ['<Tab>'] = { 'select_next', 'fallback' },
-                ['<S-Tab'] = { 'select_prev', 'fallback' },
-                ['<C-y>'] = { 'select_and_accept' },
-            },
-            sources = {
-                -- adding any nvim-cmp sources here will enable them
-                -- with blink.compat
-                compat = {},
-                default = { 'lsp', 'path', 'buffer' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-y>'] = { 'select_and_accept', 'fallback' },
+                ['<C-e>'] = { 'cancel', 'fallback' },
 
-                omni = {
-                    module = 'blink.cmp.sources.complete_func',
-                    enabled = true,
-                    ---@type blink.cmp.CompleteFuncOpts
-                    opts = {
-                        complete_func = function()
-                            return vim.bo.omnifunc
-                        end,
-                    },
-                },
-            },
-            cmdline = {
-                enabled = true,
-                keymap = { preset = 'cmdline' },
-                completion = {
-                    list = { selection = { preselect = false } },
-                    menu = {
-                        auto_show = function(ctx)
-                            return vim.fn.getcmdtype() == ':'
-                        end,
-                    },
-                    ghost_text = { enabled = true },
-                },
+                ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
+                ['<CR>'] = { 'select_and_accept', 'fallback' },
+                ['<Esc>'] = { 'cancel', 'hide_documentation', 'fallback' },
+
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+                ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
             signature = { enabled = true },
+            fuzzy = {
+                implementation = 'prefer_rust_with_warning',
+            },
         },
         config = function(_, opts)
             -- setup compat sources
