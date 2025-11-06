@@ -60,6 +60,11 @@ return {
 
                 ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
+            sources = {
+                'lsp',
+                'path',
+                'buffer',
+            },
             signature = { enabled = true },
             fuzzy = {
                 implementation = 'prefer_rust_with_warning',

@@ -162,20 +162,9 @@ require('lazy').setup({
     },
     ui = { border = 'rounded' },
 })
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities = vim.tbl_deep_extend(
-    'force',
-    capabilities,
-    vim.g.blink_enabled and require('blink.cmp').get_lsp_capabilities({}, false)
-        or vim.g.nvim_cmp_enabled and require('cmp_nvim_lsp').default_capabilities()
-)
-
-capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
 
 ---@type vim.lsp.ClientConfig
 vim.lsp.config('*', {
-    capabilities = capabilities,
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
         local cwd = vim.uv.cwd()
