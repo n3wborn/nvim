@@ -210,7 +210,7 @@ return {
             'SmiteshP/nvim-navic',
             lazy = true,
             opts = function()
-                local icons = require('custom.icons').kinds
+                local icons = require('config.icons').kinds
                 return {
                     separator = ' ',
                     highlight = true,
