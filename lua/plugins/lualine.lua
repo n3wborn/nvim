@@ -43,9 +43,15 @@ return {
                 },
                 -- stylua: ignore
                 {
-                    require("lazy.status").updates,
-                    cond = require("lazy.status").has_updates,
-                    color = function() return { fg = require('snacks').util.color("Special") } end,
+                    function() return require('tinygit.statusline').fileState() end,
+                    cond = function() return package.loaded["tinygit"] end,
+                    color = function() return { fg = require('snacks').util.color('Special') } end,
+                },
+                -- stylua: ignore
+                {
+                    require('lazy.status').updates,
+                    cond = require('lazy.status').has_updates,
+                    color = function() return { fg = require('snacks').util.color('Special') } end,
                 },
                 {
                     'diff',
