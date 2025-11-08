@@ -16,7 +16,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('custom.options')
+require('lua.config.options')
 
 require('lazy').setup({
     spec = {
@@ -199,7 +199,7 @@ for _, server in ipairs(servers) do
     vim.lsp.enable(server)
 end
 
-local signs = require('custom.icons').diagnostics
+local signs = require('config.icons').diagnostics
 
 vim.diagnostic.config({
     signs = {
@@ -218,5 +218,5 @@ vim.diagnostic.config({
     jump = { on_jump = vim.diagnostic.open_float },
 })
 
-require('custom.keymaps')
-require('custom.autocommands')
+require('config.keymaps')
+require('config.autocommands')

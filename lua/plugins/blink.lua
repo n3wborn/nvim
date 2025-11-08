@@ -34,12 +34,11 @@ return {
                         },
                     },
                 },
-
+                ghost_text = {
+                    enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
+                },
                 documentation = {
                     auto_show = true,
-                    ghost_text = {
-                        enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
-                    },
                 },
             },
             keymap = {
@@ -86,7 +85,7 @@ return {
 
             -- Unset custom prop to pass blink.cmp validation
             opts.sources.compat = nil
-            local icons_kinds = require('custom.icons').kind
+            local icons_kinds = require('lua.config.icons').kind
             -- check if we need to override symbol kinds
             for _, provider in pairs(opts.sources.providers or {}) do
                 ---@cast provider blink.cmp.SourceProviderConfig|{kind?:string}

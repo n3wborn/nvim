@@ -20,7 +20,7 @@ return {
             local cmp = require('cmp')
             local compare = require('cmp.config.compare')
             local cmp_buffer = require('cmp_buffer')
-            local icons = require('custom.icons').kinds
+            local icons = require('config.icons').kinds
             ---@type cmp.SourceConfig sources
             local sources = {
                 { name = 'nvim_lsp', priority = 900 },
