@@ -85,7 +85,7 @@ return {
 
             -- Unset custom prop to pass blink.cmp validation
             opts.sources.compat = nil
-            local icons_kinds = require('lua.config.icons').kind
+            local icons_kinds = require('config.icons').kind
             -- check if we need to override symbol kinds
             for _, provider in pairs(opts.sources.providers or {}) do
                 ---@cast provider blink.cmp.SourceProviderConfig|{kind?:string}
