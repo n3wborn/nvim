@@ -1,17 +1,4 @@
----@type vim.lsp.ClientConfig
 return {
-    cmd = { 'lua-language-server' },
-    filetypes = { 'lua' },
-    root_markers = {
-        '.luarc.json',
-        '.luarc.jsonc',
-        '.luacheckrc',
-        '.stylua.toml',
-        'stylua.toml',
-        'selene.toml',
-        'selene.yml',
-        '.git',
-    },
     -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lsp/lua_ls.lua
     on_attach = function(client)
         -- disable formatting in favor of `stylua`

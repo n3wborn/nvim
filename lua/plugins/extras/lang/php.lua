@@ -1,9 +1,5 @@
 return {
     {
-        'nvim-treesitter/nvim-treesitter',
-        opts = { ensure_installed = { 'php', 'phpdoc', 'php_only' } },
-    },
-    {
         'stevearc/conform.nvim',
         optional = true,
         opts = function(_, opts)
@@ -74,7 +70,6 @@ return {
             },
         },
     },
-
     {
         'nvim-neotest/neotest',
         dependencies = {
