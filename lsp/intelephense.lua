@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 return {
     init_options = {
         licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,

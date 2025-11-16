@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 return {
     -- taken from https://github.com/chrisgrieser/.config/blob/main/nvim/lsp/lua_ls.lua
     on_attach = function(client)
