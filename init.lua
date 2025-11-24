@@ -192,6 +192,7 @@ local servers = {
     'marksman',
     'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
+    'v_analyzer', -- https://github.com/vlang/v-analyzer
     'zls', -- prebuilt binary https://zigtools.org/zls/releases/
 }
 
