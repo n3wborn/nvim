@@ -7,7 +7,9 @@ return {
     opts = {
         skip_confirm_for_simple_edits = true,
         prompt_save_on_select_new_entry = false,
-        autosave_changes = true,
+        lsp_file_methods = {
+            autosave_changes = true,
+        },
         columns = { 'icon' },
         keymaps = {
             ['<C-h>'] = false,
