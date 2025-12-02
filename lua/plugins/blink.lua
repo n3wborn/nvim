@@ -1,11 +1,5 @@
 return {
     {
-        'hrsh7th/nvim-cmp',
-        optional = true,
-        enabled = vim.g.nvim_cmp_enabled,
-    },
-
-    {
         'saghen/blink.cmp',
         version = '*',
         -- build = "cargo build --release",
@@ -21,7 +15,6 @@ return {
             version = not vim.g.lazyvim_blink_main and '*',
         },
         event = { 'InsertEnter', 'CmdlineEnter' },
-        enabled = not vim.g.nvim_cmp_enabled,
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
