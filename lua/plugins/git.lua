@@ -174,24 +174,4 @@ return {
             end,
         },
     },
-    {
-        'ahkohd/difft.nvim',
-        opts = {
-            command = "GIT_EXTERNAL_DIFF='difft --color=always' git diff",
-        },
-        keys = {
-            {
-                '<leader>d',
-                function()
-                    local t = require('difft')
-                    if t.is_visible() then
-                        t.hide()
-                    else
-                        t.diff()
-                    end
-                end,
-                desc = 'Toggle Difft',
-            },
-        },
-    },
 }
