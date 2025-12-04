@@ -22,7 +22,6 @@ require('config.options')
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
-        { import = 'plugins.extras.ai' },
         { import = 'plugins.extras.lang' },
         {
             'zbirenbaum/copilot.lua',
