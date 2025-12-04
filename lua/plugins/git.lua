@@ -74,13 +74,6 @@ return {
             },
         },
     },
-    ---@type LazyPluginSpec
-    {
-        'akinsho/git-conflict.nvim',
-        version = '*',
-        config = true,
-        lazy = false, -- contrary to it's doc, we have to set lazy to false  to load the plugin
-    },
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
