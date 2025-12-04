@@ -129,8 +129,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if client:supports_method('textDocument/documentSymbol') then
             local navic = require('nvim-navic')
             navic.attach(client, buffer)
-
-            vim.keymap.set('n', 'g0', vim.lsp.buf.rename, keymap_opts)
         end
 
         if client:supports_method('textDocument/documentColor') then
