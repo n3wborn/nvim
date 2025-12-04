@@ -64,7 +64,6 @@ vim.opt.sessionoptions = {
 vim.opt.conceallevel = 2
 
 vim.g.blink_enabled = true
-vim.g.nvim_cmp_enabled = not vim.g.blink_enabled
 vim.g.lsp_inlay_hints = false
 vim.g.copilot_enabled = false
 vim.g.cursor_enabled = false
