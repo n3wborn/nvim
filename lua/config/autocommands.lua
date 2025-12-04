@@ -122,11 +122,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, keymap_opts)
         end
 
-        if client:supports_method('textDocument/rangesFormatting') then
-            local win = vim.api.nvim_get_current_win()
-            vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-        end
-
         if client:supports_method('textDocument/onTypeFormatting') then
             vim.lsp.on_type_formatting.enable()
         end
@@ -134,8 +129,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if client:supports_method('textDocument/documentSymbol') then
             local navic = require('nvim-navic')
             navic.attach(client, buffer)
-
-            vim.keymap.set('n', 'g0', vim.lsp.buf.rename, keymap_opts)
         end
 
         if client:supports_method('textDocument/documentColor') then

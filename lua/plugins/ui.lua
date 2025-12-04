@@ -66,9 +66,6 @@ return {
         opts = {
             flavour = 'mocha',
             transparent_background = true,
-            float = {
-                transparent = true,
-            },
             lsp_styles = {
                 virtual_text = {
                     errors = { 'italic' },
@@ -88,56 +85,9 @@ return {
                 },
             },
             styles = {
-                conditionals = {},
                 functions = { 'italic' },
             },
             auto_integrations = true,
-            integrations = {
-                aerial = true,
-                alpha = true,
-                blink_cmp = {
-                    style = 'bordered',
-                },
-                cmp = true,
-                dap = true,
-                dashboard = true,
-                diffview = true,
-                flash = true,
-                fzf = true,
-                gitsigns = {
-                    enabled = true,
-                    -- align with the transparent_background option by default
-                    transparent = true,
-                },
-                grug_far = true,
-                headlines = true,
-                illuminate = true,
-                -- indent_blankline = { enabled = true },
-                indent_blankline = {
-                    enabled = true,
-                    -- scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
-                    colored_indent_levels = true,
-                },
-                leap = true,
-                lsp_trouble = true,
-                mason = true,
-                mini = true,
-                navic = { enabled = true, custom_bg = 'lualine' },
-                neogit = true,
-                neotest = true,
-                neotree = true,
-                noice = true,
-                notify = true,
-                nvimtree = true,
-                rainbow_delimiters = true,
-                snacks = true,
-                telescope = true,
-                treesitter_context = true,
-                lsp_trouble = true,
-                ts_rainbow = true,
-                ts_rainbow2 = true,
-                which_key = true,
-            },
         },
         config = function(_, opts)
             require('catppuccin').setup(opts)

@@ -74,13 +74,6 @@ return {
             },
         },
     },
-    ---@type LazyPluginSpec
-    {
-        'akinsho/git-conflict.nvim',
-        version = '*',
-        config = true,
-        lazy = false, -- contrary to it's doc, we have to set lazy to false  to load the plugin
-    },
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
@@ -179,26 +172,6 @@ return {
                 end, '󰊢 Diff This')
                 map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', '󰊢 GitSigns Select Hunk')
             end,
-        },
-    },
-    {
-        'ahkohd/difft.nvim',
-        opts = {
-            command = "GIT_EXTERNAL_DIFF='difft --color=always' git diff",
-        },
-        keys = {
-            {
-                '<leader>d',
-                function()
-                    local t = require('difft')
-                    if t.is_visible() then
-                        t.hide()
-                    else
-                        t.diff()
-                    end
-                end,
-                desc = 'Toggle Difft',
-            },
         },
     },
 }

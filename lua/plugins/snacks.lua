@@ -14,10 +14,51 @@ return {
         ---@type snacks.lazygit.Config
         lazygit = { enabled = true, interactive = true },
         notifier = {
-            enabled = true,
+            -- log level: TRACE DEBUG ERROR WARN INFO  OFF
+            level = vim.log.levels.WARN,
+            win = { preview = { wo = { wrap = true } } },
         },
         quickfile = { enabled = true },
-        scroll = { enabled = true },
+        scroll = {
+            enabled = true,
+            keys = {
+                ---@type table<string, snacks.scope.TextObject|{desc?:string}|false>
+                textobject = {
+                    ii = {
+                        min_size = 2, -- minimum size of the scope
+                        edge = false, -- inner scope
+                        cursor = false,
+                        treesitter = { blocks = { enabled = false } },
+                        desc = "inner scope",
+                    },
+                    ai = {
+                        cursor = false,
+                        min_size = 2, -- minimum size of the scope
+                        treesitter = { blocks = { enabled = false } },
+                        desc = "full scope",
+                    },
+                },
+                ---@type table<string, snacks.scope.Jump|{desc?:string}|false>
+                jump = {
+                    ["[i"] = {
+                        min_size = 1, -- allow single line scopes
+                        bottom = false,
+                        cursor = false,
+                        edge = true,
+                        treesitter = { blocks = { enabled = false } },
+                        desc = "jump to top edge of scope",
+                    },
+                    ["]i"] = {
+                        min_size = 1, -- allow single line scopes
+                        bottom = true,
+                        cursor = false,
+                        edge = true,
+                        treesitter = { blocks = { enabled = false } },
+                        desc = "jump to bottom edge of scope",
+                    },
+                },
+            },
+        },
         statuscolumn = { enabled = true },
         words = { enabled = true },
         scope = { enabled = true },
