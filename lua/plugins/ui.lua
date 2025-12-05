@@ -210,4 +210,9 @@ return {
             vim.opt.foldlevelstart = 99
         end,
     },
+    {
+        'nvim-zh/colorful-winsep.nvim',
+        config = true,
+        event = { 'WinLeave' },
+    },
 }
