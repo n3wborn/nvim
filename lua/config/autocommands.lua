@@ -216,3 +216,24 @@ vim.api.nvim_create_autocmd('FileType', {
         }
     end,
 })
+
+-- Review workflow
+vim.keymap.set('n', '<leader>pr', ':PRReview<CR>', { desc = 'Start PR review' })
+vim.keymap.set('n', '<leader>pl', ':PRListReviewRequests<CR>', { desc = 'List review requests' })
+vim.keymap.set('n', '<leader>pc', ':PRReviewCleanup<CR>', { desc = 'Cleanup PR review' })
+vim.keymap.set('n', '<leader>pi', ':PRInfo<CR>', { desc = 'Show PR info' })
+vim.keymap.set('n', '<leader>po', ':PROpen<CR>', { desc = 'Open PR in browser' })
+vim.keymap.set('n', '<leader>pb', ':PRReviewBuffer<CR>', { desc = 'Toggle review buffer' })
+
+-- Comments
+vim.keymap.set('n', '<leader>pC', ':PRLineComment<CR>', { desc = 'Add line comment' })
+vim.keymap.set('n', '<leader>pP', ':PRPendingComment<CR>', { desc = 'Add pending comment' })
+vim.keymap.set('n', '<leader>pv', ':PRListAllComments<CR>', { desc = 'List all comments' })
+vim.keymap.set('n', '<leader>pp', ':PRListPendingComments<CR>', { desc = 'List pending comments' })
+vim.keymap.set('n', '<leader>pR', ':PRReply<CR>', { desc = 'Reply to comment' })
+vim.keymap.set('n', '<leader>pe', ':PREditComment<CR>', { desc = 'Edit my comment' })
+vim.keymap.set('n', '<leader>pd', ':PRDeleteComment<CR>', { desc = 'Delete my comment' })
+
+-- Review actions
+vim.keymap.set('n', '<leader>pa', ':PRApprove<CR>', { desc = 'Approve PR' })
+vim.keymap.set('n', '<leader>px', ':PRRequestChanges<CR>', { desc = 'Request changes' })

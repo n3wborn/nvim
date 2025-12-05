@@ -44,10 +44,10 @@ return {
         prev_file_key = '<C-h>',
     },
     cmd = { 'PR' },
-    keys = {
-        { '<leader>p', '<cmd>PRReviewMenu<cr>', desc = 'PR Review Menu' },
-        { '<leader>p', '<cmd>PRSuggestChange<CR>', desc = 'Suggest change', mode = 'v' },
-    },
+    -- keys = {
+    --     { '<leader>p', '<cmd>PRReviewMenu<cr>', desc = 'PR Review Menu' },
+    --     { '<leader>p', '<cmd>PRSuggestChange<CR>', desc = 'Suggest change', mode = 'v' },
+    -- },
     config = function(_, opts)
         require('github-pr-reviewer').setup(opts)
 
