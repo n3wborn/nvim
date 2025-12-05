@@ -49,7 +49,7 @@ return {
         { '<leader>p', '<cmd>PRSuggestChange<CR>', desc = 'Suggest change', mode = 'v' },
     },
     config = function(_, opts)
-        require('github-pr-reviewer').setup()
+        require('github-pr-reviewer').setup(opts)
 
         -- -- Quick menu access
         -- vim.keymap.set('n', '<leader>p', ':PR<CR>', { desc = 'PR Review Menu' })
