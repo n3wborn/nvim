@@ -217,6 +217,8 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
+vim.keymap.set('n', '<leader>p', ':PR<CR>', { desc = 'PR Review Menu' })
+
 -- Review workflow
 vim.keymap.set('n', '<leader>pr', ':PRReview<CR>', { desc = 'Start PR review' })
 vim.keymap.set('n', '<leader>pl', ':PRListReviewRequests<CR>', { desc = 'List review requests' })

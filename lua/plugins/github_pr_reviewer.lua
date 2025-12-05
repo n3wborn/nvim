@@ -43,36 +43,25 @@ return {
         -- Key to go to previous modified file (only works in review mode)
         prev_file_key = '<C-h>',
     },
-    cmd = { 'PR' },
-    -- keys = {
-    --     { '<leader>p', '<cmd>PRReviewMenu<cr>', desc = 'PR Review Menu' },
-    --     { '<leader>p', '<cmd>PRSuggestChange<CR>', desc = 'Suggest change', mode = 'v' },
-    -- },
+    cmd = {
+        'PR',
+        'PRReview',
+        'PRListReviewRequests',
+        'PRReviewCleanup',
+        'PRInfo',
+        'PROpen',
+        'PRReviewBuffer',
+        'PRLineComment',
+        'PRPendingComment',
+        'PRListAllComments',
+        'PRListPendingComments',
+        'PRReply',
+        'PREditComment',
+        'PRDeleteComment',
+        'PRApprove',
+        'PRRequestChanges',
+    },
     config = function(_, opts)
         require('github-pr-reviewer').setup(opts)
-
-        -- -- Quick menu access
-        -- vim.keymap.set('n', '<leader>p', ':PR<CR>', { desc = 'PR Review Menu' })
-        --
-        -- -- Review workflow
-        -- vim.keymap.set('n', '<leader>pr', ':PRReview<CR>', { desc = 'Start PR review' })
-        -- vim.keymap.set('n', '<leader>pl', ':PRListReviewRequests<CR>', { desc = 'List review requests' })
-        -- vim.keymap.set('n', '<leader>pc', ':PRReviewCleanup<CR>', { desc = 'Cleanup PR review' })
-        -- vim.keymap.set('n', '<leader>pi', ':PRInfo<CR>', { desc = 'Show PR info' })
-        -- vim.keymap.set('n', '<leader>po', ':PROpen<CR>', { desc = 'Open PR in browser' })
-        -- vim.keymap.set('n', '<leader>pb', ':PRReviewBuffer<CR>', { desc = 'Toggle review buffer' })
-        --
-        -- -- Comments
-        -- vim.keymap.set('n', '<leader>pC', ':PRLineComment<CR>', { desc = 'Add line comment' })
-        -- vim.keymap.set('n', '<leader>pP', ':PRPendingComment<CR>', { desc = 'Add pending comment' })
-        -- vim.keymap.set('n', '<leader>pv', ':PRListAllComments<CR>', { desc = 'List all comments' })
-        -- vim.keymap.set('n', '<leader>pp', ':PRListPendingComments<CR>', { desc = 'List pending comments' })
-        -- vim.keymap.set('n', '<leader>pR', ':PRReply<CR>', { desc = 'Reply to comment' })
-        -- vim.keymap.set('n', '<leader>pe', ':PREditComment<CR>', { desc = 'Edit my comment' })
-        -- vim.keymap.set('n', '<leader>pd', ':PRDeleteComment<CR>', { desc = 'Delete my comment' })
-        --
-        -- -- Review actions
-        -- vim.keymap.set('n', '<leader>pa', ':PRApprove<CR>', { desc = 'Approve PR' })
-        -- vim.keymap.set('n', '<leader>px', ':PRRequestChanges<CR>', { desc = 'Request changes' })
     end,
 }
