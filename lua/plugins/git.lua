@@ -103,9 +103,11 @@ return {
                 ignore_whitespace = false,
                 virt_text_priority = 99,
             },
+            gh = true,
             watch_gitdir = { enabled = true, follow_files = true },
             on_attach = function(buffer)
                 local gs = package.loaded.gitsigns
+                local nav_hunk_opts = { preview = true, greedy = false, target = 'all' }
 
                 local function map(mode, l, r, desc)
                     vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
@@ -115,14 +117,14 @@ return {
                     if vim.wo.diff then
                         vim.cmd.normal({ ']c', bang = true })
                     else
-                        gs.nav_hunk('next', { preview = true })
+                        gs.nav_hunk('next', nav_hunk_opts)
                     end
                 end, 'Next Hunk')
                 map('n', '<leader>hN', function()
                     if vim.wo.diff then
                         vim.cmd.normal({ '[c', bang = true })
                     else
-                        gs.nav_hunk('prev', { preview = true })
+                        gs.nav_hunk('prev', nav_hunk_opts)
                     end
                 end, 'Prev Hunk')
                 map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', '󰊢 (Un)Stage Hunk')
