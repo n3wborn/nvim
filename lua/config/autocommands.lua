@@ -101,9 +101,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', 'gd', function()
                 require('fzf-lua').lsp_definitions({ jump1 = true })
             end)
-            vim.keymap.set('n', 'gD', function()
-                require('fzf-lua').lsp_definitions({ jump1 = false })
-            end)
         end
 
         if client:supports_method('textDocument/declaration') then
