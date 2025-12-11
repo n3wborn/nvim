@@ -212,7 +212,18 @@ return {
     },
     {
         'nvim-zh/colorful-winsep.nvim',
-        config = true,
         event = { 'WinLeave' },
+        opts = {
+            border = 'rounded',
+            excluded_ft = { 'lazy', 'packer', 'TelescopePrompt', 'mason' },
+            animate = {
+                enabled = 'shift',
+                shift = {
+                    delta_time = 0.2,
+                    smooth_speed = 2,
+                    delay = 3,
+                },
+            },
+        },
     },
 }
