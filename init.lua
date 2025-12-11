@@ -111,12 +111,6 @@ require('lazy').setup({
                     desc = 'Next Trouble/Quickfix Item',
                 },
             },
-        },
-        {
-            'nvzone/typr',
-            dependencies = 'nvzone/volt',
-            opts = {},
-            cmd = { 'Typr', 'TyprStats' },
             {
                 'mbbill/undotree',
                 keys = {
@@ -134,6 +128,12 @@ require('lazy').setup({
                 config = function()
                     require('nvim-surround').setup()
                 end,
+            },
+            {
+                'nvzone/typr',
+                dependencies = 'nvzone/volt',
+                opts = {},
+                cmd = { 'Typr', 'TyprStats' },
             },
         },
     },
