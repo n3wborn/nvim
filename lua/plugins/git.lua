@@ -76,9 +76,6 @@ return {
                 },
             },
         },
-        config = function()
-            require('diffview')
-        end,
     },
     {
         'NeogitOrg/neogit',
