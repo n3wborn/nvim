@@ -152,22 +152,14 @@ vim.lsp.config('*', {
 })
 
 local servers = {
-    -- 'basedpyright', -- https://detachhead.github.io/basedpyright
-    'bashls', -- npm i -g bash-language-server
-    'cssls', -- npm i -g vscode-langservers-extracted
-    'copilot', -- npm i -g @github/copilot-language-server
-    -- 'phptools', -- npm i -g devsense-php-ls
-    'emmet_language_server', -- npm i -g @olrtg/emmet-language-server
-    -- 'emmylua_ls', -- cargo install emmylua_ls
     'eslint', -- npm i -g vscode-langservers-extracted
     'gopls', -- go install golang.org/x/tools/gopls@latest
-    'html', -- npm i -g vscode-langservers-extracted
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
     'lua_ls',
     'marksman',
-    'oxlint', -- npm i -g oxlint
     'twiggy_language_server', -- npm i -g twiggy-language-server
+    'tsgo',
     'v_analyzer', -- https://github.com/vlang/v-analyzer
     'zls', -- prebuilt binary https://zigtools.org/zls/releases/
 }

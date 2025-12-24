@@ -20,16 +20,10 @@ return {
         config = function()
             require('mason-lspconfig').setup({
                 ensure_installed = {
-                    'basedpyright',
-                    'bash_language_server',
-                    'css-lsp',
-                    -- 'lua_ls',
                     'rust_analyzer',
                     'intelephense',
-                    'php-cs-fixer',
-                    'twigcs',
+                    'postgres-language-server',
                     'twiggy-language-server',
-                    'emmet_language_server',
                 },
             })
         end,

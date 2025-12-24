@@ -15,4 +15,3 @@ RUN apk add --no-cache ${BUILD_DEPS} && \
 COPY ./ /root/.config/nvim/
 
 RUN nvim --headless "+Lazy! sync" +qa || exit 0
-
