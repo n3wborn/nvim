@@ -7,29 +7,17 @@ _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = '
 require('config.options')
 
 -- plugins
-vim.pack.add({
-    { src = 'https://github.com/b0o/SchemaStore.nvim' },
-    { src = 'https://github.com/neovim/nvim-lspconfig.git' },
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
 
-    -- formatters
-    { src = 'https://github.com/stevearc/conform.nvim.git' },
-
-    -- explorer
-    { src = 'https://github.com/stevearc/oil.nvim.git' },
-
-    -- git
-    { src = 'https://github.com/kdheepak/lazygit.nvim.git' },
-
-    -- ui
-    { src = 'https://github.com/HiPhish/rainbow-delimiters.nvim.git' },
-    { src = 'https://github.com/catppuccin/nvim.git', name = 'catppuccin' },
-})
+-- :help vim-pack
+vim.pack.add({ 'https://github.com/b0o/SchemaStore.nvim' })
+vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 
 -- treesitter
+vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
 require('nvim-treesitter').setup()
 
 -- formatters
+vim.pack.add({ 'https://github.com/stevearc/conform.nvim' })
 require('conform').setup({
     exclude_path_patterns = {
         '/node_modules/',
@@ -89,6 +77,7 @@ require('conform').setup({
 })
 
 -- explorer
+vim.pack.add({ 'https://github.com/stevearc/oil.nvim' })
 require('oil').setup({
     skip_confirm_for_simple_edits = true,
     prompt_save_on_select_new_entry = false,
@@ -109,9 +98,16 @@ local oil = require('oil')
 vim.keymap.set('n', '-', oil.open)
 
 -- git
+vim.pack.add({ 'https://github.com/kdheepak/lazygit.nvim' })
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
 
--- UI
+-- ui
+vim.pack.add({ { src = 'https://github.com/nvim-lualine/lualine.nvim.git', name = 'lualine' } })
+require('lualine').setup()
+
+vim.pack.add({ 'https://github.com/HiPhish/rainbow-delimiters.nvim' })
+
+vim.pack.add({ { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' } })
 require('catppuccin').setup({
     flavour = 'mocha',
     transparent_background = true,
@@ -138,8 +134,10 @@ require('catppuccin').setup({
     },
     -- auto_integrations = true,
 })
-
 vim.cmd('colorscheme catppuccin')
+
+vim.pack.add({ 'https://github.com/stevearc/quicker.nvim' })
+require('quicker').setup()
 
 -- LSP
 local servers = {
