@@ -66,10 +66,6 @@ u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer
 -- search within visual selection
 vim.keymap.set('x', '/', '<Esc>/\\%V')
 
--- Automatically add semicolon or comma at the end of the line
-vim.keymap.set('n', ';;', 'A;<ESC>')
-vim.keymap.set('n', ',,', 'A,<ESC>')
-
 u.map('n', '<leader>B', function()
     u.yank_file_path()
 end)
