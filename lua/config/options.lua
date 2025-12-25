@@ -63,24 +63,4 @@ vim.opt.sessionoptions = {
 }
 vim.opt.conceallevel = 2
 
-vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
-
--- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
-vim.filetype.add({
-    extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', mdc = 'markdown' },
-    filename = {
-        ['.env'] = 'dotenv',
-        ['vifmrc'] = 'vim',
-        log = 'log',
-        conf = 'conf',
-    },
-    pattern = {
-        ['.*twig'] = 'twig.html',
-        ['.*/waybar/config'] = 'jsonc',
-        ['.*/mako/config'] = 'dosini',
-        ['.*/kitty/*.conf'] = 'bash',
-        ['.*/hypr/.*%.conf'] = 'hyprlang',
-        ['%.env%.[%w_.-]+'] = 'dotenv',
-    },
-})
