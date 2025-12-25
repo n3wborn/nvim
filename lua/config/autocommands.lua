@@ -123,11 +123,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.on_type_formatting.enable()
         end
 
-        if client:supports_method('textDocument/documentSymbol') then
-            local navic = require('nvim-navic')
-            navic.attach(client, buffer)
-        end
-
+        -- if client:supports_method('textDocument/documentSymbol') then
+        --     local navic = require('nvim-navic')
+        --     navic.attach(client, buffer)
+        -- end
+        --
         if client:supports_method('textDocument/documentColor') then
             vim.lsp.document_color.enable(true, buffer)
         end

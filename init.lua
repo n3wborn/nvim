@@ -8,6 +8,7 @@ require('config.options')
 
 -- plugins
 vim.pack.add({
+    { src = 'https://github.com/b0o/SchemaStore.nvim' },
     { src = 'https://github.com/neovim/nvim-lspconfig.git' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
 
@@ -103,9 +104,9 @@ require('oil').setup({
         show_hidden = true,
     },
 })
-vim.keymap.set('n', '-', function()
-    require('oil').open()
-end)
+
+local oil = require('oil')
+vim.keymap.set('n', '-', oil.open)
 
 -- git
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
@@ -114,28 +115,28 @@ vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
 require('catppuccin').setup({
     flavour = 'mocha',
     transparent_background = true,
-    lsp_styles = {
-        virtual_text = {
-            errors = { 'italic' },
-            hints = { 'italic' },
-            warnings = { 'italic' },
-            information = { 'italic' },
-            ok = { 'italic' },
-        },
-        underlines = {
-            errors = { 'undercurl' },
-            hints = { 'undercurl' },
-            warnings = { 'undercurl' },
-            information = { 'undercurl' },
-        },
-        inlay_hints = {
-            background = true,
-        },
-    },
+    -- lsp_styles = {
+    --     virtual_text = {
+    --         errors = { 'italic' },
+    --         hints = { 'italic' },
+    --         warnings = { 'italic' },
+    --         information = { 'italic' },
+    --         ok = { 'italic' },
+    --     },
+    --     underlines = {
+    --         errors = { 'undercurl' },
+    --         hints = { 'undercurl' },
+    --         warnings = { 'undercurl' },
+    --         information = { 'undercurl' },
+    --     },
+    --     inlay_hints = {
+    --         background = true,
+    --     },
+    -- },
     styles = {
         functions = { 'italic' },
     },
-    auto_integrations = true,
+    -- auto_integrations = true,
 })
 
 vim.cmd('colorscheme catppuccin')
