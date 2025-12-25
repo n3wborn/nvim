@@ -91,7 +91,7 @@ return {
         { '<leader>gr',  function() Snacks.picker.registers() end, desc = "List Registers" },
         { "<leader>k",   function() Snacks.picker.keymaps() end, desc = "List mappings" },
         { "<leader>sR",  function() Snacks.picker.resume() end, desc = "Resume" },
-        { "<space>R",    function() Snacks.picker.resume() end, desc = "Resume" },
+        -- { "<space>R",    function() Snacks.picker.resume() end, desc = "Resume" },
         { "<leader>z",   function() Snacks.zen() end, desc = "Toggle Zen Mode" },
         { "<leader>Z",   function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
         { "<leader>.",   function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
