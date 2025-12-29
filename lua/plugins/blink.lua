@@ -28,7 +28,7 @@ return {
                     },
                 },
                 ghost_text = {
-                    enabled = vim.g.copilot_enabled or vim.g.cursor_enabled,
+                    enabled = false,
                 },
                 documentation = {
                     auto_show = true,
