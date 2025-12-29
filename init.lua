@@ -24,30 +24,6 @@ require('lazy').setup({
         { import = 'plugins' },
         { import = 'plugins.extras.lang' },
         {
-            'zbirenbaum/copilot.lua',
-            cmd = 'Copilot',
-            build = ':Copilot auth',
-            event = 'BufReadPost',
-            enabled = vim.g.copilot_enabled,
-            opts = {
-                suggestion = {
-                    enabled = vim.g.copilot_enabled,
-                    auto_trigger = true,
-                    hide_during_completion = vim.g.cursor_enabled,
-                    keymap = {
-                        accept = false,
-                        next = '<M-j>',
-                        prev = '<M-k>',
-                    },
-                },
-                panel = { enabled = false },
-                filetypes = {
-                    markdown = true,
-                    help = true,
-                },
-            },
-        },
-        {
             'neovim/nvim-lspconfig',
             dependencies = {
                 'b0o/SchemaStore.nvim',
