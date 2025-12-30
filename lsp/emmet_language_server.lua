@@ -1,4 +1,4 @@
----@type vim.lsp.ClientConfig
+---@type vim.lsp.Config
 return {
     init_options = {
         --- @type string[]
