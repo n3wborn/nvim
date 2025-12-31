@@ -152,12 +152,13 @@ vim.lsp.config('*', {
 })
 
 local servers = {
+    'bashls', -- npm i -g bash-language-server
     'eslint', -- npm i -g vscode-langservers-extracted
     'gopls', -- go install golang.org/x/tools/gopls@latest
     'intelephense', -- npm i -g intelephense
     'jsonls', -- npm i -g vscode-langservers-extracted
-    'lua_ls',
-    'marksman',
+    'lua_ls', -- wget https://github.com/LuaLS/lua-language-server/releases/tag/3.16.4
+    'marksman', -- wget https://github.com/artempyanykh/marksman/releases/latest/download/marksman-linux-x64
     'twiggy_language_server', -- npm i -g twiggy-language-server
     'tsgo',
     'v_analyzer', -- https://github.com/vlang/v-analyzer
