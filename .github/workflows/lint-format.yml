@@ -16,16 +16,14 @@ jobs:
         with:
           commit_message: "chore(style): stylua format"
           branch: ${{ github.head_ref }}
-  markdownlint:
+
+  rumdl:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: DavidAnson/markdownlint-cli2-action@v19
+      - name: Lint Markdown
+        uses: rvben/rumdl@v0
         with:
-          command: fix
-          globs: |
-            *.md
-      - uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: "chore(style): markdownlint format"
-          branch: ${{ github.head_ref }}
+          config: .rumdl.toml
+          path: "**/*.md"
+          report-type: annotations
