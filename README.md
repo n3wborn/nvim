@@ -18,7 +18,7 @@ Some parts of my config where taken from:
 If you're looking for an already configured neovim you may prefer these:
 
 - [LazyVim](https://github.com/LazyVim/LazyVim)
-* [NvChad](https://github.com/NvChad/NvChad)
+- [NvChad](https://github.com/NvChad/NvChad)
 - [Lunarvim](https://github.com/LunarVim/LunarVim)
 - [Astrovim](https://github.com/AstroNvim/AstroNvim)
 
