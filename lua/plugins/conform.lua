@@ -16,7 +16,7 @@ return {
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
             lua = { 'stylua' },
-            markdown = { 'mdformat' },
+            markdown = { 'rumdl' },
             php = { 'php_cs_fixer' },
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },

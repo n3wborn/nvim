@@ -1,0 +1,92 @@
+# rumdl configuration file
+
+# Global configuration options
+[global]
+# List of rules to disable (uncomment and modify as needed)
+# disable = ["MD013", "MD033"]
+
+# List of rules to enable exclusively (if provided, only these rules will run)
+# enable = ["MD001", "MD003", "MD004"]
+
+# List of file/directory patterns to include for linting (if provided, only these will be linted)
+# include = [
+#    "docs/*.md",
+#    "src/**/*.md",
+#    "README.md"
+# ]
+
+# List of file/directory patterns to exclude from linting
+exclude = [
+    # Common directories to exclude
+    ".git",
+    ".github",
+    "*.min.md",
+    "build",
+    "dist",
+    "node_modules",
+    "vendor",
+
+    # Specific files or patterns
+    "CHANGELOG.md",
+    "LICENSE.md"
+]
+
+# Respect .gitignore files when scanning directories (default: true)
+respect-gitignore = true
+
+# Markdown flavor/dialect (uncomment to enable)
+# Options: standard (default), gfm, commonmark, mkdocs, mdx, quarto
+# flavor = "mkdocs"
+
+# Rule-specific configurations (uncomment and modify as needed)
+
+[MD003]
+style = "atx"  # Heading style (atx, atx_closed, setext)
+
+[MD004]
+style = "dash"  # Unordered list style (asterisk, plus, dash, consistent)
+
+[MD007]
+indent = 2  # Unordered list indentation
+
+[MD009]
+br_spaces = 2   # Trailing spaces should be removed
+
+[MD013]
+line-length = 120
+code-blocks = false
+strict = false
+
+[MD022]
+lines_above = 1     # Headings should be surrounded by 1 blank above
+lines_below = 1     # Headings should be surrounded by 1 blank below
+
+[MD029]
+style = "ordered"   # Ordered list marker value
+
+[MD030]
+ul_single = 1       # Spaces after list markers should be consistent
+ol_single = 1
+
+[MD031]
+list_items = true   # Fenced code blocks should be surrounded by blank lines
+
+[MD033]
+allowed_elements = [    # Inline HTML
+    "details",
+    "summary",
+    "br",
+    "img",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td"
+]
+
+[MD035]
+style = "---"   # Horizontal rule style
+
+[extensions]
+types = ["md", "markdown"]
