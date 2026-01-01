@@ -25,5 +25,4 @@ jobs:
         uses: rvben/rumdl@v0
         with:
           config: .rumdl.toml
-          path: "**/*.md"
           report-type: annotations
