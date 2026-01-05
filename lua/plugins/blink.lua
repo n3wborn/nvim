@@ -29,6 +29,8 @@ return {
                 },
             },
             keymap = {
+                ['<Down>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<Up>'] = { 'select_prev', 'fallback_to_mappings' },
                 ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
                 ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
                 ['<C-y>'] = { 'select_and_accept', 'fallback' },
@@ -60,7 +62,7 @@ return {
                     emoji = {
                         module = 'blink-emoji',
                         name = 'Emoji',
-                        score_offset = 15, -- Tune by preference
+                        score_offset = 15,
                         opts = {
                             insert = true, -- Insert emoji (default) or complete its name
                             ---@type string|table|fun():table
@@ -72,7 +74,17 @@ return {
                             return vim.tbl_contains({ 'gitcommit', 'markdown' }, vim.o.filetype)
                         end,
                     },
+                    lsp = {
+                        min_keyword_length = 0,
+                        score_offset = 90,
+                    },
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100,
+                    },
                     buffer = {
+                        score_offset = 15,
                         opts = {
                             -- get all buffers, even ones like neo-tree
                             -- get_bufnrs = vim.api.nvim_list_bufs,
@@ -83,11 +95,6 @@ return {
                                 end, vim.api.nvim_list_bufs())
                             end,
                         },
-                    },
-                    lazydev = {
-                        name = 'LazyDev',
-                        module = 'lazydev.integrations.blink',
-                        score_offset = 100, -- show at a higher priority than lsp
                     },
                 },
             },
