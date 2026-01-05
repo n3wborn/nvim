@@ -4,6 +4,9 @@ return {
         version = '*',
         -- build = "cargo build --release",
         event = { 'InsertEnter', 'CmdlineEnter' },
+        dependencies = {
+            'moyiz/blink-emoji.nvim',
+        },
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
@@ -48,11 +51,27 @@ return {
                     'lsp',
                     'path',
                     'buffer',
+                    'emoji',
                     per_filetype = {
                         lua = { inherit_defaults = true, 'lazydev' },
                     },
                 },
                 providers = {
+                    emoji = {
+                        module = 'blink-emoji',
+                        name = 'Emoji',
+                        score_offset = 15, -- Tune by preference
+                        opts = {
+                            insert = true, -- Insert emoji (default) or complete its name
+                            ---@type string|table|fun():table
+                            trigger = function()
+                                return { ':' }
+                            end,
+                        },
+                        should_show_items = function()
+                            return vim.tbl_contains({ 'gitcommit', 'markdown' }, vim.o.filetype)
+                        end,
+                    },
                     buffer = {
                         opts = {
                             -- get all buffers, even ones like neo-tree
