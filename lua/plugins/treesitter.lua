@@ -102,9 +102,11 @@ return {
             }
         end,
     },
-    ---@type LazyPluginSpec
     {
-        'HiPhish/rainbow-delimiters.nvim',
-        event = 'VeryLazy',
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        lazy = true,
+        opts = {
+            enable_autocmd = false,
+        },
     },
 }
