@@ -66,65 +66,9 @@ u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer
 -- search within visual selection
 vim.keymap.set('x', '/', '<Esc>/\\%V')
 
--- Automatically add semicolon or comma at the end of the line
-vim.keymap.set('n', ';;', 'A;<ESC>')
-vim.keymap.set('n', ',,', 'A,<ESC>')
-
 u.map('n', '<leader>B', function()
     u.yank_file_path()
 end)
-
-local confirm_ctrl_z = function()
-    local choices = { 'Yes', 'No' }
-
-    vim.ui.select(choices, { prompt = 'Do you really want to suspend nvim ?' }, function(choice)
-        if choice == 'Yes' then
-            vim.cmd('stop')
-        else
-            print('Ctrl-Z ignored')
-        end
-    end)
-end
-
-vim.api.nvim_create_autocmd('FileType', {
-    callback = function(ev)
-        local opts = { buffer = ev.buf, silent = true }
-
-        local function is_loclist()
-            return vim.fn.getwininfo(vim.fn.win_getid())[1].loclist == 1
-        end
-
-        local function open_in_split(split_cmd)
-            local line = vim.fn.line('.')
-            local winnr = vim.fn.winnr('#') -- Fenêtre précédente
-
-            if winnr > 0 then
-                vim.cmd(winnr .. 'wincmd w')
-            end
-
-            vim.cmd(split_cmd)
-
-            if is_loclist() then
-                vim.cmd('ll ' .. line)
-            else
-                vim.cmd('cc ' .. line)
-            end
-        end
-
-        vim.keymap.set('n', '<C-v>', function()
-            open_in_split('vsplit')
-        end, opts)
-        vim.keymap.set('n', '<C-s>', function()
-            open_in_split('split')
-        end, opts)
-        vim.keymap.set('n', '<C-t>', function()
-            open_in_split('tabnew')
-        end, opts)
-    end,
-    pattern = 'qf',
-})
-
-u.map('n', '<C-z>', confirm_ctrl_z)
 
 u.map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
