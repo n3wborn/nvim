@@ -19,51 +19,13 @@ return {
             win = { preview = { wo = { wrap = true } } },
         },
         quickfile = { enabled = true },
-        scroll = {
-            enabled = true,
-            keys = {
-                ---@type table<string, snacks.scope.TextObject|{desc?:string}|false>
-                textobject = {
-                    ii = {
-                        min_size = 2, -- minimum size of the scope
-                        edge = false, -- inner scope
-                        cursor = false,
-                        treesitter = { blocks = { enabled = false } },
-                        desc = "inner scope",
-                    },
-                    ai = {
-                        cursor = false,
-                        min_size = 2, -- minimum size of the scope
-                        treesitter = { blocks = { enabled = false } },
-                        desc = "full scope",
-                    },
-                },
-                ---@type table<string, snacks.scope.Jump|{desc?:string}|false>
-                jump = {
-                    ["[i"] = {
-                        min_size = 1, -- allow single line scopes
-                        bottom = false,
-                        cursor = false,
-                        edge = true,
-                        treesitter = { blocks = { enabled = false } },
-                        desc = "jump to top edge of scope",
-                    },
-                    ["]i"] = {
-                        min_size = 1, -- allow single line scopes
-                        bottom = true,
-                        cursor = false,
-                        edge = true,
-                        treesitter = { blocks = { enabled = false } },
-                        desc = "jump to bottom edge of scope",
-                    },
-                },
-            },
-        },
+        scroll = { enabled = false },
         statuscolumn = { enabled = true },
         words = { enabled = true },
         scope = { enabled = true },
         picker = {
             layouts = {
+                ---@diagnostic disable-next-line: assign-type-mismatch
                 preset = "vscode",
             },
         },
@@ -110,6 +72,19 @@ return {
         { "<leader>un",  function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
         { "]]",          function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
         { "[[",          function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+        {
+            "<leader>sa",
+            function()
+                require("snacks").picker.grep({
+                    search = vim.fn.expand("<cword>"),
+                    args = {
+                        "--fixed-strings",
+                        "--glob",
+                        "*lock.json",
+                    },
+                })
+            end,
+            desc = "Search current word" }
     },
     init = function()
         vim.api.nvim_create_autocmd('User', {
