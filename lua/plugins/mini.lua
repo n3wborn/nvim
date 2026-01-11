@@ -18,46 +18,55 @@ return {
             },
         },
     },
+    ---@type LazyPluginSpec
     {
-        'nvim-mini/mini.ai',
-        version = '*',
-        event = 'VeryLazy',
-        opts = {
-            -- Table with textobject id as fields, textobject specification as values.
-            -- Also use this to disable builtin textobjects. See |MiniAi.config|.
-            custom_textobjects = nil,
+        'nvim-mini/mini.clue',
+        version = false,
+        lazy = false,
+        config = function()
+            local miniclue = require('mini.clue')
 
-            -- Module mappings. Use `''` (empty string) to disable one.
-            mappings = {
-                -- Main textobject prefixes
-                around = 'a',
-                inside = 'i',
+            miniclue.setup({
 
-                -- Next/last variants
-                -- NOTE: These override built-in LSP selection mappings on Neovim>=0.12
-                -- Map LSP selection manually to use it (see `:h MiniAi.config`)
-                around_next = 'an',
-                inside_next = 'in',
-                around_last = 'al',
-                inside_last = 'il',
+                triggers = {
+                    -- Leader triggers
+                    { mode = { 'n', 'x' }, keys = '<Leader>' },
 
-                -- Move cursor to corresponding edge of `a` textobject
-                goto_left = 'g[',
-                goto_right = 'g]',
-            },
+                    -- `[` and `]` keys
+                    { mode = 'n', keys = '[' },
+                    { mode = 'n', keys = ']' },
 
-            -- Number of lines within which textobject is searched
-            n_lines = 50,
+                    -- Built-in completion
+                    { mode = 'i', keys = '<C-x>' },
 
-            -- How to search for object (first inside current line, then inside
-            -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-            -- 'cover_or_nearest', 'next', 'previous', 'nearest'.
-            search_method = 'cover_or_next',
+                    -- `g` key
+                    { mode = { 'n', 'x' }, keys = 'g' },
 
-            -- Whether to disable showing non-error feedback
-            -- This also affects (purely informational) helper messages shown after
-            -- idle time if user input is required.
-            silent = false,
-        },
+                    -- Marks
+                    { mode = { 'n', 'x' }, keys = "'" },
+                    { mode = { 'n', 'x' }, keys = '`' },
+
+                    -- Registers
+                    { mode = { 'n', 'x' }, keys = '"' },
+                    { mode = { 'i', 'c' }, keys = '<C-r>' },
+
+                    -- Window commands
+                    { mode = 'n', keys = '<C-w>' },
+
+                    -- `z` key
+                    { mode = { 'n', 'x' }, keys = 'z' },
+                },
+                clues = {
+                    -- Enhance this by adding descriptions for <Leader> mapping groups
+                    miniclue.gen_clues.square_brackets(),
+                    miniclue.gen_clues.builtin_completion(),
+                    miniclue.gen_clues.g(),
+                    miniclue.gen_clues.marks(),
+                    miniclue.gen_clues.registers(),
+                    miniclue.gen_clues.windows(),
+                    miniclue.gen_clues.z(),
+                },
+            })
+        end,
     },
 }
