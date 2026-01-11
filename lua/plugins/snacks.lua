@@ -24,9 +24,8 @@ return {
         words = { enabled = true },
         scope = { enabled = true },
         picker = {
-            layouts = {
-                ---@diagnostic disable-next-line: assign-type-mismatch
-                preset = "vscode",
+            layout = {
+                fullscreen = true,
             },
         },
     },

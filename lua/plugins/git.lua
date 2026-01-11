@@ -77,6 +77,7 @@ return {
             },
         },
     },
+    ---@type LazyPluginSpec
     {
         'NeogitOrg/neogit',
         cmd = { 'Neogit' },
@@ -100,6 +101,7 @@ return {
             },
         },
     },
+    ---@type LazyPluginSpec
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
