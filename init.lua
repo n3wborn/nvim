@@ -6,134 +6,25 @@ _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = '
 
 require('config.options')
 
--- plugins
-
 -- :help vim-pack
-vim.pack.add({ 'https://github.com/b0o/SchemaStore.nvim' })
-vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
-
--- treesitter
-vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
-require('nvim-treesitter').setup()
-
--- formatters
-vim.pack.add({ 'https://github.com/stevearc/conform.nvim' })
-require('conform').setup({
-    exclude_path_patterns = {
-        '/node_modules/',
-        '/vendor/',
-    },
-    formatters_by_ft = {
-        go = { 'gofmt' },
-        --- @todo: find a way to deal with work projects related config
-        javascript = { 'oxfmt', 'eslint_d', 'prettier_d', 'prettier' },
-        -- json = { 'jq' },
-        lua = { 'stylua' },
-        php = { 'php_cs_fixer' },
-        rust = { 'rustfmt' },
-        sh = { 'shfmt', 'shellcheck' },
-        sql = { 'sql_formatter' },
-        typescript = { 'eslint_d', 'eslint' },
-        typescriptreact = { 'eslint_d', 'eslint' },
-        twig = { 'twig-cs-fixer' },
-        v = { 'v' },
-        ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
-    },
-    format_on_save = { async = false, timeout_ms = 2000, lsp_fallback = false },
-    formatters = {
-        php_cs_fixer = {
-            env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
-            args = function(_, ctx)
-                local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
-                local found = nil
-                local core_dir = os.getenv('CORE_DIR')
-                local root_dir = nil
-
-                if core_dir then
-                    root_dir = vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
-                    if root_dir then
-                        found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
-                        vim.api.nvim_echo({ { 'Found corePlugin at:\n' }, { root_dir } }, true, {})
-                    end
-                end
-
-                if not found then
-                    found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
-                    if found then
-                        vim.api.nvim_echo({ { 'Using fallback php-cs-fixer config:\n' }, { found } }, true, {})
-                    end
-                end
-
-                if found then
-                    vim.list_extend(args, { '--config=' .. found })
-                else
-                    vim.list_extend(args, { '--rules=@PSR12,@Symfony' })
-                end
-
-                return args
-            end,
-        },
-    },
-})
-
--- explorer
-vim.pack.add({ 'https://github.com/stevearc/oil.nvim' })
-require('oil').setup({
-    skip_confirm_for_simple_edits = true,
-    prompt_save_on_select_new_entry = false,
-    lsp_file_methods = {
-        autosave_changes = true,
-    },
-    columns = { 'icon' },
-    keymaps = {
-        ['<C-h>'] = false,
-        ['<M-h>'] = 'actions.select_split',
-    },
-    view_options = {
-        show_hidden = true,
-    },
-})
-
-local oil = require('oil')
-vim.keymap.set('n', '-', oil.open)
-
--- completion
 vim.pack.add({
-    { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range('1') },
-    'https://github.com/rafamadriz/friendly-snippets',
+    { src = 'https://github.com/b0o/SchemaStore.nvim' },
+    { src = 'https://github.com/neovim/nvim-lspconfig' },
+    { src = 'https://github.com/rafamadriz/friendly-snippets' },
+    -- { src = 'https://github.com/moyiz/blink-emoji.nvim' },
 })
 
-require('blink.cmp').setup({
-    keymap = {
-        ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
-        ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
-        ['<C-y>'] = { 'select_and_accept', 'fallback' },
-        ['<C-e>'] = { 'cancel', 'fallback' },
-
-        ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
-        ['<CR>'] = { 'select_and_accept', 'fallback' },
-        ['<Esc>'] = { 'cancel', 'hide_documentation', 'fallback' },
-
-        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-
-        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-
-        ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
-    },
-    appearance = {
-        use_nvim_cmp_as_default = true,
-    },
-    completion = { documentation = { auto_show = true } },
-    signature = { enabled = true },
-    fuzzy = { implementation = 'lua' },
-})
-
+-- return {
+--     src = '',
+--     data = {
+--         setup = function()
+--         end,
+--     },
+-- }
+--
 -- git
 vim.pack.add({ 'https://github.com/kdheepak/lazygit.nvim' })
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
-
 -- ui
 vim.pack.add({ { src = 'https://github.com/nvim-lualine/lualine.nvim.git', name = 'lualine' } })
 require('lualine').setup()
@@ -171,6 +62,36 @@ vim.cmd('colorscheme catppuccin')
 
 vim.pack.add({ 'https://github.com/stevearc/quicker.nvim' })
 require('quicker').setup()
+
+-- declare plugins and load
+local blink = require('config.plugins.blink')
+local conform = require('config.plugins.conform')
+local gitsigns = require('config.plugins.gitsigns')
+local oil = require('config.plugins.oil')
+local textobjects = require('config.plugins.textobjects')
+local treesitter = require('config.plugins.treesitter')
+local undotree = require('config.plugins.undotree')
+
+vim.pack.add({
+    blink,
+    conform,
+    gitsigns,
+    oil,
+    textobjects,
+    treesitter,
+    undotree,
+}, {
+    load = function(plug)
+        local data = plug.spec.data or {}
+        local setup = data.setup
+
+        vim.cmd.packadd(plug.spec.name)
+
+        if setup ~= nil and type(setup) == 'function' then
+            setup()
+        end
+    end,
+})
 
 -- LSP
 local servers = {
