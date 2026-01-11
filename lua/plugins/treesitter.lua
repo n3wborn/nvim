@@ -5,6 +5,9 @@ return {
         'nvim-treesitter/nvim-treesitter',
         branch = 'master',
         build = ':TSUpdate',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
         config = function()
             local configs = require('nvim-treesitter.configs')
             local ensure_installed = {
@@ -67,6 +70,49 @@ return {
                         node_incremental = '<C-space>',
                         scope_incremental = false,
                         node_decremental = '<bs>',
+                    },
+                },
+                textobjects = {
+                    lookahead = true,
+                    lsp_interop = {
+                        enable = true,
+                        border = 'rounded',
+                        peek_definition_code = {
+                            ['df'] = '@function.outer',
+                            ['dF'] = '@class.outer',
+                        },
+                    },
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                        keymaps = {
+                            ['af'] = '@function.outer',
+                            ['if'] = '@function.inner',
+                            ['ac'] = '@class.outer',
+                            ['ic'] = '@class.inner',
+                            ['aC'] = '@comment.outer',
+                            ['iC'] = '@comment.inner',
+                        },
+                    },
+                    move = {
+                        enable = true,
+                        set_jumps = true,
+                        goto_next_start = {
+                            [']m'] = '@function.outer',
+                            [']]'] = '@class.outer',
+                        },
+                        goto_next_end = {
+                            [']M'] = '@function.outer',
+                            [']['] = '@class.outer',
+                        },
+                        goto_previous_start = {
+                            ['[m'] = '@function.outer',
+                            ['[['] = '@class.outer',
+                        },
+                        goto_previous_end = {
+                            ['[M'] = '@function.outer',
+                            ['[]'] = '@class.outer',
+                        },
                     },
                 },
             })
