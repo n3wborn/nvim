@@ -9,6 +9,7 @@ return {
         animate = { enabled = true, duration = 10 },
         bigfile = { enabled = true },
         dashboard = { enabled = true },
+        image = { enabled = true,
         indent = { enabled = true },
         input = { enabled = true },
         ---@type snacks.lazygit.Config
