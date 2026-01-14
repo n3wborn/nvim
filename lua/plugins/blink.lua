@@ -54,9 +54,9 @@ return {
                     'path',
                     'buffer',
                     'emoji',
-                    per_filetype = {
-                        lua = { inherit_defaults = true, 'lazydev' },
-                    },
+                },
+                per_filetype = {
+                    lua = { inherit_defaults = true, 'lazydev' },
                 },
                 providers = {
                     emoji = {
