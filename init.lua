@@ -29,57 +29,31 @@ vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
 vim.pack.add({ { src = 'https://github.com/nvim-lualine/lualine.nvim.git', name = 'lualine' } })
 require('lualine').setup()
 
-vim.pack.add({ 'https://github.com/HiPhish/rainbow-delimiters.nvim' })
-
-vim.pack.add({ { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' } })
-require('catppuccin').setup({
-    flavour = 'mocha',
-    transparent_background = true,
-    -- lsp_styles = {
-    --     virtual_text = {
-    --         errors = { 'italic' },
-    --         hints = { 'italic' },
-    --         warnings = { 'italic' },
-    --         information = { 'italic' },
-    --         ok = { 'italic' },
-    --     },
-    --     underlines = {
-    --         errors = { 'undercurl' },
-    --         hints = { 'undercurl' },
-    --         warnings = { 'undercurl' },
-    --         information = { 'undercurl' },
-    --     },
-    --     inlay_hints = {
-    --         background = true,
-    --     },
-    -- },
-    styles = {
-        functions = { 'italic' },
-    },
-    -- auto_integrations = true,
-})
-vim.cmd('colorscheme catppuccin')
-
-vim.pack.add({ 'https://github.com/stevearc/quicker.nvim' })
-require('quicker').setup()
-
 -- declare plugins and load
 local blink = require('config.plugins.blink')
+local colorscheme = require('config.plugins.colorscheme')
 local conform = require('config.plugins.conform')
 local gitsigns = require('config.plugins.gitsigns')
+local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
+local origami = require('config.plugins.origami')
 local textobjects = require('config.plugins.textobjects')
 local treesitter = require('config.plugins.treesitter')
 local undotree = require('config.plugins.undotree')
+local snacks = require('config.plugins.snacks')
 
 vim.pack.add({
     blink,
+    colorscheme,
     conform,
     gitsigns,
+    lazydev,
     oil,
+    origami,
     textobjects,
     treesitter,
     undotree,
+    snacks,
 }, {
     load = function(plug)
         local data = plug.spec.data or {}
@@ -92,6 +66,8 @@ vim.pack.add({
         end
     end,
 })
+
+vim.cmd('colorscheme catppuccin')
 
 -- LSP
 local servers = {
