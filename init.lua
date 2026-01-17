@@ -34,7 +34,9 @@ require('lualine').setup()
 local blink = require('config.plugins.blink')
 local colorscheme = require('config.plugins.colorscheme')
 local conform = require('config.plugins.conform')
+local diffview = require('config.plugins.diffview')
 local gitsigns = require('config.plugins.gitsigns')
+local neogit = require('config.plugins.neogit')
 local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
 local origami = require('config.plugins.origami')
@@ -47,7 +49,9 @@ vim.pack.add({
     blink,
     colorscheme,
     conform,
+    diffview,
     gitsigns,
+    neogit,
     lazydev,
     oil,
     origami,
