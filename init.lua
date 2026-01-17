@@ -9,6 +9,7 @@ require('config.options')
 -- :help vim-pack
 vim.pack.add({
     { src = 'https://github.com/b0o/SchemaStore.nvim' },
+    { src = 'https://github.com/nvim-lua/plenary.nvim' },
     { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = 'https://github.com/rafamadriz/friendly-snippets' },
     -- { src = 'https://github.com/moyiz/blink-emoji.nvim' },
