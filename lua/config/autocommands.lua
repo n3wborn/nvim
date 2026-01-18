@@ -5,15 +5,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     desc = 'Do not auto comment on new line',
 })
 
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-    pattern = { 'json', 'jsonc' },
-    callback = function()
-        vim.wo.spell = false
-        vim.wo.conceallevel = 0
-    end,
-    desc = 'Fix conceallevel for json an help files',
-})
-
 vim.api.nvim_create_autocmd('FileType', {
     desc = 'User: Restore cursor position',
     callback = function(ctx)
