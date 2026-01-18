@@ -36,6 +36,7 @@ local colorscheme = require('config.plugins.colorscheme')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
 local gitsigns = require('config.plugins.gitsigns')
+local gitconflict = require('config.plugins.gitconflict')
 local neogit = require('config.plugins.neogit')
 local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
@@ -51,6 +52,7 @@ vim.pack.add({
     conform,
     diffview,
     gitsigns,
+    gitconflict,
     neogit,
     lazydev,
     oil,
