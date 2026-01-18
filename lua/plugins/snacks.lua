@@ -33,7 +33,7 @@ return {
         { "<leader>sd", function() Snacks.picker.grep_word() end, desc = "Search current word" },
         { "<leader>sD", function() Snacks.picker.grep_word({ hidden = true, ignored = true, }) end, desc = "Search current word" },
         { "<leader>sp", function() Snacks.picker.grep() end, desc = "Grep" },
-        { "<leader>sP", function() Snacks.picker.grep({ hidden = true, ignored = true, }) end, desc = "git grep" },
+        { "<leader>sP", function() Snacks.picker.grep({ hidden = true, ignored = true }) end, desc = "git grep" },
         { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
         { "<leader>fF", function() Snacks.picker.files({ hidden = true, ignored = true }) end, desc = "List Files" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
@@ -55,6 +55,8 @@ return {
         { "<leader>cR",  function() Snacks.rename.rename_file() end, desc = "Rename File" },
 
         -- git
+        { "<leader>gs",  function() Snacks.picker.git_status() end, desc = "Git Status" },
+        { "<leader>gb",  function() Snacks.picker.git_branches() end, desc = "Git Branches" },
         { "<leader>gd",  function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
         { "<leader>gl",  function() Snacks.picker.git_log() end, desc = "git log" },
         { "<leader>gL",  function() Snacks.picker.git_log_line() end, desc = "git log line" },
