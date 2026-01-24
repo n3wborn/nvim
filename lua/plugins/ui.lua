@@ -180,30 +180,6 @@ return {
         'nvim-tree/nvim-web-devicons',
         lazy = true,
     },
-    ---@type LazyPluginSpec
-    {
-        'chrisgrieser/nvim-origami',
-        event = 'VeryLazy',
-        keys = {
-            {
-                '<LEFT>',
-                function()
-                    require('origami').h()
-                end,
-            },
-            {
-                '<RIGHT>',
-                function()
-                    require('origami').l()
-                end,
-            },
-        },
-        opts = {}, -- needed even when using default config
-        init = function()
-            vim.opt.foldlevel = 99
-            vim.opt.foldlevelstart = 99
-        end,
-    },
     {
         'nvim-zh/colorful-winsep.nvim',
         event = { 'WinLeave' },
