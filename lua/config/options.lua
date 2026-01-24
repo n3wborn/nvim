@@ -5,7 +5,7 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.o.cursorlineopt = 'both'
+vim.opt.cursorlineopt = 'both'
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -36,16 +36,17 @@ vim.opt.wildmode = { 'longest:full', 'full' }
 vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
-vim.opt.completeopt = { 'menuone', 'fuzzy', 'noinsert', 'preview' }
+vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
 vim.opt.autowrite = true
 vim.opt.confirm = true
-vim.o.winwidth = 10
-vim.o.winminwidth = 10
-vim.g.markdown_recommended_style = 0
-vim.g.maplocalleader = ','
-vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
-vim.o.winborder = 'rounded'
-vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
+vim.opt.winwidth = 10
+vim.opt.winminwidth = 10
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.foldenable = true
+vim.opt.winborder = 'rounded'
+vim.opt.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
 vim.opt.backup = true
@@ -63,6 +64,8 @@ vim.opt.sessionoptions = {
 }
 vim.opt.conceallevel = 2
 
+vim.g.markdown_recommended_style = 0
+vim.g.maplocalleader = ','
 vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
 
