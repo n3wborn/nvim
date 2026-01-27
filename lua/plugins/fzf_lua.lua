@@ -1,7 +1,9 @@
 ---@type LazyPluginSpec
 return {
     'ibhagwan/fzf-lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+        'nvim-mini/mini.icons',
+    },
     cmd = 'FzfLua',
     keys = {
         { '<space>F', ':FzfLua<cr>' },

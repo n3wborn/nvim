@@ -99,7 +99,10 @@ return {
     -- filename
     {
         'b0o/incline.nvim',
-        dependencies = { 'catppuccin/nvim', 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'catppuccin/nvim',
+            'nvim-mini/mini.icons',
+        },
         event = 'BufReadPre',
         priority = 1200,
         config = function()
@@ -108,15 +111,6 @@ return {
                 hide = {
                     cursorline = true,
                 },
-                render = function(props)
-                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-                    if vim.bo[props.buf].modified then
-                        filename = '[+] ' .. filename
-                    end
-
-                    local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-                    return { { icon, guifg = color }, { ' ' }, { filename } }
-                end,
             })
         end,
     },
@@ -174,11 +168,6 @@ return {
                 end
             end,
         },
-    },
-    ---@type LazyPluginSpec
-    {
-        'nvim-tree/nvim-web-devicons',
-        lazy = true,
     },
     {
         'nvim-zh/colorful-winsep.nvim',

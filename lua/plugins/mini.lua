@@ -6,6 +6,11 @@ return {
         opts = {},
     },
     {
+        'nvim-mini/mini.icons',
+        version = false,
+        opts = {},
+    },
+    {
         'nvim-mini/mini.comment',
         version = '*',
         event = 'VeryLazy',
