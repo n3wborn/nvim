@@ -17,7 +17,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('config')
 
 require('lazy').setup({
     spec = {
@@ -86,3 +85,5 @@ require('lazy').setup({
     },
     ui = { border = 'rounded' },
 })
+
+require('config')
