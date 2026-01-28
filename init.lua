@@ -46,6 +46,7 @@ local treesitter = require('config.plugins.treesitter')
 local undotree = require('config.plugins.undotree')
 local snacks = require('config.plugins.snacks')
 -- local kulala = require('config.plugins.kulala')
+local fzf = require('config.plugins.fzf')
 
 vim.pack.add({
     plenary,
@@ -64,6 +65,7 @@ vim.pack.add({
     treesitter,
     undotree,
     snacks,
+    fzf,
 }, {
     load = function(plug)
         local data = plug.spec.data or {}
