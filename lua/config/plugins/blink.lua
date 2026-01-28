@@ -53,11 +53,11 @@ return {
                             min_keyword_length = 0,
                             score_offset = 90,
                         },
-                        -- lazydev = {
-                        --     name = 'LazyDev',
-                        --     module = 'lazydev.integrations.blink',
-                        --     score_offset = 100,
-                        -- },
+                        lazydev = {
+                            name = 'LazyDev',
+                            module = 'lazydev.integrations.blink',
+                            score_offset = 100,
+                        },
                         buffer = {
                             score_offset = 15,
                             opts = {

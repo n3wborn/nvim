@@ -1,5 +1,4 @@
 -- stylua: ignore
----@type LazyPluginSpec
 return {
     src = 'https://github.com/folke/snacks.nvim',
     data = {
@@ -91,6 +90,7 @@ return {
             end)
 
             -- GIT
+            vim.keymap.set('n', '<leader>gs', function() Snacks.picker.git_status() end)
             vim.keymap.set('n', '<leader>gd', function() Snacks.picker.git_diff() end)
             vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end)
             vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end)

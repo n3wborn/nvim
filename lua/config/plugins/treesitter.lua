@@ -7,7 +7,7 @@ return {
             -- stylua: ignore
             local languages = {
                 'awk', 'bash', 'c', 'cmake', 'css', 'diff', 'dockerfile', 'dot', 'gitattributes', 'gitcommit',
-                'gitignore', 'go', 'html', 'http', 'java', 'javascript', 'jq', 'jsdoc', 'json', 'lua', 'make',
+                'gitignore', 'go', 'html', 'http', 'java', 'javascript', 'jq', 'jsdoc', 'json', 'kulala_http' , 'lua', 'make',
                 'markdown', 'markdown_inline', 'perl', 'php', 'phpdoc', 'php_only', 'python', 'query', 'regex', 'ruby',
                 'rust', 'scss', 'solidity', 'sql', 'styled', 'svelte', 'toml', 'tsx', 'twig', 'typescript', 'vim',
                 'vimdoc', 'vue','yaml',
@@ -25,7 +25,6 @@ return {
                     local start_ts = function()
                         vim.treesitter.start(bufnr, parser_name)
                         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                        vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
                         vim.wo.foldmethod = 'expr'
                         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                     end

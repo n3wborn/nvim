@@ -98,9 +98,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- C_S = (insert)  vim.lsp.buf.signature_help()
 
         if client:supports_method('textDocument/definition') then
-            vim.keymap.set('n', 'gd', function()
-                require('fzf-lua').lsp_definitions({ jump1 = true })
-            end)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, keymap_opts)
         end
 
         if client:supports_method('textDocument/declaration') then

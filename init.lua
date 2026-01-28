@@ -29,6 +29,7 @@ require('lualine').setup()
 -- declare plugins and load
 local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
+local snippets = require('config.plugins.friendly-snippets')
 local blink = require('config.plugins.blink')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
@@ -38,6 +39,7 @@ local neogit = require('config.plugins.neogit')
 local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
 local origami = require('config.plugins.origami')
+local rainbow = require('config.plugins.rainbow')
 local textobjects = require('config.plugins.textobjects')
 local treesitter = require('config.plugins.treesitter')
 local undotree = require('config.plugins.undotree')
@@ -57,6 +59,8 @@ vim.pack.add({
     lazydev,
     oil,
     origami,
+    rainbow,
+    snippets,
     textobjects,
     treesitter,
     undotree,
