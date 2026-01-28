@@ -19,17 +19,15 @@ vim.pack.add({
 --     },
 -- }
 --
--- git
-vim.pack.add({ 'https://github.com/kdheepak/lazygit.nvim' })
-vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>')
 -- ui
 vim.pack.add({ { src = 'https://github.com/nvim-lualine/lualine.nvim.git', name = 'lualine' } })
 require('lualine').setup()
 
 -- declare plugins and load
+local lazygit = require('config.plugins.lazygit')
 local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
-local snippets = require('config.plugins.friendly-snippets')
+local snippets = require('config.plugins.friendly_snippets')
 local blink = require('config.plugins.blink')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
@@ -48,6 +46,7 @@ local snacks = require('config.plugins.snacks')
 local fzf = require('config.plugins.fzf')
 
 vim.pack.add({
+    lazygit,
     plenary,
     schemastore,
     blink,
