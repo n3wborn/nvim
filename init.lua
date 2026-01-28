@@ -9,8 +9,6 @@ require('config.options')
 -- :help vim-pack
 vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
-    { src = 'https://github.com/rafamadriz/friendly-snippets' },
-    -- { src = 'https://github.com/moyiz/blink-emoji.nvim' },
 })
 
 -- return {
@@ -32,7 +30,6 @@ require('lualine').setup()
 local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
 local blink = require('config.plugins.blink')
-local colorscheme = require('config.plugins.colorscheme')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
 local gitsigns = require('config.plugins.gitsigns')
@@ -52,7 +49,6 @@ vim.pack.add({
     plenary,
     schemastore,
     blink,
-    colorscheme,
     conform,
     diffview,
     gitsigns,
@@ -122,6 +118,8 @@ vim.diagnostic.config({
 -- keymaps / autocommands
 require('config.keymaps')
 require('config.autocommands')
+
+vim.cmd('colorscheme catppuccin')
 
 -- filetype
 vim.filetype.add({
