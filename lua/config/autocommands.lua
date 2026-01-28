@@ -1,38 +1,62 @@
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
+
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = aug,
     callback = function()
-        vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+        vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
     end,
     desc = 'Do not auto comment on new line',
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    desc = 'User: Restore cursor position',
+    group = aug,
     callback = function(ctx)
         if vim.bo[ctx.buf].buftype ~= '' then
             return
         end
         vim.cmd([[silent! normal! g`"]])
     end,
+    desc = 'Restore cursor position',
 })
 
-vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
-    command = 'checktime',
-    desc = 'Check if we need to reload the file when it changed',
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose', 'TermLeave' }, {
+    group = aug,
+    callback = function(ev)
+        if vim.fn.getcmdwintype() ~= '' then
+            return
+        end
+
+        if ev.event == 'FocusGained' or ev.event == 'TermClose' or ev.event == 'TermLeave' then
+            vim.cmd('checktime')
+            return
+        end
+
+        local bo = vim.bo[ev.buf]
+        if bo.buftype == '' and not bo.modified and vim.api.nvim_buf_get_name(ev.buf) ~= '' then
+            vim.cmd('checktime ' .. ev.buf)
+        end
+    end,
+    desc = 'Auto reload files changed on disk',
 })
 
 vim.api.nvim_create_autocmd('VimResized', {
-    desc = 'User: keep splits equally sized on window resize',
-    command = 'wincmd =',
+    group = aug,
+    callback = function()
+        vim.cmd.wincmd('=')
+    end,
+    desc = 'Keep splits equally sized',
 })
 
 vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
+    group = aug,
     callback = vim.schedule_wrap(function()
         vim.cmd.nohlsearch()
     end),
-    desc = 'Remove hl search when enter Insert',
+    desc = 'Remove search highlight',
 })
 
 vim.api.nvim_create_autocmd('FileType', {
+    group = aug,
     pattern = {
         'gitsigns-blame',
         'git',
@@ -60,142 +84,106 @@ vim.api.nvim_create_autocmd('FileType', {
             desc = 'Close window',
         })
     end,
-    desc = 'Configure special buffers to close with q (and ESC for lazy)',
+    desc = 'Configure special buffers',
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('my.lsp', {}),
-    callback = function(ev)
-        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-        local buffer = ev.buf
-        local keymap_opts = { buffer = ev.buf }
+vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
+    group = aug,
+    callback = function()
+        vim.opt_local.cursorline = true
+    end,
+    desc = 'Enable cursorline in active window',
+})
 
-        -- diagnostics
-        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
-
-        -- completion
-        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
-
-        if client:supports_method('callHierarchy/incomingCalls') then
-            vim.keymap.set('n', 'grI', vim.lsp.buf.incoming_calls, keymap_opts)
+vim.api.nvim_create_autocmd('WinLeave', {
+    group = aug,
+    callback = function()
+        if vim.bo.buftype ~= 'quickfix' then
+            vim.opt_local.cursorline = false
         end
+    end,
+    desc = 'Disable cursorline when leaving window',
+})
 
-        -- default keymaps
-        -- grn = vim.lsp.buf.rename()
-        -- gra = vim.lsp.buf.code_action()
-        -- grr = vim.lsp.buf.references()
-        -- gri = vim.lsp.buf.implementation()
-        -- g0 = vim.lsp.buf.document_symbol()
-        -- C_S = (insert)  vim.lsp.buf.signature_help()
-
-        if client:supports_method('textDocument/definition') then
-            vim.keymap.set('n', 'gd', function()
-                require('fzf-lua').lsp_definitions({ jump1 = true })
-            end)
-        end
-
-        if client:supports_method('textDocument/declaration') then
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, keymap_opts)
-        end
-
-        if client:supports_method('textDocument/typeDefinition') then
-            vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition, keymap_opts)
-        end
-
-        if client:supports_method('textDocument/implementation') then
-            vim.keymap.set('n', 'gri', vim.lsp.buf.implementation, keymap_opts)
-        end
-
-        if client:supports_method('textDocument/rename') then
-            vim.keymap.set('n', '<leader>R', vim.lsp.buf.rename, keymap_opts)
-        end
-
-        if client:supports_method('textDocument/onTypeFormatting') then
-            vim.lsp.on_type_formatting.enable()
-        end
-
-        if client:supports_method('textDocument/documentSymbol') then
-            local navic = require('nvim-navic')
-            navic.attach(client, buffer)
-        end
-
-        if client:supports_method('textDocument/documentColor') then
-            vim.lsp.document_color.enable(true, buffer)
-        end
-
-        if client:supports_method('textDocument/colorPresentation') then
-            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled(buffer), buffer)
-        end
-
-        if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
-            vim.lsp.inlay_hint.enable(true)
-        end
-
-        if client:supports_method('textDocument/inlineCompletion', buffer) and vim.g.ai_enabled then
-            vim.lsp.inline_completion.enable(true, keymap_opts)
-
-            vim.keymap.set(
-                'i',
-                '<C-F>',
-                vim.lsp.inline_completion.get,
-                { desc = 'LSP: accept inline completion', keymap_opts }
-            )
-            vim.keymap.set(
-                'i',
-                '<C-G>',
-                vim.lsp.inline_completion.select,
-                { desc = 'LSP: switch inline completion', keymap_opts }
-            )
-        end
-
-        vim.keymap.set('i', '<M-s>', vim.lsp.buf.signature_help, keymap_opts)
-        vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float)
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = aug,
+    callback = function()
+        vim.hl.on_yank()
     end,
 })
 
-vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
-    group = vim.api.nvim_create_augroup('StatuslineUpdate', { clear = true }),
-    pattern = '*',
-    callback = vim.schedule_wrap(function()
-        vim.cmd('redrawstatus')
-    end),
-    desc = 'Update statusline/winbar',
-})
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLost' }, {
+    group = aug,
+    callback = function(ctx)
+        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
 
-vim.api.nvim_create_autocmd('FocusGained', {
-    desc = 'User: Close all non-existing buffers on `FocusGained`.',
-    callback = function()
-        local closedBuffers = {}
-        local allBufs = vim.fn.getbufinfo({ buflisted = 1 })
-        vim.iter(allBufs):each(function(buf)
-            if not vim.api.nvim_buf_is_valid(buf.bufnr) then
-                return
-            end
-            local stillExists = vim.uv.fs_stat(buf.name) ~= nil
-            local specialBuffer = vim.bo[buf.bufnr].buftype ~= ''
-            local newBuffer = buf.name == ''
-            if stillExists or specialBuffer or newBuffer then
-                return
-            end
-            table.insert(closedBuffers, vim.fs.basename(buf.name))
-            vim.api.nvim_buf_delete(buf.bufnr, { force = false })
-        end)
-        if #closedBuffers == 0 then
+        local bufnr = ctx.buf
+        local bo, b = vim.bo[bufnr], vim.b[bufnr]
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+        if bo.buftype ~= '' or bo.ft == 'gitcommit' or bo.readonly then
             return
         end
 
-        if #closedBuffers == 1 then
-            vim.notify(closedBuffers[1], nil, { title = 'Buffer closed', icon = '󰅗' })
-        else
-            local text = '- ' .. table.concat(closedBuffers, '\n- ')
-            vim.notify(text, nil, { title = 'Buffers closed', icon = '󰅗' })
+        if b.saveQueued and not saveInstantly then
+            return
         end
 
-        -- If ending up in empty buffer, re-open the first oldfile that exists
+        b.saveQueued = true
+
+        vim.defer_fn(function()
+            if not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+            end
+
+            vim.api.nvim_buf_call(bufnr, function()
+                vim.cmd(('silent! noautocmd lockmarks update! %q'):format(bufname))
+            end)
+
+            b.saveQueued = false
+        end, saveInstantly and 0 or 2000)
+    end,
+    desc = 'Auto save',
+})
+
+vim.api.nvim_create_autocmd('FocusGained', {
+    group = aug,
+    callback = function()
+        local closed = {}
+
+        for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+            if not vim.api.nvim_buf_is_valid(buf.bufnr) then
+                goto continue
+            end
+
+            local exists = vim.uv.fs_stat(buf.name)
+            local special = vim.bo[buf.bufnr].buftype ~= ''
+            local newbuf = buf.name == ''
+
+            if exists or special or newbuf then
+                goto continue
+            end
+
+            table.insert(closed, vim.fs.basename(buf.name))
+            vim.api.nvim_buf_delete(buf.bufnr, { force = false })
+
+            ::continue::
+        end
+
+        if #closed == 0 then
+            return
+        end
+
+        vim.notify(table.concat(closed, '\n'), nil, {
+            title = 'Buffers closed',
+            icon = '󰅗',
+        })
+
         vim.schedule(function()
             if vim.api.nvim_buf_get_name(0) ~= '' then
                 return
             end
+
             for _, file in ipairs(vim.v.oldfiles) do
                 if vim.uv.fs_stat(file) and vim.fs.basename(file) ~= 'COMMIT_EDITMSG' then
                     vim.cmd.edit(file)
@@ -204,72 +192,5 @@ vim.api.nvim_create_autocmd('FocusGained', {
             end
         end)
     end,
-})
-
--- https://github.com/chrisgrieser/.config/blob/main/nvim/lua/config/autocmds.lua#L84
-vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLost' }, {
-    desc = 'User: Auto-save',
-    callback = function(ctx)
-        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
-        local bufnr = ctx.buf
-        local bo, b = vim.bo[bufnr], vim.b[bufnr]
-        local bufname = ctx.file
-        if bo.buftype ~= '' or bo.ft == 'gitcommit' or bo.readonly then
-            return
-        end
-        if b.saveQueued and not saveInstantly then
-            return
-        end
-
-        b.saveQueued = true
-        vim.defer_fn(function()
-            if not vim.api.nvim_buf_is_valid(bufnr) then
-                return
-            end
-
-            vim.api.nvim_buf_call(bufnr, function()
-                -- saving with explicit name prevents issues when changing `cwd`
-                -- `:update!` suppresses "The file has been changed since reading it!!!"
-                local vimCmd = ('silent! noautocmd lockmarks update! %q'):format(bufname)
-                vim.cmd(vimCmd)
-            end)
-            b.saveQueued = false
-        end, saveInstantly and 0 or 2000)
-    end,
-})
-
-vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.hl.on_yank()
-    end,
-    group = vim.api.nvim_create_augroup('my.yankHighlight', { clear = true }),
-    pattern = '*',
-})
-
-local aug = vim.api.nvim_create_augroup('my.config', {})
-
-vim.api.nvim_create_autocmd('FocusGained', {
-    desc = 'Reload files from disk when we focus vim',
-    pattern = '*',
-    command = "if getcmdwintype() == '' | checktime | endif",
-    group = aug,
-})
-vim.api.nvim_create_autocmd('BufEnter', {
-    desc = 'Every time we enter an unmodified buffer, check if it changed on disk',
-    pattern = '*',
-    command = "if &buftype == '' && !&modified && expand('%') != '' | exec 'checktime ' . expand('<abuf>') | endif",
-    group = aug,
-})
-
-vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
-    desc = 'Highlight the cursor line in the active window',
-    pattern = '*',
-    command = 'setlocal cursorline',
-    group = aug,
-})
-vim.api.nvim_create_autocmd('WinLeave', {
-    desc = 'Clear the cursor line highlight when leaving a window',
-    pattern = '*',
-    command = "if &bt != 'quickfix' | setlocal nocursorline | endif",
-    group = aug,
+    desc = 'Close non-existing buffers',
 })
