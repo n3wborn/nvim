@@ -31,6 +31,7 @@ local snippets = require('config.plugins.friendly_snippets')
 local blink = require('config.plugins.blink')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
+local fff = require('config.plugins.fff')
 local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
@@ -52,6 +53,7 @@ vim.pack.add({
     blink,
     conform,
     diffview,
+    fff,
     foldtext,
     gitsigns,
     gitconflict,
