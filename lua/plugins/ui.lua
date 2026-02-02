@@ -63,7 +63,15 @@ return {
         priority = 1000,
         lazy = false,
         name = 'catppuccin',
+        ---@type CatppuccinOptions
         opts = {
+            integrations = {
+                fzf = true,
+                diffview = true,
+                rainbow_delimiters = true,
+                gitsigns = true,
+                noice = true,
+            },
             flavour = 'mocha',
             transparent_background = true,
             lsp_styles = {
@@ -144,29 +152,17 @@ return {
     },
     ---@type LazyPluginSpec
     {
-        {
-            'SmiteshP/nvim-navic',
-            lazy = true,
-            opts = function()
-                local icons = require('config.icons').kinds
-                return {
-                    separator = ' ',
-                    highlight = true,
-                    depth_limit = 5,
-                    icons = icons,
-                    lazy_update_context = true,
-                }
-            end,
-        },
-        -- lualine integration
-        {
-            'nvim-lualine/lualine.nvim',
-            optional = true,
-            opts = function(_, opts)
-                if not vim.g.trouble_lualine then
-                    table.insert(opts.sections.lualine_c, { 'navic', color_correction = 'dynamic' })
-                end
-            end,
+        'SmiteshP/nvim-navic',
+        lazy = true,
+        opts = {
+            separator = ' ',
+            highlight = true,
+            depth_limit = 5,
+            lazy_update_context = true,
+            lsp = {
+                auto_attach = true,
+                preference = { 'tsgo', 'typescript-tools' },
+            },
         },
     },
     {

@@ -45,8 +45,7 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldenable = true
-vim.opt.winborder = 'rounded'
-vim.opt.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
+vim.go.winborder = 'rounded'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
 vim.opt.backup = true
