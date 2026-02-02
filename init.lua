@@ -31,12 +31,12 @@ local snippets = require('config.plugins.friendly_snippets')
 local blink = require('config.plugins.blink')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
+local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
 local neogit = require('config.plugins.neogit')
 local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
-local origami = require('config.plugins.origami')
 local rainbow = require('config.plugins.rainbow')
 local textobjects = require('config.plugins.textobjects')
 local treesitter = require('config.plugins.treesitter')
@@ -52,12 +52,12 @@ vim.pack.add({
     blink,
     conform,
     diffview,
+    foldtext,
     gitsigns,
     gitconflict,
     neogit,
     lazydev,
     oil,
-    origami,
     rainbow,
     snippets,
     textobjects,
