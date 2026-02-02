@@ -21,13 +21,6 @@ return {
                 callback = function(event)
                     local bufnr = event.buf
                     local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-                    -- Start treesitter for this buffer
-                    local start_ts = function()
-                        vim.treesitter.start(bufnr, parser_name)
-                        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                        vim.wo.foldmethod = 'expr'
-                        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-                    end
 
                     -- Skip if no filetype
                     if filetype == '' then
@@ -50,6 +43,14 @@ return {
                     local ts_config = require('nvim-treesitter.config')
                     if not vim.tbl_contains(ts_config.get_available(), parser_name) then
                         return
+                    end
+
+                    -- Start treesitter for this buffer
+                    local start_ts = function()
+                        vim.treesitter.start(bufnr, parser_name)
+                        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                        vim.wo.foldmethod = 'expr'
+                        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                     end
 
                     local already_installed = ts_config.get_installed('parsers')
