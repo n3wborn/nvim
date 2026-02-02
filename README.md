@@ -1,6 +1,6 @@
 # Nvim
 
-![capture][capture-url]
+![capture](<https://github.com/user-attachments/assets/7f1b89b6-5928-42bb-aae0-d4fb65de90d6>)
 
 I use this repo to keep track of my own neovim config.
 Use it if you want but keep this in mind :
@@ -17,9 +17,7 @@ Some parts of my config where taken from:
 
 If you're looking for an already configured neovim you may prefer these:
 
-- [LazyVim](https://github.com/LazyVim/LazyVim)
+    - [LazyVim](https://github.com/LazyVim/LazyVim)
 - [NvChad](https://github.com/NvChad/NvChad)
-- [Lunarvim](https://github.com/LunarVim/LunarVim)
+  - [Lunarvim](https://github.com/LunarVim/LunarVim)
 - [Astrovim](https://github.com/AstroNvim/AstroNvim)
-
-[capture-url]: https://github.com/user-attachments/assets/7f1b89b6-5928-42bb-aae0-d4fb65de90d6
