@@ -105,7 +105,10 @@ return {
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
+        ---@diagnostic disable: missing-fields
+        ---@type Gitsigns.Config
         opts = {
+            attach_to_untracked = true,
             signs = {
                 add = { text = '│ ' },
                 change = { text = '│ ' },
@@ -122,6 +125,7 @@ return {
             },
             current_line_blame = true,
             preview_config = {
+                border = 'rounded',
                 style = 'minimal',
             },
             current_line_blame_opts = {
@@ -134,7 +138,7 @@ return {
             gh = true,
             watch_gitdir = { enabled = true, follow_files = true },
             on_attach = function(buffer)
-                local gs = package.loaded.gitsigns
+                local gs = require('gitsigns')
                 local nav_hunk_opts = { preview = true, greedy = false, target = 'all' }
 
                 local function map(mode, l, r, desc)
@@ -157,8 +161,7 @@ return {
                 end, 'Prev Hunk')
                 map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', '󰊢 (Un)Stage Hunk')
                 map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', '󰊢 Reset Hunk')
-                map('n', '<leader>hS', gs.stage_buffer, '󰊢 Stage Buffer')
-                map('n', '<leader>hu', gs.undo_stage_hunk, '󰊢 Undo Stage Hunk')
+                map('n', '<leader>hS', gs.stage_buffer, '󰊢 Stage/Unstage Buffer')
                 map('n', '<leader>hR', gs.reset_buffer, '󰊢 Reset Buffer')
                 map('n', '<leader>hp', gs.preview_hunk_inline, '󰊢 Preview Hunk Inline')
                 map('n', '<leader>hb', function()
