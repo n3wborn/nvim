@@ -51,5 +51,9 @@ return {
                 },
             })
         end,
+
+        vim.keymap.set('n', 'ff', function()
+            require('fff').find_files()
+        end, { desc = 'FFFind files' }),
     },
 }
