@@ -149,46 +149,30 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLo
 vim.api.nvim_create_autocmd('FocusGained', {
     group = aug,
     callback = function()
-        local closed = {}
-
-        for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-            if not vim.api.nvim_buf_is_valid(buf.bufnr) then
-                goto continue
-            end
-
-            local exists = vim.uv.fs_stat(buf.name)
-            local special = vim.bo[buf.bufnr].buftype ~= ''
-            local newbuf = buf.name == ''
-
-            if exists or special or newbuf then
-                goto continue
-            end
-
-            table.insert(closed, vim.fs.basename(buf.name))
-            vim.api.nvim_buf_delete(buf.bufnr, { force = false })
-
-            ::continue::
-        end
-
-        if #closed == 0 then
-            return
-        end
-
-        vim.notify(table.concat(closed, '\n'), nil, {
-            title = 'Buffers closed',
-            icon = '󰅗',
-        })
-
         vim.schedule(function()
-            if vim.api.nvim_buf_get_name(0) ~= '' then
-                return
+            local closed = {}
+            local current = vim.api.nvim_get_current_buf()
+
+            for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+                local bufnr = buf.bufnr
+                local name = buf.name
+
+                local valid = vim.api.nvim_buf_is_valid(bufnr)
+                local exists = name ~= '' and vim.uv.fs_stat(name)
+                local special = vim.bo[bufnr].buftype ~= ''
+                local newbuf = name == ''
+
+                if valid and not exists and not special and not newbuf then
+                    table.insert(closed, vim.fs.basename(name))
+                    vim.api.nvim_buf_delete(bufnr, { force = false })
+                end
             end
 
-            for _, file in ipairs(vim.v.oldfiles) do
-                if vim.uv.fs_stat(file) and vim.fs.basename(file) ~= 'COMMIT_EDITMSG' then
-                    vim.cmd.edit(file)
-                    return
-                end
+            if #closed > 0 then
+                vim.notify(table.concat(closed, '\n'), nil, {
+                    title = 'Buffers closed',
+                    icon = '󰅗',
+                })
             end
         end)
     end,
