@@ -1,5 +1,7 @@
----@type vim.lsp.ClientConfig
+---@type vim.lsp.Config
 return {
+    cmd = { 'intelephense', '--stdio' },
+    filetypes = { 'php' },
     init_options = {
         licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
     },
@@ -11,4 +13,5 @@ return {
             },
         },
     },
+    root_markers = { '.git', 'composer.json' },
 }
