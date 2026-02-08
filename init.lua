@@ -18,10 +18,6 @@ vim.pack.add({
 --         end,
 --     },
 -- }
---
--- ui
-vim.pack.add({ { src = 'https://github.com/nvim-lualine/lualine.nvim.git', name = 'lualine' } })
-require('lualine').setup()
 
 -- declare plugins and load
 local lazygit = require('config.plugins.lazygit')
@@ -35,6 +31,8 @@ local fff = require('config.plugins.fff')
 local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
+local lualine = require('config.plugins.lualine')
+local mini_pairs = require('config.plugins.mini_pairs')
 local neogit = require('config.plugins.neogit')
 local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
@@ -57,6 +55,8 @@ vim.pack.add({
     foldtext,
     gitsigns,
     gitconflict,
+    lualine,
+    mini_pairs,
     neogit,
     lazydev,
     oil,
@@ -124,8 +124,6 @@ vim.diagnostic.config({
 require('config.keymaps')
 require('config.autocommands')
 
-vim.cmd('colorscheme catppuccin')
-
 -- filetype
 vim.filetype.add({
     extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', mdc = 'markdown' },
@@ -144,3 +142,25 @@ vim.filetype.add({
         ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 })
+
+vim.g.rainbow_delimiters = {
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
+
+local set = vim.api.nvim_set_hl
+
+set(0, 'RainbowDelimiterRed', { link = 'CatppuccinRed' })
+set(0, 'RainbowDelimiterYellow', { link = 'CatppuccinYellow' })
+set(0, 'RainbowDelimiterBlue', { link = 'CatppuccinBlue' })
+set(0, 'RainbowDelimiterOrange', { link = 'CatppuccinPeach' })
+set(0, 'RainbowDelimiterGreen', { link = 'CatppuccinGreen' })
+set(0, 'RainbowDelimiterViolet', { link = 'CatppuccinMauve' })
+set(0, 'RainbowDelimiterCyan', { link = 'CatppuccinTeal' })
