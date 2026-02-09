@@ -179,8 +179,10 @@ vim.api.nvim_create_autocmd('FocusGained', {
     desc = 'Close non-existing buffers',
 })
 
+local lsp_group = vim.api.nvim_create_augroup('my.lsp', { clear = true })
+
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('my.lsp', { clear = true }),
+    group = lsp_group,
     desc = 'LSP keymaps & features',
     callback = function(ev)
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
@@ -196,7 +198,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         map('n', '<leader>D', vim.diagnostic.open_float)
 
         -- completion
-        vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = false })
+        vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
         -- navigation
         if client:supports_method('textDocument/definition') then
