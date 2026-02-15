@@ -2,12 +2,18 @@
 return {
     'saghen/blink.cmp',
     version = '*',
-    -- build = "cargo build --release",
+    build = 'cargo +nightly build --release',
     event = { 'InsertEnter', 'CmdlineEnter' },
-    dependencies = { 'garymjr/nvim-snippets' },
+    dependencies = {
+        'garymjr/nvim-snippets',
+        'folke/lazydev.nvim',
+    },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+        appearance = {
+            nerd_font_variant = 'mono',
+        },
         completion = {
             menu = {
                 draw = {
@@ -22,9 +28,7 @@ return {
             ghost_text = {
                 enabled = false,
             },
-            documentation = {
-                auto_show = true,
-            },
+            documentation = { auto_show = true, auto_show_delay_ms = 500 },
         },
         keymap = {
             ['<Down>'] = { 'select_next', 'fallback' },
@@ -47,25 +51,16 @@ return {
             ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
         sources = {
-            default = {
-                'lsp',
-                'path',
-                'buffer',
-                'lazydev',
-            },
+            default = { 'lsp', 'path', 'buffer', 'lazydev', 'snippets' },
+            min_keyword_length = 0,
             providers = {
-                lsp = {
-                    timeout_ms = 200,
-                    min_keyword_length = 0,
-                    score_offset = 90,
-                },
                 lazydev = {
                     name = 'LazyDev',
                     module = 'lazydev.integrations.blink',
                     score_offset = 100,
                 },
                 buffer = {
-                    score_offset = 15,
+                    score_offset = -3,
                     opts = {
                         -- get all buffers, even ones like neo-tree
                         -- get_bufnrs = vim.api.nvim_list_bufs,
@@ -83,5 +78,6 @@ return {
         fuzzy = {
             implementation = 'prefer_rust_with_warning',
         },
+        opts_extend = { 'sources.default' },
     },
 }
