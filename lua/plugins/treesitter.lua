@@ -1,20 +1,61 @@
--- heavily inspired by LazyVim/LazyVim config
+-- From https://github.com/saikocat/dotfiles/blob/master/neovim/.config/nvim/lua/plugins/code/treesitter.lua
+-- Treesitter textobjects dependency is a local plugin but proxied to nvim-treesitter-textobjects
+-- this is to improve readibility iin the treesitter dependencies.
+--
+-- To recompile everything, delete all from these 2 directories:
+--   * ~/.local/share/nvim/site/parser/
+--   * ~/.local/share/nvim/site/queries/
+--
+-- Additional Refs:
+--   * https://github.com/ThorstenRhau/neovim/blob/main/lua/optional/treesitter.lua
+
 return {
     {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        branch = 'master',
-    },
-    ---@type LazyPluginSpec
-    {
         'nvim-treesitter/nvim-treesitter',
-        branch = 'master',
-        build = ':TSUpdate',
         dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
+            {
+                'nvim-treesitter/nvim-treesitter-context',
+                opts = {
+                    max_lines = 4,
+                    multiline_threshold = 2,
+                },
+            },
+            {
+                'nvim-treesitter/nvim-treesitter-textobjects',
+                branch = 'main',
+                init = function()
+                    -- Disable entire built-in ftplugin mappings to avoid conflicts.
+                    -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+                    vim.g.no_plugin_maps = true
+
+                    -- Or, disable per filetype (add as you like)
+                    -- vim.g.no_python_maps = true
+                    -- vim.g.no_ruby_maps = true
+                    -- vim.g.no_rust_maps = true
+                    -- vim.g.no_go_maps = true
+                end,
+
+                config = function()
+                    require('config.treesitter_textobjects_keymaps').setup()
+                end,
+            },
+            {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+                opts = {
+                    enable_autocmd = false,
+                },
+            },
         },
+        event = {
+            'BufReadPre',
+            'BufNewFile',
+        },
+        branch = 'main',
+        lazy = false,
+        build = ':TSUpdate',
         config = function()
-            local configs = require('nvim-treesitter.configs')
-            local ensure_installed = {
+            local ts = require('nvim-treesitter')
+            ts.install({
                 'awk',
                 'bash',
                 'c',
@@ -61,103 +102,55 @@ return {
                 'vimdoc',
                 'vue',
                 'yaml',
+            }, {
+                max_jobs = 8,
+            })
+
+            local group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true })
+
+            local ignore_filetypes = {
+                'blink-cmp-menu',
+                'checkhealth',
+                'fidget',
+                'incline',
+                'lazy',
+                'lazy_backdrop',
+                'mason',
+                'mason_backdrop',
+                'noice',
+                'snacks_dashboard',
+                'snacks_layout_box',
+                'snacks_notif',
+                'snacks_notif_history',
+                'snacks_picker_input',
+                'snacks_picker_list',
+                'snacks_picker_preview',
+                'snacks_terminal',
+                'snacks_win',
             }
 
-            configs.setup({
-                ensure_installed = ensure_installed,
-                sync_install = false,
-                highlight = { enable = true },
-                indent = { enable = true },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = '<C-space>',
-                        node_incremental = '<C-space>',
-                        scope_incremental = false,
-                        node_decremental = '<bs>',
-                    },
-                },
-                textobjects = {
-                    lookahead = true,
-                    lsp_interop = {
-                        enable = true,
-                        border = 'rounded',
-                        peek_definition_code = {
-                            ['df'] = '@function.outer',
-                            ['dF'] = '@class.outer',
-                        },
-                    },
-                    select = {
-                        enable = true,
-                        lookahead = true,
-                        keymaps = {
-                            ['af'] = '@function.outer',
-                            ['if'] = '@function.inner',
-                            ['ac'] = '@class.outer',
-                            ['ic'] = '@class.inner',
-                            ['aC'] = '@comment.outer',
-                            ['iC'] = '@comment.inner',
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true,
-                        goto_next_start = {
-                            [']m'] = '@function.outer',
-                            [']]'] = '@class.outer',
-                        },
-                        goto_next_end = {
-                            [']M'] = '@function.outer',
-                            [']['] = '@class.outer',
-                        },
-                        goto_previous_start = {
-                            ['[m'] = '@function.outer',
-                            ['[['] = '@class.outer',
-                        },
-                        goto_previous_end = {
-                            ['[M'] = '@function.outer',
-                            ['[]'] = '@class.outer',
-                        },
-                    },
-                },
+            -- Auto-install parsers and enable highlighting on FileType
+            vim.api.nvim_create_autocmd('FileType', {
+                group = group,
+                desc = 'Enable treesitter highlighting and indentation',
+                callback = function(event)
+                    if vim.tbl_contains(ignore_filetypes, event.match) then
+                        return
+                    end
+
+                    local lang = vim.treesitter.language.get_lang(event.match) or event.match
+                    local buf = event.buf
+
+                    -- Start highlighting immediately (works if parser exists)
+                    pcall(vim.treesitter.start, buf, lang)
+
+                    -- Enable treesitter indentation
+                    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+                    -- Install missing parsers (async, no-op if already installed)
+                    ts.install({ lang })
+                end,
             })
         end,
-    },
-    ---@type LazyPluginSpec
-    {
-        'windwp/nvim-ts-autotag',
-        event = 'VeryLazy',
-        opts = {},
-    },
-    ---@type LazyPluginSpec
-    {
-        'nvim-treesitter/nvim-treesitter-context',
-        event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
-        cmd = { 'TSContext' },
-        opts = function()
-            local tsc = require('treesitter-context')
-            Snacks.toggle({
-                name = 'Treesitter Context',
-                get = tsc.enabled,
-                set = function(state)
-                    if state then
-                        tsc.enable()
-                    else
-                        tsc.disable()
-                    end
-                end,
-            }):map('<leader>ut')
-
-            return {
-                max_lines = 3,
-            }
-        end,
-    },
-    {
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        lazy = true,
-        opts = {
-            enable_autocmd = false,
-        },
     },
 }
