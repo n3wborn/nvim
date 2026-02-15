@@ -47,7 +47,9 @@ return {
                 desc = 'Toggle DiffviewFileHistory on current file',
             },
         },
+        ---@type DiffviewConfig
         opts = {
+            use_icons = false,
             keymaps = {
                 file_panel = {
                     {
@@ -93,6 +95,7 @@ return {
             graph_style = 'kitty',
             -- Each Integration is auto-detected through plugin presence, however, it can be disabled by setting to `false`
             integrations = {
+                codediff = false,
                 telescope = false,
                 fzf_lua = false,
                 mini_pick = false,
