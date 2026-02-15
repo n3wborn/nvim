@@ -1,5 +1,9 @@
 -- heavily inspired by LazyVim/LazyVim config
 return {
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = 'master',
+    },
     ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
