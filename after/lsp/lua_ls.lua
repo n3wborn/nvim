@@ -23,25 +23,12 @@ return {
     settings = {
         Lua = {
             completion = {
-                enable = true,
+                callSnippet = 'Replace',
             },
-            diagnostics = {
-                enable = true,
-                globals = { 'vim', 'Snacks' }, -- when working on nvim plugins that lack a `.luarc.json`
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
-                checkThirdParty = false,
-            },
-            hint = {
-                enable = true,
-                setType = true,
-                arrayIndex = 'Disable', -- too noisy
-                semicolon = 'Disable', -- mostly wrong on invalid code
-            },
-            telemetry = {
-                enable = false,
-            },
+            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+            -- diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = { globals = { 'vim', 'Snacks' } },
+            telemetry = { enable = false },
         },
     },
     root_markers = vim.fn.has('nvim-0.11.3') == 1 and { lua_ls_root_markers1, lua_ls_root_markers2, { '.git' } }
