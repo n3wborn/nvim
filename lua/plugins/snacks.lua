@@ -4,7 +4,7 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    ---@type snacks.plugins.Config
+    ---@type snacks.Config
     opts = {
         animate = { enabled = true, duration = 10 },
         bigfile = { enabled = true },
@@ -20,9 +20,10 @@ return {
         statuscolumn = { enabled = true },
         scope = { enabled = true },
         picker = {
-            layout = {
-                fullscreen = true,
-            },
+            layout = { fullscreen = true },
+            previewers = { diff = { builtin = false }, git = { builtin = false } },
+            debug = { scores = false, leaks = false, explorer = false, files = false, proc = true },
+            sources = { files = { hidden = true }, grep = { hidden = true } },
         },
     },
     keys = {
@@ -41,7 +42,6 @@ return {
         { "<space>S",   function() Snacks.picker.smart({ multi = { "recent", "files" } }) end, desc = "Smart Picker" },
 
         -- buffer / marks / registers /mappings
-        { "gb",          function() Snacks.picker.buffers() end, desc = "List Buffers" },
         { "<leader>gj",  function() Snacks.picker.jumps() end, desc = "List Jumps" },
         { "<leader>gm",  function() Snacks.picker.marks() end, desc = "List Marks" },
         { '<leader>gr',  function() Snacks.picker.registers() end, desc = "List Registers" },
@@ -57,7 +57,6 @@ return {
         -- git
         { "<leader>gs",  function() Snacks.picker.git_status() end, desc = "Git Status" },
         { "<leader>gb",  function() Snacks.picker.git_branches() end, desc = "Git Branches" },
-        { "<leader>gd",  function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
         { "<leader>gl",  function() Snacks.picker.git_log() end, desc = "git log" },
         { "<leader>gL",  function() Snacks.picker.git_log_line() end, desc = "git log line" },
         { "<leader>gF",  function() Snacks.picker.git_log_file() end, desc = "git log file" },
