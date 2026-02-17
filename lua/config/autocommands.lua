@@ -251,17 +251,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
             map('i', '<C-G>', vim.lsp.inline_completion.select, { desc = 'Cycle inline completion' })
         end
 
-        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-            buffer = bufnr,
-            group = lsp_group,
-            callback = vim.lsp.buf.document_highlight,
-        })
+        if client:supports_method('textDocument/documentHighlight') then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                buffer = bufnr,
+                group = lsp_group,
+                callback = vim.lsp.buf.document_highlight,
+            })
 
-        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-            buffer = bufnr,
-            group = lsp_group,
-            callback = vim.lsp.buf.clear_references,
-        })
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                buffer = bufnr,
+                group = lsp_group,
+                callback = vim.lsp.buf.clear_references,
+            })
+        end
     end,
 })
 
