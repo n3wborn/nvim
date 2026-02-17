@@ -54,6 +54,9 @@ return {
             default = { 'lsp', 'path', 'buffer', 'lazydev', 'snippets' },
             min_keyword_length = 0,
             providers = {
+                snippets = {
+                    max_items = 3,
+                },
                 lazydev = {
                     name = 'LazyDev',
                     module = 'lazydev.integrations.blink',
@@ -80,5 +83,4 @@ return {
         },
     },
     opts_extend = { 'sources.default' },
-
 }
