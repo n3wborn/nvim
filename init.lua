@@ -66,7 +66,7 @@ require('lazy').setup({
     },
     install = {
         missing = true,
-        colorscheme = { 'catpuccin' },
+        colorscheme = { 'catppuccin' },
     },
     checker = { enabled = true },
     performance = {
