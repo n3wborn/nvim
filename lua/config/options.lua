@@ -40,11 +40,6 @@ vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
 vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.opt.winwidth = 10
-vim.opt.winminwidth = 10
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.foldlevel = 99
-vim.opt.foldenable = true
 vim.go.winborder = 'rounded'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
@@ -85,4 +80,15 @@ vim.filetype.add({
         ['.*/hypr/.*%.conf'] = 'hyprlang',
         ['%.env%.[%w_.-]+'] = 'dotenv',
     },
+})
+
+-- folding
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+
+local utils = require('utils')
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
+    callback = function(args)
+        utils.set_folds(args.buf)
+    end,
 })
