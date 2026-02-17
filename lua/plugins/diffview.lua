@@ -23,6 +23,29 @@ return {
                 desc = '󰊢 Diff This',
             },
             {
+                '<leader>hd',
+                function()
+                    local ok, lib = pcall(require, 'diffview.lib')
+                    if not ok then
+                        vim.notify('diffview.nvim not installed', vim.log.levels.WARN)
+                        return
+                    end
+
+                    local view = lib.get_current_view()
+                    if view then
+                        vim.cmd('DiffviewClose')
+                        return
+                    end
+
+                    local file = vim.api.nvim_buf_get_name(0)
+                    if file == '' then
+                        vim.cmd('DiffviewOpen')
+                    else
+                        vim.cmd('DiffviewFileHistory')
+                    end
+                end,
+            },
+            {
                 '<leader>hD',
                 function()
                     local ok, lib = pcall(require, 'diffview.lib')
