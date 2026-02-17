@@ -15,13 +15,19 @@ local lua_ls_root_markers2 = {
 return {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
-    on_attach = function(client)
+    on_attach = function(client, buf_id)
         -- disable formatting in favor of `stylua`
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
+        -- Reduce very long list of triggers for better 'mini.completion' experience
+        client.server_capabilities.completionProvider.triggerCharacters = { '.', ':', '#', '(' }
     end,
     settings = {
         Lua = {
+            workspace = {
+                ignoreSubmodules = true,
+                library = { vim.env.VIMRUNTIME },
+            },
             completion = {
                 callSnippet = 'Replace',
             },
