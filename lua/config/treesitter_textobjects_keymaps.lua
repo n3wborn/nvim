@@ -43,8 +43,8 @@ function M.setup()
 
     -- Select
     local select_maps = {
-        { { 'x', 'o' }, 'am', sel('@function.outer'), { desc = 'TS: around function' } },
-        { { 'x', 'o' }, 'im', sel('@function.inner'), { desc = 'TS: inside function' } },
+        { { 'x', 'o' }, 'af', sel('@function.outer'), { desc = 'TS: around function' } },
+        { { 'x', 'o' }, 'if', sel('@function.inner'), { desc = 'TS: inside function' } },
         { { 'x', 'o' }, 'ac', sel('@class.outer'), { desc = 'TS: around class' } },
         { { 'x', 'o' }, 'ic', sel('@class.inner'), { desc = 'TS: inside class' } },
         { { 'x', 'o' }, 'as', sel('@local.scope', 'locals'), { desc = 'TS: around scope' } },
