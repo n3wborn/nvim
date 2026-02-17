@@ -5,7 +5,7 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.opt.cursorlineopt = 'both'
+vim.o.cursorlineopt = 'screenline,number'
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -37,6 +37,7 @@ vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
 vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
+vim.opt.completetimeout = 100 -- Limit sources delay
 vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.opt.winwidth = 10
@@ -57,6 +58,9 @@ vim.opt.sessionoptions = {
     'winpos',
 }
 vim.opt.conceallevel = 2
+vim.opt.switchbuf = 'usetab'
+vim.opt.splitkeep = 'screen'
+vim.opt.formatoptions = 'rqnl1j'
 
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
@@ -84,7 +88,8 @@ vim.filetype.add({
 
 -- folding
 vim.opt.foldenable = true
-vim.opt.foldlevel = 99
+vim.opt.foldlevel = 10
+vim.opt.foldnestmax = 10
 
 local utils = require('utils')
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
