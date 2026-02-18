@@ -112,11 +112,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
+-- Autosave
+vim.api.nvim_create_user_command('AutosaveToggle', function()
+    vim.g.autosave_enabled = not vim.g.autosave_enabled
+    print('Autosave: ' .. (vim.g.autosave_enabled and 'ON' or 'OFF'))
+end, {})
+
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLost' }, {
     group = aug,
     callback = function(ctx)
-        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
+        if not vim.g.autosave_enabled then
+            return
+        end
 
+        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
         local bufnr = ctx.buf
         local bo, b = vim.bo[bufnr], vim.b[bufnr]
         local bufname = vim.api.nvim_buf_get_name(bufnr)
