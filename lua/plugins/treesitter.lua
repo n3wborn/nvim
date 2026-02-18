@@ -108,7 +108,7 @@ return {
             }
 
             require('nvim-treesitter').install(languages, { max_jobs = 8 })
- 
+
             vim.api.nvim_create_autocmd('FileType', {
                 group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
                 callback = function(args)
