@@ -59,6 +59,10 @@ require('lazy').setup({
             opts = {},
             cmd = { 'Typr', 'TyprStats' },
         },
+        {
+            'DrKJeff16/wezterm-types',
+            version = false, -- Get the latest version
+        },
     },
     defaults = {
         lazy = true,
