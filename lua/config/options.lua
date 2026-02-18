@@ -62,6 +62,7 @@ vim.opt.switchbuf = 'usetab'
 vim.opt.splitkeep = 'screen'
 vim.opt.formatoptions = 'rqnl1j'
 
+vim.g.autosave_enabled = true
 vim.g.markdown_recommended_style = 0
 vim.g.maplocalleader = ','
 vim.g.blink_enabled = true
