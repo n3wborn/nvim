@@ -5,8 +5,8 @@ return {
     opts = {
         keymaps = { -- normal mode (if not stated otherwise)
             abort = 'q',
-            confirm = '<CR>',
-            insertModeConfirm = '<M-CR>',
+            confirmAndSubstituteInBuffer = '<CR>',
+            insertModeConfirmAndSubstituteInBuffer = '<M-CR>',
             prevSubstitutionInHistory = '<Up>',
             nextSubstitutionInHistory = '<Down>',
             toggleFixedStrings = '<C-f>', -- ripgrep's `--fixed-strings`
