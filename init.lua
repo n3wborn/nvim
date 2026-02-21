@@ -20,7 +20,6 @@ vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
     spec = {
         { import = 'plugins' },
-        { import = 'plugins.extras.lang' },
         ---@type LazyPluginSpec
         {
             'neovim/nvim-lspconfig',
