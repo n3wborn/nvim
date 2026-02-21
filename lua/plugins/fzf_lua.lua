@@ -26,7 +26,7 @@ return {
             function()
                 require('fzf-lua').lsp_definitions()
             end,
-            desc = 'Goto Symbol (Workspace)',
+            desc = 'Goto Definition',
         },
         {
             '<leader>gf',
@@ -47,14 +47,14 @@ return {
             function()
                 require('fzf-lua').buffers({ cwd_only = true })
             end,
-            desc = 'Search in current working Buffers',
+            desc = 'Buffers (cwd)',
         },
         {
             'gB',
             function()
                 require('fzf-lua').buffers({ cwd_only = false })
             end,
-            desc = 'Search in every Buffers',
+            desc = 'Buffers (all)',
         },
         {
             '<c-x><c-f>',
@@ -67,48 +67,43 @@ return {
                     winopts = { fullscreen = false },
                 })
             end,
-            desc = 'Complete Path',
             mode = { 'i', 'x' },
+            desc = 'Complete Path',
         },
     },
-    config = function()
-        local fzf = require('fzf-lua')
-        local config = fzf.config
-        local actions = fzf.actions
-
-        config.defaults.keymap.fzf['ctrl-q'] = 'select-all+accept'
-        config.defaults.keymap.fzf['ctrl-u'] = 'half-page-up'
-        config.defaults.keymap.fzf['ctrl-d'] = 'half-page-down'
-        config.defaults.keymap.fzf['ctrl-x'] = 'jump'
-        config.defaults.keymap.fzf['ctrl-f'] = 'preview-page-down'
-        config.defaults.keymap.fzf['ctrl-b'] = 'preview-page-up'
-        config.defaults.keymap.builtin['<c-f>'] = 'preview-page-down'
-        config.defaults.keymap.builtin['<c-b>'] = 'preview-page-up'
-        config.defaults.file_icons = 'mini'
-
-        fzf.setup('skim')
-
-        config.setup_opts.winopts = { fullscreen = true }
-        config.setup_opts.buffers = { formatter = 'path.filename_first' }
-        config.setup_opts.lsp = {
+    ---@type fzf-lua.Config
+    opts = {
+        'skim',
+        winopts = {
+            fullscreen = true,
+        },
+        keymap = {
+            fzf = {
+                ['ctrl-q'] = 'select-all+accept',
+                ['ctrl-u'] = 'half-page-up',
+                ['ctrl-d'] = 'half-page-down',
+                ['ctrl-x'] = 'jump',
+                ['ctrl-f'] = 'preview-page-down',
+                ['ctrl-b'] = 'preview-page-up',
+                ['ctrl-s down'] = 'preview-page-down',
+                ['ctrl-up'] = 'preview-page-up',
+            },
+            builtin = {
+                ['<c-f>'] = 'preview-page-down',
+                ['<c-b>'] = 'preview-page-up',
+            },
+        },
+        file_icons = 'mini',
+        buffers = {
+            formatter = 'path.filename_first',
+        },
+        lsp = {
             symbols = {
                 child_prefix = false,
             },
             code_actions = {
                 previewer = vim.fn.executable('delta') == 1 and 'codeaction_native' or nil,
             },
-        }
-
-        actions = {
-            files = {
-                ['default'] = actions.file_edit_or_qf,
-                ['ctrl-l'] = actions.arg_add,
-                ['ctrl-x'] = actions.file_split,
-                ['ctrl-v'] = actions.file_vsplit,
-                ['ctrl-t'] = actions.file_tabedit,
-                ['ctrl-q'] = actions.file_sel_to_qf,
-                ['alt-q'] = actions.file_sel_to_ll,
-            },
-        }
-    end,
+        },
+    },
 }
