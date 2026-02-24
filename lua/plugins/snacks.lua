@@ -22,7 +22,6 @@ return {
         picker = {
             layout = { fullscreen = true },
             previewers = { diff = { builtin = false }, git = { builtin = false } },
-            debug = { scores = false, leaks = false, explorer = false, files = false, proc = true },
             sources = { files = { hidden = true }, grep = { hidden = true } },
         },
     },
