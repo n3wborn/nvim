@@ -41,9 +41,6 @@ require('lazy').setup({
         {
             'kylechui/nvim-surround',
             event = 'VeryLazy',
-            config = function()
-                require('nvim-surround').setup()
-            end,
         },
         ---@type LazyPluginSpec
         {
