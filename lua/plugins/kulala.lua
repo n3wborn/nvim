@@ -1,28 +1,38 @@
--- file.http exemple :
+-- Kulala will be loaded on http/rest filetypes but also from http injected code !
 --
--- ### simple GET
---
+-- ```http
+-- # simple GET
 -- GET https://jsonplaceholder.typicode.com/todos/1
 --
--- ### get comments
---
+-- # get comments
 -- GET https://jsonplaceholder.typicode.com/comments
+-- ```
 
 ---@type LazyPluginSpec
 return {
     'mistweaverco/kulala.nvim',
     ft = { 'http', 'rest' },
-    keys = function()
-        local k = require('kulala')
-
-        ---@as LazyKeys
-        local keymaps = {
-            { '<leader>K', k.run, { 'n', 'v' } },
-            { '<leader>Ka', k.run_all, 'n' },
-            { '<leader>Kr', k.replay, 'n' },
-        }
-
-        return keymaps
-    end,
-    opts = {},
+    keys = {
+        {
+            '<leader>K',
+            function()
+                require('kulala').run()
+            end,
+            { 'n', 'v' },
+        },
+        {
+            '<leader>Ka',
+            function()
+                require('kulala').run_all()
+            end,
+            { 'n' },
+        },
+        {
+            '<leader>Kr',
+            function()
+                require('kulala').replay()
+            end,
+            { 'n' },
+        },
+    },
 }
