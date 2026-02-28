@@ -3,6 +3,7 @@ local lua_ls_root_markers1 = {
     '.luarc.json',
     '.luarc.jsonc',
 }
+
 local lua_ls_root_markers2 = {
     '.luacheckrc',
     '.stylua.toml',
@@ -15,25 +16,16 @@ local lua_ls_root_markers2 = {
 return {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
-    on_attach = function(client, buf_id)
-        -- disable formatting in favor of `stylua`
+    on_attach = function(client, _)
+        -- let stylua (via conform) handle this
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
-        -- Reduce very long list of triggers for better 'mini.completion' experience
-        client.server_capabilities.completionProvider.triggerCharacters = { '.', ':', '#', '(' }
     end,
     settings = {
         Lua = {
-            workspace = {
-                ignoreSubmodules = true,
-                library = { vim.env.VIMRUNTIME },
-            },
-            completion = {
-                callSnippet = 'Replace',
-            },
-            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
+            completion = { callSnippet = 'Replace' },
             diagnostics = { globals = { 'vim', 'Snacks' } },
+            workspace = { checkThirdParty = false },
             telemetry = { enable = false },
         },
     },
