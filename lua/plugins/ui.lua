@@ -124,19 +124,37 @@ return {
     },
     ---@type LazyPluginSpec
     {
-        'NvChad/nvim-colorizer.lua',
-        event = 'BufReadPre',
+        'brenoprata10/nvim-highlight-colors',
+        cmd = {
+            'HighlightColors',
+        },
+        event = 'VeryLazy',
         opts = {
-            options = {
-                filetypes = { 'javascript', 'typescript', 'html', 'css', 'scss' },
-                parsers = {
-                    css = true, -- preset: enables names, hex, rgb, hsl, oklch
-                    tailwind = { enable = true },
-                },
-                display = {
-                    mode = 'background', -- "background"|"foreground"|"virtualtext"
-                },
+            render = 'background', --'background'|'foreground'|'virtual'
+            enable_hex = true,
+            enable_short_hex = true,
+            enable_rgb = true,
+            enable_hsl = true,
+            enable_ansi = true,
+            enable_xterm256 = true,
+            enable_xtermTrueColor = true,
+            enable_hsl_without_function = true,
+            enable_var_usage = true,
+            enable_named_colors = true,
+            enable_tailwind = true,
+            exclude_filetypes = {
+                'lazy',
+                'oil',
+                'nvim-tree',
+                'neo-tree',
+                'fzf',
+                'snacks_dashboard',
+                'NeogitStatus',
             },
+            exclude_buftypes = {},
+            exclude_buffer = function(bufnr)
+                return vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr)) > 1000000
+            end,
         },
     },
     ---@type LazyPluginSpec
