@@ -3,11 +3,12 @@ return {
     'OXY2DEV/foldtext.nvim',
     lazy = false,
     ---@module 'foldtext'
-    ---@type foldtext.confiz
+    ---@type foldtext.config
     opts = {
-        ignore_filetypes = {},
+        ignore_filetypes = {
+            'snacks_dashboard',
+        },
         ignore_buftypes = {},
-
         styles = {
             default = {
                 ---|fS "config: Default configuration"
