@@ -144,6 +144,7 @@ return {
             enable_tailwind = true,
             exclude_filetypes = {
                 'fzf',
+                'help',
                 'lazy',
                 'markdown',
                 'neo-tree',
@@ -152,45 +153,12 @@ return {
                 'nvim-tree',
                 'oil',
                 'snacks_dashboard',
+                'git',
             },
             exclude_buftypes = {},
             exclude_buffer = function(bufnr)
                 return vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr)) > 1000000
             end,
-        },
-    },
-    ---@type LazyPluginSpec
-    {
-        'folke/noice.nvim',
-        event = 'VeryLazy',
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-        },
-        ---@type NoiceConfig
-        opts = {
-            messages = { enabled = true },
-            presets = {
-                bottom_search = true, -- use a classic bottom cmdline for search
-                command_palette = true, -- position the cmdline and popupmenu together
-                long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = true, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = true, -- add a border to hover docs and signature help
-            },
-        },
-    },
-    ---@type LazyPluginSpec
-    {
-        'SmiteshP/nvim-navic',
-        lazy = true,
-        opts = {
-            separator = ' ',
-            highlight = true,
-            depth_limit = 5,
-            lazy_update_context = true,
-            lsp = {
-                auto_attach = true,
-                preference = { 'tsgo', 'typescript-tools' },
-            },
         },
     },
     {

@@ -1,4 +1,4 @@
--- Lualine statusline styling (Catppuccin Mocha themed)
+-- From BrendonJL/dotfiles
 return {
     {
         'nvim-lualine/lualine.nvim',
@@ -27,35 +27,52 @@ return {
             opts.options = opts.options or {}
             opts.options.component_separators = { left = '│', right = '│' }
             opts.options.section_separators = { left = '', right = '' }
-            opts.options.globalstatus = true
-            opts.options.theme = {
-                normal = {
-                    a = { fg = colors.mauve, bg = colors.bg, gui = 'bold' },
-                    b = { fg = colors.blue, bg = colors.bg },
-                    c = { fg = colors.fg, bg = colors.bg },
-                    x = { fg = colors.blue, bg = colors.bg },
-                    y = { fg = colors.green, bg = colors.bg },
-                    z = { fg = colors.mauve, bg = colors.bg },
-                },
-                insert = {
-                    a = { fg = colors.green, bg = colors.bg, gui = 'bold' },
-                },
-                visual = {
-                    a = { fg = colors.peach, bg = colors.bg, gui = 'bold' },
-                },
-                replace = {
-                    a = { fg = colors.red, bg = colors.bg, gui = 'bold' },
-                },
-                command = {
-                    a = { fg = colors.yellow, bg = colors.bg, gui = 'bold' },
-                },
-                inactive = {
-                    a = { fg = colors.overlay0, bg = colors.bg },
-                    b = { fg = colors.overlay0, bg = colors.bg },
-                    c = { fg = colors.overlay0, bg = colors.bg },
+            opts.options.globalstatus = false -- default
+            opts.options.refresh = {
+                statusline = 200,
+                refresh_time = 16, -- ~60fps
+                events = {
+                    'WinEnter',
+                    'BufEnter',
+                    'BufWritePost',
+                    'SessionLoadPost',
+                    'FileChangedShellPost',
+                    'VimResized',
+                    'Filetype',
+                    'CursorMoved',
+                    'CursorMovedI',
+                    'ModeChanged',
                 },
             }
 
+            -- opts.options.theme = {
+            --     normal = {
+            --         a = { fg = colors.mauve, bg = colors.bg, gui = 'bold' },
+            --         b = { fg = colors.blue, bg = colors.bg },
+            --         c = { fg = colors.fg, bg = colors.bg },
+            --         x = { fg = colors.blue, bg = colors.bg },
+            --         y = { fg = colors.green, bg = colors.bg },
+            --         z = { fg = colors.mauve, bg = colors.bg },
+            --     },
+            --     insert = {
+            --         a = { fg = colors.green, bg = colors.bg, gui = 'bold' },
+            --     },
+            --     visual = {
+            --         a = { fg = colors.peach, bg = colors.bg, gui = 'bold' },
+            --     },
+            --     replace = {
+            --         a = { fg = colors.red, bg = colors.bg, gui = 'bold' },
+            --     },
+            --     command = {
+            --         a = { fg = colors.yellow, bg = colors.bg, gui = 'bold' },
+            --     },
+            --     inactive = {
+            --         a = { fg = colors.overlay0, bg = colors.bg },
+            --         b = { fg = colors.overlay0, bg = colors.bg },
+            --         c = { fg = colors.overlay0, bg = colors.bg },
+            --     },
+            -- }
+            --
             -- Left sections
             opts.sections = opts.sections or {}
             opts.sections.lualine_a = {
@@ -63,12 +80,12 @@ return {
                     'mode',
                     fmt = function(str)
                         local mode_map = {
-                            N = '🧠 N',
-                            I = '✏️ I',
-                            V = '👁️ V',
-                            C = '⌨️ C',
-                            R = '🔄 R',
-                            T = '💻 T',
+                            N = '🧠 ',
+                            I = '✏️ ',
+                            V = '👁️ ',
+                            C = '⌨️ ',
+                            R = '🔄 ',
+                            T = '💻 ',
                         }
                         local letter = str:sub(1, 1)
                         return mode_map[letter] or ('  ' .. letter)
@@ -129,24 +146,38 @@ return {
                     cond = function()
                         return package.loaded['nvim-navic'] and require('nvim-navic').is_available()
                     end,
-                    color = { fg = colors.overlay0 },
+                    -- color = { fg = colors.overlay0 },
                 },
             }
 
             -- Right sections
             opts.sections.lualine_x = {
                 {
-                    function()
-                        local clients = vim.lsp.get_clients({ bufnr = 0 })
-                        if #clients > 0 then
-                            return '󰒋 ' .. clients[1].name
-                        end
-                        return ''
-                    end,
-                    color = { fg = colors.blue },
+                    'lsp_status',
+                    icon = '󰒋 ',
+                    symbols = {
+                        spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                        done = '✓',
+                        separator = ' ',
+                    },
+                    ignore_lsp = {},
+                    show_name = true,
                 },
             }
 
+            -- opts.sections.lualine_x = {
+            --     {
+            --         function()
+            --             local clients = vim.lsp.get_clients({ bufnr = 0 })
+            --             if #clients > 0 then
+            --                 return '󰒋 ' .. clients[1].name
+            --             end
+            --             return ''
+            --         end,
+            --         color = { fg = colors.blue },
+            --     },
+            -- }
+            --
             opts.sections.lualine_y = {
                 {
                     'filetype',
