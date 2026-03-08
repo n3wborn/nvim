@@ -114,7 +114,7 @@ return {
                     'lsp_status',
                     icon = '󰒋 ',
                     symbols = {
-                        spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                        spinner = require('config.icons').spinner.circle,
                         done = '✓',
                         separator = ' ',
                     },
