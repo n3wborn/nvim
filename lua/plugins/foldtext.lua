@@ -1,14 +1,15 @@
 ---@type LazyPluginSpec
 return {
     'OXY2DEV/foldtext.nvim',
-    lazy = false,
     ---@module 'foldtext'
     ---@type foldtext.config
     opts = {
         ignore_filetypes = {
             'snacks_dashboard',
         },
-        ignore_buftypes = {},
+        ignore_buftypes = {
+            'nofile',
+        },
         styles = {
             default = {
                 ---|fS "config: Default configuration"

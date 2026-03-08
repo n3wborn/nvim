@@ -15,7 +15,7 @@ return {
         dependencies = {
             {
                 'nvim-treesitter/nvim-treesitter-context',
-                lazy = false,
+                lazy = true,
                 opts = {
                     max_lines = 4,
                     multiline_threshold = 2,
@@ -24,7 +24,7 @@ return {
             {
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 branch = 'main',
-                lazy = false,
+                lazy = true,
                 init = function()
                     -- Disable entire built-in ftplugin mappings to avoid conflicts.
                     -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
