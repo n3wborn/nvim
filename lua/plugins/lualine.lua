@@ -1,72 +1,162 @@
----@type LazyPluginSpec
+-- From BrendonJL/dotfiles
 return {
-    'nvim-lualine/lualine.nvim',
-    dependencies = {
-        'nvim-mini/mini.icons',
-    },
-    event = 'VeryLazy',
-    opts = {
-        options = {
-            icons_enabled = true,
-            theme = 'catppuccin',
-            globalstatus = vim.o.laststatus == 3,
-            disabled_filetypes = {
-                statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard', 'gitcommit' },
-            },
-            component_separators = { left = '', right = '' },
-            section_separators = { left = '', right = '' },
-            always_divide_middle = true,
+    {
+        'nvim-lualine/lualine.nvim',
+        event = 'VeryLazy',
+        dependencies = {
+            'SmiteshP/nvim-navic', -- For showing current function/symbol
         },
-        sections = {
-            lualine_a = { 'mode' },
-            lualine_b = { 'branch' },
-            lualine_c = { 'filename' },
-            lualine_x = {
-                require('snacks').profiler.status(),
-                -- stylua: ignore
-                {
-                    function() return require("noice").api.status.command.get() end,
-                    cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-                    color = function() return { fg = require('snacks').util.color("Statement") } end,
+        opts = function(_, opts)
+            -- Custom components
+            local icons = require('config.icons')
+
+            opts.options = opts.options or {}
+            opts.options.component_separators = { left = '│', right = '│' }
+            opts.options.section_separators = { left = '', right = '' }
+            opts.options.globalstatus = false -- default
+            opts.options.refresh = {
+                statusline = 200,
+                refresh_time = 16, -- ~60fps
+                events = {
+                    'WinEnter',
+                    'BufEnter',
+                    'BufWritePost',
+                    'SessionLoadPost',
+                    'FileChangedShellPost',
+                    'VimResized',
+                    'Filetype',
+                    'CursorMoved',
+                    'CursorMovedI',
+                    'ModeChanged',
                 },
-                -- stylua: ignore
+            }
+
+            -- Left sections
+            opts.sections = opts.sections or {}
+            opts.sections.lualine_a = {
                 {
-                    function() return require("noice").api.status.mode.get() end,
-                    cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                    color = function() return { fg = require('snacks').util.color("Constant") } end,
+                    'mode',
+                    fmt = function(str)
+                        local mode_map = {
+                            N = '[NORMAL]',
+                            I = '[INSERT]',
+                            V = '[VISUAL]',
+                            C = '[COMMAND]',
+                            R = '[REPLACE]',
+                            T = '[TERM]',
+                        }
+                        local letter = str:sub(1, 1)
+                        return mode_map[letter] or ('  ' .. letter)
+                    end,
+                    padding = { left = 1, right = 1 },
                 },
-                -- stylua: ignore
+            }
+
+            opts.sections.lualine_b = {
                 {
-                    function() return "  " .. require("dap").status() end,
-                    cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-                    color = function() return { fg = require('snacks').util.color("Debug") } end,
-                },
-                -- stylua: ignore
-                {
-                    require("lazy.status").updates,
-                    cond = require("lazy.status").has_updates,
-                    color = function() return { fg = require('snacks').util.color("Special") } end,
+                    'branch',
+                    icon = icons.git.git,
+                    padding = { left = 1, right = 1 },
                 },
                 {
                     'diff',
-                    source = function()
-                        local gitsigns = vim.b.gitsigns_status_dict
-
-                        if gitsigns then
-                            return {
-                                added = gitsigns.added,
-                                modified = gitsigns.changed,
-                                removed = gitsigns.removed,
-                            }
-                        end
-                    end,
+                    symbols = {
+                        added = icons.git.added,
+                        modified = icons.git.modified,
+                        removed = icons.git.removed,
+                    },
+                    padding = { left = 1, right = 1 },
                 },
+            }
+
+            opts.sections.lualine_c = {
+                {
+                    'diagnostics',
+                    symbols = {
+                        error = icons.diagnostics.Error,
+                        warn = icons.diagnostics.Warn,
+                        info = icons.diagnostics.Info,
+                        hint = icons.diagnostics.Hint,
+                    },
+                },
+                { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
+                {
+                    'filename',
+                    path = 1,
+                    symbols = {
+                        modified = ' ●',
+                        readonly = ' ',
+                        unnamed = '[No Name]',
+                    },
+                },
+                -- Show current function/symbol via navic
+                {
+                    function()
+                        local navic = require('nvim-navic')
+                        if navic.is_available() then
+                            local location = navic.get_location()
+                            if location ~= '' then
+                                return '› ' .. location
+                            end
+                        end
+                        return ''
+                    end,
+                    cond = function()
+                        return package.loaded['nvim-navic'] and require('nvim-navic').is_available()
+                    end,
+                    -- color = { fg = colors.overlay0 },
+                },
+            }
+
+            -- Right sections
+            opts.sections.lualine_x = {
+                {
+                    'lsp_status',
+                    icon = '󰒋 ',
+                    symbols = {
+                        spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                        done = '✓',
+                        separator = ' ',
+                    },
+                    ignore_lsp = {},
+                    show_name = true,
+                },
+            }
+
+            opts.sections.lualine_y = {
+                {
+                    'filetype',
+                    icon_only = false,
+                    padding = { left = 1, right = 1 },
+                },
+            }
+
+            opts.sections.lualine_z = {
+                {
+                    'location',
+                    padding = { left = 1, right = 1 },
+                },
+                {
+                    'progress',
+                    padding = { left = 0, right = 1 },
+                },
+            }
+
+            return opts
+        end,
+    },
+    -- Navic for breadcrumbs (current function)
+    {
+        'SmiteshP/nvim-navic',
+        lazy = true,
+        opts = {
+            lsp = {
+                auto_attach = true,
             },
-            lualine_y = {
-                { 'progress', separator = ' ', padding = { left = 1, right = 1 } },
-            },
-            lualine_z = { 'encoding', 'fileformat', 'filetype' },
+            highlight = true,
+            separator = ' › ',
+            depth_limit = 3,
+            icons = require('config.icons'),
         },
-        extensions = { 'neo-tree', 'lazy', 'fzf' },
     },
 }

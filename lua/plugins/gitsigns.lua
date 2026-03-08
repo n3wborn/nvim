@@ -36,6 +36,7 @@ return {
         gh = true,
         on_attach = function(buffer)
             local gs = require('gitsigns')
+            local icons = require('config.icons').git
             local nav_hunk_opts = { preview = true, greedy = false, target = 'all' }
 
             local function map(mode, l, r, desc)
@@ -56,19 +57,19 @@ return {
                     gs.nav_hunk('prev', nav_hunk_opts)
                 end
             end, 'Prev Hunk')
-            map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', '󰊢 (Un)Stage Hunk')
-            map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', '󰊢 Reset Hunk')
-            map('n', '<leader>hS', gs.stage_buffer, '󰊢 Stage/Unstage Buffer')
-            map('n', '<leader>hR', gs.reset_buffer, '󰊢 Reset Buffer')
-            map('n', '<leader>hp', gs.preview_hunk_inline, '󰊢 Preview Hunk Inline')
+            map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', icons.git .. ' (Un)Stage Hunk')
+            map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', icons.git .. ' Reset Hunk')
+            map('n', '<leader>hS', gs.stage_buffer, icons.git .. ' Stage/Unstage Buffer')
+            map('n', '<leader>hR', gs.reset_buffer, icons.git .. ' Reset Buffer')
+            map('n', '<leader>hp', gs.preview_hunk_inline, icons.git .. ' Preview Hunk Inline')
             map('n', '<leader>hb', function()
                 gs.blame_line({ full = true })
-            end, '󰊢 Blame Line')
+            end, icons.git .. ' Blame Line')
             map('n', '<leader>hB', function()
                 gs.blame()
-            end, '󰊢 Blame Buffer')
-            map('n', '<leader>tb', gs.toggle_current_line_blame, '󰊢 Toogle Current Line Blame')
-            map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', '󰊢 GitSigns Select Hunk')
+            end, icons.git .. ' Blame Buffer')
+            map('n', '<leader>tb', gs.toggle_current_line_blame, icons.git .. ' Toogle Current Line Blame')
+            map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', icons.git .. ' GitSigns Select Hunk')
         end,
     },
 }

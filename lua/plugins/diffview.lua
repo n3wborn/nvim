@@ -20,7 +20,7 @@ return {
                         vim.cmd('DiffviewClose')
                     end
                 end,
-                desc = '󰊢 Diff This',
+                desc = require('config.icons').git.git .. ' Diff This',
             },
             {
                 '<leader>hd',
