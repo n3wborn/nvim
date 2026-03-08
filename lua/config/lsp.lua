@@ -47,6 +47,7 @@ vim.diagnostic.config({
     jump = { on_jump = vim.diagnostic.open_float },
 })
 
+local u = require('utils')
 local lsp_group = vim.api.nvim_create_augroup('my.lsp', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -56,54 +57,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
         local bufnr = ev.buf
 
-        local map = function(mode, lhs, rhs, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, lhs, rhs, opts)
-        end
-
         -- diagnostics
-        map('n', '<leader>D', vim.diagnostic.open_float)
-
-        -- completion
-        vim.lsp.completion.enable(true, client.id, bufnr)
-
-        -- navigation
-        if client:supports_method('textDocument/definition') then
-            map('n', 'gd', vim.lsp.buf.definition)
-        end
-
-        if client:supports_method('textDocument/declaration') then
-            map('n', 'gD', vim.lsp.buf.declaration)
-        end
-
-        if client:supports_method('textDocument/typeDefinition') then
-            map('n', '<leader>gt', vim.lsp.buf.type_definition)
-        end
-
-        if client:supports_method('textDocument/implementation') then
-            map('n', 'gri', vim.lsp.buf.implementation)
-        end
-
-        if client:supports_method('callHierarchy/incomingCalls') then
-            map('n', 'grI', vim.lsp.buf.incoming_calls)
-        end
-
-        -- editing
-        if client:supports_method('textDocument/rename') then
-            map('n', '<leader>R', vim.lsp.buf.rename)
-        end
+        u.map('n', '<leader>D', vim.diagnostic.open_float)
 
         if client:supports_method('textDocument/onTypeFormatting') then
             vim.lsp.on_type_formatting.enable()
         end
-
-        map('i', '<M-s>', vim.lsp.buf.signature_help)
-
-        -- -- UI extras
-        -- if client:supports_method('textDocument/documentSymbol') then
-        --     require('nvim-navic').attach(client, bufnr)
-        -- end
 
         if client:supports_method('textDocument/documentColor') then
             vim.lsp.document_color.enable(true, bufnr)
@@ -111,12 +70,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
             vim.lsp.inlay_hint.enable(true)
-        end
-
-        if client:supports_method('textDocument/inlineCompletion') then
-            vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-            map('i', '<C-F>', vim.lsp.inline_completion.get, { desc = 'Accept inline completion' })
-            map('i', '<C-G>', vim.lsp.inline_completion.select, { desc = 'Cycle inline completion' })
         end
 
         if client:supports_method('textDocument/documentHighlight') then
