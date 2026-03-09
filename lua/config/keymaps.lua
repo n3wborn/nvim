@@ -45,6 +45,10 @@ u.map('v', '>', '>gv')
 u.map('v', 'J', ":m '>+1<CR>gv=gv")
 u.map('v', 'K', ":m '<-2<CR>gv=gv")
 
+--- center when scrolling
+u.map('n', '<C-d>', '<C-d>zz', { desc = 'scroll centered' })
+u.map('n', '<C-u>', '<C-u>zz', { desc = 'scroll centered' })
+
 -- u.map Ctrl-c to Escape
 u.map('i', '<C-c>', '')
 u.map('i', '<C-c>', '<Esc>')
