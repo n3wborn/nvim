@@ -73,8 +73,8 @@ function M.setup()
         { { 'n', 'x', 'o' }, '[]', mv('goto_previous_end', '@class.outer'), { desc = 'TS: prev class end' } },
 
         -- "nearest of start/end"
-        { { 'n', 'x', 'o' }, ']d', mv('goto_next', '@conditional.outer'), { desc = 'TS: next conditional' } },
-        { { 'n', 'x', 'o' }, '[d', mv('goto_previous', '@conditional.outer'), { desc = 'TS: prev conditional' } },
+        { { 'n', 'x', 'o' }, ']c', mv('goto_next', '@conditional.outer'), { desc = 'TS: next conditional' } },
+        { { 'n', 'x', 'o' }, '[c', mv('goto_previous', '@conditional.outer'), { desc = 'TS: prev conditional' } },
 
         -- Grouped captures example
         {
