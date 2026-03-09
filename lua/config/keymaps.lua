@@ -83,11 +83,8 @@ local diagnostic_goto = function(next, severity)
     end
 end
 
-u.map('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
-u.map('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })
 u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
 u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
-u.map('n', '<leader>D', vim.diagnostic.open_float)
 
 -- autosave
 u.map('n', '<leader>as', '<cmd>AutosaveToggle<CR>', { desc = 'Toggle Autosave' })
