@@ -30,6 +30,7 @@ end
 
 local signs = require('config.icons').diagnostics
 
+---@type vim.diagnostic.Opts
 vim.diagnostic.config({
     signs = {
         text = {
