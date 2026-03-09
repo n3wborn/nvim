@@ -16,13 +16,9 @@ local lua_ls_root_markers2 = {
 return {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
-    on_attach = function(client, _)
-        -- let stylua (via conform) handle this
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-    end,
     settings = {
         Lua = {
+            format = { enable = false },
             completion = { callSnippet = 'Replace' },
             diagnostics = { globals = { 'vim', 'Snacks' } },
             workspace = { checkThirdParty = false },
