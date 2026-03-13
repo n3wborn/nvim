@@ -11,7 +11,8 @@ vim.lsp.config('*', {
 })
 
 local servers = {
-    'intelephense',
+    -- 'intelephense',
+    'phpantom',
     'lua_ls',
     -- emmylua_ls',
     'bashls',
