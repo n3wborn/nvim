@@ -86,4 +86,6 @@ require('lazy').setup({
     ui = { border = 'rounded' },
 })
 
+vim.cmd.colorscheme('catppuccin-mocha')
+
 require('config')

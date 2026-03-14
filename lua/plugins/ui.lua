@@ -57,53 +57,6 @@ return {
             require('mini.align').setup(opts)
         end,
     },
-    ---@type LazyPluginSpec
-    {
-        'catppuccin/nvim',
-        priority = 1000,
-        lazy = false,
-        name = 'catppuccin',
-        ---@type CatppuccinOptions
-        opts = {
-            integrations = {
-                fzf = true,
-                diffview = true,
-                rainbow_delimiters = true,
-                gitsigns = true,
-                noice = true,
-            },
-            flavour = 'mocha',
-            transparent_background = true,
-            lsp_styles = {
-                virtual_text = {
-                    errors = { 'italic' },
-                    hints = { 'italic' },
-                    warnings = { 'italic' },
-                    information = { 'italic' },
-                    ok = { 'italic' },
-                },
-                underlines = {
-                    errors = { 'undercurl' },
-                    hints = { 'undercurl' },
-                    warnings = { 'undercurl' },
-                    information = { 'undercurl' },
-                },
-                inlay_hints = {
-                    background = true,
-                },
-            },
-            styles = {
-                functions = { 'italic' },
-            },
-            auto_integrations = true,
-        },
-        config = function(_, opts)
-            require('catppuccin').setup(opts)
-
-            vim.cmd.colorscheme('catppuccin')
-        end,
-    },
-
     -- filename
     {
         'b0o/incline.nvim',
@@ -112,7 +65,7 @@ return {
             'nvim-mini/mini.icons',
         },
         event = 'BufReadPre',
-        priority = 1200,
+        priority = 999,
         config = function()
             require('incline').setup({
                 window = { margin = { vertical = 0, horizontal = 1 } },
