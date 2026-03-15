@@ -20,9 +20,6 @@ vim.pack.add({
 
 -- declare plugins and load
 local lazygit = require('config.plugins.lazygit')
-local plenary = require('config.plugins.plenary')
-local schemastore = require('config.plugins.schemastore')
-local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
 local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
@@ -36,14 +33,10 @@ local textobjects = require('config.plugins.textobjects')
 local treesitter = require('config.plugins.treesitter')
 local undotree = require('config.plugins.undotree')
 local snacks = require('config.plugins.snacks')
--- local kulala = require('config.plugins.kulala')
 local fzf = require('config.plugins.fzf')
 
 vim.pack.add({
     lazygit,
-    plenary,
-    schemastore,
-    conform,
     diffview,
     foldtext,
     gitsigns,
