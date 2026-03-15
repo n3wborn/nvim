@@ -23,7 +23,6 @@ vim.pack.add({
 local lazygit = require('config.plugins.lazygit')
 local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
-local snippets = require('config.plugins.friendly_snippets')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
 local fff = require('config.plugins.fff')
@@ -57,7 +56,6 @@ vim.pack.add({
     neogit,
     oil,
     rainbow,
-    snippets,
     textobjects,
     treesitter,
     undotree,
