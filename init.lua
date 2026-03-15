@@ -76,8 +76,6 @@ vim.pack.add({
     end,
 })
 
-vim.cmd('colorscheme catppuccin')
-
 -- LSP
 local servers = {
     'eslint', -- npm i -g vscode-langservers-extracted
