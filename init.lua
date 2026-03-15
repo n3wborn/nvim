@@ -10,7 +10,6 @@ require('config.options')
 vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
-
 -- return {
 --     src = '',
 --     data = {
@@ -25,7 +24,6 @@ local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
-local fff = require('config.plugins.fff')
 local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
@@ -47,7 +45,6 @@ vim.pack.add({
     schemastore,
     conform,
     diffview,
-    fff,
     foldtext,
     gitsigns,
     gitconflict,
