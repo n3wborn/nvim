@@ -1,4 +1,3 @@
--- stylua: ignore
 return {
     src = 'https://github.com/folke/snacks.nvim',
     data = {
@@ -13,12 +12,12 @@ return {
                 ---@type snacks.lazygit.Config
                 lazygit = { enabled = true, interactive = true },
                 notifier = {
-                    -- log level: TRACE DEBUG ERROR WARN INFO  OFF
+                    -- log level: Trace DEBUG ERROR WARN INFO  OFF
                     level = vim.log.levels.WARN,
                     win = { preview = { wo = { wrap = true } } },
                 },
                 quickfile = { enabled = false },
-                scroll = { enabled = false },
+                scroll = { enabled = true },
                 statuscolumn = { enabled = true },
                 words = { enabled = true },
                 scope = { enabled = true },
@@ -29,48 +28,47 @@ return {
                     },
                     ---@type snacks.picker.projects.Config
                     projects = {
-                        finder = "recent_projects",
-                        format = "file",
-                        dev = { "~/projects", '~/prog/git', '~/.config/' },
-                        confirm = "load_session",
-                        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "Makefile" },
+                        finder = 'recent_projects',
+                        format = 'file',
+                        dev = { '~/projects', '~/prog/git', '~/.config/' },
+                        confirm = 'load_session',
+                        patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'package.json', 'Makefile' },
                         recent = true,
                         matcher = {
                             frecency = true, -- use frecency boosting
                             sort_empty = true, -- sort even when the filter is empty
                             cwd_bonus = false,
                         },
-                        sort = { fields = { "score:desc", "idx" } },
+                        sort = { fields = { 'score:desc', 'idx' } },
                         win = {
                             preview = { minimal = true },
                             input = {
                                 keys = {
                                     -- every action will always first change the cwd of the current tabpage to the project
-                                    ["<c-e>"] = { { "tcd", "picker_explorer" }, mode = { "n", "i" } },
-                                    ["<c-f>"] = { { "tcd", "picker_files" }, mode = { "n", "i" } },
-                                    ["<c-g>"] = { { "tcd", "picker_grep" }, mode = { "n", "i" } },
-                                    ["<c-r>"] = { { "tcd", "picker_recent" }, mode = { "n", "i" }, nowait = true },
-                                    ["<c-w>"] = { { "tcd" }, mode = { "n", "i" } },
-                                    ["<c-t>"] = {
+                                    ['<c-e>'] = { { 'tcd', 'picker_explorer' }, mode = { 'n', 'i' } },
+                                    ['<c-f>'] = { { 'tcd', 'picker_files' }, mode = { 'n', 'i' } },
+                                    ['<c-g>'] = { { 'tcd', 'picker_grep' }, mode = { 'n', 'i' } },
+                                    ['<c-r>'] = { { 'tcd', 'picker_recent' }, mode = { 'n', 'i' }, nowait = true },
+                                    ['<c-w>'] = { { 'tcd' }, mode = { 'n', 'i' } },
+                                    ['<c-t>'] = {
                                         function(picker)
-                                            vim.cmd("tabnew")
-                                            Snacks.notify("New tab opened")
+                                            vim.cmd('tabnew')
+                                            Snacks.notify('New tab opened')
                                             picker:close()
                                             Snacks.picker.projects()
                                         end,
-                                        mode = { "n", "i" },
+                                        mode = { 'n', 'i' },
                                     },
                                 },
                             },
                         },
                     },
-
                 },
             }
 
             require('snacks').setup(opts)
 
-            -- stylua: ignore
+            -- stylua: ignore start
             -- PICKERS
             vim.keymap.set('n', '<leader>sd', function() Snacks.picker.grep_word() end)
             vim.keymap.set('n', '<leader>sp', function() Snacks.picker.grep() end)
@@ -111,7 +109,7 @@ return {
             vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end)
             vim.keymap.set('n', '<leader>.',  function() Snacks.scratch() end)
             vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end)
+            -- stylua: ignore start
         end,
     },
-
 }
