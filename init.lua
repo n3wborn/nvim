@@ -24,7 +24,6 @@ local lazygit = require('config.plugins.lazygit')
 local plenary = require('config.plugins.plenary')
 local schemastore = require('config.plugins.schemastore')
 local snippets = require('config.plugins.friendly_snippets')
-local blink = require('config.plugins.blink')
 local conform = require('config.plugins.conform')
 local diffview = require('config.plugins.diffview')
 local fff = require('config.plugins.fff')
@@ -34,7 +33,6 @@ local gitconflict = require('config.plugins.gitconflict')
 local lualine = require('config.plugins.lualine')
 local mini_pairs = require('config.plugins.mini_pairs')
 local neogit = require('config.plugins.neogit')
-local lazydev = require('config.plugins.lazydev')
 local oil = require('config.plugins.oil')
 local rainbow = require('config.plugins.rainbow')
 local textobjects = require('config.plugins.textobjects')
@@ -48,7 +46,6 @@ vim.pack.add({
     lazygit,
     plenary,
     schemastore,
-    blink,
     conform,
     diffview,
     fff,
@@ -58,7 +55,6 @@ vim.pack.add({
     lualine,
     mini_pairs,
     neogit,
-    lazydev,
     oil,
     rainbow,
     snippets,
