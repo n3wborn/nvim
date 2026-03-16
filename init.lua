@@ -40,7 +40,6 @@ require('nvim-navic').setup({
 -- declare plugins and load
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
-local mini_pairs = require('config.plugins.mini_pairs')
 local neogit = require('config.plugins.neogit')
 local oil = require('config.plugins.oil')
 local textobjects = require('config.plugins.textobjects')
@@ -52,7 +51,6 @@ local fzf = require('config.plugins.fzf')
 vim.pack.add({
     gitsigns,
     gitconflict,
-    mini_pairs,
     neogit,
     oil,
     textobjects,
