@@ -83,7 +83,7 @@ vim.schedule(function()
             },
         },
         signature = { enabled = true },
-        fuzzy = { implementation = "prefer_rust_with_warning" },
+        fuzzy = { implementation = 'prefer_rust_with_warning' },
     })
 end)
 
