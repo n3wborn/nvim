@@ -25,7 +25,6 @@ local lualine = require('config.plugins.lualine')
 local mini_pairs = require('config.plugins.mini_pairs')
 local neogit = require('config.plugins.neogit')
 local oil = require('config.plugins.oil')
-local rainbow = require('config.plugins.rainbow')
 local textobjects = require('config.plugins.textobjects')
 local treesitter = require('config.plugins.treesitter')
 local undotree = require('config.plugins.undotree')
@@ -42,7 +41,6 @@ vim.pack.add({
     mini_pairs,
     neogit,
     oil,
-    rainbow,
     textobjects,
     treesitter,
     undotree,
