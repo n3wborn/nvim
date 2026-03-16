@@ -23,14 +23,23 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = 'https://github.com/nvim-lua/plenary.nvim' },
     { src = 'https://github.com/b0o/SchemaStore.nvim' },
+    { src = 'https://github.com/SmiteshP/nvim-navic' },
 })
 
 require('schemastore').load()
+require('nvim-navic').setup({
+    lsp = {
+        auto_attach = true,
+    },
+    highlight = true,
+    separator = ' › ',
+    depth_limit = 3,
+    icons = require('config.icons'),
+})
 
 -- declare plugins and load
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
-local lualine = require('config.plugins.lualine')
 local mini_pairs = require('config.plugins.mini_pairs')
 local neogit = require('config.plugins.neogit')
 local oil = require('config.plugins.oil')
@@ -43,7 +52,6 @@ local fzf = require('config.plugins.fzf')
 vim.pack.add({
     gitsigns,
     gitconflict,
-    lualine,
     mini_pairs,
     neogit,
     oil,
