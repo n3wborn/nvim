@@ -9,14 +9,11 @@ require('config.options')
 -- :help vim-pack
 vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
+    { src = 'https://github.com/nvim-lua/plenary.nvim' },
+    { src = 'https://github.com/b0o/SchemaStore.nvim' },
 })
--- return {
---     src = '',
---     data = {
---         setup = function()
---         end,
---     },
--- }
+
+require('schemastore').load()
 
 -- declare plugins and load
 local lazygit = require('config.plugins.lazygit')
