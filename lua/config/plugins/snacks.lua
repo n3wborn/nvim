@@ -90,7 +90,7 @@ return {
             -- GIT
             vim.keymap.set('n', '<leader>gs', function() Snacks.picker.git_status() end)
             vim.keymap.set('n', '<leader>gd', function() Snacks.picker.git_diff() end)
-            vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end)
+            -- vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end)
             vim.keymap.set('n', '<leader>gl', function() Snacks.lazygit.log() end)
             vim.keymap.set('n', '<leader>gL', function() Snacks.lazygit.log_file() end)
             vim.keymap.set('n', '<leader>gB', function() Snacks.gitbrowse() end)

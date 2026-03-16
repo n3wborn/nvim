@@ -16,7 +16,6 @@ vim.pack.add({
 require('schemastore').load()
 
 -- declare plugins and load
-local lazygit = require('config.plugins.lazygit')
 local foldtext = require('config.plugins.foldtext')
 local gitsigns = require('config.plugins.gitsigns')
 local gitconflict = require('config.plugins.gitconflict')
@@ -31,7 +30,6 @@ local snacks = require('config.plugins.snacks')
 local fzf = require('config.plugins.fzf')
 
 vim.pack.add({
-    lazygit,
     foldtext,
     gitsigns,
     gitconflict,
