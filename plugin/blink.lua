@@ -2,8 +2,11 @@
 vim.schedule(function()
     vim.pack.add({
         'https://github.com/folke/lazydev.nvim',
-        'garymjr/nvim-snippets',
-        'https://github.com/saghen/blink.cmp',
+        'https://github.com/garymjr/nvim-snippets',
+        {
+            src = 'https://github.com/saghen/blink.cmp',
+            version = vim.version.range('^1'),
+        },
     })
 
     require('lazydev').setup({
@@ -80,9 +83,7 @@ vim.schedule(function()
             },
         },
         signature = { enabled = true },
-        fuzzy = {
-            implementation = 'prefer_rust_with_warning',
-        },
+        fuzzy = { implementation = "prefer_rust_with_warning" },
     })
 end)
 
