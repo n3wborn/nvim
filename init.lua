@@ -61,12 +61,15 @@ vim.pack.add({
 }, {
     load = function(plug)
         local data = plug.spec.data or {}
+        ---@type function|nil setup
         local setup = data.setup
 
         vim.cmd.packadd(plug.spec.name)
 
         if setup ~= nil and type(setup) == 'function' then
-            setup()
+            vim.schedule(function()
+                setup()
+            end)
         end
     end,
 })
