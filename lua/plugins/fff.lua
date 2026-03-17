@@ -41,44 +41,47 @@ return {
         },
     },
     lazy = false, -- it already lazy-load itself
-    keys = {
-        {
-            'ff',
-            function()
-                local fff = require('fff')
-                local fuzzy = require('fff.core').ensure_initialized()
-                local ok, git_root = pcall(fuzzy.get_git_root)
+    keys = function()
+        local fff = require('fff')
+        local fuzzy = require('fff.core').ensure_initialized()
 
-                if ok and git_root then
-                    fff.find_in_git_root()
-                else
-                    vim.notify('Not in a git repository', vim.log.levels.WARN)
-                    ---@diagnostic disable-next-line: param-type-mismatch
-                    fff.find_files_in_dir(vim.uv.cwd())
-                end
-            end,
-            desc = '[FFF] Find Files',
-        },
-        {
-            'fF',
-            function()
-                require('fff').find_files()
-            end,
-            desc = '[FFF] Find files',
-        },
-        {
-            '<space>sp',
-            function()
-                require('fff').live_grep()
-            end,
-            desc = '[FFF] Find With Live Grep',
-        },
-        {
-            '<space>sd',
-            function()
-                require('fff').live_grep({ query = vim.fn.expand('<cword>') })
-            end,
-            desc = '[FFF] Find Current Word',
-        },
-    },
+        return {
+            {
+                'ff',
+                function()
+                    local ok, git_root = pcall(fuzzy.get_git_root)
+
+                    if ok and git_root then
+                        fff.find_files()
+                    else
+                        vim.notify('Not in a git repository', vim.log.levels.WARN)
+                        ---@diagnostic disable-next-line: param-type-mismatch
+                        fff.find_files_in_dir(vim.uv.cwd())
+                    end
+                end,
+                desc = '[FFF] Find Files',
+            },
+            {
+                'fF',
+                function()
+                    fff.find_files()
+                end,
+                desc = '[FFF] Find files',
+            },
+            {
+                '<space>sp',
+                function()
+                    fff.live_grep()
+                end,
+                desc = '[FFF] Find With Live Grep',
+            },
+            {
+                '<space>sd',
+                function()
+                    fff.live_grep({ query = vim.fn.expand('<cword>') })
+                end,
+                desc = '[FFF] Find Current Word',
+            },
+        }
+    end,
 }
