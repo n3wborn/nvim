@@ -38,7 +38,9 @@ return {
             local gs = require('gitsigns')
             local icons = require('config.icons').git
             local nav_hunk_opts = { preview = true, greedy = false, target = 'all' }
-
+            local center = function()
+                vim.cmd.normal({ 'zz', bang = true })
+            end
             local function map(mode, l, r, desc)
                 vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
             end
@@ -49,6 +51,7 @@ return {
                 else
                     gs.nav_hunk('next', nav_hunk_opts)
                 end
+                center()
             end, 'Next Hunk')
             map('n', '<leader>hN', function()
                 if vim.wo.diff then
@@ -56,6 +59,7 @@ return {
                 else
                     gs.nav_hunk('prev', nav_hunk_opts)
                 end
+                center()
             end, 'Prev Hunk')
             map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', icons.git .. ' (Un)Stage Hunk')
             map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', icons.git .. ' Reset Hunk')
