@@ -72,42 +72,4 @@ vim.pack.add({
     end,
 })
 
--- LSP
-local servers = {
-    'eslint', -- npm i -g vscode-langservers-extracted
-    'gopls', -- go install golang.org/x/tools/gopls@latest
-    'intelephense', -- npm i -g intelephense
-    'jsonls', -- npm i -g vscode-langservers-extracted
-    'lua_ls',
-    'marksman',
-    'oxlint', -- npm i -g oxlint
-    'twiggy_language_server', -- npm i -g twiggy-language-server
-    'v_analyzer', -- https://github.com/vlang/v-analyzer
-    'zls', -- prebuilt binary https://zigtools.org/zls/releases/
-}
-
-for _, server in ipairs(servers) do
-    vim.lsp.enable(server)
-end
-
--- diagnostics
-local signs = require('config.icons').diagnostics
-
-vim.diagnostic.config({
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = signs.Error,
-            [vim.diagnostic.severity.WARN] = signs.Warn,
-            [vim.diagnostic.severity.HINT] = signs.Hint,
-            [vim.diagnostic.severity.INFO] = signs.Info,
-        },
-    },
-
-    severity_sort = true,
-    underline = false,
-    update_in_insert = true,
-    float = true,
-    jump = { on_jump = vim.diagnostic.open_float },
-})
-
 require('config')
