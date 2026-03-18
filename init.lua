@@ -4,8 +4,6 @@ vim.g.maplocalleader = ','
 _G.global = {}
 _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
-require('config.options')
-
 vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
@@ -112,6 +110,4 @@ vim.diagnostic.config({
     jump = { on_jump = vim.diagnostic.open_float },
 })
 
--- keymaps / autocommands
-require('config.keymaps')
-require('config.autocommands')
+require('config')
