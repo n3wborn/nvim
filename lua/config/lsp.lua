@@ -67,7 +67,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         if client:supports_method('textDocument/documentColor') then
-            vim.lsp.document_color.enable(true, bufnr)
+            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled())
         end
 
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
