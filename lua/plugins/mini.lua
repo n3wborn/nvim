@@ -1,11 +1,5 @@
 return {
     {
-        'nvim-mini/mini.pairs',
-        version = false,
-        event = 'VeryLazy',
-        opts = {},
-    },
-    {
         'nvim-mini/mini.icons',
         version = false,
         opts = {},
