@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.bo[bufnr].buflisted = false
 
         vim.keymap.set('n', 'q', '<cmd>close<CR>', {
-            buffer = bufnr,
+            buf = bufnr,
             silent = true,
             desc = 'Close window',
         })
