@@ -44,12 +44,6 @@ require('lazy').setup({
         },
         ---@type LazyPluginSpec
         {
-            'HiPhish/rainbow-delimiters.nvim',
-            enabled = false,
-            event = 'VeryLazy',
-        },
-        ---@type LazyPluginSpec
-        {
 
             'nvzone/typr',
             dependencies = 'nvzone/volt',
