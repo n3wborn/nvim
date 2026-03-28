@@ -41,7 +41,6 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.INFO] = signs.Info,
         },
     },
-
     severity_sort = true,
     underline = false,
     update_in_insert = true,
@@ -49,21 +48,23 @@ vim.diagnostic.config({
     jump = { on_jump = vim.diagnostic.open_float },
 })
 
-local u = require('utils')
 local lsp_group = vim.api.nvim_create_augroup('my.lsp', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = lsp_group,
-    desc = 'LSP keymaps & features',
+    desc = 'LSP Keymaps',
     callback = function(ev)
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
         local bufnr = ev.buf
 
-        -- diagnostics
-        u.map('n', '<leader>D', vim.diagnostic.open_float)
+        local function map(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+        end
+
+        map('n', '<leader>D', vim.diagnostic.open_float, 'Line diagnostics')
 
         if client:supports_method('textDocument/onTypeFormatting') then
-            vim.lsp.on_type_formatting.enable()
+            vim.lsp.on_type_formatting.enable(true, { bufnr = bufnr })
         end
 
         if client:supports_method('textDocument/documentColor') then
@@ -71,29 +72,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
-            vim.lsp.inlay_hint.enable(true)
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
 
         if client:supports_method('textDocument/documentHighlight') then
+            local group = vim.api.nvim_create_augroup('lsp-highlight-' .. bufnr, { clear = true })
+
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = bufnr,
-                group = lsp_group,
+                group = group,
                 callback = vim.lsp.buf.document_highlight,
             })
 
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
                 buffer = bufnr,
-                group = lsp_group,
+                group = group,
                 callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+                buffer = bufnr,
+                once = true,
+                callback = function()
+                    vim.lsp.buf.clear_references()
+                    vim.api.nvim_del_augroup_by_name('lsp-highlight-' .. bufnr)
+                end,
             })
         end
     end,
-})
-
-vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
-    group = vim.api.nvim_create_augroup('StatuslineUpdate', { clear = true }),
-    desc = 'Update statusline/winbar',
-    callback = vim.schedule_wrap(function()
-        vim.cmd.redrawstatus()
-    end),
 })
