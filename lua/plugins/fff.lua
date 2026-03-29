@@ -9,8 +9,7 @@ return {
         layout = {
             height = 0.9,
             width = 0.9,
-            prompt_position = 'top', -- 'bottom', 'top'
-            preview_position = 'right', -- 'left', 'right', 'top', 'bottom'
+            prompt_position = 'top',
             preview_size = 0.6,
             show_scrollbar = false,
             -- How to shorten long directory paths in the file list:
@@ -35,53 +34,48 @@ return {
         },
         grep = {
             max_file_size = 8 * 10 * 1024 * 1024, -- Skip files larger than 80MB
-            max_matches_per_file = 100, -- 0 to unlimited
+            max_matches_per_file = 1, -- 0 to unlimited
             smart_case = true,
             time_budget_ms = 150, -- prevents UI freeze, 0 = no limit
         },
     },
     lazy = false, -- it already lazy-load itself
-    keys = function()
-        local fff = require('fff')
-        local fuzzy = require('fff.core').ensure_initialized()
+    keys = {
+        {
+            'ff',
+            function()
+                local fuzzy = require('fff.core').ensure_initialized()
+                local ok, git_root = pcall(fuzzy.get_git_root)
 
-        return {
-            {
-                'ff',
-                function()
-                    local ok, git_root = pcall(fuzzy.get_git_root)
-
-                    if ok and git_root then
-                        fff.find_files()
-                    else
-                        vim.notify('Not in a git repository', vim.log.levels.WARN)
-                        ---@diagnostic disable-next-line: param-type-mismatch
-                        fff.find_files_in_dir(vim.uv.cwd())
-                    end
-                end,
-                desc = '[FFF] Find Files',
-            },
-            {
-                'fF',
-                function()
-                    fff.find_files()
-                end,
-                desc = '[FFF] Find files',
-            },
-            {
-                '<space>sp',
-                function()
-                    fff.live_grep()
-                end,
-                desc = '[FFF] Find With Live Grep',
-            },
-            {
-                '<space>sd',
-                function()
-                    fff.live_grep({ query = vim.fn.expand('<cword>') })
-                end,
-                desc = '[FFF] Find Current Word',
-            },
-        }
-    end,
+                if ok and git_root then
+                    require('fff').find_files()
+                else
+                    vim.notify('Not in a git repository', vim.log.levels.WARN)
+                    require('fff').find_files_in_dir(vim.uv.cwd())
+                end
+            end,
+            desc = '[FFF] Find Files',
+        },
+        {
+            'fF',
+            function()
+                require('fff').find_files()
+            end,
+            desc = '[FFF] Find files',
+        },
+        {
+            '<space>sp',
+            function()
+                require('fff').live_grep()
+            end,
+            desc = '[FFF] Find With Live Grep',
+        },
+        {
+            '<space>sd',
+            function()
+                require('fff').live_grep({ query = vim.fn.expand('<cword>') })
+            end,
+            desc = '[FFF] Find Current Word',
+        },
+    },
 }
