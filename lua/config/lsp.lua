@@ -1,16 +1,16 @@
 local servers = {
+    'bashls',
+    'gopls',
+    'jsonls',
+    -- emmylua_ls',
+    'lua_ls',
+    'marksman',
     -- 'intelephense',
     'phpantom',
-    'lua_ls',
-    -- emmylua_ls',
-    'bashls',
-    'twiggy-language-server',
-    'zls',
-    'gopls',
-    'v_analyzer',
     'tsgo',
-    'marksman',
-    'jsonls',
+    'twiggy-language-server',
+    'v_analyzer',
+    'zls',
 }
 
 for _, server in ipairs(servers) do
