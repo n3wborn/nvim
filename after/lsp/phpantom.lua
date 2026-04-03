@@ -12,5 +12,5 @@ return {
     --     return util.path.is_descendant(cwd, root) and cwd or root
     -- end,
     -- phpantom_lsp doc set it like this: `root_markers = { 'composer.json', '.git' }`
-    root_markers = { '.git', 'composer.json' },
+    root_markers = { '.phpantom.toml', '.git', 'composer.json' },
 }
