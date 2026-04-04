@@ -1,7 +1,6 @@
 ---@type vim.lsp.Config
 return {
-    -- npm i -g twiggy-language-server
     cmd = { 'twiggy-language-server', '--stdio' },
-    filetypes = { 'twig' },
+    filetypes = { 'twig', 'twig.html' },
     root_markers = { 'composer.json', '.git' },
 }

@@ -11,10 +11,10 @@ return {
         dashboard = { enabled = true },
         image = { enabled = true },
         indent = { enabled = false },
-        input = { enabled = true },
+        input = { enabled = false },
         ---@type snacks.lazygit.Config
         lazygit = { enabled = true },
-        notifier = { enabled = true },
+        notifier = { enabled = false },
         quickfile = { enabled = false },
         scroll = { enabled = false },
         statuscolumn = { enabled = true },

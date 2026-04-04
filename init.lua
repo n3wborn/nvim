@@ -4,6 +4,21 @@ vim.g.maplocalleader = ','
 _G.global = {}
 _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 
+local disabled_builtins = {
+    'gzip',
+    'matchit',
+    'matchparen',
+    'netrwPlugin',
+    'tarPlugin',
+    'tohtml',
+    'tutor',
+    'zipPlugin',
+}
+
+for _, plugin in ipairs(disabled_builtins) do
+    vim.g['loaded_' .. plugin] = 1
+end
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -28,6 +43,7 @@ require('lazy').setup({
             },
             event = { 'BufReadPre', 'BufNewFile' },
         },
+        ---@type LazyPluginSpec
         {
             'mbbill/undotree',
             keys = {
@@ -38,6 +54,7 @@ require('lazy').setup({
                 },
             },
         },
+        ---@type LazyPluginSpec
         {
             'kylechui/nvim-surround',
             event = 'VeryLazy',
@@ -50,10 +67,6 @@ require('lazy').setup({
             opts = {},
             cmd = { 'Typr', 'TyprStats' },
         },
-        {
-            'DrKJeff16/wezterm-types',
-            version = false, -- Get the latest version
-        },
     },
     defaults = {
         lazy = true,
@@ -64,21 +77,6 @@ require('lazy').setup({
         colorscheme = { 'catppuccin' },
     },
     checker = { enabled = true },
-    performance = {
-        rtp = {
-            disabled_plugins = {
-                'gzip',
-                'matchit',
-                'matchparen',
-                'netrwPlugin',
-                'tarPlugin',
-                'tohtml',
-                'tutor',
-                'zipPlugin',
-            },
-        },
-    },
-    ui = { border = 'rounded' },
 })
 
 vim.cmd.colorscheme('catppuccin-mocha')
