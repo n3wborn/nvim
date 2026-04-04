@@ -11,7 +11,7 @@ return {
         dashboard = { enabled = true },
         image = { enabled = true },
         indent = { enabled = false },
-        input = { enabled = true },
+        input = { enabled = false },
         ---@type snacks.lazygit.Config
         lazygit = { enabled = true },
         notifier = { enabled = false },
