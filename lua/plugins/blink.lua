@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec
 return {
     'saghen/blink.cmp',
-    version = '*',
+    version = '1.*',
     build = 'cargo +nightly build --release',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
