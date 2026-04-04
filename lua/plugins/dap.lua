@@ -2,7 +2,18 @@ return {
     { 'nvim-neotest/nvim-nio' },
     {
         'jay-babu/mason-nvim-dap.nvim',
-        dependencies = 'mason.nvim',
+        dependencies = 
+            {
+                'williamboman/mason.nvim',
+                cmd = {
+                    'Mason',
+                    'MasonUpdate',
+                    'MasonInstall',
+                    'MasonUninstall',
+                    'MasonUninstallAll',
+                    'MasonLog',
+                },
+            },
         cmd = { 'DapInstall', 'DapUninstall' },
         opts = {
             automatic_installation = true,
