@@ -28,6 +28,7 @@ require('lazy').setup({
             },
             event = { 'BufReadPre', 'BufNewFile' },
         },
+        ---@type LazyPluginSpec
         {
             'mbbill/undotree',
             keys = {
@@ -38,6 +39,7 @@ require('lazy').setup({
                 },
             },
         },
+        ---@type LazyPluginSpec
         {
             'kylechui/nvim-surround',
             event = 'VeryLazy',

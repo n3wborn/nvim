@@ -14,7 +14,7 @@ return {
         input = { enabled = true },
         ---@type snacks.lazygit.Config
         lazygit = { enabled = true },
-        notifier = { enabled = true },
+        notifier = { enabled = false },
         quickfile = { enabled = false },
         scroll = { enabled = false },
         statuscolumn = { enabled = true },
