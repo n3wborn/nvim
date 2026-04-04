@@ -4,6 +4,7 @@ local servers = {
     'jsonls',
     -- emmylua_ls',
     'lua_ls',
+    'kotlin_lsp',
     'marksman',
     -- 'intelephense',
     'phpantom',
