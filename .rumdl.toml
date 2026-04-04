@@ -88,5 +88,8 @@ allowed_elements = [    # Inline HTML
 [MD035]
 style = "---"   # Horizontal rule style
 
+[MD064]
+allow-sentence-double-space = false
+
 [extensions]
 types = ["md", "markdown"]
