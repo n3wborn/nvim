@@ -2,7 +2,6 @@
 return {
     'jellydn/hurl.nvim',
     dependencies = {
-        'MunifTanjim/nui.nvim',
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
     },
