@@ -6,13 +6,13 @@ jobs:
   stylua:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: JohnnyMorganz/stylua-action@v4
+      - uses: actions/checkout@v6
+      - uses: JohnnyMorganz/stylua-action@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: .
           version: 2.0.2
-      - uses: stefanzweifel/git-auto-commit-action@v6
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore(style): stylua format"
           branch: ${{ github.head_ref }}
@@ -20,9 +20,9 @@ jobs:
   rumdl:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Lint Markdown
-        uses: rvben/rumdl@v0
+      - uses: rvben/rumdl@0.1.0v0
         with:
           config: .rumdl.toml
           report-type: annotations
