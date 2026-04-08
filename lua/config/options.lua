@@ -5,7 +5,7 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.o.cursorlineopt = 'both'
+vim.o.cursorlineopt = 'screenline,number'
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -36,16 +36,12 @@ vim.opt.wildmode = { 'longest:full', 'full' }
 vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
-vim.opt.completeopt = { 'menuone', 'fuzzy', 'noinsert', 'preview' }
+vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
+vim.opt.completetimeout = 100 -- Limit sources delay
 vim.opt.autowrite = true
 vim.opt.confirm = true
-vim.o.winwidth = 10
-vim.o.winminwidth = 10
-vim.g.markdown_recommended_style = 0
-vim.g.maplocalleader = ','
-vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
-vim.o.winborder = 'rounded'
-vim.o.statuscolumn = '%@SignCb@%s%=%T%@NumCb@%l│%T'
+vim.opt.winwidth = 10
+vim.go.winborder = 'rounded'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
 vim.opt.backup = true
@@ -62,5 +58,70 @@ vim.opt.sessionoptions = {
     'winpos',
 }
 vim.opt.conceallevel = 2
+vim.opt.switchbuf = 'usetab'
+vim.opt.splitkeep = 'screen'
+vim.opt.formatoptions = 'rqnl1j'
 
+vim.g.autosave_enabled = true
+vim.g.live_previewer_enabled = false
+vim.g.markdown_preview_enabled = not vim.g.live_previewer_enabled
+vim.g.maplocalleader = ','
+vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
+
+-- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
+-- folding
+vim.opt.foldenable = true
+vim.opt.foldlevel = 10
+vim.opt.foldnestmax = 10
+
+local utils = require('utils')
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
+    callback = function(args)
+        utils.set_folds(args.buf)
+    end,
+})
+
+require('vim._core.ui2').enable({
+    enable = true,
+    msg = {
+        targets = {
+            [''] = 'msg',
+            empty = 'cmd',
+            confirm = 'cmd',
+            completion = 'cmd',
+            search_cmd = 'cmd',
+            search_count = 'cmd',
+            wildlist = 'cmd',
+            typed_cmd = 'cmd',
+        },
+
+        cmd = {
+            kind = 'floating',
+            anchor = 'center',
+            width = 0.6,
+            height = 0.2,
+        },
+
+        dialog = {
+            kind = 'floating',
+            anchor = 'center',
+            width = 0.5,
+            height = 0.3,
+        },
+
+        msg = {
+            kind = 'floating',
+            anchor = 'cursor',
+            height = 0.3,
+            timeout = 5000,
+        },
+
+        pager = {
+            kind = 'floating',
+            anchor = 'center',
+            width = 0.8,
+            height = 0.6,
+        },
+    },
+})
