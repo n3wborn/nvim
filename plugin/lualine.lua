@@ -30,25 +30,7 @@ local options = function()
 
     -- Left sections
     opts.sections = opts.sections or {}
-    opts.sections.lualine_a = {
-        {
-            'mode',
-            fmt = function(str)
-                local mode_map = {
-                    N = '[NORMAL]',
-                    I = '[INSERT]',
-                    V = '[VISUAL]',
-                    C = '[COMMAND]',
-                    R = '[REPLACE]',
-                    T = '[TERM]',
-                }
-                local letter = str:sub(1, 1)
-                return mode_map[letter] or ('  ' .. letter)
-            end,
-            padding = { left = 1, right = 1 },
-        },
-    }
-
+    opts.sections.lualine_a = {}
     opts.sections.lualine_b = {
         {
             'branch',
@@ -65,7 +47,6 @@ local options = function()
             padding = { left = 1, right = 1 },
         },
     }
-
     opts.sections.lualine_c = {
         {
             'diagnostics',
@@ -76,31 +57,14 @@ local options = function()
                 hint = icons.diagnostics.Hint,
             },
         },
-        { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
         {
             'filename',
             path = 1,
             symbols = {
-                modified = ' ●',
-                readonly = ' ',
+                modified = ' ',
+                readonly = '[Readonly]',
                 unnamed = '[No Name]',
             },
-        },
-        -- Show current function/symbol via navic
-        {
-            function()
-                if navic.is_available() then
-                    local location = navic.get_location()
-                    if location ~= '' then
-                        return '› ' .. location
-                    end
-                end
-                return ''
-            end,
-            cond = function()
-                return package.loaded['nvim-navic'] and require('nvim-navic').is_available()
-            end,
-            -- color = { fg = colors.overlay0 },
         },
     }
 
@@ -110,31 +74,21 @@ local options = function()
             'lsp_status',
             icon = '󰒋 ',
             symbols = {
-                spinner = require('config.icons').circle,
+                spinner = require('config.icons').spinner.circle,
                 done = '✓',
                 separator = ' ',
             },
             ignore_lsp = {},
             show_name = true,
+            always_visible = false,
         },
     }
 
-    opts.sections.lualine_y = {
-        {
-            'filetype',
-            icon_only = false,
-            padding = { left = 1, right = 1 },
-        },
-    }
-
+    opts.sections.lualine_y = {}
     opts.sections.lualine_z = {
         {
             'location',
             padding = { left = 1, right = 1 },
-        },
-        {
-            'progress',
-            padding = { left = 0, right = 1 },
         },
     }
 
