@@ -97,4 +97,3 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
         vim.cmd.redrawstatus()
     end),
 })
-
