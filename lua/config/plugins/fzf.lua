@@ -43,7 +43,7 @@ return {
             }
 
             -- stylua: ignore start
-            vim.keymap.set("n", "<space>F", '<cmd>FZF<cr>', { desc = "Fzf main" })
+            vim.keymap.set("n", "<space>F", '<cmd>FzfLua<cr>', { desc = "Fzf main" })
             vim.keymap.set('n', '<leader>ss', fzf.lsp_document_symbols, { desc = 'Goto Symbol' })
             vim.keymap.set('n', '<leader>sS', fzf.lsp_live_workspace_symbols, { desc = 'Goto Symbol (Workspace)' })
             vim.keymap.set('n', '<leader>gd', fzf.lsp_definitions, { desc = 'Goto Definition' })
