@@ -246,13 +246,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('i', '<M-s>', vim.lsp.buf.signature_help)
 
-        -- UI extras
-        -- if client:supports_method('textDocument/documentSymbol') then
-        --     require('nvim-navic').attach(client, bufnr)
-        -- end
-
         if client:supports_method('textDocument/documentColor') then
-            vim.lsp.document_color.enable(true, bufnr)
+            vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled())
         end
 
         if client:supports_method('textDocument/inlayHint') and vim.g.lsp_inlay_hints then
@@ -273,4 +268,34 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'DiagnosticChanged' }, {
     callback = vim.schedule_wrap(function()
         vim.cmd.redrawstatus()
     end),
+})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        -- treesitter
+        if name == 'nvim-treesitter' and kind == 'update' then
+            if not ev.data.active then
+                vim.cmd.packadd('nvim-treesitter')
+            end
+            vim.cmd('TSUpdate')
+        end
+
+        -- fff
+        if name == 'fff.nvim' and kind == 'update' then
+            if not ev.data.active then
+                vim.cmd.packadd('fff.nvim')
+            end
+
+            require('fff.download').download_or_build_binary()
+        end
+    end,
+})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+
+        -- TODO: Check if process is ok !
+    end,
 })

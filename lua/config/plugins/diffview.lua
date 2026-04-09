@@ -1,5 +1,3 @@
-vim.pack.add({ 'https://github.com/sindrets/diffview.nvim' })
-
 local opts = {
     keymaps = {
         file_panel = {
@@ -29,6 +27,7 @@ local opts = {
         },
     },
 }
+
 require('diffview').setup(opts)
 
 vim.keymap.set('n', '<leader><leader>v', function()

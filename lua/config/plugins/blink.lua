@@ -1,20 +1,5 @@
 -- only load once startup is done
 vim.schedule(function()
-    vim.pack.add({
-        'https://github.com/folke/lazydev.nvim',
-        'https://github.com/garymjr/nvim-snippets',
-        {
-            src = 'https://github.com/saghen/blink.cmp',
-            version = vim.version.range('^1'),
-        },
-    })
-
-    require('lazydev').setup({
-        library = {
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-        },
-    })
-
     require('blink.cmp').setup({
         appearance = {
             nerd_font_variant = 'mono',

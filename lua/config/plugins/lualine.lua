@@ -1,11 +1,8 @@
-vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' })
-
 local options = function()
     local opts = {}
 
     -- Custom components
     local icons = require('config.icons')
-    local navic = require('nvim-navic')
 
     opts.options = {}
     opts.options.component_separators = { left = '│', right = '│' }

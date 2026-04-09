@@ -1,22 +1,5 @@
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'PackChanged',
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-
-        -- TODO: Check if process is ok !
-        if name == 'fff.nvim' and kind == 'update' then
-            if not ev.data.active then
-                vim.cmd.packadd('fff.nvim')
-            end
-
-            require('fff.download').download_or_build_binary()
-        end
-    end,
-})
-
-vim.pack.add({ 'https://github.com/dmtrKovalenko/fff.nvim' })
-
-require('fff').setup({
+local u = require('utils')
+local opts = {
     prompt = '🪿 ',
     layout = {
         height = 0.9,
@@ -51,9 +34,9 @@ require('fff').setup({
         smart_case = true,
         time_budget_ms = 150, -- prevents UI freeze, 0 = no limit
     },
-})
+}
 
-local u = require('utils')
+require('fff').setup(opts)
 
 u.map('n', 'ff', function()
     require('fff').find_files()
