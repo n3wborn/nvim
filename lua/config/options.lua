@@ -75,13 +75,6 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
 
-local utils = require('utils')
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
-    callback = function(args)
-        utils.set_folds(args.buf)
-    end,
-})
-
 require('vim._core.ui2').enable({
     enable = true,
     msg = {
