@@ -1,7 +1,7 @@
 return {
     ---@type LazyPluginSpec
     {
-        'sindrets/diffview.nvim',
+        'dlyongemallo/diffview.nvim',
         cmd = {
             'DiffviewOpen',
             'DiffviewClose',
