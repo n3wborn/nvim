@@ -11,7 +11,7 @@ vim.g.fff = {
         line_numbers = true,
     },
     debug = {
-        enabled = true,
+        enabled = false,
         show_scores = true,
     },
     grep = {
