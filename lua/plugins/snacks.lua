@@ -12,8 +12,7 @@ return {
         image = { enabled = true },
         indent = { enabled = false },
         input = { enabled = false },
-        ---@type snacks.lazygit.Config
-        lazygit = { enabled = true },
+        lazygit = { enabled = false},
         notifier = { enabled = false },
         quickfile = { enabled = false },
         scroll = { enabled = false },
@@ -60,7 +59,6 @@ return {
         { "<leader>gL",  function() Snacks.picker.git_log_line() end, desc = "git log line" },
         { "<leader>gF",  function() Snacks.picker.git_log_file() end, desc = "git log file" },
         { "<leader>gB",  function() Snacks.gitbrowse() end, desc = "Git Browse" },
-        { "<leader>gg",  function() Snacks.lazygit() end, desc = "Lazygit" },
 
         -- scratch
         { "<leader>.",   function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
