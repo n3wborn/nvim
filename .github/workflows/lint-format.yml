@@ -1,28 +1,37 @@
-name: Formating
-
-on: [push, pull_request_target]
+on:
+  pull_request:
+    branches: ["dev"]
+  push:
 
 jobs:
   stylua:
+    name: Format Lua
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v6
-      - uses: JohnnyMorganz/stylua-action@v5
+
+      - uses: JohnnyMorganz/stylua-action@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: .
-          version: 2.0.2
-      - uses: stefanzweifel/git-auto-commit-action@v7
+          version: latest
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        if: github.event_name == 'pull_request'
         with:
           commit_message: "chore(style): stylua format"
           branch: ${{ github.head_ref }}
 
-  rumdl:
+  markdown:
+    name: Lint Markdown
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v6
-      - name: Lint Markdown
-      - uses: rvben/rumdl@0.1.0v0
+
+      - name: Run rumdl
+        uses: rvben/rumdl@v0
         with:
           config: .rumdl.toml
           report-type: annotations
