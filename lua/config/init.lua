@@ -1,8 +1,6 @@
 require('config.options')
 require('config.keymaps')
 
-require('schemastore').load()
-
 -- :help vim-pack
 vim.pack.add({
     { src = 'https://github.com/ibhagwan/fzf-lua' },
