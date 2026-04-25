@@ -18,7 +18,7 @@ return {
         end,
     },
     ---@type LazyPluginSpec
-   {
+    {
         'joryeugene/dadbod-grip.nvim',
         dependencies = {
             { 'tpope/vim-dadbod', lazy = true },
