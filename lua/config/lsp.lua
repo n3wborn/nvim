@@ -6,6 +6,7 @@ local servers = {
     'lua_ls',
     'kotlin_lsp',
     'marksman',
+    'mpls',
     -- 'intelephense',
     'phpantom',
     'tsgo',
