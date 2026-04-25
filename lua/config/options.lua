@@ -63,8 +63,6 @@ vim.opt.splitkeep = 'screen'
 vim.opt.formatoptions = 'rqnl1j'
 
 vim.g.autosave_enabled = true
-vim.g.live_previewer_enabled = false
-vim.g.markdown_preview_enabled = not vim.g.live_previewer_enabled
 vim.g.maplocalleader = ','
 vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
