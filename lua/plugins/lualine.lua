@@ -1,6 +1,6 @@
--- From BrendonJL/dotfiles
----@type LazyPluginSpec
 return {
+    -- From BrendonJL/dotfiles
+    ---@type LazyPluginSpec
     ---@diagnostic disable-next-line: assign-type-mismatch
     {
         'nvim-lualine/lualine.nvim',
