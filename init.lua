@@ -77,6 +77,7 @@ require('lazy').setup({
         colorscheme = { 'catppuccin' },
     },
     checker = { enabled = true },
+    rocks = { enabled = false },
 })
 
 vim.cmd.colorscheme('catppuccin-mocha')

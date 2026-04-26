@@ -1,5 +1,6 @@
 vim.g.fff = {
     prompt = '🪿 ',
+
     layout = {
         height = 0.9,
         width = 0.9,
@@ -8,7 +9,6 @@ vim.g.fff = {
     },
     preview = {
         enabled = true,
-        line_numbers = true,
     },
     debug = {
         enabled = false,
@@ -56,21 +56,6 @@ return {
     keys = {
         {
             'ff',
-            function()
-                local fuzzy = require('fff.core').ensure_initialized()
-                local ok, git_root = pcall(fuzzy.get_git_root)
-
-                if ok and git_root then
-                    require('fff').find_files()
-                else
-                    vim.notify('Not in a git repository', vim.log.levels.WARN)
-                    require('fff').find_files_in_dir(vim.uv.cwd())
-                end
-            end,
-            desc = '[FFF] Find Files',
-        },
-        {
-            'fF',
             function()
                 require('fff').find_files()
             end,
