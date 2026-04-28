@@ -11,8 +11,11 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-mini/mini.comment',
+        dependencies = {
+            'JoosepAlviste/nvim-ts-context-commentstring',
+        },
         version = '*',
-        event = 'VeryLazy',
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             options = {
                 custom_commentstring = function()
