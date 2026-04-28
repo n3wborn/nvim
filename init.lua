@@ -45,17 +45,6 @@ require('lazy').setup({
         },
         ---@type LazyPluginSpec
         {
-            'mbbill/undotree',
-            keys = {
-                {
-                    '<leader>U',
-                    '<cmd>UndotreeToggle<cr>',
-                    desc = 'Toggles undotree',
-                },
-            },
-        },
-        ---@type LazyPluginSpec
-        {
             'kylechui/nvim-surround',
             event = 'VeryLazy',
         },
@@ -81,5 +70,8 @@ require('lazy').setup({
 })
 
 vim.cmd.colorscheme('catppuccin-mocha')
+
+vim.cmd('packadd nvim.difftool')
+vim.cmd('packadd nvim.undotree')
 
 require('config')

@@ -144,4 +144,14 @@ M.set_folds = function(bufnr)
     end
 end
 
+M.undotree = function()
+    local close = require('undotree').open({
+        title = 'Undotree',
+        command = 'topleft 30vnew',
+    })
+    if not close then
+        vim.bo.filetype = 'undotree'
+    end
+end
+
 return M
