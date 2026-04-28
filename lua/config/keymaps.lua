@@ -88,3 +88,6 @@ u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 
 -- autosave
 u.map('n', '<leader>as', '<cmd>AutosaveToggle<CR>', { desc = 'Toggle Autosave' })
+
+-- undotree
+u.map('n', '<leader>U', u.undotree)
