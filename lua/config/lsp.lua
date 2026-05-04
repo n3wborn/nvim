@@ -10,6 +10,7 @@ local servers = {
     -- 'intelephense',
     'phpantom',
     'tsgo',
+    'taplo',
     'twiggy-language-server',
     'v_analyzer',
     'zls',
