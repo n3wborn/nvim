@@ -55,10 +55,12 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
 u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
-u.map('n', 'p', 'p`[=`]', { desc = 'Paste and indent' })
-u.map('n', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
-u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
-u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+-- u.map({'n', 'v'}, 'p', 'p`[=`]', { desc = 'Paste and indent' })
+-- u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+-- u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
+-- u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+vim.keymap.set('n', 'P', '"+P')
+vim.keymap.set('n', 'p', '"+p')
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
