@@ -83,7 +83,7 @@ return {
         },
         event = 'VeryLazy',
         opts = {
-            render = 'background', --'background'|'foreground'|'virtual'
+            render = 'foreground', --'background'|'foreground'|'virtual'
             enable_hex = true,
             enable_short_hex = true,
             enable_rgb = true,
@@ -100,13 +100,16 @@ return {
                 'help',
                 'lazy',
                 'markdown',
+                'NeogitLogView',
                 'NeogitStashView',
                 'NeogitStatus',
                 'oil',
                 'snacks_dashboard',
                 'git',
             },
-            exclude_buftypes = {},
+            exclude_buftypes = {
+                'nofile',
+            },
             exclude_buffer = function(bufnr)
                 return vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr)) > 1000000
             end,
