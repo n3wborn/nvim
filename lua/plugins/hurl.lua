@@ -3,7 +3,7 @@ return {
     'jellydn/hurl.nvim',
     dependencies = {
         'nvim-lua/plenary.nvim',
-        'nvim-treesitter/nvim-treesitter',
+        -- 'nvim-treesitter/nvim-treesitter',
     },
     ft = 'hurl',
     opts = {
