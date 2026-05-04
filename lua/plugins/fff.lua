@@ -1,11 +1,10 @@
-
 ---@type LazyPluginSpec
 return {
     'dmtrKovalenko/fff.nvim',
     build = function()
         require('fff.download').download_or_build_binary() -- use gb on lazy to rebuild when needed
     end,
-    init = function ()
+    init = function()
         vim.g.fff = {
             prompt = '🪿 ',
 
@@ -25,7 +24,7 @@ return {
             },
             grep = {
                 max_matches_per_file = 1, -- 0 to unlimited
-                time_budget_ms = 100,     -- prevents UI freeze, 0 = no limit
+                time_budget_ms = 100, -- prevents UI freeze, 0 = no limit
             },
             keymaps = {
                 close = '<C-c>',
@@ -53,7 +52,7 @@ return {
             file_picker = {
                 current_file_label = '(current)',
             },
-    }
+        }
     end,
     lazy = false, -- it already lazy-load itself
     keys = {
