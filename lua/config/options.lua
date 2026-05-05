@@ -73,6 +73,7 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
 vim.o.scrolloffpad = 1
+vim.o.scrolloff = 99
 
 local utils = require('utils')
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
