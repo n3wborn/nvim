@@ -27,7 +27,7 @@ return {
                 time_budget_ms = 100, -- prevents UI freeze, 0 = no limit
             },
             keymaps = {
-                close = '<C-c>',
+                close = '<esc><esc>',
                 select = '<CR>',
                 select_split = '<C-s>',
                 select_vsplit = '<C-v>',
@@ -50,7 +50,7 @@ return {
                 focus_preview = '<leader>p',
             },
             file_picker = {
-                current_file_label = '(current)',
+                current_file_label = '[Current File]',
             },
         }
     end,
