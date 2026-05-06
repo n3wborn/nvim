@@ -189,20 +189,22 @@ vim.api.nvim_create_autocmd('FocusGained', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
+    group = vim.api.nvim_create_augroup('my.treesitter.setup', { clear = true }),
     callback = function(args)
         local buf = args.buf
-        -- Check if we have a parser for the current filetype
-        local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype) or vim.bo[buf].filetype
 
-        -- Try to start highlighting
-        local ok, _ = pcall(vim.treesitter.start, buf, lang)
+        if vim.wo.diff then
+            return
+        end
+
+        local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype) or vim.bo[buf].filetype
+        local ok = pcall(vim.treesitter.start, buf, lang)
 
         if ok then
             vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
 
-        vim.opt.foldmethod = 'expr'
-        vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.opt_local.foldmethod = 'expr'
+        vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
 })
