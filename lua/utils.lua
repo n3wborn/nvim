@@ -123,27 +123,6 @@ M.notif = function(msg)
     end)
 end
 
-M.has_ts_folds = function(bufnr)
-    bufnr = bufnr or 0
-
-    local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
-    if not ok or not parser then
-        return false
-    end
-
-    local lang = parser:lang()
-    return vim.treesitter.query.get(lang, 'folds') ~= nil
-end
-
-M.set_folds = function(bufnr)
-    if M.has_ts_folds(bufnr) then
-        vim.opt_local.foldmethod = 'expr'
-        vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    else
-        vim.opt_local.foldmethod = 'indent'
-    end
-end
-
 M.undotree = function()
     local close = require('undotree').open({
         title = 'Undotree',
