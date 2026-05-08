@@ -1,15 +1,35 @@
 ---@type LazyPluginSpec
 return {
     'mistweaverco/kulala.nvim',
-    keys = {
-        { '<space>Rs', desc = 'Send request' },
-        { '<space>Ra', desc = 'Send all requests' },
-        { '<space>Rb', desc = 'Open scratchpad' },
-    },
     ft = { 'http', 'rest' },
     opts = {
         -- your configuration comes here
-        global_keymaps = false,
+        global_keymaps = {
+            ['Send request'] = { -- sets global mapping
+                '<space>Rs',
+                function()
+                    require('kulala').run()
+                end,
+                mode = { 'n', 'v' }, -- optional mode, default is n
+                desc = 'Send request', -- optional description, otherwise inferred from the key
+            },
+            ['Send all requests'] = {
+                '<space>Ra',
+                function()
+                    require('kulala').run_all()
+                end,
+                mode = { 'n', 'v' },
+                ft = 'http', -- sets mapping for *.http files only
+            },
+            ['Replay the last request'] = {
+                '<space>Rr',
+                function()
+                    require('kulala').replay()
+                end,
+                ft = { 'http', 'rest' }, -- sets mapping for specified file types
+            },
+            ['Find request'] = false, -- set to false to disable
+        },
         global_keymaps_prefix = '<space>R',
         kulala_keymaps_prefix = '',
         syntax_hl = {
