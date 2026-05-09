@@ -61,6 +61,12 @@ u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line wit
 -- u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
 vim.keymap.set('n', 'P', '"+P')
 vim.keymap.set('n', 'p', '"+p')
+-- always center search results
+vim.keymap.set('n', 'n', 'nzz', { silent = true })
+vim.keymap.set('n', 'N', 'Nzz', { silent = true })
+vim.keymap.set('n', '*', '*zz', { silent = true })
+vim.keymap.set('n', '#', '#zz', { silent = true })
+vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
