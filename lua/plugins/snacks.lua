@@ -36,7 +36,6 @@ return {
         { "<leader>ff", function() Snacks.picker.files() end, desc = "List Files" },
         { "<leader>fF", function() Snacks.picker.files({ hidden = true, ignored = true }) end, desc = "List Files" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "List Recent Files" },
-        { "<space>R",   function() Snacks.picker.resume() end, desc = "Resume" },
         { "<space>S",   function() Snacks.picker.smart({ multi = { "recent", "files" } }) end, desc = "Smart Picker" },
 
         -- buffer / marks / registers /mappings
