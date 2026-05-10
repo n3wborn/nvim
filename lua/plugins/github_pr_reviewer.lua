@@ -1,31 +1,14 @@
 return {
     'otavioschwanck/github-pr-reviewer.nvim',
     opts = {
-        -- Prefix for review branches (default: "reviewing_")
         branch_prefix = 'reviewing_',
-
-        -- Picker for PR selection: "native", "fzf-lua", or "telescope"
-        picker = 'native',
-
-        -- Open the first file automatically
+        picker = 'native', -- "native" | "fzf-lua" | "telescope"
         open_files_on_review = true,
-
-        -- Show PR comments as virtual text in buffers
         show_comments = true,
-
-        -- Show icons/emojis in UI (set to false for a text-only interface)
         show_icons = true,
-
-        -- Show inline diff in buffers (old lines as virtual text above changes)
         show_inline_diff = true,
-
-        -- Show floating windows with PR info, stats, and keymaps
         show_floats = true,
-
-        -- Key to mark file as viewed and go to next file (only works in review mode)
         mark_as_viewed_key = '<CR>',
-
-        -- Key to toggle between unified and split diff view (only works in review mode)
         diff_view_toggle_key = '<C-v>',
 
         -- Key to toggle floating windows visibility (only works in review mode)
@@ -61,7 +44,4 @@ return {
         'PRApprove',
         'PRRequestChanges',
     },
-    config = function(_, opts)
-        require('github-pr-reviewer').setup(opts)
-    end,
 }
