@@ -70,6 +70,7 @@ return {
                 desc = 'Toggle DiffviewFileHistory on current file',
             },
         },
+        ---@module "diffview"
         ---@type DiffviewConfig
         opts = {
             use_icons = false,
