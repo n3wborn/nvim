@@ -99,3 +99,6 @@ u.map('n', '<leader>as', '<cmd>AutosaveToggle<CR>', { desc = 'Toggle Autosave' }
 
 -- undotree
 u.map('n', '<leader>U', u.undotree)
+
+-- restart
+u.map('n', '<space>R', ':restart<CR>', { desc = 'Restart Nvim' })
