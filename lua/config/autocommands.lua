@@ -118,43 +118,6 @@ vim.api.nvim_create_user_command('AutosaveToggle', function()
     print('Autosave: ' .. (vim.g.autosave_enabled and 'ON' or 'OFF'))
 end, {})
 
-vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'BufLeave', 'FocusLost' }, {
-    group = aug,
-    callback = function(ctx)
-        if not vim.g.autosave_enabled then
-            return
-        end
-
-        local saveInstantly = ctx.event == 'FocusLost' or ctx.event == 'BufLeave'
-        local bufnr = ctx.buf
-        local bo, b = vim.bo[bufnr], vim.b[bufnr]
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
-
-        if bo.buftype ~= '' or bo.ft == 'gitcommit' or bo.readonly then
-            return
-        end
-
-        if b.saveQueued and not saveInstantly then
-            return
-        end
-
-        b.saveQueued = true
-
-        vim.defer_fn(function()
-            if not vim.api.nvim_buf_is_valid(bufnr) then
-                return
-            end
-
-            vim.api.nvim_buf_call(bufnr, function()
-                vim.cmd(('silent! noautocmd lockmarks update! %q'):format(bufname))
-            end)
-
-            b.saveQueued = false
-        end, saveInstantly and 0 or 2000)
-    end,
-    desc = 'Auto save',
-})
-
 vim.api.nvim_create_autocmd('FocusGained', {
     group = aug,
     callback = function()

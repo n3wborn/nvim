@@ -73,3 +73,4 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
 vim.o.scrolloffpad = 1
+vim.opt.autowrite = true -- also, see: AutosaveToggle
