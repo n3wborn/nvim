@@ -95,10 +95,30 @@ u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
 u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 
 -- autosave
-u.map('n', '<leader>as', '<cmd>AutosaveToggle<CR>', { desc = 'Toggle Autosave' })
+u.map('n', '<leader>as', function()
+    local invert = not vim.opt.autowrite
+    vim.opt.autowrite = invert
+end, { desc = 'Toggle Autowrite' })
 
 -- undotree
 u.map('n', '<leader>U', u.undotree)
 
 -- restart
 u.map('n', '<space>R', ':restart<CR>', { desc = 'Restart Nvim' })
+
+u.map('n', 'ff', function()
+    require('fff').find_files()
+end)
+
+u.map('n', '<space>sp', function()
+    require('fff').live_grep()
+end)
+
+u.map('n', '<space>sd', function()
+    local word = vim.fn.expand('<cword>')
+    if word == '' then
+        word = vim.fn.expand('<cWORD>')
+    end
+
+    require('fff').live_grep({ query = word })
+end)
