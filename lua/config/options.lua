@@ -5,7 +5,7 @@ vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.undofile = true
-vim.o.cursorlineopt = 'screenline,number'
+vim.opt.cursorlineopt = 'both'
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -41,7 +41,7 @@ vim.opt.completetimeout = 100 -- Limit sources delay
 vim.opt.autowrite = true
 vim.opt.confirm = true
 vim.opt.winwidth = 10
-vim.go.winborder = 'rounded'
+vim.opt.winborder = 'rounded'
 vim.opt.updatetime = 100
 vim.opt.equalalways = true
 vim.opt.backup = true
@@ -62,14 +62,14 @@ vim.opt.switchbuf = 'usetab'
 vim.opt.splitkeep = 'screen'
 vim.opt.formatoptions = 'rqnl1j'
 
-vim.g.autosave_enabled = true
-vim.g.maplocalleader = ','
-vim.g.blink_enabled = true
-vim.g.lsp_inlay_hints = false
-
 -- taken from Lazyvim LazyVim/lua/lazyvim/plugins/extras/util/dot.lua
 -- folding
 vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
-vim.o.scrolloffpad = 1
+vim.opt.scrolloffpad = 1
+vim.opt.autowrite = true -- also, see: AutosaveToggle
+
+vim.g.maplocalleader = ','
+vim.g.blink_enabled = true
+vim.g.lsp_inlay_hints = false
