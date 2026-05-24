@@ -3,12 +3,11 @@ return {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
     keys = {
-        { '<space>G', ':Neogit<CR>', desc = 'Open Neogit' },
+        { '<leader>gg', ':Neogit<CR>', desc = 'Open Neogit' },
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
         'dlyongemallo/diffview.nvim',
-        'folke/snacks.nvim',
     },
     opts = {
         graph_style = 'kitty',
