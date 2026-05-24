@@ -3,6 +3,7 @@ return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
+    --- @module "conform"
     --- @type nil|conform.setupOpts
     opts = {
         exclude_path_patterns = {
@@ -14,6 +15,7 @@ return {
             --- @todo: find a way to deal with work projects related config
             -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
             -- json = { 'jq' },
+            ['kulala.http'] = { 'kulala' },
             lua = { 'stylua' },
             markdown = { 'rumdl' },
             php = { 'php_cs_fixer' },
@@ -28,6 +30,11 @@ return {
         },
         format_on_save = { async = false, timeout_ms = 2000, lsp_fallback = false },
         formatters = {
+            kulala = {
+                command = 'kulala-fmt',
+                args = { 'format', '$FILENAME' },
+                stdin = false,
+            },
             php_cs_fixer = {
                 env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
                 args = function(_, ctx)

@@ -5,6 +5,7 @@ local servers = {
     -- emmylua_ls',
     'lua_ls',
     'kotlin_lsp',
+    'kulala_ls',
     'marksman',
     'mpls',
     -- 'intelephense',
