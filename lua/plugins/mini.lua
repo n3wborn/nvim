@@ -3,13 +3,6 @@ return {
     { 'nvim-mini/mini.icons', version = false, opts = {} },
     ---@type LazyPluginSpec
     {
-        'nvim-mini/mini.notify',
-        version = false,
-        event = 'VeryLazy',
-        opts = {},
-    },
-    ---@type LazyPluginSpec
-    {
         'nvim-mini/mini.comment',
         dependencies = {
             'JoosepAlviste/nvim-ts-context-commentstring',
