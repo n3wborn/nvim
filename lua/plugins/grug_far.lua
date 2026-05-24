@@ -11,8 +11,5 @@ return {
             desc = ' Search and Replace',
         },
     },
-
-    config = function()
-        require('grug-far').setup()
-    end,
+    opts = {},
 }

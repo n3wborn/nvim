@@ -8,8 +8,8 @@ return {
         'pmizio/typescript-tools.nvim',
         dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
         ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-        config = function()
-            require('typescript-tools').setup({
+        opts = function()
+            return {
                 settings = {
                     jsx_close_tag = { enable = true },
                     tsserver_plugins = {
@@ -26,7 +26,7 @@ return {
                         allowRenameOfImportPath = true,
                     },
                 },
-            })
+            }
         end,
     },
 }
