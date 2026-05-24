@@ -45,10 +45,10 @@ return {
         'nvim-mini/mini.clue',
         version = false,
         lazy = false,
-        config = function()
+        opts = function()
             local miniclue = require('mini.clue')
 
-            miniclue.setup({
+            return {
 
                 triggers = {
                     -- Leader triggers
@@ -88,7 +88,7 @@ return {
                     miniclue.gen_clues.windows(),
                     miniclue.gen_clues.z(),
                 },
-            })
+            }
         end,
     },
 }
