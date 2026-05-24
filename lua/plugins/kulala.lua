@@ -2,36 +2,30 @@
 return {
     'mistweaverco/kulala.nvim',
     ft = { 'http', 'rest' },
-    opts = {
-        -- your configuration comes here
-        global_keymaps = {
-            ['Send request'] = { -- sets global mapping
-                '<space>Rs',
-                function()
-                    require('kulala').run()
-                end,
-                mode = { 'n', 'v' }, -- optional mode, default is n
-                desc = 'Send request', -- optional description, otherwise inferred from the key
-            },
-            ['Send all requests'] = {
-                '<space>Ra',
-                function()
-                    require('kulala').run_all()
-                end,
-                mode = { 'n', 'v' },
-                ft = 'http', -- sets mapping for *.http files only
-            },
-            ['Replay the last request'] = {
-                '<space>Rr',
-                function()
-                    require('kulala').replay()
-                end,
-                ft = { 'http', 'rest' }, -- sets mapping for specified file types
-            },
-            ['Find request'] = false, -- set to false to disable
+    keys = {
+        {
+            '<leader><leader>r',
+            function()
+                require('kulala').run()
+            end,
+            mode = { 'n', 'v' }, -- optional mode, default is n
+            desc = 'Send request', -- optional description, otherwise inferred from the key
         },
-        global_keymaps_prefix = '<space>R',
+        {
+            '<leader><leader>ra',
+            function()
+                require('kulala').run_all()
+            end,
+            mode = { 'n', 'v' }, -- optional mode, default is n
+            desc = 'Send all request', -- optional description, otherwise inferred from the key
+        },
+    },
+    opts = {
         kulala_keymaps_prefix = '',
+        ui = {
+            display_direction = 'horizontal',
+        },
+
         syntax_hl = {
             ['@punctuation.bracket.kulala_http'] = 'Number',
             ['@character.special.kulala_http'] = 'Special',
