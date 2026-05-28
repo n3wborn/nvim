@@ -38,7 +38,8 @@ vim.opt.wildignore:append(
 )
 vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
 vim.opt.completetimeout = 100 -- Limit sources delay
-vim.opt.autowrite = true
+vim.o.autowrite = true
+vim.o.autowriteall = true
 vim.opt.confirm = true
 vim.opt.winwidth = 10
 vim.opt.winborder = 'rounded'
@@ -68,7 +69,6 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
 vim.opt.scrolloffpad = 1
-vim.opt.autowrite = true -- also, see: AutosaveToggle
 
 vim.g.maplocalleader = ','
 vim.g.blink_enabled = true
