@@ -95,9 +95,8 @@ u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
 u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 
 -- autosave
-u.map('n', '<leader>as', function()
-    local invert = not vim.opt.autowrite
-    vim.opt.autowrite = invert
+vim.keymap.set('n', '<leader>as', function()
+    u.toggle_autowrite()
 end, { desc = 'Toggle Autowrite' })
 
 -- undotree

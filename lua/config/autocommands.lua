@@ -113,10 +113,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Autosave
-vim.api.nvim_create_user_command('AutosaveToggle', function()
-    vim.g.autosave_enabled = not vim.g.autosave_enabled
-    print('Autosave: ' .. (vim.g.autosave_enabled and 'ON' or 'OFF'))
-end, {})
+vim.api.nvim_create_user_command('ToggleAutoWrite', function()
+    local value = not vim.o.autowrite
+    vim.o.autowrite = value
+    vim.o.autowriteall = value
+
+    vim.notify('autowrite: ' .. (value and 'enabled' or 'disabled'), vim.log.levels.INFO)
+end, {
+    desc = 'Toogle Autowrite',
+})
 
 vim.api.nvim_create_autocmd('FocusGained', {
     group = aug,
