@@ -94,10 +94,19 @@ end
 u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
 u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 
+-- Autosave
+u.command('ToggleAutoWrite', function()
+    local value = not vim.o.autowrite
+    vim.o.autowrite = value
+    vim.o.autowriteall = value
+
+    vim.notify('autowrite: ' .. (value and 'enabled' or 'disabled'), vim.log.levels.INFO)
+end, {
+    desc = 'Toogle Autowrite',
+})
+
 -- autosave
-vim.keymap.set('n', '<leader>as', function()
-    u.toggle_autowrite()
-end, { desc = 'Toggle Autowrite' })
+vim.keymap.set('n', '<leader>as', ':ToggleAutoWrite<CR>', { desc = 'ToggleAutowrite' })
 
 -- undotree
 u.map('n', '<leader>U', u.undotree)
