@@ -1,7 +1,6 @@
 ---@type LazyPluginSpec
 return {
     'arborist-ts/arborist.nvim',
-    branch = 'dev',
     event = { 'BufEnter', 'BufNewFile' },
     ---@module "arborist"
     ---@type arborist.Config
