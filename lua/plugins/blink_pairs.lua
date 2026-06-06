@@ -1,9 +1,14 @@
 ---@type LazyPluginSpec
 return {
     'saghen/blink.pairs',
-    version = '*', -- (recommended) only required with prebuilt binaries
-    dependencies = 'saghen/blink.download',
-    event = 'InsertEnter',
+    dependencies = {
+        'saghen/blink.lib',
+        'catppuccin/nvim',
+    },
+    build = function()
+        require('blink.pairs').build():pwait(60000)
+    end,
+    event = { 'BufEnter', 'BufNewFile' },
     --- @module 'blink.pairs'
     --- @type blink.pairs.Config
     opts = {
