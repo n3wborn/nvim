@@ -1,13 +1,5 @@
 local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-    group = aug,
-    callback = function()
-        vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
-    end,
-    desc = 'Do not auto comment on new line',
-})
-
 vim.api.nvim_create_autocmd('FileType', {
     group = aug,
     callback = function(ctx)
