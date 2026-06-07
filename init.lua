@@ -1,8 +1,9 @@
+_G.global = {}
+_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
+
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
-_G.global = {}
-_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
 vim.g.fff = {
     prompt = '🪿 ',
 
@@ -129,3 +130,10 @@ vim.cmd('packadd nvim.difftool')
 vim.cmd('packadd nvim.undotree')
 
 require('config')
+
+require('vim._core.ui2').enable({
+    enable = true,
+})
+
+vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden'
+vim.opt.grepformat = '%f:%l:%c:%m'

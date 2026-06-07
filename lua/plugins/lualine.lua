@@ -5,9 +5,6 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         event = 'VeryLazy',
-        dependencies = {
-            'SmiteshP/nvim-navic', -- For showing current function/symbol
-        },
         opts = function(_, opts)
             -- Custom components
             local icons = require('config.icons')
@@ -99,19 +96,5 @@ return {
 
             return opts
         end,
-    },
-    -- Navic for breadcrumbs (current function)
-    {
-        'SmiteshP/nvim-navic',
-        lazy = true,
-        opts = {
-            lsp = {
-                auto_attach = true,
-            },
-            highlight = true,
-            separator = ' › ',
-            depth_limit = 3,
-            icons = require('config.icons'),
-        },
     },
 }

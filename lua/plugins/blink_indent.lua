@@ -5,17 +5,16 @@
 return {
     'saghen/blink.indent',
     event = 'BufRead',
-    opts = function()
-        --- @type blink.indent.Config
-        return {
-            scope = {
-                char = '▏',
-                enabled = true,
-            },
-            static = {
-                char = '▏',
-                enabled = true,
-            },
-        }
-    end,
+    version = '*',
+    --- @type blink.indent.Config
+    opts = {
+        scope = {
+            char = '▏',
+            enabled = true,
+        },
+        static = {
+            char = '▏',
+            enabled = true,
+        },
+    },
 }
