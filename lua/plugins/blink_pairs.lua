@@ -1,10 +1,15 @@
+---@module "blink.pairs"
+---@module "lazy"
+
 ---@type LazyPluginSpec
 return {
     'saghen/blink.pairs',
     dependencies = {
         'saghen/blink.lib',
-        'catppuccin/nvim',
     },
+    init = function()
+        vim.g.blink_pairs = true
+    end,
     build = function()
         require('blink.pairs').build():pwait(60000)
     end,
