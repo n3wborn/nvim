@@ -129,3 +129,10 @@ vim.cmd('packadd nvim.difftool')
 vim.cmd('packadd nvim.undotree')
 
 require('config')
+
+require('vim._core.ui2').enable({
+    enable = true,
+})
+
+vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden'
+vim.opt.grepformat = '%f:%l:%c:%m'
