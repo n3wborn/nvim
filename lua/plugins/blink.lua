@@ -1,13 +1,18 @@
+---@module "blink"
+---@module "lazy"
+
 ---@type LazyPluginSpec
 return {
     'saghen/blink.cmp',
-    version = '1.*',
-    build = 'cargo +nightly build --release',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
+        'saghen/blink.lib',
         'garymjr/nvim-snippets',
         'folke/lazydev.nvim',
     },
+    build = function()
+        require('blink.cmp').build():pwait()
+    end,
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
