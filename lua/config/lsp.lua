@@ -7,6 +7,7 @@ local servers = {
     'kotlin_lsp',
     'marksman',
     'mpls',
+    'oxfmt',
     -- 'intelephense',
     'phpantom',
     'tsgo',
