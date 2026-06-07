@@ -1,25 +1,20 @@
 ---@type LazyPluginSpec
 return {
     'mrcjkb/rustaceanvim',
-    lazy = false, -- This plugin is already lazy
-    version = '^6', -- Recommended
+    lazy = false,
+    version = '^9',
     ft = { 'rust' },
     opts = {
         server = {
             settings = {
-                -- rust-analyzer language server configuration
+                ---@type lspconfig.settings.rust_analyzer
                 ['rust-analyzer'] = {
                     cargo = {
                         allFeatures = true,
                         loadOutDirsFromCheck = true,
                         runBuildScripts = true,
                     },
-                    -- Add clippy lints for Rust.
-                    checkOnSave = {
-                        allFeatures = true,
-                        command = 'clippy',
-                        extraArgs = { '--no-deps' },
-                    },
+                    checkOnSave = true,
                     procMacro = {
                         enable = true,
                         ignored = {
