@@ -85,7 +85,7 @@ return {
         },
         signature = { enabled = true },
         fuzzy = {
-            implementation = 'prefer_rust_with_warning',
+            implementation = 'prefer_rust',
         },
     },
     opts_extend = { 'sources.default' },
