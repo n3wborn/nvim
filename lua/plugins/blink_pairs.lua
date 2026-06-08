@@ -11,6 +11,7 @@ return {
         vim.g.blink_pairs = true
     end,
     build = function()
+        ---@as blink.lib.Task
         require('blink.pairs').build():pwait(60000)
     end,
     event = { 'BufEnter', 'BufNewFile' },
