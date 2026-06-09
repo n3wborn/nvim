@@ -26,7 +26,7 @@ return {
             twig = { 'twig-cs-fixer' },
             v = { 'v' },
         },
-        format_on_save = { async = false, timeout_ms = 2000, lsp_format = 'last' },
+        format_on_save = { async = false, timeout_ms = 2000, lsp_format = false },
         formatters = {
             php_cs_fixer = {
                 env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
