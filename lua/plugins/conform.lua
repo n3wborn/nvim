@@ -61,5 +61,8 @@ return {
                 end,
             },
         },
+        default_format_opts = {
+            stop_after_first = true,
+        },
     },
 }
