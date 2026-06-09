@@ -11,6 +11,7 @@ return {
         'folke/lazydev.nvim',
     },
     build = function()
+        ---@as blink.lib.Task
         require('blink.cmp').build():pwait()
     end,
     ---@module 'blink.cmp'
@@ -84,7 +85,7 @@ return {
         },
         signature = { enabled = true },
         fuzzy = {
-            implementation = 'prefer_rust_with_warning',
+            implementation = 'prefer_rust',
         },
     },
     opts_extend = { 'sources.default' },
