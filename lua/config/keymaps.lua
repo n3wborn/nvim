@@ -2,63 +2,64 @@
 local u = require('utils')
 
 -- source config
-u.map('n', '<leader>R', '<cmd>source $MYVIMRC<cr>')
+vim.keymap.set('n', '<leader>R', '<cmd>source $MYVIMRC<cr>')
 
 -- fix indentation
-u.map('n', '<leader>i', 'mmgg=G`m<cr>')
+vim.keymap.set('n', '<leader>i', 'mmgg=G`m<cr>')
 
 -- easier windows jump
-u.map('n', '<C-Left>', '<C-w>h')
-u.map('n', '<C-Right>', '<C-w>l')
-u.map('n', '<C-Down>', '<C-w>j')
-u.map('n', '<C-Up>', '<C-w>k')
+vim.keymap.set('n', '<C-Left>', '<C-w>h')
+vim.keymap.set('n', '<C-Right>', '<C-w>l')
+vim.keymap.set('n', '<C-Down>', '<C-w>j')
+vim.keymap.set('n', '<C-Up>', '<C-w>k')
 
 --- Resize windows
-u.map('n', '<leader>+', '<cmd>vertical resize +10<cr>')
-u.map('n', '<leader>-', '<cmd>vertical resize -10<cr>')
+vim.keymap.set('n', '<leader>+', '<cmd>vertical resize +10<cr>')
+vim.keymap.set('n', '<leader>-', '<cmd>vertical resize -10<cr>')
 
-u.map('n', '<space>+', '<cmd>resize +5<cr>')
-u.map('n', '<space>-', '<cmd>resize -5<cr>')
+vim.keymap.set('n', '<space>+', '<cmd>resize +5<cr>')
+vim.keymap.set('n', '<space>-', '<cmd>resize -5<cr>')
 
 -- save in insert mode
 vim.keymap.set('n', '<C-s>', '<cmd>:w<cr><esc>')
 
 --- Phpcbf - Php-cs-fixer
-u.map('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
-u.map('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>') -- *F*ix (Symfony)
-u.map('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
--- u.map('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
-u.map('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
+--- @TODO: use a task runner
+vim.keymap.set('n', '<leader>FB', '<cmd>!phpcbf %<cr>') -- *B*eautify
+vim.keymap.set('n', '<leader>FS', '<cmd>!php-cs-fixer --rules=@Symfony --using-cache=no fix %<cr>') -- *F*ix (Symfony)
+vim.keymap.set('n', '<leader>FP', '<cmd>!php-cs-fixer --rules=@PSR12 --using-cache=no fix %<cr>') -- *F*ix (PSR12)
+-- vim.keymap.set('n', '<leader>FF', '<cmd>!php-cs-fixer --rules=@PSR12,@Symfony --using-cache=no fix %<cr>')
+vim.keymap.set('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
 
 --- Git
-u.map('n', '<leader>gh', ':diffget //3<cr>')
-u.map('n', '<leader>gu', ':diffget //2<cr>')
+vim.keymap.set('n', '<leader>gh', ':diffget //3<cr>')
+vim.keymap.set('n', '<leader>gu', ':diffget //2<cr>')
 
 -- Lazy UI
-u.map('n', '<leader>L', '<cmd>Lazy<cr>')
+vim.keymap.set('n', '<leader>L', '<cmd>Lazy<cr>')
 
 --- keep text selected after indentation
-u.map('v', '<', '<gv')
-u.map('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
 
 --- move current line up/down
-u.map('v', 'J', ":m '>+1<CR>gv=gv")
-u.map('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
--- u.map Ctrl-c to Escape
-u.map('i', '<C-c>', '')
-u.map('i', '<C-c>', '<Esc>')
+-- vim.keymap.set Ctrl-c to Escape
+vim.keymap.set('i', '<C-c>', '')
+vim.keymap.set('i', '<C-c>', '<Esc>')
 
 -- close current window
-u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
+vim.keymap.set('n', '<C-c><C-c>', '<cmd>close<cr>')
 
 --- Copy-paste
-u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
-u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
--- u.map({'n', 'v'}, 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
--- u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+vim.keymap.set('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
+vim.keymap.set('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
+-- vim.keymap.set({'n', 'v'}, 'p', 'p`[=`]', { desc = 'Paste and indent' })
+-- vim.keymap.set({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+-- vim.keymap.set('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
+-- vim.keymap.set('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
 vim.keymap.set('n', 'P', '"+P')
 vim.keymap.set('n', 'p', '"+p')
 -- always center search results
@@ -67,18 +68,6 @@ vim.keymap.set('n', 'N', 'Nzz', { silent = true })
 vim.keymap.set('n', '*', '*zz', { silent = true })
 vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
-
---- Switch to previous buffer
-u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
-
--- search within visual selection
-vim.keymap.set('x', '/', '<Esc>/\\%V')
-
-u.map('n', '<leader>B', function()
-    u.yank_file_path()
-end)
-
-u.map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 -- diagnostics
 local diagnostic_goto = function(next, severity)
@@ -91,8 +80,8 @@ local diagnostic_goto = function(next, severity)
     end
 end
 
-u.map('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
-u.map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
+vim.keymap.set('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next Error' })
+vim.keymap.set('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev Error' })
 
 -- Autosave
 u.command('ToggleAutoWrite', function()
@@ -100,33 +89,18 @@ u.command('ToggleAutoWrite', function()
     vim.o.autowrite = value
     vim.o.autowriteall = value
 
-    vim.notify('autowrite: ' .. (value and 'enabled' or 'disabled'), vim.log.levels.INFO)
-end, {
-    desc = 'Toogle Autowrite',
-})
+    u.info('autowrite: ' .. (value and 'enabled' or 'disabled'))
+end, { desc = 'Toogle Autowrite' })
 
--- autosave
+-- stylua: ignore start
+vim.keymap.set('n', '<space><space>', '<cmd>e #<cr>zz', { desc = 'Switch to previous buffer' })
+vim.keymap.set('x', '/', '<Esc>/\\%V', { desc = 'Search within visual selection' })
+vim.keymap.set('n', '<leader>B', function() u.yank_file_path() end, { desc = 'Yank file path' })
 vim.keymap.set('n', '<leader>as', ':ToggleAutoWrite<CR>', { desc = 'ToggleAutowrite' })
-
--- undotree
-u.map('n', '<leader>U', u.undotree)
-
--- restart
-u.map('n', '<space>R', ':restart<CR>', { desc = 'Restart Nvim' })
-
-u.map('n', 'ff', function()
-    require('fff').find_files()
-end)
-
-u.map('n', '<space>sp', function()
-    require('fff').live_grep()
-end)
-
-u.map('n', '<space>sd', function()
-    local word = vim.fn.expand('<cword>')
-    if word == '' then
-        word = vim.fn.expand('<cWORD>')
-    end
-
-    require('fff').live_grep({ query = word })
-end)
+vim.keymap.set('n', '<leader>U', u.undotree, { desc = 'Show/Hide Undotree' })
+vim.keymap.set('n', '<space>R', ':restart<CR>', { desc = 'Restart Nvim' })
+-- FFF
+vim.keymap.set('n', 'ff', function() require('fff').find_files() end)
+vim.keymap.set('n', '<space>sp', function() require('fff').live_grep() end)
+vim.keymap.set('n', '<space>sd', function() require('fff').live_grep({ query = vim.fn.expand('<cWORD>') }) end)
+-- stylua: ignore end
