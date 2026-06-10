@@ -24,7 +24,7 @@ return {
         {
             '<leader>gd',
             function()
-                require('fzf-lua').lsp_definitions()
+                require('fzf-lua').lsp_definitions({ reuse_win = false, jump1_action = FzfLua.actions.file_split })
             end,
             desc = 'Goto Definition',
         },
