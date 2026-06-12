@@ -7,7 +7,7 @@ return {
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
-        'dlyongemallo/diffview.nvim',
+        'dlyongemallo/diffview-plus.nvim',
     },
     opts = {
         graph_style = 'kitty',
