@@ -1,7 +1,8 @@
 return {
     ---@type LazyPluginSpec
     {
-        'dlyongemallo/diffview.nvim',
+        'dlyongemallo/diffview-plus.nvim',
+        version = '*',
         cmd = {
             'DiffviewOpen',
             'DiffviewClose',
@@ -73,6 +74,12 @@ return {
         ---@module "diffview"
         ---@type DiffviewConfig
         opts = {
+            auto_close_on_empty = true,
+            hide_merge_artifacts = true,
+            clean_up_buffers = true,
+            default_args = {
+                DiffviewOpen = { '--imply-local' },
+            },
             use_icons = false,
             keymaps = {
                 file_panel = {
