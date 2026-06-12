@@ -25,8 +25,9 @@ return {
             typescriptreact = { 'eslint_d', 'eslint' },
             twig = { 'twig-cs-fixer' },
             v = { 'v' },
+            ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
-        format_on_save = { async = false, timeout_ms = 2000, lsp_format = false },
+        format_on_save = { async = false, timeout_ms = 2000, lsp_format = 'never' },
         formatters = {
             php_cs_fixer = {
                 env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
@@ -60,9 +61,6 @@ return {
                     return args
                 end,
             },
-        },
-        default_format_opts = {
-            stop_after_first = true,
         },
     },
 }
