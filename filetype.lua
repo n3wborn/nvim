@@ -17,6 +17,7 @@ vim.filetype.add({
     },
 
     pattern = {
+        ['.*%.gitconfig'] = 'gitconfig',
         ['compose%..*%.ya?ml'] = 'yaml.docker-compose',
         ['docker%-compose%..*%.ya?ml'] = 'yaml.docker-compose',
         ['.*%.twig'] = 'twig.html',
