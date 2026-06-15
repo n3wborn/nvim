@@ -36,8 +36,25 @@ vim.diagnostic.config({
     severity_sort = true,
     underline = false,
     update_in_insert = true,
+    -- TODO: choose which one is better
+    -- update_in_insert = false,
     float = true,
     jump = { on_jump = vim.diagnostic.open_float },
+    -- TODO: choose lines or text
+    virtual_lines = {
+        current_line = true,
+        severity = {
+            vim.diagnostic.severity.WARN,
+            vim.diagnostic.severity.ERROR,
+        },
+    },
+    -- virtual_text = {
+    --     current_line = true,
+    --     severity = {
+    --         vim.diagnostic.severity.WARN,
+    --         vim.diagnostic.severity.ERROR,
+    --     },
+    -- },
 })
 
 local lsp_group = vim.api.nvim_create_augroup('my.lsp', { clear = true })
