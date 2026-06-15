@@ -1,4 +1,3 @@
--- https://github.com/Hessesian/kotlin-lsp
 -- cargo binstall kotlin-lsp
 ---@type vim.lsp.Config
 return {
