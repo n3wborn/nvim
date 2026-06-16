@@ -3,72 +3,10 @@ _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = '
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
-
-vim.g.fff = {
-    prompt = '🪿 ',
-
-    layout = {
-        height = 0.9,
-        width = 0.9,
-        prompt_position = 'top',
-        preview_size = 0.6,
-    },
-    preview = {
-        enabled = true,
-        line_numbers = true,
-    },
-    debug = {
-        enabled = false,
-        show_scores = false,
-    },
-    grep = {
-        max_matches_per_file = 1, -- 0 to unlimited
-        time_budget_ms = 100, -- prevents UI freeze, 0 = no limit
-    },
-    keymaps = {
-        close = '<esc><esc>',
-        select = '<CR>',
-        select_split = '<C-s>',
-        select_vsplit = '<C-v>',
-        select_tab = '<C-t>',
-        -- you can assign multiple keys to any action
-        move_up = { '<Up>', '<C-p>' },
-        move_down = { '<Down>', '<C-n>' },
-        preview_scroll_up = '<C-u>',
-        preview_scroll_down = '<C-d>',
-        toggle_debug = '<F2>',
-        -- grep mode: cycle between plain text, regex, and fuzzy search
-        cycle_grep_modes = '<S-Tab>',
-        -- goes to the previous query in history
-        cycle_previous_query = '<C-Up>',
-        -- multi-select keymaps for quickfix
-        toggle_select = '<Tab>',
-        send_to_quickfix = '<C-q>',
-        -- this are specific for the normal mode (you can exit it using any other keybind like jj)
-        focus_list = '<leader>l',
-        focus_preview = '<leader>p',
-    },
-    file_picker = {
-        current_file_label = '[Current File]',
-    },
-}
-local disabled_builtins = {
-    'gzip',
-    'matchit',
-    'matchparen',
-    'netrwPlugin',
-    'tarPlugin',
-    'tohtml',
-    'tutor',
-    'zipPlugin',
-}
-
-for _, plugin in ipairs(disabled_builtins) do
-    vim.g['loaded_' .. plugin] = 1
-end
+vim.g.sessions_enabled = true
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         'git',
         'clone',
@@ -81,36 +19,25 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup({
+    performance = {
+        cache = {
+            enabled = true,
+        },
+        rtp = {
+            disabled_plugins = {
+                'gzip',
+                'tarPlugin',
+                'tohtml',
+                'zipPlugin',
+                'netrwPlugin',
+                'matchit',
+                'matchparen',
+                'tutor',
+            },
+        },
+    },
     spec = {
         { import = 'plugins' },
-        ---@type LazyPluginSpec
-        {
-            'neovim/nvim-lspconfig',
-            dependencies = {
-                'b0o/SchemaStore.nvim',
-            },
-            event = { 'BufReadPre', 'BufNewFile' },
-        },
-        ---@type LazyPluginSpec
-        {
-            'kylechui/nvim-surround',
-            event = 'VeryLazy',
-        },
-        ---@type LazyPluginSpec
-        {
-
-            'nvzone/typr',
-            dependencies = 'nvzone/volt',
-            opts = {},
-            cmd = { 'Typr', 'TyprStats' },
-        },
-        {
-            'dmtrKovalenko/fff.nvim',
-            lazy = false,
-            build = function()
-                require('fff.download').download_or_build_binary()
-            end,
-        },
     },
     defaults = {
         lazy = true,
@@ -120,7 +47,7 @@ require('lazy').setup({
         missing = true,
         colorscheme = { 'catppuccin' },
     },
-    checker = { enabled = true },
+    checker = { enabled = false },
     rocks = { enabled = false },
 })
 
@@ -130,10 +57,6 @@ vim.cmd('packadd nvim.difftool')
 vim.cmd('packadd nvim.undotree')
 
 require('config')
-
-require('vim._core.ui2').enable({
-    enable = true,
-})
 
 vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden'
 vim.opt.grepformat = '%f:%l:%c:%m'

@@ -93,7 +93,7 @@ M.is_file = function(path)
         return false
     end
 
-    local stat = vim.loop.fs_stat(path)
+    local stat = vim.uv.fs_stat(path)
     return stat and stat.type == 'file'
 end
 

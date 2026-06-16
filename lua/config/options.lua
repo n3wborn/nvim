@@ -36,6 +36,7 @@ vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
 
+vim.o.autoread = true
 vim.o.autowrite = true
 vim.o.autowriteall = true
 
@@ -67,6 +68,17 @@ vim.opt.conceallevel = 2
 vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
+vim.opt.foldtext = ''
+
+-- needed for tree-sitter aware commenting
+vim.opt.commentstring = ''
+
+vim.opt.fillchars:append({
+    fold = ' ',
+    foldopen = '',
+    foldclose = '',
+    foldsep = ' ',
+})
 
 vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false

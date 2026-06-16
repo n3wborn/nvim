@@ -6,18 +6,18 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-        animate = { enabled = true, duration = 10 },
+        animate = { enabled = false},
         bigfile = { enabled = true },
-        dashboard = { enabled = true },
+        dashboard = { enabled = false },
         image = { enabled = true },
         indent = { enabled = false },
         input = { enabled = false },
         lazygit = { enabled = false},
         notifier = { enabled = true },
-        quickfile = { enabled = false },
+        quickfile = { enabled = true },
         scroll = { enabled = false },
         statuscolumn = { enabled = true },
-        scope = { enabled = true },
+        scope = { enabled = false },        -- already handled blink indent
         picker = {
             layout = { fullscreen = true },
             previewers = { diff = { builtin = false }, git = { builtin = false } },
@@ -101,7 +101,7 @@ return {
                 Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map('<leader>uL')
                 Snacks.toggle.diagnostics():map('<leader>ud')
                 Snacks.toggle.line_number():map('<leader>ul')
-                -- Snacks.toggle.treesitter():map('<leader>T')
+                Snacks.toggle.treesitter():map('<leader>T')
                 Snacks.toggle
                     .option('background', { off = 'light', on = 'dark', name = 'Dark Background' })
                     :map('<leader>ub')

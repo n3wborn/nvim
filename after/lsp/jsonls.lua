@@ -2,6 +2,7 @@
 return {
     cmd = { 'vscode-json-language-server', '--stdio' },
     filetypes = { 'json', 'jsonc' },
+    ---@type lspconfig.settings.jsonls
     settings = {
         json = {
             validate = { enable = true },

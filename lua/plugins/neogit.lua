@@ -15,10 +15,22 @@ return {
         integrations = {
             codediff = false,
             telescope = false,
-            fzf_lua = false,
+            fzf_lua = true,
             mini_pick = false,
             diffview = true,
             snacks = true,
+        },
+        diff_viewer = 'diffview',
+        sections = {
+            recent = {
+                folded = false,
+            },
+        },
+        signs = {
+            -- { CLOSED, OPENED }
+            hunk = { '', '' },
+            item = { '', '' },
+            section = { '', '' },
         },
     },
 }

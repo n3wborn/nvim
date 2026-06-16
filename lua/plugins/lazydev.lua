@@ -8,6 +8,8 @@ return {
             { path = 'snacks.nvim', words = { 'Snacks' } },
             -- 'lazy.nvim',
             { path = 'lazy.nvim', words = { 'Lazy' } },
+            { path = 'nvim-lspconfig', words = { 'lspconfig' } },
+            { path = 'celeste_comment.nvim', words = { 'Celeste' } },
         },
     },
 }

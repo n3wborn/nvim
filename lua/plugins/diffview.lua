@@ -2,7 +2,6 @@ return {
     ---@type LazyPluginSpec
     {
         'dlyongemallo/diffview-plus.nvim',
-        version = '*',
         cmd = {
             'DiffviewOpen',
             'DiffviewClose',

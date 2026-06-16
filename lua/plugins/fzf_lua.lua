@@ -8,34 +8,6 @@ return {
     keys = {
         { '<space>F', ':FzfLua<cr>' },
         {
-            '<leader>ss',
-            function()
-                require('fzf-lua').lsp_document_symbols()
-            end,
-            desc = 'Goto Symbol',
-        },
-        {
-            '<leader>sS',
-            function()
-                require('fzf-lua').lsp_live_workspace_symbols()
-            end,
-            desc = 'Goto Symbol (Workspace)',
-        },
-        {
-            '<leader>gd',
-            function()
-                require('fzf-lua').lsp_definitions()
-            end,
-            desc = 'Goto Definition',
-        },
-        {
-            '<leader>gf',
-            function()
-                require('fzf-lua').lsp_finder()
-            end,
-            desc = 'LSP finder',
-        },
-        {
             '<leader>gi',
             function()
                 require('fzf-lua').lsp_implementations()
@@ -63,20 +35,6 @@ return {
             end,
             desc = 'Find Files',
         },
-        {
-            '<c-x><c-f>',
-            function()
-                require('fzf-lua').complete_path({
-                    file_icons = true,
-                    git_icons = true,
-                    color_icons = true,
-                    multiprocess = true,
-                    winopts = { fullscreen = false },
-                })
-            end,
-            mode = { 'i', 'x' },
-            desc = 'Complete Path',
-        },
     },
     ---@type fzf-lua.Config
     opts = function()
@@ -93,7 +51,6 @@ return {
             },
             keymap = {
                 fzf = {
-                    ['ctrl-q'] = 'select-all+accept',
                     ['ctrl-u'] = 'half-page-up',
                     ['ctrl-d'] = 'half-page-down',
                     ['ctrl-x'] = 'jump',
@@ -110,6 +67,28 @@ return {
             -- buffers = {
             --     formatter = 'path.filename_first',
             -- },
+            actions = {
+                files = {
+                    ['enter'] = FzfLua.actions.file_edit_or_qf,
+                    ['ctrl-s'] = FzfLua.actions.file_split,
+                    ['ctrl-v'] = FzfLua.actions.file_vsplit,
+                    ['ctrl-t'] = FzfLua.actions.file_tabedit,
+                    ['alt-q'] = FzfLua.actions.file_sel_to_qf,
+                    ['alt-Q'] = FzfLua.actions.file_sel_to_ll,
+                    ['alt-i'] = FzfLua.actions.toggle_ignore,
+                    ['alt-h'] = FzfLua.actions.toggle_hidden,
+                    ['alt-f'] = FzfLua.actions.toggle_follow,
+                    -- Select all + send to quickfix (works with both fzf and skim,
+                    -- unlike a hand-written `select-all+accept` bind in keymap.fzf).
+                    ['ctrl-q'] = { fn = fzf_lua.actions.file_sel_to_qf, prefix = 'select-all' },
+                },
+            },
+            helptags = {
+                actions = {
+                    -- Open help pages in a vertical split.
+                    ['enter'] = require('fzf-lua.actions').help_vert,
+                },
+            },
             lsp = {
                 includeDeclaration = false, -- include current declaration in LSP context
                 symbols = {

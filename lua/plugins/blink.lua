@@ -7,7 +7,6 @@ return {
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
         'saghen/blink.lib',
-        'garymjr/nvim-snippets',
         'folke/lazydev.nvim',
     },
     build = function()
@@ -21,7 +20,14 @@ return {
             nerd_font_variant = 'mono',
         },
         completion = {
+            list = {
+                -- Insert items while navigating the completion list.
+                selection = { preselect = false, auto_insert = true },
+                max_items = 20,
+            },
+            documentation = { auto_show = true },
             menu = {
+                scrollbar = false,
                 draw = {
                     columns = {
                         { 'label', 'label_description', gap = 1 },
@@ -31,10 +37,6 @@ return {
                     },
                 },
             },
-            ghost_text = {
-                enabled = false,
-            },
-            documentation = { auto_show = true, auto_show_delay_ms = 500 },
         },
         keymap = {
             ['<Down>'] = { 'select_next', 'fallback' },
@@ -47,7 +49,6 @@ return {
             ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
             ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
-            ['<Esc>'] = { 'cancel', 'hide_documentation', 'fallback' },
 
             ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
 
@@ -69,17 +70,17 @@ return {
                     score_offset = 100,
                 },
                 buffer = {
-                    score_offset = -3,
-                    opts = {
-                        -- get all buffers, even ones like neo-tree
-                        -- get_bufnrs = vim.api.nvim_list_bufs,
-                        -- or (recommended) filter to only "normal" buffers
-                        get_bufnrs = function()
-                            return vim.tbl_filter(function(bufnr)
-                                return vim.bo[bufnr].buftype == ''
-                            end, vim.api.nvim_list_bufs())
-                        end,
-                    },
+                    -- default to all visible buffers
+                    get_bufnrs = function()
+                        return vim.iter(vim.api.nvim_list_wins())
+                            :map(function(win)
+                                return vim.api.nvim_win_get_buf(win)
+                            end)
+                            :filter(function(buf)
+                                return vim.bo[buf].buftype ~= 'nofile'
+                            end)
+                            :totable()
+                    end,
                 },
             },
         },

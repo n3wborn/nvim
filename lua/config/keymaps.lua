@@ -55,18 +55,31 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
 u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
--- u.map({'n', 'v'}, 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
--- u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
-vim.keymap.set('n', 'P', '"+P')
-vim.keymap.set('n', 'p', '"+p')
+u.map({ 'n', 'v' }, 'p', 'p`[=`]', { desc = 'Paste and indent' })
+u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+
 -- always center search results
 vim.keymap.set('n', 'n', 'nzz', { silent = true })
 vim.keymap.set('n', 'N', 'Nzz', { silent = true })
 vim.keymap.set('n', '*', '*zz', { silent = true })
 vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
+
+-- always center previous/next jumps
+vim.keymap.set('n', '<C-o>', '<C-o>zz', { silent = true })
+vim.keymap.set('n', '<C-i>', '<C-i>zz', { silent = true })
+
+-- always center Ctrl Up/Down
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
+
+-- always center Ctrl forward/backward
+vim.keymap.set('n', '<C-f>', '<C-f>zz', { silent = true })
+vim.keymap.set('n', '<C-b>', '<C-b>zz', { silent = true })
+
+-- always center forward/backward hunk
+vim.keymap.set('n', '<]-c>', '<]-c>zz', { silent = true })
+vim.keymap.set('n', '<[-c>', '<[-c>zz', { silent = true })
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
@@ -113,20 +126,3 @@ u.map('n', '<leader>U', u.undotree)
 
 -- restart
 u.map('n', '<space>R', ':restart<CR>', { desc = 'Restart Nvim' })
-
-u.map('n', 'ff', function()
-    require('fff').find_files()
-end)
-
-u.map('n', '<space>sp', function()
-    require('fff').live_grep()
-end)
-
-u.map('n', '<space>sd', function()
-    local word = vim.fn.expand('<cword>')
-    if word == '' then
-        word = vim.fn.expand('<cWORD>')
-    end
-
-    require('fff').live_grep({ query = word })
-end)
