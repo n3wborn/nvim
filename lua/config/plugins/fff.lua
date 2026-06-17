@@ -38,14 +38,10 @@ local opts = {
 
 require('fff').setup(opts)
 
-u.map('n', 'ff', function()
-    require('fff').find_files()
-end, { desc = '[FFF] Find Files' })
-
-u.map('n', '<space>sp', function()
-    require('fff').live_grep()
-end, { desc = '[FFF] [S]earch in [P]roject' })
-
-u.map('n', '<space>sd', function()
+-- stylua: ignore start
+vim.keymap.set('n', 'ff', function() require('fff').find_files() end, { desc = '[FFF] Find Files' })
+vim.keymap.set('n', '<space>sp', function() require('fff').live_grep() end, { desc = '[FFF] [S]earch in [P]roject' })
+vim.keymap.set('n', '<space>sd', function()
     require('fff').live_grep({ query = vim.fn.expand('<cword>') })
 end, { desc = '[FFF] Find Current Word' })
+-- stylua: ignore end
