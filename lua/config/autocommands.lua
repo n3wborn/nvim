@@ -165,3 +165,12 @@ vim.api.nvim_create_autocmd('FileType', {
         }
     end,
 })
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'VeryLazy',
+    callback = function()
+        vim.schedule(function()
+            require('persistence').load()
+        end)
+    end,
+})
