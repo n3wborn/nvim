@@ -1,7 +1,14 @@
+-- experimental Lua module loader.
+vim.loader.enable()
+
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
-_G.global = {}
-_G.global.float_border_opts = { border = 'rounded', focusable = false, scope = 'line' }
+vim.cmd.colorscheme('catpuccin')
 
-require('config')
+require('settings')
+require('keymaps')
+
+vim.cmd.packadd('nvim.undotree')
+
+require('vim._core.ui2').enable({})

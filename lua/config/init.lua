@@ -1,6 +1,3 @@
-require('config.options')
-require('config.keymaps')
-
 -- :help vim-pack
 vim.pack.add({
     { src = 'https://github.com/ibhagwan/fzf-lua' },
@@ -52,6 +49,3 @@ local function load_plugins()
     end
 end
 load_plugins()
-
-require('config.lsp')
-require('config.autocommands')
