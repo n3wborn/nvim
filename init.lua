@@ -3,6 +3,7 @@ _G.global.float_border_opts = { border = 'rounded', focusable = false, scope = '
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
+vim.g.sessions_enabled = true
 
 vim.g.fff = {
     prompt = '🪿 ',
