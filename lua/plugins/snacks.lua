@@ -8,7 +8,7 @@ return {
     opts = {
         animate = { enabled = true, duration = 10 },
         bigfile = { enabled = true },
-        dashboard = { enabled = true },
+        dashboard = { enabled = false },
         image = { enabled = true },
         indent = { enabled = false },
         input = { enabled = false },

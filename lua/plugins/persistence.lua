@@ -2,7 +2,11 @@
 return {
     'folke/persistence.nvim',
     event = 'BufReadPre',
-    opts = {},
+    ---@module 'persistence'
+    ---@type Persistence.Config
+    opts = {
+        need = 0,
+    },
     -- stylua: ignore
     keys = {
         { "<leader>qS", function() require("persistence").load() end, desc = "Restore Session" },
@@ -10,4 +14,5 @@ return {
         { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
         { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
     },
+    cond = vim.g.sessions_enabled,
 }
