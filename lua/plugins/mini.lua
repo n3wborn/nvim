@@ -1,13 +1,15 @@
 return {
     ---@type LazyPluginSpec
-    { 'nvim-mini/mini.icons', version = false, opts = {} },
+    {
+        'nvim-mini/mini.icons',
+        opts = {},
+    },
     ---@type LazyPluginSpec
     {
         'nvim-mini/mini.comment',
         dependencies = {
             'JoosepAlviste/nvim-ts-context-commentstring',
         },
-        version = '*',
         event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             options = {
@@ -21,7 +23,6 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-mini/mini.hipatterns',
-        version = false,
         event = 'VeryLazy',
         opts = {
             highlighters = {
@@ -36,7 +37,6 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-mini/mini.clue',
-        version = false,
         lazy = false,
         opts = function()
             local miniclue = require('mini.clue')
