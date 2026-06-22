@@ -1,22 +1,97 @@
-local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+    desc = 'Enable Treesitter',
+    group = vim.api.nvim_create_augroup('my.aucmd.install_and_enable_treesitter_when_needed', {}),
+    callback = function(event)
+        local bufnr = event.buf
+        local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+
+        -- Skip if no filetype or bigfile
+        if filetype == '' or vim.bo[bufnr].filetype ~= 'bigfile' then
+            return
+        end
+
+        -- Get parser name based on filetype
+        local parser_name = vim.treesitter.language.get_lang(filetype)
+        if not parser_name then
+            vim.notify(vim.inspect('No treesitter parser found for filetype: ' .. filetype), vim.log.levels.WARN)
+            -- Use regex based syntax-highlighting as fallback
+            vim.bo[bufnr].syntax = 'ON'
+            return
+        end
+
+        -- Try to get existing parser
+        local ts_config = require('nvim-treesitter.config')
+        if not vim.tbl_contains(ts_config.get_available(), parser_name) then
+            return
+        end
+
+        -- Start treesitter for this buffer
+        local start_ts = function()
+            vim.treesitter.start(bufnr, parser_name)
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.wo.foldmethod = 'expr'
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            vim.cmd.normal 'zx'
+        end
+
+        local already_installed = ts_config.get_installed('parsers')
+        if not vim.tbl_contains(already_installed, parser_name) then
+            -- Install parser
+            vim.notify('Installing parser for ' .. parser_name, vim.log.levels.INFO)
+            require('nvim-treesitter').install({ parser_name }):await(start_ts)
+            return
+        end
+
+        start_ts()
+    end,
+})
 
 vim.api.nvim_create_autocmd('BufEnter', {
-    group = aug,
+    group = vim.api.nvim_create_augroup('my.aucmd.do_not_comment_on_new_line', { clear = true }),
+    desc = 'Do not auto comment on new line',
     callback = function()
         vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
     end,
-    desc = 'Do not auto comment on new line',
+})
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+    group = vim.api.nvim_create_augroup('my.aucmd.restore_last_location', { clear = true }),
+    desc = 'Restore cursor position',
+    callback = function(args)
+        local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+        local line_count = vim.api.nvim_buf_line_count(args.buf)
+        if mark[1] > 0 and mark[1] <= line_count then
+            vim.cmd 'normal! g`"zz'
+        end
+    end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    group = aug,
-    callback = function(ctx)
-        if vim.bo[ctx.buf].buftype ~= '' then
-            return
+    group = vim.api.nvim_create_augroup('my.aucmd.close_with_q', { clear = true }),
+    desc = 'Close with <q>',
+    pattern = {
+        'Navbuddy',
+        'PlenaryTestPopup',
+        'checkhealth',
+        'git',
+        'git',
+        'gitsigns-blame',
+        'help',
+        'lazy',
+        'lspinfo',
+        'man',
+        'notify',
+        'oil',
+        'qf',
+        'quickfix',
+        'spectre_panel',
+        'startuptime',
+    },
+    callback = function(args)
+        if args.match ~= 'help' or not vim.bo[args.buf].modifiable then
+            vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
         end
-        vim.cmd([[silent! normal! g`"]])
     end,
-    desc = 'Restore cursor position',
 })
 
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose', 'TermLeave' }, {
@@ -53,38 +128,6 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
         vim.cmd.nohlsearch()
     end),
     desc = 'Remove search highlight',
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-    group = aug,
-    pattern = {
-        'gitsigns-blame',
-        'git',
-        'checkhealth',
-        'help',
-        'lspinfo',
-        'man',
-        'Navbuddy',
-        'notify',
-        'oil',
-        'PlenaryTestPopup',
-        'qf',
-        'spectre_panel',
-        'startuptime',
-        'quickfix',
-        'lazy',
-    },
-    callback = function(event)
-        local bufnr = event.buf
-        vim.bo[bufnr].buflisted = false
-
-        vim.keymap.set('n', 'q', '<cmd>close<CR>', {
-            buffer = bufnr,
-            silent = true,
-            desc = 'Close window',
-        })
-    end,
-    desc = 'Configure special buffers',
 })
 
 vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter', 'BufWinEnter' }, {
