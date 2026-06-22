@@ -169,8 +169,37 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()
+        print(vim.fn.arglistid())
+
+        if vim.fn.argc() > 0 then
+            return
+        end
+
         vim.schedule(function()
             require('persistence').load()
         end)
     end,
+    desc = 'Restore last current dir (or last) session',
+})
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'PersistenceSavePre',
+    callback = function()
+        local ignored_filetypes = {
+            'NeogitStatus',
+            'NeogitCommitMessage',
+            'oil',
+            'snacks_dashboard',
+        }
+
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            local ft = vim.bo[buf].filetype
+            local bt = vim.bo[buf].buftype
+
+            if bt ~= '' or vim.tbl_contains(ignored_filetypes, ft) then
+                vim.api.nvim_buf_delete(buf, { force = true })
+            end
+        end
+    end,
+    desc = 'Only keep useful buffers into sessions',
 })
