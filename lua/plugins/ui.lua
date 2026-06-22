@@ -2,7 +2,6 @@ return {
     ---@type LazyPluginSpec
     {
         'nvim-mini/mini.align',
-        version = false,
         event = 'VeryLazy',
         opts = {
             -- Module mappings. Use `''` (empty string) to disable one.

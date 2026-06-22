@@ -5,7 +5,6 @@
 return {
     'saghen/blink.indent',
     event = 'BufRead',
-    version = '*',
     --- @type blink.indent.Config
     opts = {
         scope = {
