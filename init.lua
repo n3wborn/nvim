@@ -87,7 +87,7 @@ require('lazy').setup({
                     },
                 },
                 grep = {
-                    max_matches_per_file = 1, -- 0 to unlimited
+                    max_matches_per_file = 0, -- 0 to unlimited
                     time_budget_ms = 100, -- prevents UI freeze, 0 = no limit
                 },
                 keymaps = {
@@ -104,6 +104,8 @@ require('lazy').setup({
                     toggle_debug = '<F2>',
                     -- grep mode: cycle between plain text, regex, and fuzzy search
                     cycle_grep_modes = '<S-Tab>',
+                    grep_jump_to_next_file = { '<C-A-n>' },
+                    grep_jump_to_prev_file = { '<C-A-p>' },
                     -- goes to the previous query in history
                     cycle_previous_query = '<C-Up>',
                     -- multi-select keymaps for quickfix
