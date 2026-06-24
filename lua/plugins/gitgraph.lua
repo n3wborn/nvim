@@ -1,6 +1,12 @@
 ---@type LazyPluginSpec
 return {
     'isakbm/gitgraph.nvim',
+    dependencies = {
+        'dlyongemallo/diffview-plus.nvim',
+    },
+    ---@module "gitgraph"
+    ---@type I.GGConfig
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
         git_cmd = 'git',
         symbols = {
@@ -36,11 +42,15 @@ return {
             fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
         },
         hooks = {
+            -- Check diff of a commit
             on_select_commit = function(commit)
-                print('selected commit:', commit.hash)
+                vim.notify('DiffviewOpen ' .. commit.hash .. '^!')
+                vim.cmd(':DiffviewOpen ' .. commit.hash .. '^!')
             end,
+            -- Check diff from commit a -> commit b
             on_select_range_commit = function(from, to)
-                print('selected range:', from.hash, to.hash)
+                vim.notify('DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+                vim.cmd(':DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
             end,
         },
     },
@@ -48,6 +58,7 @@ return {
         {
             '<space>gl',
             function()
+                vim.cmd('tabnew')
                 require('gitgraph').draw({}, { all = true, max_count = 5000 })
             end,
             desc = 'GitGraph - Draw',
