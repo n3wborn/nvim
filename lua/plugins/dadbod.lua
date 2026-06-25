@@ -63,9 +63,9 @@ return {
         'saghen/blink.cmp',
         opts = {
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                default = { 'lsp', 'path', 'buffer' },
                 per_filetype = {
-                    sql = { 'snippets', 'dadbod', 'buffer' },
+                    sql = { 'dadbod', 'buffer' },
                 },
                 providers = {
                     dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
