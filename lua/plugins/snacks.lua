@@ -14,7 +14,7 @@ return {
         input = { enabled = false },
         lazygit = { enabled = false},
         notifier = { enabled = true },
-        quickfile = { enabled = false },
+        quickfile = { enabled = true },
         scroll = { enabled = false },
         statuscolumn = { enabled = true },
         scope = { enabled = true },
