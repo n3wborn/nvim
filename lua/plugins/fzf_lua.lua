@@ -8,34 +8,6 @@ return {
     keys = {
         { '<space>F', ':FzfLua<cr>' },
         {
-            '<leader>ss',
-            function()
-                require('fzf-lua').lsp_document_symbols()
-            end,
-            desc = 'Goto Symbol',
-        },
-        {
-            '<leader>sS',
-            function()
-                require('fzf-lua').lsp_live_workspace_symbols()
-            end,
-            desc = 'Goto Symbol (Workspace)',
-        },
-        {
-            '<leader>gd',
-            function()
-                require('fzf-lua').lsp_definitions()
-            end,
-            desc = 'Goto Definition',
-        },
-        {
-            '<leader>gf',
-            function()
-                require('fzf-lua').lsp_finder()
-            end,
-            desc = 'LSP finder',
-        },
-        {
             '<leader>gi',
             function()
                 require('fzf-lua').lsp_implementations()
@@ -110,6 +82,12 @@ return {
             -- buffers = {
             --     formatter = 'path.filename_first',
             -- },
+            helptags = {
+                actions = {
+                    -- Open help pages in a vertical split.
+                    ['enter'] = require('fzf-lua.actions').help_vert,
+                },
+            },
             lsp = {
                 includeDeclaration = false, -- include current declaration in LSP context
                 symbols = {
