@@ -37,7 +37,6 @@ vim.diagnostic.config({
         end,
     },
     jump = { on_jump = vim.diagnostic.open_float },
-    -- TODO: choose lines or text
     virtual_lines = {
         current_line = true,
         severity = {
@@ -45,13 +44,6 @@ vim.diagnostic.config({
             vim.diagnostic.severity.ERROR,
         },
     },
-    -- virtual_text = {
-    --     current_line = true,
-    --     severity = {
-    --         vim.diagnostic.severity.WARN,
-    --         vim.diagnostic.severity.ERROR,
-    --     },
-    -- },
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -65,12 +57,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set({ 'n', 'x' }, '<leader>ss', function()
                 require('fzf-lua').lsp_document_symbols()
             end, { desc = 'List Symbols' })
-            vim.keymap.set(
-                { 'n', 'x' },
-                '<leader>sS',
-                '<cmd>FzfLua lsp_live_workspace_symbols<cr>',
-                { desc = 'List Workspace Symbols' }
-            )
+            vim.keymap.set({ 'n', 'x' }, '<leader>sS', function()
+                require('fzf-lua').lsp_live_workspace_symbols()
+            end, { desc = 'List Workspace Symbols' })
         end
 
         if client:supports_method('textDocument/definition') then
