@@ -6,7 +6,7 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-        animate = { enabled = true, duration = 10 },
+        animate = { enabled = false},
         bigfile = { enabled = true },
         dashboard = { enabled = false },
         image = { enabled = true },
@@ -17,7 +17,7 @@ return {
         quickfile = { enabled = true },
         scroll = { enabled = false },
         statuscolumn = { enabled = true },
-        scope = { enabled = true },
+        scope = { enabled = false },        -- already handled blink indent
         picker = {
             layout = { fullscreen = true },
             previewers = { diff = { builtin = false }, git = { builtin = false } },
