@@ -55,18 +55,19 @@ u.map('n', '<C-c><C-c>', '<cmd>close<cr>')
 --- Copy-paste
 u.map('n', '<leader>Y', 'gg"+yG', { desc = 'Copy whole file' })
 u.map('n', 'D', '"_dd', { noremap = true, silent = true, desc = 'Delete line without yanking' })
--- u.map({'n', 'v'}, 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
--- u.map('v', 'p', 'p`[=`]', { desc = 'Paste and indent' })
--- u.map('v', 'P', 'P`[=`]', { desc = 'Paste before and indent' })
-vim.keymap.set('n', 'P', '"+P')
-vim.keymap.set('n', 'p', '"+p')
+u.map({ 'n', 'v' }, 'p', 'p`[=`]', { desc = 'Paste and indent' })
+u.map({ 'n', 'v' }, 'P', 'P`[=`]', { desc = 'Paste before and indent' })
+
 -- always center search results
 vim.keymap.set('n', 'n', 'nzz', { silent = true })
 vim.keymap.set('n', 'N', 'Nzz', { silent = true })
 vim.keymap.set('n', '*', '*zz', { silent = true })
 vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
+
+-- always center previous/next jumps
+vim.keymap.set('n', '<C-o>', '<C-o>zz', { silent = true })
+vim.keymap.set('n', '<C-i>', '<C-i>zz', { silent = true })
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
