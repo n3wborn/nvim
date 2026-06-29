@@ -46,8 +46,8 @@ return {
             ['<C-y>'] = { 'select_and_accept', 'fallback' },
             ['<C-e>'] = { 'cancel', 'fallback' },
 
-            ['<Tab>'] = { 'select_next', 'fallback' },
-            ['<S-Tab>'] = { 'select_prev', 'fallback' },
+            ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
+            ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
             ['<Esc>'] = { 'cancel', 'hide_documentation', 'fallback' },
 
@@ -59,9 +59,12 @@ return {
             ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
         sources = {
-            default = { 'lsp', 'path', 'buffer', 'lazydev' },
+            default = { 'lsp', 'path', 'buffer', 'lazydev', 'snippets' },
             min_keyword_length = 0,
             providers = {
+                snippets = {
+                    max_items = 3,
+                },
                 lazydev = {
                     name = 'LazyDev',
                     module = 'lazydev.integrations.blink',

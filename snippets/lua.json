@@ -1,4 +1,10 @@
 {
+    "table": {
+        "prefix": "tbl",
+        "body": ["{\n\t${1}\n},"],
+        "description": "Add lua table brackets"
+
+    },
     "require": {
         "prefix": "req",
         "body": ["require(${1:module})"],
