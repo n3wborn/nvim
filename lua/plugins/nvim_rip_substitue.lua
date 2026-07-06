@@ -24,5 +24,13 @@ return {
             mode = { 'n', 'x' },
             desc = ' rip substitute',
         },
+        {
+            '<leader>fs',
+            function()
+                require('rip-substitute').sub()
+            end,
+            mode = { 'v' },
+            desc = ' rip substitute selected range',
+        },
     },
 }
