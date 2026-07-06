@@ -69,6 +69,18 @@ vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 vim.keymap.set('n', '<C-o>', '<C-o>zz', { silent = true })
 vim.keymap.set('n', '<C-i>', '<C-i>zz', { silent = true })
 
+-- always center page up/down
+vim.keymap.set('n', '<PageUp>', '<PageUp>zz', { silent = true })
+vim.keymap.set('n', '<PageDown>', '<PageDown>zz', { silent = true })
+
+-- always center Ctrl Up/Down
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
+
+-- always center Ctrl forward/backward
+vim.keymap.set('n', '<C-f>', '<C-f>zz', { silent = true })
+vim.keymap.set('n', '<C-b>', '<C-b>zz', { silent = true })
+
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
 
