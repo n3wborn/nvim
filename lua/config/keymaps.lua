@@ -69,10 +69,6 @@ vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 vim.keymap.set('n', '<C-o>', '<C-o>zz', { silent = true })
 vim.keymap.set('n', '<C-i>', '<C-i>zz', { silent = true })
 
--- always center page up/down
-vim.keymap.set('n', '<PageUp>', '<PageUp>zz', { silent = true })
-vim.keymap.set('n', '<PageDown>', '<PageDown>zz', { silent = true })
-
 -- always center Ctrl Up/Down
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
