@@ -1,5 +1,6 @@
+require('config.options')
 require('config.keymaps')
 require('config.autocommands')
-require('config.lsp')
-require('config.options')
 require('config.winbar')
+require('config.lsp')
+require('config.folding')
