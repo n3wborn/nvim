@@ -137,35 +137,6 @@ vim.api.nvim_create_autocmd('FocusGained', {
     desc = 'Close non-existing buffers',
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('my.treesitter.setup', { clear = true }),
-    callback = function(args)
-        local buf = args.buf
-
-        if vim.wo.diff then
-            return
-        end
-
-        local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype) or vim.bo[buf].filetype
-        local ok = pcall(vim.treesitter.start, buf, lang)
-
-        if ok then
-            vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end
-
-        vim.opt_local.foldmethod = 'expr'
-        vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.opt_local.foldtext = ''
-        vim.opt_local.fillchars = {
-            fold = ' ',
-            foldopen = '▾',
-            foldclose = '▸',
-            foldinner = ' ',
-            foldsep = ' ',
-        }
-    end,
-})
-
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()

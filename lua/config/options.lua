@@ -67,6 +67,13 @@ vim.opt.conceallevel = 2
 vim.opt.foldenable = true
 vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
+vim.opt.foldtext = ''
+
+vim.opt.fillchars:append({
+    foldopen = '',
+    foldclose = '',
+    foldsep = ' ',
+})
 
 vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
