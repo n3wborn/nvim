@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd('FocusGained', {
 
                 if valid and not exists and not special and not newbuf then
                     table.insert(closed, vim.fs.basename(name))
-                    vim.api.nvim_buf_delete(bufnr, { force = false })
+                    vim.api.nvim_buf_delete(bufnr, {})
                 end
             end
 
