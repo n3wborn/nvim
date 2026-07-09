@@ -77,6 +77,10 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
 vim.keymap.set('n', '<C-f>', '<C-f>zz', { silent = true })
 vim.keymap.set('n', '<C-b>', '<C-b>zz', { silent = true })
 
+-- always center forward/backward hunk
+vim.keymap.set('n', '<]-c>', '<]-c>zz', { silent = true })
+vim.keymap.set('n', '<[-c>', '<[-c>zz', { silent = true })
+
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })
 
