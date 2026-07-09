@@ -70,6 +70,7 @@ vim.opt.foldnestmax = 10
 vim.opt.foldtext = ''
 
 vim.opt.fillchars:append({
+    fold = ' ',
     foldopen = '',
     foldclose = '',
     foldsep = ' ',
