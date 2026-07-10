@@ -58,7 +58,6 @@ vim.api.nvim_create_autocmd('FileType', {
         'man',
         'Navbuddy',
         'notify',
-        'oil',
         'PlenaryTestPopup',
         'qf',
         'spectre_panel',
@@ -159,7 +158,6 @@ vim.api.nvim_create_autocmd('User', {
         local ignored_filetypes = {
             'NeogitStatus',
             'NeogitCommitMessage',
-            'oil',
             'snacks_dashboard',
         }
 
@@ -168,7 +166,7 @@ vim.api.nvim_create_autocmd('User', {
             local bt = vim.bo[buf].buftype
 
             if bt ~= '' or vim.tbl_contains(ignored_filetypes, ft) then
-                vim.api.nvim_buf_delete(buf, { force = true })
+                vim.api.nvim_buf_delete(buf, {})
             end
         end
     end,
