@@ -92,6 +92,39 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
+vim.api.nvim_create_autocmd('FocusGained', {
+    group = aug,
+    callback = function()
+        vim.schedule(function()
+            local closed = {}
+            local current = vim.api.nvim_get_current_buf()
+
+            for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+                local bufnr = buf.bufnr
+                local name = buf.name
+
+                local valid = vim.api.nvim_buf_is_valid(bufnr)
+                local exists = name ~= '' and vim.uv.fs_stat(name)
+                local special = vim.bo[bufnr].buftype ~= ''
+                local newbuf = name == ''
+
+                if valid and not exists and not special and not newbuf then
+                    table.insert(closed, vim.fs.basename(name))
+                    vim.api.nvim_buf_delete(bufnr, {})
+                end
+            end
+
+            if #closed > 0 then
+                vim.notify(table.concat(closed, '\n'), nil, {
+                    title = 'Buffers closed',
+                    icon = '󰅗',
+                })
+            end
+        end)
+    end,
+    desc = 'Close non-existing buffers',
+})
+
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()
