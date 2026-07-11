@@ -1,16 +1,5 @@
 local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
 
-vim.api.nvim_create_autocmd('FileType', {
-    group = aug,
-    callback = function(ctx)
-        if vim.bo[ctx.buf].buftype ~= '' then
-            return
-        end
-        vim.cmd([[silent! normal! g`"]])
-    end,
-    desc = 'Restore cursor position',
-})
-
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose', 'TermLeave' }, {
     group = aug,
     callback = function(ev)

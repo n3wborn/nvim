@@ -5,23 +5,8 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 vim.g.sessions_enabled = true
 
-local disabled_builtins = {
-    'gzip',
-    'matchit',
-    'matchparen',
-    'netrwPlugin',
-    'tarPlugin',
-    'tohtml',
-    'tutor',
-    'zipPlugin',
-}
-
-for _, plugin in ipairs(disabled_builtins) do
-    vim.g['loaded_' .. plugin] = 1
-end
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         'git',
         'clone',
@@ -34,6 +19,23 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup({
+    performance = {
+        cache = {
+            enabled = true,
+        },
+        rtp = {
+            disabled_plugins = {
+                'gzip',
+                'tarPlugin',
+                'tohtml',
+                'zipPlugin',
+                'netrwPlugin',
+                'matchit',
+                'matchparen',
+                'tutor',
+            },
+        },
+    },
     spec = {
         { import = 'plugins' },
     },
@@ -45,7 +47,7 @@ require('lazy').setup({
         missing = true,
         colorscheme = { 'catppuccin' },
     },
-    checker = { enabled = true },
+    checker = { enabled = false },
     rocks = { enabled = false },
 })
 
