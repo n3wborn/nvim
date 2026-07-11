@@ -1,16 +1,5 @@
 local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
 
-vim.api.nvim_create_autocmd('FileType', {
-    group = aug,
-    callback = function(ctx)
-        if vim.bo[ctx.buf].buftype ~= '' then
-            return
-        end
-        vim.cmd([[silent! normal! g`"]])
-    end,
-    desc = 'Restore cursor position',
-})
-
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose', 'TermLeave' }, {
     group = aug,
     callback = function(ev)
@@ -101,39 +90,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.hl.hl_op()
     end,
-})
-
-vim.api.nvim_create_autocmd('FocusGained', {
-    group = aug,
-    callback = function()
-        vim.schedule(function()
-            local closed = {}
-            local current = vim.api.nvim_get_current_buf()
-
-            for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-                local bufnr = buf.bufnr
-                local name = buf.name
-
-                local valid = vim.api.nvim_buf_is_valid(bufnr)
-                local exists = name ~= '' and vim.uv.fs_stat(name)
-                local special = vim.bo[bufnr].buftype ~= ''
-                local newbuf = name == ''
-
-                if valid and not exists and not special and not newbuf then
-                    table.insert(closed, vim.fs.basename(name))
-                    vim.api.nvim_buf_delete(bufnr, {})
-                end
-            end
-
-            if #closed > 0 then
-                vim.notify(table.concat(closed, '\n'), nil, {
-                    title = 'Buffers closed',
-                    icon = '󰅗',
-                })
-            end
-        end)
-    end,
-    desc = 'Close non-existing buffers',
 })
 
 vim.api.nvim_create_autocmd('User', {

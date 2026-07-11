@@ -35,20 +35,6 @@ return {
             end,
             desc = 'Find Files',
         },
-        {
-            '<c-x><c-f>',
-            function()
-                require('fzf-lua').complete_path({
-                    file_icons = true,
-                    git_icons = true,
-                    color_icons = true,
-                    multiprocess = true,
-                    winopts = { fullscreen = false },
-                })
-            end,
-            mode = { 'i', 'x' },
-            desc = 'Complete Path',
-        },
     },
     ---@type fzf-lua.Config
     opts = function()

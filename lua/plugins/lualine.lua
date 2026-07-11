@@ -4,7 +4,7 @@ return {
     ---@diagnostic disable-next-line: assign-type-mismatch
     {
         'nvim-lualine/lualine.nvim',
-        event = 'VeryLazy',
+        event = 'UIEnter',
         opts = function(_, opts)
             -- Custom components
             local icons = require('config.icons')
