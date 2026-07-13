@@ -4,6 +4,10 @@ return {
     name = 'catppuccin',
     priority = 1000,
     opts = {
+        transparent_background = true,
+        float = {
+            transparent = true,
+        },
         auto_integrations = true,
         integrations = {
             blink_cmp = {
