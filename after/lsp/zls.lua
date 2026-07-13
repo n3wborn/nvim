@@ -10,6 +10,7 @@ return {
     --
     -- Further information on how to configure ZLS:
     -- https://zigtools.org/zls/configure/
+    ---@type lspconfig.settings.zls
     settings = {
         zls = {
             -- Whether to enable build-on-save diagnostics
@@ -19,7 +20,7 @@ return {
             -- enable_build_on_save = true,
 
             -- omit the following line if `zig` is in your PATH
-            zig_exe_path = '~/bin/zig-v0.15.1',
+            zig_exe_path = '~/bin/zig-x86_64-linux-0.16.0/zig',
         },
     },
 }
