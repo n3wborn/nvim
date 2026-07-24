@@ -97,7 +97,6 @@ vim.api.nvim_create_autocmd('FocusGained', {
     callback = function()
         vim.schedule(function()
             local closed = {}
-            local current = vim.api.nvim_get_current_buf()
 
             for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
                 local bufnr = buf.bufnr
