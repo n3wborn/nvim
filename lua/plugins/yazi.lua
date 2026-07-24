@@ -21,12 +21,16 @@ return {
     opts = {
         -- if you want to open yazi instead of netrw, see below for more info
         open_for_directories = true,
+        integrations = {
+            bufdelete_implementation = 'bundled-snacks',
+            grep_in_directory = 'fzf-lua',
+        },
         keymaps = {
             show_help = '<f1>',
             open_file_in_vertical_split = '<c-v>',
             open_file_in_horizontal_split = '<c-s>',
             open_file_in_tab = '<c-t>',
-            grep_in_directory = false,
+            grep_in_directory = '<c-f>',
             cycle_open_buffers = '<tab>',
             copy_relative_path_to_selected_files = '<c-y>',
             send_to_quickfix_list = '<c-q>',
