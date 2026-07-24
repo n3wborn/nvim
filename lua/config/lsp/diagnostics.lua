@@ -39,7 +39,6 @@ function M.setup()
                 return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
             end,
         },
-        jump = { on_jump = vim.diagnostic.open_float },
         virtual_lines = {
             current_line = true,
             severity = {
