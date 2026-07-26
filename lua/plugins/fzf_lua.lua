@@ -51,7 +51,6 @@ return {
             },
             keymap = {
                 fzf = {
-                    ['ctrl-q'] = 'select-all+accept',
                     ['ctrl-u'] = 'half-page-up',
                     ['ctrl-d'] = 'half-page-down',
                     ['ctrl-x'] = 'jump',
@@ -68,6 +67,13 @@ return {
             -- buffers = {
             --     formatter = 'path.filename_first',
             -- },
+            actions = {
+                files = {
+                    -- Select all + send to quickfix (works with both fzf and skim,
+                    -- unlike a hand-written `select-all+accept` bind in keymap.fzf).
+                    ['ctrl-q'] = { fn = fzf_lua.actions.file_sel_to_qf, prefix = 'select-all' },
+                },
+            },
             helptags = {
                 actions = {
                     -- Open help pages in a vertical split.
