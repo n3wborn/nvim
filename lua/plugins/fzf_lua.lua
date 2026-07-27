@@ -69,6 +69,15 @@ return {
             -- },
             actions = {
                 files = {
+                    ['enter'] = FzfLua.actions.file_edit_or_qf,
+                    ['ctrl-s'] = FzfLua.actions.file_split,
+                    ['ctrl-v'] = FzfLua.actions.file_vsplit,
+                    ['ctrl-t'] = FzfLua.actions.file_tabedit,
+                    ['alt-q'] = FzfLua.actions.file_sel_to_qf,
+                    ['alt-Q'] = FzfLua.actions.file_sel_to_ll,
+                    ['alt-i'] = FzfLua.actions.toggle_ignore,
+                    ['alt-h'] = FzfLua.actions.toggle_hidden,
+                    ['alt-f'] = FzfLua.actions.toggle_follow,
                     -- Select all + send to quickfix (works with both fzf and skim,
                     -- unlike a hand-written `select-all+accept` bind in keymap.fzf).
                     ['ctrl-q'] = { fn = fzf_lua.actions.file_sel_to_qf, prefix = 'select-all' },
