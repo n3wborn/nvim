@@ -1,25 +1,5 @@
 local aug = vim.api.nvim_create_augroup('my.config', { clear = true })
 
-vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose', 'TermLeave' }, {
-    group = aug,
-    callback = function(ev)
-        if vim.fn.getcmdwintype() ~= '' then
-            return
-        end
-
-        if ev.event == 'FocusGained' or ev.event == 'TermClose' or ev.event == 'TermLeave' then
-            vim.cmd('checktime')
-            return
-        end
-
-        local bo = vim.bo[ev.buf]
-        if bo.buftype == '' and not bo.modified and vim.api.nvim_buf_get_name(ev.buf) ~= '' then
-            vim.cmd('checktime ' .. ev.buf)
-        end
-    end,
-    desc = 'Auto reload files changed on disk',
-})
-
 vim.api.nvim_create_autocmd('VimResized', {
     group = aug,
     callback = function()
@@ -92,38 +72,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-vim.api.nvim_create_autocmd('FocusGained', {
-    group = aug,
-    callback = function()
-        vim.schedule(function()
-            local closed = {}
-
-            for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-                local bufnr = buf.bufnr
-                local name = buf.name
-
-                local valid = vim.api.nvim_buf_is_valid(bufnr)
-                local exists = name ~= '' and vim.uv.fs_stat(name)
-                local special = vim.bo[bufnr].buftype ~= ''
-                local newbuf = name == ''
-
-                if valid and not exists and not special and not newbuf then
-                    table.insert(closed, vim.fs.basename(name))
-                    vim.api.nvim_buf_delete(bufnr, {})
-                end
-            end
-
-            if #closed > 0 then
-                vim.notify(table.concat(closed, '\n'), nil, {
-                    title = 'Buffers closed',
-                    icon = '󰅗',
-                })
-            end
-        end)
-    end,
-    desc = 'Close non-existing buffers',
-})
-
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()
@@ -138,4 +86,23 @@ vim.api.nvim_create_autocmd('User', {
         end)
     end,
     desc = 'Restore last current dir (or last) session',
+})
+
+-- taken from https://github.com/BurntSushi/dotfiles/blob/master/.config/nvim/lua/autos.lua
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'BufWinEnter', 'CursorHold', 'CursorHoldI' }, {
+    callback = function()
+        if vim.fn.mode() ~= 'c' then
+            vim.cmd.checktime()
+        end
+    end,
+    desc = 'Force reload of files that change on disk outside of vim (see also autoread in options.lua)',
+})
+
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+    callback = function()
+        vim.cmd.echohl('WarningMsg')
+        vim.cmd.echo([["File changed on disk. Buffer reloaded."]])
+        vim.cmd.echohl('None')
+    end,
+    desc = 'Emits a warning if the file changed.',
 })

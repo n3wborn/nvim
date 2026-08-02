@@ -36,6 +36,7 @@ vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
 
+vim.o.autoread = true
 vim.o.autowrite = true
 vim.o.autowriteall = true
 
