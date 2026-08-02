@@ -5,6 +5,34 @@ return {
     build = function()
         require('fff.download').download_or_build_binary()
     end,
+    keys = {
+        {
+            'ff',
+            function()
+                require('fff').find_files()
+            end,
+            desc = '[FFF] Find Files',
+        },
+        {
+            '<space>sp',
+            function()
+                require('fff').live_grep()
+            end,
+            desc = '[FFF] Live grep',
+        },
+        {
+            '<space>sd',
+            function()
+                local word = vim.fn.expand('<cword>')
+                if word == '' then
+                    word = vim.fn.expand('<cWORD>')
+                end
+
+                require('fff').live_grep({ query = word })
+            end,
+            desc = '[FFF] Search Current Word',
+        },
+    },
     opts = {
         layout = {
             height = 0.9,
