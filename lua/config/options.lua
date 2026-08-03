@@ -70,6 +70,9 @@ vim.opt.foldlevel = 10
 vim.opt.foldnestmax = 10
 vim.opt.foldtext = ''
 
+-- needed for tree-sitter aware commenting
+vim.opt.commentstring = ''
+
 vim.opt.fillchars:append({
     fold = ' ',
     foldopen = '',
