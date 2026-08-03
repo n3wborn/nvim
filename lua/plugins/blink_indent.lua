@@ -1,7 +1,7 @@
 ---@module "blink.indent"
 ---@module "lazy"
 
----@type LazySpec
+---@type LazyPluginSpec
 return {
     'saghen/blink.indent',
     event = 'BufRead',
