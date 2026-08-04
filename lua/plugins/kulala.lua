@@ -2,8 +2,6 @@
 ---@type LazyPluginSpec
 return {
     'mistweaverco/kulala.nvim',
-    -- Load before session save/restore so VimLeavePre and SessionLoadPost hooks are registered.
-    event = { 'SessionLoadPost', 'VimLeavePre' },
     ft = { 'rest', 'http' },
     ---@type KulalaDefaultConfig
     keys = {

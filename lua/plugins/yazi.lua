@@ -4,11 +4,16 @@ return {
     dependencies = {
         { 'nvim-lua/plenary.nvim', lazy = true },
     },
-    event = 'VeryLazy',
     cmd = {
         'Yazi',
     },
     keys = {
+        {
+            '-',
+            mode = { 'n' },
+            '<cmd>Yazi<cr>',
+            desc = 'Open yazi at the current file',
+        },
         {
             '<leader>e',
             mode = { 'n', 'v' },
