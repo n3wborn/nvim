@@ -4,7 +4,7 @@
 ---@type LazyPluginSpec
 return {
     'saghen/blink.indent',
-    event = 'BufRead',
+    event = 'BufWinEnter',
     --- @type blink.indent.Config
     opts = {
         blocked = { buftypes = { include_defaults = true }, filetypes = { include_defaults = true } },

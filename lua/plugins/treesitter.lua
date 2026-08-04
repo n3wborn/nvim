@@ -10,7 +10,7 @@
 ---@type LazyPluginSpec
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufEnter', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufNewFile' },
     build = ':TSUpdate',
     config = function()
         local languages = {
@@ -81,8 +81,8 @@ return {
                 -- Try to start highlighting
                 local ok, _ = pcall(vim.treesitter.start, buf, lang)
 
-                if ok then
-                    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                if not ok then
+                    return
                 end
 
                 vim.opt.foldmethod = 'expr'
