@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             'phpantom',
             'tsgo',
             'taplo',
+            'ty',
             'twiggy-language-server',
             'v_analyzer',
             'zls',
