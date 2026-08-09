@@ -75,8 +75,8 @@ vim.opt.commentstring = ''
 
 vim.opt.fillchars:append({
     fold = ' ',
-    foldopen = '',
-    foldclose = '',
+    foldopen = '',
+    foldclose = '',
     foldsep = ' ',
 })
 
