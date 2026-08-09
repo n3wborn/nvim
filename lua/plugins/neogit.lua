@@ -26,5 +26,11 @@ return {
                 folded = false,
             },
         },
+        signs = {
+            -- { CLOSED, OPENED }
+            hunk = { '', '' },
+            item = { '', '' },
+            section = { '', '' },
+        },
     },
 }
