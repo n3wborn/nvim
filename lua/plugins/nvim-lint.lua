@@ -11,6 +11,7 @@ return {
             javascript = { 'eslint_d' },
             javascriptreact = { 'eslint_d' },
             php = { 'php' },
+            python = { 'ruff' },
             typescript = { 'eslint_d' },
             typescriptreact = { 'eslint_d' },
             zig = { 'zlint' },
