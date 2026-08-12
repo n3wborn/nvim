@@ -12,9 +12,6 @@ return {
         },
         formatters_by_ft = {
             go = { 'gofmt' },
-            --- @todo: find a way to deal with work projects related config
-            -- javascript = { { 'eslint_d', 'eslint', 'prettier_d', 'prettier' } },
-            -- json = { 'jq' },
             lua = { 'stylua' },
             markdown = { 'rumdl' },
             php = { 'php_cs_fixer' },
@@ -29,14 +26,33 @@ return {
             rust = { 'rustfmt' },
             sh = { 'shfmt', 'shellcheck' },
             sql = { 'sql_formatter' },
-            typescript = { 'eslint_d', 'eslint' },
-            typescriptreact = { 'eslint_d', 'eslint' },
             twig = { 'twig-cs-fixer' },
             v = { 'v' },
+
+            -- https://oxc.rs/
+            javascript = { 'oxfmt' },
+            javascriptreact = { 'oxfmt' },
+            typescript = { 'oxfmt' },
+            typescriptreact = { 'oxfmt' },
+            json = { 'oxfmt' },
+            jsonc = { 'oxfmt' },
+            vue = { 'oxfmt' },
+
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
         format_on_save = { async = false, timeout_ms = 2000, lsp_format = 'never' },
         formatters = {
+            oxfmt = {
+                command = function(_, ctx)
+                    local local_oxfmt = vim.fs.find('node_modules/.bin/oxfmt', {
+                        upward = true,
+                        path = ctx.dirname,
+                        type = 'file',
+                    })[1]
+
+                    return local_oxfmt or 'oxfmt'
+                end,
+            },
             php_cs_fixer = {
                 env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
                 args = function(_, ctx)
