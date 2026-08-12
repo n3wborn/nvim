@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             'kotlin_lsp',
             'marksman',
             'mpls',
-            'oxfmt',
+            'oxlint',
             -- 'intelephense',
             'phpantom',
             'tsgo',

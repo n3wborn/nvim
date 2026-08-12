@@ -8,12 +8,8 @@ return {
         events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
         linters_by_ft = {
             gitcommit = { 'gitlint' },
-            javascript = { 'eslint_d' },
-            javascriptreact = { 'eslint_d' },
             php = { 'php', 'phpcs' },
             python = { 'ruff' },
-            typescript = { 'eslint_d' },
-            typescriptreact = { 'eslint_d' },
             zig = { 'zlint' },
         },
         linters = {},
