@@ -121,6 +121,16 @@ end, {
 -- autosave
 vim.keymap.set('n', '<leader>as', ':ToggleAutoWrite<CR>', { desc = 'ToggleAutowrite' })
 
+-- Format on save
+u.command('ToggleFormatOnSave', function()
+    vim.g.disable_autoformat = not vim.g.disable_autoformat
+    vim.notify('format on save: ' .. (vim.g.disable_autoformat and 'disabled' or 'enabled'), vim.log.levels.INFO)
+end, {
+    desc = 'Toggle format on save',
+})
+
+vim.keymap.set('n', '<leader>aF', ':ToggleFormatOnSave<CR>', { desc = 'Toggle format on save' })
+
 -- undotree
 u.map('n', '<leader>U', u.undotree)
 
