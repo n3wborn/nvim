@@ -40,7 +40,12 @@ return {
 
             ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
         },
-        format_on_save = { async = false, timeout_ms = 2000, lsp_format = 'never' },
+        format_on_save = function(bufnr)
+            if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
+            end
+            return { async = false, timeout_ms = 2000, lsp_format = 'never' }
+        end,
         formatters = {
             oxfmt = {
                 command = function(_, ctx)
