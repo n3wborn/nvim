@@ -1,78 +1,106 @@
 -- global settings
+vim.g.blink_enabled = true
+vim.g.lsp_inlay_hints = false
+
+-- tabs / indent
 local indent = 4
-vim.opt.shiftwidth = indent
-vim.opt.tabstop = indent
-vim.opt.expandtab = true
-vim.opt.smartindent = true
-vim.opt.cursorlineopt = 'both'
-vim.opt.list = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.wrap = false
+vim.o.shiftwidth = indent
+vim.o.tabstop = indent
+vim.o.expandtab = true
+vim.o.smartindent = true
 
-vim.opt.undofile = true
-vim.opt.undodir = vim.fn.expand('~') .. '/.local/share/nvim/undo'
+-- smart case search
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-vim.opt.shortmess = 'filnxtToOFWIcC'
-vim.opt.hidden = true
-vim.opt.ignorecase = true
-vim.opt.joinspaces = false
-vim.opt.shiftround = true
-vim.opt.smartcase = true
-vim.opt.inccommand = 'nosplit'
-vim.opt.errorbells = false
-vim.opt.swapfile = false
-vim.opt.showbreak = '↪'
-vim.opt.colorcolumn = '120'
-vim.opt.shada = "!,'100,<50,s10,h,:1000,/1000"
-vim.opt.clipboard = 'unnamedplus'
+-- default "ltToOCF"
+vim.opt.shortmess:append({
+    w = true,
+    s = true,
+})
 
+-- backup
+vim.o.backup = true
+vim.o.backupdir = vim.fn.stdpath('state') .. '/backup'
+
+-- undo / swap
+vim.o.undofile = true
+vim.o.undodir = vim.fn.expand('~') .. '/.local/share/nvim/undo'
+vim.o.swapfile = false
+
+-- When jumping through the call stack, try to switch to the buffer
+-- if already open in a window, else use the last window to open the buffer.
+vim.o.switchbuf = 'usetab,uselast'
+
+-- split
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.splitkeep = 'screen'
+vim.o.equalalways = true
+
+vim.o.shada = "!,'100,<50,s10,h,:1000,/1000"
+
+-- use system clipboard
+vim.o.clipboard = 'unnamedplus'
+
+-- completion
 vim.opt.completeopt = { 'menuone', 'noinsert', 'preview' }
-vim.opt.completetimeout = 100 -- Limit sources delay
-vim.opt.pumheight = 25
-vim.opt.pumblend = 10
+vim.o.completetimeout = 100 -- Limit sources delay
+vim.o.pumheight = 25
+vim.o.pumblend = 10
 vim.opt.wildmode = { 'longest:full', 'full' }
 vim.opt.wildignore:append(
     '*.png,*.jpg,*.jpeg,*.gif,*.wav,*.aiff,*.dll,*.pdb,*.mdb,*.so,*.swp,*.zip,*.gz,*.bz2,*.meta,*.svg,*.cache,*/.git/*'
 )
 
+-- auto read / write
 vim.o.autoread = true
 vim.o.autowrite = true
 vim.o.autowriteall = true
 
-vim.opt.guifont = 'FiraCode Nerd Font Regular'
-vim.opt.termguicolors = true
+-- fold
+vim.o.foldenable = true
+vim.o.foldlevelstart = 99
+vim.o.foldnestmax = 10
+vim.wo.foldtext = ''
 
-vim.opt.winwidth = 10
-vim.opt.winborder = 'rounded'
+-- disable folding in diff
+vim.opt.diffopt:append('followwrap,vertical,context:99')
 
-vim.opt.redrawtime = 3000
-vim.opt.updatetime = 100
-
-vim.opt.backup = true
-vim.opt.cmdheight = 0
-vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
-vim.opt.switchbuf = 'usetab'
-
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.splitkeep = 'screen'
-vim.opt.equalalways = true
-
-vim.opt.smoothscroll = true
-vim.opt.scrollbind = false
-vim.opt.scrolloffpad = 1
-
-vim.opt.conceallevel = 2
-
-vim.opt.foldenable = true
-vim.opt.foldlevel = 10
-vim.opt.foldnestmax = 10
-vim.opt.foldtext = ''
+-- format
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+vim.g.autoformat = true
 
 -- needed for tree-sitter aware commenting
-vim.opt.commentstring = ''
+vim.o.commentstring = ''
 
+-- conceal
+vim.o.conceallevel = 2
+
+-- window
+vim.o.winwidth = 10
+vim.o.winborder = 'rounded'
+
+-- line numbers
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.wrap = false
+
+-- update / redraw screen
+vim.o.redrawtime = 3000
+vim.o.updatetime = 100
+
+-- show column limit
+vim.o.colorcolumn = '120'
+
+-- highligh screenline and numberline
+vim.o.cursorlineopt = 'both'
+
+-- gui
+vim.o.guifont = 'FiraCode Nerd Font Regular'
+vim.o.termguicolors = true
+
+-- UI characters
 vim.opt.fillchars:append({
     fold = ' ',
     foldopen = '',
@@ -80,5 +108,14 @@ vim.opt.fillchars:append({
     foldsep = ' ',
 })
 
-vim.g.blink_enabled = true
-vim.g.lsp_inlay_hints = false
+-- show a ~ char on wrapped line
+vim.o.showbreak = '↪'
+
+-- Status line
+vim.o.laststatus = 3
+vim.o.cmdheight = 1
+
+-- scroll
+vim.o.smoothscroll = true
+vim.o.scrollbind = false
+vim.o.scrolloffpad = 1
