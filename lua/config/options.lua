@@ -17,6 +17,7 @@ vim.o.smartcase = true
 vim.opt.shortmess:append({
     w = true,
     s = true,
+    I = true,
 })
 
 -- backup
