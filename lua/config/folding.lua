@@ -12,19 +12,19 @@ function M.setup(bufnr)
 
     local win = vim.wo
 
+    if has_ts_parser(bufnr) then
+        win.foldmethod = 'expr'
+        win.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.opt_local.foldtext = ''
+        return
+    end
+
     for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
         if client:supports_method('textDocument/foldingRange') then
             win.foldmethod = 'expr'
             win.foldexpr = 'v:lua.vim.lsp.foldexpr()'
             return
         end
-    end
-
-    if has_ts_parser(bufnr) then
-        win.foldmethod = 'expr'
-        win.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.opt_local.foldtext = ''
-        return
     end
 
     win.foldmethod = 'indent'
