@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd('User', {
         end
 
         vim.schedule(function()
-            require('persistence').load()
+            require('config.sessions').load()
         end)
     end,
     desc = 'Restore last current dir (or last) session',
