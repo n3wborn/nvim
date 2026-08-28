@@ -37,6 +37,25 @@ u.map('n', '<leader>gu', ':diffget //2<cr>')
 -- Lazy UI
 u.map('n', '<leader>L', '<cmd>Lazy<cr>')
 
+--- Sessions
+if vim.g.sessions_enabled then
+    u.map('n', '<leader>qL', function()
+        require('config.sessions').load()
+    end, { desc = 'Load Session' })
+    u.map('n', '<leader>qS', function()
+        require('config.sessions').save()
+    end, { desc = 'Save Session' })
+    u.map('n', '<leader>qs', function()
+        require('config.sessions').select()
+    end, { desc = 'Select Session' })
+    u.map('n', '<leader>ql', function()
+        require('config.sessions').load({ last = true })
+    end, { desc = 'Restore Last Session' })
+    u.map('n', '<leader>qd', function()
+        require('config.sessions').stop()
+    end, { desc = "Don't Save Current Session" })
+end
+
 --- keep text selected after indentation
 u.map('v', '<', '<gv')
 u.map('v', '>', '>gv')
