@@ -8,7 +8,7 @@ return {
         events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
         linters_by_ft = {
             gitcommit = { 'gitlint' },
-            php = { 'php', 'phpcs' },
+            php = { 'php' },
             python = { 'ruff' },
             zig = { 'zlint' },
         },
