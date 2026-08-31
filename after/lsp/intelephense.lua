@@ -5,17 +5,15 @@ return {
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
         local buf_dir = vim.fs.dirname(fname)
-
-        -- Walk upward and collect ALL matches, not just the first one
         local markers = { '.git', 'composer.json' }
+
         local found = vim.fs.find(markers, {
             upward = true,
             path = buf_dir,
-            -- Don't stop at the first match: find them all up to /
             limit = math.huge,
         })
 
-        -- Pick the topmost (closest to /) match
+        -- Pick the topmost match
         local root = nil
         for _, match in ipairs(found) do
             local dir = vim.fs.dirname(match)
@@ -33,7 +31,28 @@ return {
     settings = {
         intelephense = {
             files = {
-                maxSize = 20 * 1024 * 1024, -- 20Mo
+                maxSize = 300 * 1024 * 1024, -- 300Mo
+                exclude = {
+                    '**/.git/**',
+                    '**/.svn/**',
+                    '**/.hg/**',
+                    '**/CVS/**',
+                    '**/.DS_Store/**',
+                    '**/node_modules/**',
+                    '**/bower_components/**',
+                    '**/vendor/**/{Tests,tests}/**',
+                    '**/.history/**',
+                    '**/vendor/**/vendor/**',
+                    '**/var/log/**',
+                    '**/var/storage/**',
+                    '**/var/tmp/**',
+                    '**/var/cache/*/Container*/**',
+                    '**/var/cache/*/Symfony/**',
+                    '**/var/cache/*/pools/**',
+                    '**/var/cache/*/profiler/**',
+                    '**/dumps/**',
+                    '**/.pnpm-store/**',
+                },
             },
             telemetry = {
                 enabled = false,
@@ -54,13 +73,21 @@ return {
                 deprecated = true,
                 exclude = {
                     ['**/vendor/**'] = { '*' }, -- override this by setting `**/vendor/** = {}`
+                    -- Classes Propel générées (bin/console surface:propel:build --om),
+                    -- gitignorées, jamais éditées à la main : lib/model/<schema>/om|map/
+                    -- et src/**/Model/<schema>/om|map/. Les diagnostics dessus ne sont
+                    -- que du bruit (elles ne sont pas indexées comme fichiers "vendor").
+                    ['**/lib/model/**/om/**'] = { '*' },
+                    ['**/lib/model/**/map/**'] = { '*' },
+                    ['**/src/**/Model/**/om/**'] = { '*' },
+                    ['**/src/**/Model/**/map/**'] = { '*' },
                 },
                 implementationErrors = true,
                 noMixedTypeCheck = true,
                 relaxedTypeCheck = true,
                 run = 'onSave',
             },
-            maxMemory = 1024,
+            maxMemory = 4096,
             inlayHint = {
                 parameterNames = true,
                 parameterTypes = true,
