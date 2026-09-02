@@ -11,10 +11,10 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             'marksman',
             'mpls',
             'oxlint',
+            -- TODO: replace static php LSP choice by a function
             -- 'intelephense',
-            'phpantom',
-            -- `npm install -g typescript typescript-language-server`
-            -- ts_go is no longer needed since typescript v7.0
+            'php_lsp',
+            -- 'phpantom',
             'ts_ls',
             'taplo',
             'ty',
