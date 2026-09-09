@@ -14,6 +14,7 @@ vim.filetype.add({
         ['compose.yaml'] = 'yaml.docker-compose',
         ['.env'] = 'dotenv',
         ['vifmrc'] = 'vim',
+        ['.tmux.conf'] = 'bash',
     },
 
     pattern = {
