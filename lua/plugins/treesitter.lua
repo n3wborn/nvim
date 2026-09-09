@@ -54,6 +54,7 @@ return {
             'svelte',
             'toml',
             'tsx',
+            'tmux',
             'twig',
             'typescript',
             'vim',
