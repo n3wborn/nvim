@@ -1,0 +1,27 @@
+{
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+    "runtime": {
+        "version": "LuaJIT"
+    },
+    "workspace": {
+        "checkThirdParty": false,
+        "library": [
+            "$VIMRUNTIME",
+            "${3rd}/luv/library",
+            "$HOME/.local/share/nvim/lazy"
+        ],
+        "preloadFileSize": 1000
+    },
+    "diagnostics": {
+        "globals": ["vim"],
+        "unusedLocalExclude": ["_*"],
+        "unusedParamExclude": ["_*"],
+        "disable": ["missing-fields", "inject-field"]
+    },
+    "completion": {
+        "autoRequire": false
+    },
+    "codeLens": {
+        "enable": false
+    }
+}
