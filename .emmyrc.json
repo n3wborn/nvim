@@ -1,27 +1,45 @@
 {
     "$schema": "https://raw.githubusercontent.com/EmmyLuaLs/emmylua-analyzer-rust/refs/heads/main/crates/emmylua_code_analysis/resources/schema.json",
-    "runtime": {
-        "version": "LuaJIT",
-        "requirePattern": [
-            "lua/?.lua",
-            "lua/?/init.lua"
-        ]
+    "codeAction": {
+        "insertSpace": true
+    },
+    "completion": {
+        "autoRequire": false
     },
     "diagnostics": {
-        "enable": true,
         "disable": [
             "unnecessary-if",
             "await-in-sync",
-            "global-in-non-module"
-        ]
-    },
-    "workspace": {
-        "library": [
-            "$VIMRUNTIME"
+            "global-in-non-module",
+            "call-non-callable",
+            "missing-fields",
+            "inject-field"
         ],
-        "preloadFileSize": 1000
+        "enable": true,
+        "globals": ["vim"]
+    },
+    "doc": {
+        "privateName": ["^_"]
+    },
+    "format": {
+        "externalTool": {
+            "args": ["-", "--stdin-filepath", "${file}"],
+            "program": "stylua"
+        }
     },
     "hint": {
         "enable": true
+    },
+    "runtime": {
+        "requirePattern": ["lua/?.lua", "lua/?/init.lua"],
+        "version": "LuaJIT"
+    },
+    "strict": {
+        "arrayIndex": true,
+        "typeCall": true
+    },
+    "workspace": {
+        "library": ["$VIMRUNTIME", "${3rd}/luv/library", "$HOME/.local/share/nvim/lazy"],
+        "preloadFileSize": 1000
     }
 }
