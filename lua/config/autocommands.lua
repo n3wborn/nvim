@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd('WinLeave', {
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = aug,
     callback = function()
-        vim.hl.hl_op()
+        vim.hl.on_yank()
     end,
 })
 
