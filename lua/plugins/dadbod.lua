@@ -63,7 +63,6 @@ return {
         'saghen/blink.cmp',
         opts = {
             sources = {
-                default = { 'lsp', 'path', 'buffer' },
                 per_filetype = {
                     sql = { 'dadbod', 'buffer' },
                 },

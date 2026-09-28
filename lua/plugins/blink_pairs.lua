@@ -7,9 +7,6 @@ return {
     dependencies = {
         'saghen/blink.lib',
     },
-    init = function()
-        vim.g.blink_pairs = true
-    end,
     build = function()
         ---@as blink.lib.Task
         require('blink.pairs').build():pwait(60000)
@@ -28,7 +25,7 @@ return {
         },
         highlights = {
             enabled = true,
-            -- requires require('vim._extui').enable({}), otherwise has no effect
+            -- requires require('vim._core.ui2').enable() (see init.lua), otherwise has no effect
             cmdline = true,
             groups = {
                 'BlinkPairsPurple',
