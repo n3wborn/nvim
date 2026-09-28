@@ -10,7 +10,7 @@ function M.setup()
     -- Require once (assumes this runs after the plugin is loaded)
     local select = require('nvim-treesitter-textobjects.select')
     local move = require('nvim-treesitter-textobjects.move')
-    local swap = require('nvim-treesitter-textobjects.swap')
+    -- local swap = require('nvim-treesitter-textobjects.swap')
     local rep = require('nvim-treesitter-textobjects.repeatable_move')
 
     -- Factories (return a function for vim.keymap.set)
@@ -32,11 +32,9 @@ function M.setup()
         end
     end
 
-    local sw = function(method, capture)
-        return function()
-            swap[method](capture)
-        end
-    end
+    -- local sw = function(method, capture)
+    --     return function()
+    --         swap[method](capture)
 
     -- Disable built-in ftplugin mappings. Probably not needed sine we did it in init()
     -- vim.g.no_plugin_maps = true
@@ -51,10 +49,10 @@ function M.setup()
     }
 
     -- Swap
-    local swap_maps = {
-        { 'n', '<leader>a', sw('swap_next', '@parameter.inner'), { desc = 'TS: swap next parameter' } },
-        { 'n', '<leader>A', sw('swap_previous', '@parameter.outer'), { desc = 'TS: swap previous parameter' } },
-    }
+    -- local swap_maps = {
+    -- { 'n', '<leader>a', sw('swap_next', '@parameter.inner'), { desc = 'TS: swap next parameter' } },
+    -- { 'n', '<leader>A', sw('swap_previous', '@parameter.outer'), { desc = 'TS: swap previous parameter' } },
+    -- }
 
     -- Move
     local move_maps = {
@@ -123,12 +121,11 @@ function M.setup()
     for _, m in ipairs(select_maps) do
         map(m[1], m[2], m[3], m[4])
     end
-    for _, m in ipairs(swap_maps) do
-        map(m[1], m[2], m[3], m[4])
-    end
-    for _, m in ipairs(move_maps) do
-        map(m[1], m[2], m[3], m[4])
-    end
+    -- for _, m in ipairs(swap_maps) do
+    --     map(m[1], m[2], m[3], m[4])
+    -- end, m in ipairs(move_maps) do
+    -- map(m[1], m[2], m[3], m[4])
+    -- end
 
     -- Repeatable ; and ,
     map({ 'n', 'x', 'o' }, ';', rep.repeat_last_move_next, { desc = 'TS: repeat last move next' })

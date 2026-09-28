@@ -62,31 +62,16 @@ return {
             'yaml',
         }
 
-        require('nvim-treesitter').install(languages, { max_jobs = 8 }):wait(300000) -- wait max. 5 minutes
+        -- Async: already installed parsers are skipped, missing ones are installed in background
+        require('nvim-treesitter').install(languages, { max_jobs = 8 })
 
-        local init = vim.api.nvim_get_runtime_file('lua/nvim-treesitter/init.lua', false)[1]
-        if init then
-            vim.opt.runtimepath:prepend(vim.fn.fnamemodify(init, ':h:h:h') .. '/runtime')
-        end
-
-        require('nvim-treesitter').install(languages):wait(300000)
-
+        -- Folding is handled in config/folding.lua
         vim.api.nvim_create_autocmd('FileType', {
             group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true }),
             callback = function(args)
                 local buf = args.buf
-                -- Check if we have a parser for the current filetype
                 local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype) or vim.bo[buf].filetype
-
-                -- Try to start highlighting
-                local ok, _ = pcall(vim.treesitter.start, buf, lang)
-
-                if not ok then
-                    return
-                end
-
-                vim.opt.foldmethod = 'expr'
-                vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                pcall(vim.treesitter.start, buf, lang)
             end,
         })
     end,
