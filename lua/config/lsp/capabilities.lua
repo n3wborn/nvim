@@ -73,28 +73,6 @@ return {
     },
 
     {
-        capability = 'textDocument/signatureHelp',
-
-        keymaps = {
-            {
-                modes = 'i',
-                lhs = '<C-k>',
-                rhs = function()
-                    local blink = require('blink.cmp')
-                    local menu = require('blink.cmp.completion.windows.menu')
-
-                    if menu.win:is_open() then
-                        blink.hide()
-                    end
-
-                    lsp.buf.signature_help()
-                end,
-                desc = 'Signature Help',
-            },
-        },
-    },
-
-    {
         capability = 'textDocument/onTypeFormatting',
 
         setup = function(ctx)

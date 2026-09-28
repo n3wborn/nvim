@@ -33,6 +33,8 @@ return {
             desc = '[FFF] Search Current Word',
         },
     },
+    ---@type FffConfig
+    ---@diagnostic disable: missing-fields
     opts = {
         layout = {
             height = 0.9,
