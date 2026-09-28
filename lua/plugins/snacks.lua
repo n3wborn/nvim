@@ -106,7 +106,18 @@ return {
                     .option('background', { off = 'light', on = 'dark', name = 'Dark Background' })
                     :map('<leader>ub')
                 Snacks.toggle.inlay_hints():map('<leader>P')
-                Snacks.toggle.indent():map('<leader>ug')
+                -- Indent guides are drawn by blink.indent, not Snacks
+                Snacks.toggle
+                    .new({
+                        name = 'Indent Guides',
+                        get = function()
+                            return require('blink.indent').is_enabled()
+                        end,
+                        set = function(state)
+                            require('blink.indent').enable(state)
+                        end,
+                    })
+                    :map('<leader>ug')
                 Snacks.toggle.dim():map('<leader>uD')
             end,
         })

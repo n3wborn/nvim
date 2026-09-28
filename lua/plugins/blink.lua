@@ -58,7 +58,10 @@ return {
             ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
         sources = {
-            default = { 'lsp', 'path', 'buffer', 'lazydev', 'snippets' },
+            default = { 'lsp', 'path', 'buffer', 'snippets' },
+            per_filetype = {
+                lua = { inherit_defaults = true, 'lazydev' },
+            },
             min_keyword_length = 0,
             providers = {
                 snippets = {
@@ -70,14 +73,14 @@ return {
                     score_offset = 100,
                 },
                 buffer = {
-                    -- default to all visible buffers
+                    -- all visible normal buffers (excludes terminal, quickfix, help, prompt...)
                     get_bufnrs = function()
                         return vim.iter(vim.api.nvim_list_wins())
                             :map(function(win)
                                 return vim.api.nvim_win_get_buf(win)
                             end)
                             :filter(function(buf)
-                                return vim.bo[buf].buftype ~= 'nofile'
+                                return vim.bo[buf].buftype == ''
                             end)
                             :totable()
                     end,
