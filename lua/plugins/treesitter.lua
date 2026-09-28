@@ -25,6 +25,7 @@ return {
             'gitattributes',
             'gitcommit',
             'gitignore',
+            'git_config',
             'go',
             'html',
             'http',
@@ -59,7 +60,9 @@ return {
             'vim',
             'vimdoc',
             'vue',
+            'xml',
             'yaml',
+            'zig',
         }
 
         -- Async: already installed parsers are skipped, missing ones are installed in background
