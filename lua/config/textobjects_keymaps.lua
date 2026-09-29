@@ -31,6 +31,17 @@ function M.setup()
         end
     end
 
+    -- Keep the native motion (e.g. ]c / [c: next/prev change) in diff mode
+    local diff_or = function(native, fn)
+        return function()
+            if vim.wo.diff then
+                vim.cmd.normal({ vim.v.count1 .. native, bang = true })
+            else
+                fn()
+            end
+        end
+    end
+
     -- Select
     local select_maps = {
         { { 'x', 'o' }, 'af', sel('@function.outer'), { desc = 'TS: around function' } },
@@ -57,8 +68,18 @@ function M.setup()
         { { 'n', 'x', 'o' }, '[]', mv('goto_previous_end', '@class.outer'), { desc = 'TS: prev class end' } },
 
         -- "nearest of start/end"
-        { { 'n', 'x', 'o' }, ']c', mv('goto_next', '@conditional.outer'), { desc = 'TS: next conditional' } },
-        { { 'n', 'x', 'o' }, '[c', mv('goto_previous', '@conditional.outer'), { desc = 'TS: prev conditional' } },
+        {
+            { 'n', 'x', 'o' },
+            ']c',
+            diff_or(']c', mv('goto_next', '@conditional.outer')),
+            { desc = 'TS: next conditional (next change in diff)' },
+        },
+        {
+            { 'n', 'x', 'o' },
+            '[c',
+            diff_or('[c', mv('goto_previous', '@conditional.outer')),
+            { desc = 'TS: prev conditional (prev change in diff)' },
+        },
 
         -- Grouped captures example
         {
