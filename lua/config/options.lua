@@ -1,5 +1,4 @@
 -- global settings
-vim.g.blink_enabled = true
 vim.g.lsp_inlay_hints = false
 
 -- tabs / indent
@@ -63,7 +62,7 @@ vim.o.autowriteall = true
 vim.o.foldenable = true
 vim.o.foldlevelstart = 99
 vim.o.foldnestmax = 10
-vim.wo.foldtext = ''
+vim.o.foldtext = ''
 
 -- disable folding in diff
 vim.opt.diffopt:append('followwrap,vertical,context:99')
@@ -71,9 +70,6 @@ vim.opt.diffopt:append('followwrap,vertical,context:99')
 -- format
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 vim.g.autoformat = true
-
--- needed for tree-sitter aware commenting
-vim.o.commentstring = ''
 
 -- conceal
 vim.o.conceallevel = 2
