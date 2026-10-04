@@ -1,3 +1,118 @@
+--- Run git from the repository (project or submodule) that owns `file`.
+--- Starts from the parent dir so a submodule entry targets the superproject.
+local function git_owner_exec(root, file, args)
+    local abs = file:sub(1, 1) == '/' and file or vim.fs.joinpath(root, file)
+    local dir = vim.fs.dirname(abs)
+    while not vim.uv.fs_stat(dir) do
+        dir = vim.fs.dirname(dir)
+    end
+    local cmd = vim.list_extend({ 'git', '-C', dir }, args)
+    table.insert(cmd, abs)
+    return vim.system(cmd, { text = true }):wait()
+end
+
+--- Same as git_owner_exec, as a shell command for fzf previews ({file} is substituted by fzf-lua).
+local function git_owner_preview(root, args)
+    return (
+        [[cd %s && sh -c 'f=$(realpath -m -- "$1"); d=$(dirname -- "$f"); ]]
+        .. [[while [ ! -d "$d" ]; do d=$(dirname -- "$d"); done; git -C "$d" %s "$f"' _ {file}]]
+    ):format(vim.fn.shellescape(root), args)
+end
+
+--- git status including the files changed inside (nested) submodules.
+local function git_status_recursive()
+    local fzf_lua = require('fzf-lua')
+    local res = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, { text = true }):wait()
+    if res.code ~= 0 then
+        return fzf_lua.utils.warn('not a git repository')
+    end
+    local root = vim.trim(res.stdout)
+    local status = '-c color.status=false --no-optional-locks status --porcelain=v1 -u --no-renames'
+
+    -- submodule files are displayed as `[name] path/in/submodule`,
+    -- the path from the root is used instead when a name is not unique
+    local subs = vim.system(
+        { 'git', 'submodule', 'foreach', '--recursive', '--quiet', 'printf "%s\\t%s\\n" "$name" "$displaypath"' },
+        { cwd = root, text = true }
+    ):wait()
+    local list, count, paths = {}, {}, {}
+    for name, path in (subs.stdout or ''):gmatch('([^\t\n]+)\t([^\n]+)') do
+        list[#list + 1] = { name = name, path = path }
+        count[name] = (count[name] or 0) + 1
+    end
+    local cmds = { ('git -C %s %s'):format(vim.fn.shellescape(root), status) }
+    for _, sub in ipairs(list) do
+        local label = count[sub.name] == 1 and sub.name or sub.path
+        paths[label] = sub.path
+        cmds[#cmds + 1] = ('git -C %s %s | sed %s'):format(
+            vim.fn.shellescape(vim.fs.joinpath(root, sub.path)),
+            status,
+            vim.fn.shellescape(('s|^\\(...\\)|\\1[%s] |'):format(label:gsub('[\\&|]', '\\%0')))
+        )
+    end
+
+    local function run(selected, opts, args, skip)
+        for _, s in ipairs(selected) do
+            if not (skip and skip(s)) then
+                local r = git_owner_exec(root, fzf_lua.path.entry_to_file(s, opts).path, args)
+                if r.code ~= 0 then
+                    fzf_lua.utils.error(r.stderr)
+                end
+            end
+        end
+    end
+
+    fzf_lua.git_status({
+        prompt = 'Git Status (submodules)> ',
+        cwd = root,
+        _fmt = {
+            from = function(entry)
+                return (
+                    entry:gsub('%[([^%[%]]-)%] ', function(label)
+                        return paths[label] and paths[label] .. '/'
+                    end, 1)
+                )
+            end,
+        },
+        cmd = table.concat(cmds, '; '),
+        previewer = vim.tbl_extend('force', fzf_lua.config.globals.previewers.git_diff, {
+            cmd_modified = git_owner_preview(root, 'diff --color HEAD --'),
+            cmd_deleted = git_owner_preview(root, 'diff --color HEAD --'),
+        }),
+        actions = {
+            ['left'] = {
+                fn = function(selected, opts)
+                    -- staging an already staged deletion errs, like fzf-lua's own git_stage
+                    run(selected, opts, { 'add', '--' }, function(s)
+                        return s:byte(1) == 68
+                    end)
+                end,
+                reload = true,
+            },
+            ['right'] = {
+                fn = function(selected, opts)
+                    run(selected, opts, { 'reset', '--' })
+                end,
+                reload = true,
+            },
+            ['ctrl-x'] = {
+                fn = function(selected, opts)
+                    if fzf_lua.utils.confirm('Reset ' .. #selected .. ' file(s)?', '&Yes\n&No') ~= 1 then
+                        return
+                    end
+                    for _, s in ipairs(selected) do
+                        local file = fzf_lua.path.entry_to_file(s, opts).path
+                        local tracked = git_owner_exec(root, file, { 'ls-files', '--error-unmatch', '--' }).code == 0
+                        run({ s }, opts, tracked and { 'checkout', 'HEAD', '--' } or { 'clean', '-f', '--' })
+                    end
+                    vim.cmd('checktime')
+                end,
+                reload = true,
+            },
+        },
+    })
+end
+
 ---@type LazyPluginSpec
 return {
     'ibhagwan/fzf-lua',
@@ -35,6 +150,7 @@ return {
             end,
             desc = 'Find Files',
         },
+        { '<leader>gS', git_status_recursive, desc = 'Git Status + submodules' },
     },
     ---@type fzf-lua.Config
     opts = function()
