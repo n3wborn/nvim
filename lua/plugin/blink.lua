@@ -50,16 +50,21 @@ add({
             },
             sources = {
                 default = { 'lsp', 'path', 'buffer', 'snippets' },
+                per_filetype = {
+                    lua = { inherit_defaults = true, 'lazydev' },
+                    sql = { 'dadbod', 'buffer' },
+                },
                 min_keyword_length = 0,
                 providers = {
                     snippets = {
                         max_items = 3,
                     },
-                    -- lazydev = {
-                    --     name = 'LazyDev',
-                    --     module = 'lazydev.integrations.blink',
-                    --     score_offset = 100,
-                    -- },
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100,
+                    },
+                    dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
                     buffer = {
                         -- default to all visible buffers
                         get_bufnrs = function()

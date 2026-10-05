@@ -2,6 +2,8 @@ local M = {}
 
 ---@class PluginSpec
 ---@field src string The GitHub repository of the plugin
+---@field name? string Optional plugin directory name (defaults to the repo name)
+---@field version? string|vim.VersionRange Optional branch, tag, commit or version range
 ---@field module_name? string Optional module name for configuration (defaults to the repo name)
 ---@field opts? table|fun():table Optional configuration options for the plugin
 ---@field on_setup? fun():nil Optional function to run after the plugin is loaded and configured
@@ -12,7 +14,11 @@ local function configure(plugins)
     local sources = vim.iter(plugins)
         :map(function(plugin)
             -- Ensure we use GitHub urls.
-            return string.format('https://github.com/%s', plugin.src)
+            return {
+                src = string.format('https://github.com/%s', plugin.src),
+                name = plugin.name,
+                version = plugin.version,
+            }
         end)
         :totable()
 
@@ -74,15 +80,15 @@ end
 --- Runs the given command inside the plugin's directory when the plugin is updated.
 ---
 ---@param plugin_name string Plugin name
----@param cmd string|fun():nil Command to run
+---@param cmd string|string[]|fun(data: table):nil Command to run (a function receives the PackChanged event data)
 function M.on_plugin_update(plugin_name, cmd)
     vim.api.nvim_create_autocmd('PackChanged', {
         callback = function(args)
             if args.data.spec.name == plugin_name and (args.data.kind == 'install' or args.data.kind == 'update') then
-                if type(cmd) == 'string' then
-                    vim.system({ cmd }, { cwd = args.data.path })
+                if type(cmd) == 'function' then
+                    cmd(args.data)
                 else
-                    cmd()
+                    vim.system(type(cmd) == 'string' and { cmd } or cmd, { cwd = args.data.path })
                 end
             end
         end,
