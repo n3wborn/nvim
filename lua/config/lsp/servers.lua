@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             -- 'intelephense',
             'php_lsp',
             -- 'phpantom',
-            'ts_ls',
+            'tsc',
             'taplo',
             'ty',
             'twiggy-language-server',
