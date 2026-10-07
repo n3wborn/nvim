@@ -85,20 +85,22 @@ vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
 -- always center previous/next jumps
-vim.keymap.set('n', '<C-o>', '<C-o>zz', { silent = true })
-vim.keymap.set('n', '<C-i>', '<C-i>zz', { silent = true })
+vim.keymap.set('n', '<C-o>', u.center('<C-o>'), { desc = 'Jump back (centered)' })
+vim.keymap.set('n', '<C-i>', u.center('<C-i>'), { desc = 'Jump forward (centered)' })
 
 -- always center Ctrl Up/Down
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
+vim.keymap.set('n', '<C-u>', u.center('<C-u>'), { desc = 'Scroll up (centered)' })
+vim.keymap.set('n', '<C-d>', u.center('<C-d>'), { desc = 'Scroll down (centered)' })
 
 -- always center Ctrl forward/backward
-vim.keymap.set('n', '<C-f>', '<C-f>zz', { silent = true })
-vim.keymap.set('n', '<C-b>', '<C-b>zz', { silent = true })
+vim.keymap.set('n', '<C-f>', u.center('<C-f>'), { desc = 'Page forward (centered)' })
+vim.keymap.set('n', '<C-b>', u.center('<C-b>'), { desc = 'Page backward (centered)' })
 
--- always center forward/backward hunk
-vim.keymap.set('n', '<]-c>', '<]-c>zz', { silent = true })
-vim.keymap.set('n', '<[-c>', '<[-c>zz', { silent = true })
+-- always center quickfix navigation (overrides the default ]q/[q/]Q/[Q)
+vim.keymap.set('n', ']q', u.center(':cnext'), { desc = 'Next quickfix (centered)' })
+vim.keymap.set('n', '[q', u.center(':cprevious'), { desc = 'Prev quickfix (centered)' })
+vim.keymap.set('n', ']Q', u.center(':clast'), { desc = 'Last quickfix (centered)' })
+vim.keymap.set('n', '[Q', u.center(':cfirst'), { desc = 'First quickfix (centered)' })
 
 --- Switch to previous buffer
 u.map('n', '<space><space>', '<cmd>e #<cr>', { desc = 'Switch to previous buffer' })

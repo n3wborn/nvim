@@ -133,4 +133,28 @@ M.undotree = function()
     end
 end
 
+-- run a command then center the cursor line
+-- `cmd` can be a function, an Ex command when starting with ':' (prefixed with count1),
+-- otherwise a sequence of normal mode keys (prefixed with count if given)
+M.center = function(cmd)
+    return function()
+        local ok, err
+        if type(cmd) == 'function' then
+            ok, err = pcall(cmd)
+        elseif cmd:sub(1, 1) == ':' then
+            ok, err = pcall(vim.cmd, vim.v.count1 .. cmd:sub(2))
+        else
+            local count = vim.v.count > 0 and vim.v.count or ''
+            ok, err = pcall(vim.cmd.normal, { count .. vim.keycode(cmd), bang = true })
+        end
+        if not ok then
+            return vim.notify((tostring(err):gsub('^Vim:', '')), vim.log.levels.WARN)
+        end
+        -- zz would break the operator in operator-pending mode
+        if not vim.fn.mode(1):find('^no') then
+            vim.cmd.normal({ 'zz', bang = true })
+        end
+    end
+end
+
 return M
