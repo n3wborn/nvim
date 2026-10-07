@@ -1,17 +1,8 @@
-local vim_pack = require('vim-pack')
+local add = require('vim-pack').add
 
-vim_pack.on_plugin_update('fff.nvim', function(data)
-    if not data.active then
-        vim.cmd.packadd('fff.nvim')
-    end
-    require('fff.download').download_or_build_binary()
-end)
-
-vim_pack.add({
+add({
     {
-        src = 'dmtrKovalenko/fff.nvim',
-        ---@type FffConfig
-        ---@diagnostic disable: missing-fields
+        src = 'dmtrKovalenko/fff',
         opts = {
             layout = {
                 height = 0.9,
@@ -70,7 +61,6 @@ vim_pack.add({
         },
         on_setup = function()
             local fff = require('fff')
-
             vim.keymap.set('n', 'ff', function()
                 fff.find_files()
             end, { desc = '[FFF] Find Files' })
@@ -87,4 +77,16 @@ vim_pack.add({
             end, { desc = '[FFF] Search Current Word' })
         end,
     },
+})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == 'fff' and (kind == 'install' or kind == 'update') then
+            if not ev.data.active then
+                vim.cmd.packadd('fff')
+            end
+            require('fff.download').download_or_build_binary()
+        end
+    end,
 })
