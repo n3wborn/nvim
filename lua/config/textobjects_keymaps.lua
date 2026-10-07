@@ -1,5 +1,6 @@
 -- https://github.com/saikocat/dotfiles/blob/master/neovim/.config/nvim/lua/plugins/code/treesitter_textobjects_keymaps.lua
 local M = {}
+local u = require('utils')
 
 function M.setup()
     local map = function(modes, lhs, rhs, opts)
@@ -20,15 +21,15 @@ function M.setup()
     end
 
     local mv = function(method, capture, group)
-        return function()
+        return u.center(function()
             move[method](capture, group or 'textobjects')
-        end
+        end)
     end
 
     local mv_any = function(method, captures, group)
-        return function()
+        return u.center(function()
             move[method](captures, group or 'textobjects')
-        end
+        end)
     end
 
     -- Keep the native motion (e.g. ]c / [c: next/prev change) in diff mode
