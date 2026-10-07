@@ -1,6 +1,7 @@
 local add_on_event = require('vim-pack').add_on_event
 
-add_on_event('BufWritePre', {
+-- Loaded before the first write: an autocmd created during BufWritePre would not run for that write.
+add_on_event({ 'BufReadPre', 'BufNewFile' }, {
     {
         src = 'stevearc/conform.nvim',
         opts = {
