@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             'jsonls',
             -- emmylua_ls',
             'lua_ls',
-            'kotlin_lsp',
+            'kmp_lsp',
             'marksman',
             'mpls',
             'oxlint',

@@ -1,10 +1,9 @@
--- https://github.com/Hessesian/kotlin-lsp
--- cargo binstall kotlin-lsp
+-- https://github.com/Hessesian/kmp-lsp
+-- cargo binstall kmp-lsp
 ---@type vim.lsp.Config
 return {
-    name = 'kotlin_lsp',
-    cmd = { 'kotlin-lsp' },
-    filetypes = { 'kotlin', 'java' },
+    cmd = { 'kmp-lsp' },
+    filetypes = { 'kotlin', 'java', 'swift' },
     root_markers = {
         'settings.gradle',
         'settings.gradle.kts',
