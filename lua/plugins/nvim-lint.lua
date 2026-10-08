@@ -8,7 +8,7 @@ return {
         events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
         linters_by_ft = {
             gitcommit = { 'gitlint' },
-            php = { 'php' },
+            php = { 'php', 'mago_lint' },
             python = { 'ruff' },
             zig = { 'zlint' },
         },
@@ -92,6 +92,103 @@ return {
 
                 lint.linters.phpcs = phpcs
             end
+        end
+
+        -- Mago: only where a mago.toml exists (nearest one upward = workspace, so its
+        -- baseline paths match). Lint runs with the other linters, analyze only on save.
+        do
+            ---@param path? string
+            ---@return string|nil
+            local function mago_root(path)
+                return vim.fs.root(path or vim.api.nvim_buf_get_name(0), 'mago.toml')
+            end
+
+            ---@param command 'lint'|'analyze'
+            local function mago_linter(command)
+                local linter = vim.deepcopy(lint.linters['mago_' .. command])
+
+                linter.stdin = true
+                linter.append_fname = false
+                linter.args = {
+                    '--colors=never',
+                    '--workspace',
+                    function()
+                        return mago_root()
+                    end,
+                    '--config',
+                    function()
+                        return vim.fs.joinpath(mago_root(), 'mago.toml')
+                    end,
+                    command,
+                    '--reporting-format=short',
+                    '--stdin-input',
+                    function()
+                        return vim.api.nvim_buf_get_name(0)
+                    end,
+                }
+                linter.condition = function(ctx)
+                    return mago_root(ctx.filename) ~= nil
+                end
+
+                lint.linters['mago_' .. command] = linter
+            end
+
+            ---@param command 'lint'|'analyze'
+            local function mago_try_lint(command)
+                if vim.bo.filetype == 'php' and mago_root() then
+                    lint.try_lint('mago_' .. command)
+                end
+            end
+
+            if lint.linters.mago_lint and lint.linters.mago_analyze then
+                mago_linter('lint')
+                mago_linter('analyze')
+
+                vim.api.nvim_create_autocmd('BufWritePost', {
+                    group = vim.api.nvim_create_augroup('nvim-lint-mago-analyze', { clear = true }),
+                    pattern = '*.php',
+                    callback = function()
+                        mago_try_lint('analyze')
+                    end,
+                })
+            end
+
+            -- :MagoBaseline [lint|analyze]  regenerate the baseline(s) of the current workspace
+            -- :MagoBaseline! [lint|analyze] only drop entries that no longer match an issue
+            vim.api.nvim_create_user_command('MagoBaseline', function(cmd)
+                local root = mago_root()
+
+                if not root then
+                    vim.notify('No mago.toml found', vim.log.levels.WARN, { title = 'mago' })
+                    return
+                end
+
+                local commands = cmd.args ~= '' and { cmd.args } or { 'lint', 'analyze' }
+                local flag = cmd.bang and '--remove-outdated-baseline-entries' or '--generate-baseline'
+
+                for _, command in ipairs(commands) do
+                    vim.system({ 'mago', '--colors=never', command, flag }, { cwd = root, text = true }, function(res)
+                        vim.schedule(function()
+                            local ok = res.code == 0
+                            vim.notify(
+                                ('mago %s %s (%s): %s'):format(command, flag, root, ok and 'done' or 'failed'),
+                                ok and vim.log.levels.INFO or vim.log.levels.ERROR,
+                                { title = 'mago' }
+                            )
+                            if ok then
+                                mago_try_lint(command)
+                            end
+                        end)
+                    end)
+                end
+            end, {
+                bang = true,
+                nargs = '?',
+                complete = function()
+                    return { 'lint', 'analyze' }
+                end,
+                desc = 'Regenerate the mago baseline(s) of the current workspace',
+            })
         end
 
         for name, linter in pairs(opts.linters) do
