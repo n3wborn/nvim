@@ -85,8 +85,8 @@ vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
 -- always center previous/next jumps
-vim.keymap.set('n', '<C-o>', u.center('<C-o>'), { desc = 'Jump back (centered)' })
-vim.keymap.set('n', '<C-i>', u.center('<C-i>'), { desc = 'Jump forward (centered)' })
+vim.keymap.set('n', '<C-o>', '<C-o>zz', { desc = 'Jump back (centered)' })
+vim.keymap.set('n', '<C-i>', '<C-i>zz', { desc = 'Jump forward (centered)' })
 
 -- always center Ctrl Up/Down
 vim.keymap.set('n', '<C-u>', u.center('<C-u>'), { desc = 'Scroll up (centered)' })
