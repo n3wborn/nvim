@@ -1,0 +1,101 @@
+local add_on_event = require('vim-pack').add_on_event
+
+-- Loaded before the first write: an autocmd created during BufWritePre would not run for that write.
+add_on_event({ 'BufReadPre', 'BufNewFile' }, {
+    {
+        src = 'stevearc/conform.nvim',
+        opts = {
+            exclude_path_patterns = {
+                '/node_modules/',
+                '/vendor/',
+            },
+            formatters_by_ft = {
+                go = { 'gofmt' },
+                lua = { 'stylua' },
+                markdown = { 'rumdl' },
+                php = { 'php_cs_fixer' },
+                python = {
+                    -- To fix auto-fixable lint errors.
+                    'ruff_fix',
+                    -- To run the Ruff formatter.
+                    'ruff_format',
+                    -- To organize the imports.
+                    'ruff_organize_imports',
+                },
+                rust = { 'rustfmt' },
+                sh = { 'shfmt', 'shellcheck' },
+                sql = { 'sql_formatter' },
+                twig = { 'twig-cs-fixer' },
+                v = { 'v' },
+
+                -- https://oxc.rs/
+                javascript = { 'oxfmt' },
+                javascriptreact = { 'oxfmt' },
+                typescript = { 'oxfmt' },
+                typescriptreact = { 'oxfmt' },
+                json = { 'oxfmt' },
+                jsonc = { 'oxfmt' },
+                vue = { 'oxfmt' },
+
+                ['*'] = { 'trim_whitespace', 'squeeze_blanks', 'trim_newlines' },
+            },
+            format_on_save = function(bufnr)
+                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                    return
+                end
+                return { async = false, timeout_ms = 2000, lsp_format = 'never' }
+            end,
+            formatters = {
+                oxfmt = {
+                    command = function(_, ctx)
+                        local local_oxfmt = vim.fs.find('node_modules/.bin/oxfmt', {
+                            upward = true,
+                            path = ctx.dirname,
+                            type = 'file',
+                        })[1]
+
+                        return local_oxfmt or 'oxfmt'
+                    end,
+                },
+                php_cs_fixer = {
+                    env = { PHP_CS_FIXER_IGNORE_ENV = 1 },
+                    args = function(_, ctx)
+                        local args = { 'fix', '$FILENAME', '--quiet', '--no-interaction', '--using-cache=no' }
+                        local found = nil
+                        local core_dir = os.getenv('CORE_DIR')
+                        local root_dir = nil
+
+                        if core_dir then
+                            root_dir =
+                                vim.fs.find(core_dir, { type = 'directory', upward = true, path = ctx.dirname })[1]
+                            if root_dir then
+                                found = vim.fs.find('.php-cs-fixer.php.dist', { path = root_dir, type = 'file' })[1]
+                                vim.api.nvim_echo({ { 'Found corePlugin at:\n' }, { root_dir } }, true, {})
+                            end
+                        end
+
+                        if not found then
+                            found = vim.fs.find('.php-cs-fixer.php.dist', { upward = true, path = ctx.dirname })[1]
+                            if found then
+                                vim.api.nvim_echo({ { 'Using fallback php-cs-fixer config:\n' }, { found } }, true, {})
+                            end
+                        end
+
+                        if found then
+                            vim.list_extend(args, { '--config=' .. found })
+                        else
+                            vim.list_extend(args, { '--rules=@PSR12,@Symfony' })
+                        end
+
+                        return args
+                    end,
+                },
+            },
+        },
+    },
+})
+-- Use conform for gq.
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+-- Start auto-formatting by default (and disable with my ToggleFormat command).
+vim.g.autoformat = true
