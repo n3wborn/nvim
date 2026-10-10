@@ -96,6 +96,12 @@ vim.keymap.set('n', '<C-d>', u.center('<C-d>'), { desc = 'Scroll down (centered)
 vim.keymap.set('n', '<C-f>', u.center('<C-f>'), { desc = 'Page forward (centered)' })
 vim.keymap.set('n', '<C-b>', u.center('<C-b>'), { desc = 'Page backward (centered)' })
 
+-- always center diagnostics navigation
+vim.keymap.set('n', ']d', u.center(']dzz'), { desc = 'Next diagnostic (centered)' })
+vim.keymap.set('n', '[d', u.center('[dzz'), { desc = 'Prev diagnostic (centered)' })
+vim.keymap.set('n', ']D', u.center(']Dzz'), { desc = 'Last diagnostic (centered)' })
+vim.keymap.set('n', '[D', u.center('[Dzz'), { desc = 'First diagnostic (centered)' })
+
 -- always center quickfix navigation (overrides the default ]q/[q/]Q/[Q)
 vim.keymap.set('n', ']q', u.center(':cnext'), { desc = 'Next quickfix (centered)' })
 vim.keymap.set('n', '[q', u.center(':cprevious'), { desc = 'Prev quickfix (centered)' })
