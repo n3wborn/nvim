@@ -34,6 +34,7 @@ return {
             'jq',
             'jsdoc',
             'json',
+            'kotlin',
             'lua',
             'make',
             'markdown',
