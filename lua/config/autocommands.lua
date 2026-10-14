@@ -72,8 +72,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'VeryLazy',
+vim.api.nvim_create_autocmd('VimEnter', {
     callback = function()
         if vim.fn.argc() > 0 or vim.env.NVIM_SKIP_SESSION then
             return

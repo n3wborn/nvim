@@ -34,8 +34,10 @@ u.map('n', '<leader>FF', '<cmd>!docker compose exec php php-cs-fixer fix %<cr>')
 u.map('n', '<leader>gh', ':diffget //3<cr>')
 u.map('n', '<leader>gu', ':diffget //2<cr>')
 
--- Lazy UI
-u.map('n', '<leader>L', '<cmd>Lazy<cr>')
+-- Plugins update (vim.pack)
+u.map('n', '<leader>L', function()
+    vim.pack.update()
+end)
 
 --- Sessions
 if vim.g.sessions_enabled then
