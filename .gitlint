@@ -1,0 +1,13 @@
+[general]
+# Ignore rules, reference them by id or name (comma-separated)
+ignore=T3
+
+# Enable specific community contributed rules
+contrib=contrib-title-conventional-commits,CC1
+
+### Configuring rules ###
+[title-max-length]
+line-length=80
+
+[title-min-length]
+min-length=5
