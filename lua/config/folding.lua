@@ -60,4 +60,30 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
     end,
 })
 
+local group = vim.api.nvim_create_augroup('my.config.folds', { clear = true })
+
+local function open_diff_folds()
+    if vim.wo.diff then
+        vim.cmd('normal! zR')
+    end
+end
+
+-- to be available on :diffthis
+vim.api.nvim_create_autocmd('OptionSet', {
+    group = group,
+    pattern = 'diff',
+    callback = open_diff_folds,
+})
+
+vim.api.nvim_create_autocmd('VimEnter', {
+    group = group,
+    callback = function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_get_option_value('diff', { win = win }) then
+                vim.api.nvim_win_call(win, open_diff_folds)
+            end
+        end
+    end,
+})
+
 return M
