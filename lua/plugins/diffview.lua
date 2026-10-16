@@ -76,6 +76,15 @@ return {
             auto_close_on_empty = true,
             hide_merge_artifacts = true,
             clean_up_buffers = true,
+            view = { foldlevel = 99 },
+            hooks = {
+                diff_buf_win_enter = function(_, winid)
+                    vim.wo[winid].foldlevel = 99
+                    vim.api.nvim_win_call(winid, function()
+                        vim.cmd('normal! zR')
+                    end)
+                end,
+            },
             default_args = {
                 DiffviewOpen = { '--imply-local' },
             },
