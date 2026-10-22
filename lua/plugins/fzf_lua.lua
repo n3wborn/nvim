@@ -11,11 +11,35 @@ local function git_owner_exec(root, file, args)
     return vim.system(cmd, { text = true }):wait()
 end
 
+--- Commit to diff the files of `dir` against: inside a submodule, the merge base of HEAD and
+--- the commit recorded by the superproject's HEAD (so its new commits are part of the diff,
+--- but not the ones of a diverged recorded commit), HEAD otherwise.
+local function git_base(dir)
+    local function git(cwd, ...)
+        local r = vim.system({ 'git', '-C', cwd, ... }, { text = true }):wait()
+        return r.code == 0 and vim.trim(r.stdout) or ''
+    end
+    local super = git(dir, 'rev-parse', '--show-superproject-working-tree')
+    if super == '' then
+        return 'HEAD'
+    end
+    local top = git(dir, 'rev-parse', '--show-toplevel')
+    local base = git(super, 'rev-parse', '-q', '--verify', 'HEAD:' .. top:sub(#super + 2))
+    base = base ~= '' and git(dir, 'merge-base', base, 'HEAD') or ''
+    return base ~= '' and base or 'HEAD'
+end
+
 --- Same as git_owner_exec, as a shell command for fzf previews ({file} is substituted by fzf-lua).
+--- `$b` is the commit given by git_base.
 local function git_owner_preview(root, args)
     return (
         [[cd %s && sh -c 'f=$(realpath -m -- "$1"); d=$(dirname -- "$f"); ]]
-        .. [[while [ ! -d "$d" ]; do d=$(dirname -- "$d"); done; git -C "$d" %s "$f"' _ {file}]]
+        .. [[while [ ! -d "$d" ]; do d=$(dirname -- "$d"); done; b=HEAD; ]]
+        .. [[sp=$(git -C "$d" rev-parse --show-superproject-working-tree); if [ -n "$sp" ]; then ]]
+        .. [[t=$(git -C "$d" rev-parse --show-toplevel); ]]
+        .. [[b=$(git -C "$sp" rev-parse -q --verify "HEAD:${t#"$sp"/}") ]]
+        .. [[&& b=$(git -C "$d" merge-base "$b" HEAD) || b=HEAD; fi; ]]
+        .. [[git -C "$d" %s "$f"' _ {file}]]
     ):format(vim.fn.shellescape(root), args)
 end
 
@@ -31,22 +55,38 @@ local function git_status_recursive()
 
     -- submodule files are displayed as `[name] path/in/submodule`,
     -- the path from the root is used instead when a name is not unique
-    local subs = vim.system(
-        { 'git', 'submodule', 'foreach', '--recursive', '--quiet', 'printf "%s\\t%s\\n" "$name" "$displaypath"' },
-        { cwd = root, text = true }
-    ):wait()
+    local subs = vim.system({
+        'git',
+        'submodule',
+        'foreach',
+        '--recursive',
+        '--quiet',
+        'printf "%s\\t%s\\t%s\\n" "$name" "$displaypath" "$(git -C "$toplevel" rev-parse -q --verify HEAD:"$sm_path")"',
+    }, { cwd = root, text = true }):wait()
     local list, count, paths = {}, {}, {}
-    for name, path in (subs.stdout or ''):gmatch('([^\t\n]+)\t([^\n]+)') do
-        list[#list + 1] = { name = name, path = path }
+    for name, path, base in (subs.stdout or ''):gmatch('([^\t\n]+)\t([^\t\n]+)\t([^\n]*)') do
+        list[#list + 1] = { name = name, path = path, base = base }
         count[name] = (count[name] or 0) + 1
     end
     local cmds = { ('git -C %s %s'):format(vim.fn.shellescape(root), status) }
     for _, sub in ipairs(list) do
         local label = count[sub.name] == 1 and sub.name or sub.path
+        local dir = vim.fn.shellescape(vim.fs.joinpath(root, sub.path))
         paths[label] = sub.path
-        cmds[#cmds + 1] = ('git -C %s %s | sed %s'):format(
-            vim.fn.shellescape(vim.fs.joinpath(root, sub.path)),
+        -- files changed by the submodule commits not recorded yet in its superproject
+        -- (since the merge base, the recorded commit may be on a diverged branch),
+        -- as staged entries unless already listed by `git status`
+        local commits = sub.base == '' and ''
+            or ('; git -C %s diff --name-status --no-renames %s...HEAD | sed %s'):format(
+                dir,
+                sub.base,
+                vim.fn.shellescape('s|^\\(.\\)\t|\\1  |')
+            )
+        cmds[#cmds + 1] = ('{ git -C %s %s%s; } | awk %s | sed %s'):format(
+            dir,
             status,
+            commits,
+            vim.fn.shellescape('!seen[substr($0, 4)]++'),
             vim.fn.shellescape(('s|^\\(...\\)|\\1[%s] |'):format(label:gsub('[\\&|]', '\\%0')))
         )
     end
@@ -76,10 +116,20 @@ local function git_status_recursive()
         },
         cmd = table.concat(cmds, '; '),
         previewer = vim.tbl_extend('force', fzf_lua.config.globals.previewers.git_diff, {
-            cmd_modified = git_owner_preview(root, 'diff --color HEAD --'),
-            cmd_deleted = git_owner_preview(root, 'diff --color HEAD --'),
+            cmd_modified = git_owner_preview(root, 'diff --color "$b" --'),
+            cmd_deleted = git_owner_preview(root, 'diff --color "$b" --'),
         }),
         actions = {
+            -- open the file on its first hunk (a multi-selection goes to the quickfix)
+            ['enter'] = function(selected, opts)
+                fzf_lua.actions.file_edit_or_qf(selected, opts)
+                if #selected == 1 then
+                    vim.schedule(function()
+                        local u = require('utils')
+                        u.goto_first_hunk(git_base(vim.fs.dirname(vim.api.nvim_buf_get_name(0))))
+                    end)
+                end
+            end,
             ['left'] = {
                 fn = function(selected, opts)
                     -- staging an already staged deletion errs, like fzf-lua's own git_stage

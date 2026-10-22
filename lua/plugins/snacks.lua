@@ -21,7 +21,17 @@ return {
         picker = {
             layout = { fullscreen = true },
             previewers = { diff = { builtin = false }, git = { builtin = false } },
-            sources = { files = { hidden = true }, grep = { hidden = true } },
+            sources = {
+                files = { hidden = true },
+                grep = { hidden = true },
+                git_status = {
+                    -- open the file on its first hunk
+                    confirm = function(picker)
+                        picker:action("jump")
+                        vim.schedule(require("utils").goto_first_hunk)
+                    end,
+                },
+            },
         },
     },
     keys = {

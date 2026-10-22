@@ -157,4 +157,27 @@ M.center = function(cmd)
     end
 end
 
+--- Move the cursor to the first hunk (vs `rev`, HEAD by default) of the current buffer.
+--- git runs from the file's directory so files inside submodules work too.
+---@param rev? string
+M.goto_first_hunk = function(rev)
+    local file = api.nvim_buf_get_name(0)
+    if file == '' then
+        return
+    end
+    local res = vim.system(
+        { 'git', '-C', vim.fs.dirname(file), 'diff', '--no-color', '--no-ext-diff', '-U0', rev or 'HEAD', '--', file },
+        { text = true }
+    ):wait()
+    local start, count = (res.stdout or ''):match('\n@@ %-%S+ %+(%d+),?(%d*) @@')
+    if not start then
+        return
+    end
+    -- a pure deletion points at the line before the removed block
+    local lnum = tonumber(start) + (count == '0' and 1 or 0)
+    lnum = math.max(1, math.min(lnum, api.nvim_buf_line_count(0)))
+    api.nvim_win_set_cursor(0, { lnum, 0 })
+    vim.cmd.normal({ 'zvzz', bang = true })
+end
+
 return M
