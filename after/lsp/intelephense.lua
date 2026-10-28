@@ -1,29 +1,37 @@
+-- https://intelephense.com/docs (`npm i intelephense -g`)
 ---@type vim.lsp.Config
 return {
     cmd = { 'intelephense', '--stdio' },
     filetypes = { 'php' },
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
-        local buf_dir = vim.fs.dirname(fname)
-        local markers = { '.git', 'composer.json' }
 
-        local found = vim.fs.find(markers, {
+        if fname == '' then
+            return
+        end
+
+        local found = vim.fs.find({ '.git', 'composer.json' }, {
             upward = true,
-            path = buf_dir,
+            path = vim.fs.dirname(fname),
             limit = math.huge,
         })
 
-        -- Pick the topmost match
-        local root = nil
+        local root
+
+        -- use topmost root (ex: project_root/plugins/submodule will use project_root)
         for _, match in ipairs(found) do
             local dir = vim.fs.dirname(match)
-            if root == nil or #dir < #root then
+
+            if not root or #dir < #root then
                 root = dir
             end
         end
 
-        on_dir(root or vim.uv.cwd())
+        if root then
+            on_dir(root)
+        end
     end,
+    workspace_required = true,
     init_options = {
         licenceKey = vim.env.INTELEPHENSE_LICENSE_KEY,
     },
@@ -31,13 +39,15 @@ return {
     settings = {
         intelephense = {
             files = {
-                maxSize = 300 * 1024 * 1024, -- 300Mo
+                -- Taille maximale d'un fichier individuel (10 Mio).
+                maxSize = 10 * 1024 * 1024,
+
                 exclude = {
                     '**/.git/**',
                     '**/.svn/**',
                     '**/.hg/**',
                     '**/CVS/**',
-                    '**/.DS_Store/**',
+                    '**/.DS_Store',
                     '**/node_modules/**',
                     '**/bower_components/**',
                     '**/vendor/**/{Tests,tests}/**',
@@ -46,10 +56,7 @@ return {
                     '**/var/log/**',
                     '**/var/storage/**',
                     '**/var/tmp/**',
-                    '**/var/cache/*/Container*/**',
-                    '**/var/cache/*/Symfony/**',
-                    '**/var/cache/*/pools/**',
-                    '**/var/cache/*/profiler/**',
+                    '**/var/cache/**',
                     '**/dumps/**',
                     '**/.pnpm-store/**',
                 },
@@ -58,11 +65,11 @@ return {
                 enabled = false,
             },
             codeLens = {
-                implementations = { enabled = true },
-                overrides = { enabled = true },
-                parent = { enabled = true },
-                references = { enabled = true },
-                usages = { enabled = true },
+                implementations = { enable = true },
+                overrides = { enable = true },
+                parent = { enable = true },
+                references = { enable = true },
+                usages = { enable = true },
             },
             completion = {
                 maxItems = 150,
@@ -72,27 +79,20 @@ return {
             diagnostics = {
                 deprecated = true,
                 exclude = {
-                    ['**/vendor/**'] = { '*' }, -- override this by setting `**/vendor/** = {}`
-                    -- Classes Propel générées (bin/console surface:propel:build --om),
-                    -- gitignorées, jamais éditées à la main : lib/model/<schema>/om|map/
-                    -- et src/**/Model/<schema>/om|map/. Les diagnostics dessus ne sont
-                    -- que du bruit (elles ne sont pas indexées comme fichiers "vendor").
+                    -- disable for vendor
+                    ['**/vendor/**'] = { '*' },
+                    -- disable for Propel ORM classes
                     ['**/lib/model/**/om/**'] = { '*' },
                     ['**/lib/model/**/map/**'] = { '*' },
                     ['**/src/**/Model/**/om/**'] = { '*' },
                     ['**/src/**/Model/**/map/**'] = { '*' },
                 },
                 implementationErrors = true,
-                noMixedTypeCheck = true,
+                -- avoid false positives
                 relaxedTypeCheck = true,
                 run = 'onSave',
             },
             maxMemory = 4096,
-            inlayHint = {
-                parameterNames = true,
-                parameterTypes = true,
-                returnTypes = true,
-            },
         },
     },
 }
