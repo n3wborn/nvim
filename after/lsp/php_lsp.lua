@@ -5,33 +5,38 @@ return {
     filetypes = { 'php' },
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
-        local buf_dir = vim.fs.dirname(fname)
 
-        -- Monorepo multi-plugins (surface) : walk upward and collect ALL
-        -- matches, not just the first one, comme pour intelephense/phpantom.
+        if fname == '' then
+            return
+        end
+
+        local buf_dir = vim.fs.dirname(fname)
         local markers = { '.git', 'composer.json' }
 
         local found = vim.fs.find(markers, {
             upward = true,
             path = buf_dir,
-            -- Don't stop at the first match: find them all up to /
             limit = math.huge,
         })
 
-        -- Pick the topmost (closest to /) match
-        local root = nil
+        local root
+
+        -- use topmost root (ex: project_root/plugins/submodule will use project_root)
         for _, match in ipairs(found) do
             local dir = vim.fs.dirname(match)
-            if root == nil or #dir < #root then
+
+            if not root or #dir < #root then
                 root = dir
             end
         end
 
-        on_dir(root or vim.uv.cwd())
+        if root then
+            on_dir(root)
+        end
     end,
+
     workspace_required = true,
     init_options = {
-        indexVendor = true,
         excludePaths = {
             'node_modules',
             'bower_components',
