@@ -13,8 +13,8 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             'oxlint',
             -- TODO: replace static php LSP choice by a function
             -- 'intelephense',
-            'php_lsp',
-            -- 'phpantom',
+            -- 'php_lsp',
+            'phpantom',
             'tsc',
             'taplo',
             'ty',
