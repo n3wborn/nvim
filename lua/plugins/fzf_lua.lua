@@ -51,8 +51,8 @@ local function git_status_recursive()
         return fzf_lua.utils.warn('not a git repository')
     end
     local root = vim.trim(res.stdout)
-    local status = '-c color.status=false --no-optional-locks status --porcelain=v1 -u --no-renames'
 
+    local status = '-c color.status=false --no-optional-locks status --porcelain=v1 -u --no-renames'
     -- submodule files are displayed as `[name] path/in/submodule`,
     -- the path from the root is used instead when a name is not unique
     local subs = vim.system({
@@ -172,13 +172,7 @@ return {
     cmd = 'FzfLua',
     keys = {
         { '<space>F', ':FzfLua<cr>' },
-        {
-            '<leader>gi',
-            function()
-                require('fzf-lua').lsp_implementations()
-            end,
-            desc = 'List Implementation',
-        },
+        { '<leader>gS', git_status_recursive, desc = 'Git Status + submodules' },
         {
             'gb',
             function()
@@ -200,9 +194,44 @@ return {
             end,
             desc = 'Find Files',
         },
-        { '<leader>gS', git_status_recursive, desc = 'Git Status + submodules' },
+        {
+            '<leader>gi',
+            function()
+                require('fzf-lua').lsp_implementations()
+            end,
+            desc = 'List Implementation',
+        },
+        {
+            '<leader>ss',
+            function()
+                require('fzf-lua').lsp_document_symbols()
+            end,
+            desc = 'Document Symbols',
+        },
+        {
+            '<leader>sS',
+            function()
+                require('fzf-lua').lsp_live_workspace_symbols()
+            end,
+            desc = 'Workspace Symbols',
+        },
+        {
+            'gd',
+            function()
+                require('fzf-lua').lsp_definitions({ jump1 = true })
+            end,
+            desc = 'Goto Definition',
+        },
+        {
+            'gD',
+            function()
+                require('fzf-lua').lsp_definitions({ jump1 = false })
+            end,
+            desc = 'Peek Definition',
+        },
     },
     ---@type fzf-lua.Config
+    ---@diagnostic disable-next-line: assign-type-mismatch
     opts = function()
         local fzf_lua = require('fzf-lua')
 
@@ -235,18 +264,19 @@ return {
             -- },
             actions = {
                 files = {
-                    ['enter'] = FzfLua.actions.file_edit_or_qf,
-                    ['ctrl-s'] = FzfLua.actions.file_split,
-                    ['ctrl-v'] = FzfLua.actions.file_vsplit,
-                    ['ctrl-t'] = FzfLua.actions.file_tabedit,
-                    ['alt-q'] = FzfLua.actions.file_sel_to_qf,
-                    ['alt-Q'] = FzfLua.actions.file_sel_to_ll,
-                    ['alt-i'] = FzfLua.actions.toggle_ignore,
-                    ['alt-h'] = FzfLua.actions.toggle_hidden,
-                    ['alt-f'] = FzfLua.actions.toggle_follow,
-                    -- Select all + send to quickfix (works with both fzf and skim,
-                    -- unlike a hand-written `select-all+accept` bind in keymap.fzf).
-                    ['ctrl-q'] = { fn = fzf_lua.actions.file_sel_to_qf, prefix = 'select-all' },
+                    ['enter'] = fzf_lua.actions.file_edit_or_qf,
+                    ['ctrl-s'] = fzf_lua.actions.file_split,
+                    ['ctrl-v'] = fzf_lua.actions.file_vsplit,
+                    ['ctrl-t'] = fzf_lua.actions.file_tabedit,
+                    ['alt-q'] = fzf_lua.actions.file_sel_to_qf,
+                    ['alt-Q'] = fzf_lua.actions.file_sel_to_ll,
+                    ['alt-i'] = fzf_lua.actions.toggle_ignore,
+                    ['alt-h'] = fzf_lua.actions.toggle_hidden,
+                    ['alt-f'] = fzf_lua.actions.toggle_follow,
+                    ['ctrl-q'] = {
+                        fn = fzf_lua.actions.file_sel_to_qf,
+                        prefix = 'select-all',
+                    },
                 },
             },
             helptags = {
