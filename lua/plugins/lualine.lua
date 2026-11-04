@@ -71,21 +71,7 @@ return {
             }
 
             -- Right sections
-            opts.sections.lualine_x = {
-                {
-                    'lsp_status',
-                    icon = '󰒋 ',
-                    symbols = {
-                        spinner = require('config.icons').spinner.circle,
-                        done = '✓',
-                        separator = ' ',
-                    },
-                    ignore_lsp = {},
-                    show_name = true,
-                    always_visible = false,
-                },
-            }
-
+            opts.sections.lualine_x = {}
             opts.sections.lualine_y = {}
             opts.sections.lualine_z = {
                 {
