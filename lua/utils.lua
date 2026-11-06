@@ -180,4 +180,31 @@ M.goto_first_hunk = function(rev)
     vim.cmd.normal({ 'zvzz', bang = true })
 end
 
+--- Waits for a blink.lib task inside a lazy.nvim `build` function without
+--- freezing the UI. blink's `task:pwait()` relies on `vim.wait()`, which blocks
+--- user input; here the lazy coroutine is suspended and polled instead.
+--- Falls back to `task:wait()` outside of a lazy async context.
+---@param task blink.lib.Task
+---@param timeout? integer milliseconds
+M.lazy_await_blink_task = function(task, timeout)
+    local Async = require('lazy.async')
+    local async = Async.running()
+    if not async then
+        return task:wait(timeout)
+    end
+
+    local RUNNING = require('blink.lib.task').STATUS.RUNNING
+    local elapsed, step = 0, 100
+    while task.status == RUNNING do
+        if timeout and elapsed >= timeout then
+            task:cancel()
+            error('Task timed out after ' .. timeout .. ' milliseconds')
+        end
+        async:sleep(step)
+        elapsed = elapsed + step
+    end
+    -- task is finished: wait() returns the result or raises the error
+    return task:wait(0)
+end
+
 return M
