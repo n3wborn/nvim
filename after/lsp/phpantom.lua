@@ -1,3 +1,4 @@
+-- https://github.com/PHPantom-dev/phpantom_lsp (`cargo binstall phpantom_lsp`)
 ---@type vim.lsp.Config
 return {
     name = 'phpantom',
@@ -5,28 +6,32 @@ return {
     filetypes = { 'php' },
     root_dir = function(bufnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(bufnr)
-        local buf_dir = vim.fs.dirname(fname)
 
-        -- Walk upward and collect ALL matches, not just the first one
-        -- local markers = { '.phpantom.toml', '.git', 'composer.json' }
-        local markers = { '.git', 'composer.json' }
-        local found = vim.fs.find(markers, {
+        if fname == '' then
+            return
+        end
+
+        local found = vim.fs.find({ '.phpantom.toml', '.git', 'composer.json' }, {
             upward = true,
-            path = buf_dir,
-            -- Don't stop at the first match: find them all up to /
+            path = vim.fs.dirname(fname),
             limit = math.huge,
         })
 
-        -- Pick the topmost (closest to /) match
-        local root = nil
+        local root
+
+        -- use topmost root (ex: project_root/plugins/submodule will use project_root)
         for _, match in ipairs(found) do
             local dir = vim.fs.dirname(match)
-            if root == nil or #dir < #root then
+
+            if not root or #dir < #root then
                 root = dir
             end
         end
 
-        on_dir(root or vim.uv.cwd())
+        if root then
+            on_dir(root)
+        end
     end,
-    -- root_markers = { '.phpantom.toml', '.git', 'composer.json' },
+
+    workspace_required = true,
 }
