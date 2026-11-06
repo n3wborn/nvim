@@ -10,8 +10,7 @@ return {
         'folke/lazydev.nvim',
     },
     build = function()
-        ---@as blink.lib.Task
-        require('blink.cmp').build():pwait()
+        require('utils').lazy_await_blink_task(require('blink.cmp').build())
     end,
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config

@@ -8,8 +8,7 @@ return {
         'saghen/blink.lib',
     },
     build = function()
-        ---@as blink.lib.Task
-        require('blink.pairs').build():pwait(60000)
+        require('utils').lazy_await_blink_task(require('blink.pairs').build(), 60000)
     end,
     event = { 'BufEnter', 'BufNewFile' },
     --- @module 'blink.pairs'
