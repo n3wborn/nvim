@@ -25,6 +25,15 @@ function M.setup()
                 [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
             },
         },
+        -- Show the diagnostic in a float after each jump (]d, [d, ]D, [D, ]e, ...)
+        jump = {
+            on_jump = function(diagnostic, bufnr)
+                if not diagnostic then
+                    return
+                end
+                vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+            end,
+        },
         severity_sort = true,
         underline = false,
         update_in_insert = true,
@@ -35,16 +44,10 @@ function M.setup()
             -- Show severity icons as prefixes.
             prefix = function(diag)
                 local level = vim.diagnostic.severity[diag.severity]
-                local prefix = string.format(' %s ', diagnostic_icons[level])
-                return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
+                local name = level:sub(1, 1) .. level:sub(2):lower()
+                local prefix = string.format(' %s ', diagnostic_icons[name])
+                return prefix, 'Diagnostic' .. name
             end,
-        },
-        virtual_lines = {
-            current_line = true,
-            severity = {
-                vim.diagnostic.severity.WARN,
-                vim.diagnostic.severity.ERROR,
-            },
         },
     })
 end
