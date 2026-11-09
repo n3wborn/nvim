@@ -9,7 +9,7 @@ return {
     },
     keys = {
         {
-            '-',
+            '<leader>-',
             mode = { 'n' },
             '<cmd>Yazi<cr>',
             desc = 'Open yazi at the current file',
