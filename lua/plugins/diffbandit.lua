@@ -17,7 +17,7 @@ return {
     },
     keys = {
         {
-            '<leader>g',
+            '<leader>G',
             '<cmd>DiffBanditGit<cr>',
             desc = 'DiffBandit Git Menu',
         },
