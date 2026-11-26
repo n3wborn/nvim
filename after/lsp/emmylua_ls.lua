@@ -21,7 +21,7 @@ return {
             workspace = {
                 library = {
                     '$VIMRUNTIME',
-                    '$HOME/.local/share/nvim/lazy',
+                    '$HOME/.local/share/nvim/site/pack/core/opt',
                 },
                 ignoreGlobs = { '**/*_spec.lua' },
             },
