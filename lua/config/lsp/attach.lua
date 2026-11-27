@@ -16,12 +16,5 @@ api.nvim_create_autocmd('LspAttach', {
 
             highlight_group = api.nvim_create_augroup('my.lsp.highlight-' .. ev.buf, {}),
         }, capabilities)
-
-        if client:supports_method('textDocument/codeLens', ev.buf) then
-            vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled(), {
-                bufnr = ev.buf,
-                client_id = client.id,
-            })
-        end
     end,
 })
