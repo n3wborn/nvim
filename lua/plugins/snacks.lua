@@ -116,6 +116,18 @@ return {
                     .option('background', { off = 'light', on = 'dark', name = 'Dark Background' })
                     :map('<leader>ub')
                 Snacks.toggle.inlay_hints():map('<leader>P')
+                Snacks.toggle
+                    .new({
+                        name = 'Code Lens',
+                        get = function()
+                            return vim.lsp.codelens.is_enabled()
+                        end,
+                        set = function(state)
+                            vim.g.lsp_code_lens = state
+                            vim.lsp.codelens.enable(state)
+                        end,
+                    })
+                    :map('<leader>uc')
                 -- Indent guides are drawn by blink.indent, not Snacks
                 Snacks.toggle
                     .new({

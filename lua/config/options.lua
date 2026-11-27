@@ -1,5 +1,6 @@
 -- global settings
 vim.g.lsp_inlay_hints = false
+vim.g.lsp_code_lens = false
 
 -- tabs / indent
 local indent = 4
