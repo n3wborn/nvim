@@ -80,8 +80,6 @@ return {
                         end,
                     },
                 },
-                    end,
-                },
             },
         },
         signature = { enabled = true },
