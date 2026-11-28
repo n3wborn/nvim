@@ -123,6 +123,12 @@ function M.start()
                     return
                 end
             end
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.bo[buf].filetype == 'Outline' then
+                    vim.api.nvim_buf_delete(buf, { force = true })
+                end
+            end
+
             M.save()
         end,
         desc = 'Save session for current directory on exit',
