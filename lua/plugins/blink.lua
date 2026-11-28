@@ -72,17 +72,13 @@ return {
                     score_offset = 100,
                 },
                 buffer = {
-                    -- all visible normal buffers (excludes terminal, quickfix, help, prompt...)
-                    get_bufnrs = function()
-                        return vim.iter(vim.api.nvim_list_wins())
-                            :map(function(win)
-                                return vim.api.nvim_win_get_buf(win)
-                            end)
-                            :filter(function(buf)
-                                return vim.bo[buf].buftype == ''
-                            end)
-                            :totable()
-                    end,
+                    opts = {
+                        get_bufnrs = function()
+                            return vim.tbl_filter(function(bufnr)
+                                return vim.bo[bufnr].buftype == ''
+                            end, vim.api.nvim_list_bufs())
+                        end,
+                    },
                 },
             },
         },
